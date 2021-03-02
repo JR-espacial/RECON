@@ -1,0 +1,37 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 200%;
+}
+
+header{
+    height: 80%;
+    display: flex;
+    align-items: center;
+    color: white;
+    background-color: #642F67;
+    justify-content: center;
+    margin: 1.5%;
+}
+
+main{
+    /*background-color:#C62E47;*/
+    margin: 1.5%;
+    padding-left: 10%;
+    padding-top: 2%;
+    padding-right: 10%;
+    color: grey;
+}
+
+footer{
+    color: grey;
+    padding-left: 12%;
+
+}
+
+#imagen_piano{
+    width: 50%;
+}
+
+.titulo{
+    color: #642F67;
+}
