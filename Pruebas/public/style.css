@@ -1,0 +1,10 @@
+
+#contenedor_colaboradores{
+    border: 100px !important;
+    border-color: rgb(56, 56, 56);
+}
+
+.imagen_estandar{
+    width: 10%;
+    height: 50px;
+}
