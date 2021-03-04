@@ -8,3 +8,14 @@
     width: 10%;
     height: 50px;
 }
+
+#boton_casos_uso{
+    margin-top: 7%;
+
+}
+
+#tabla_caso_uso{
+    max-height: 500px;
+    width: 58%;
+    overflow: scroll;
+}
