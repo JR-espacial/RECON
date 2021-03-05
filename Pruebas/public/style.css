@@ -16,7 +16,13 @@
 
 #tabla_caso_uso{
     max-height: 500px;
-    width: 58%;
+    width: 63%;
+    overflow: scroll;
+}
+
+#tabla_caso_uso_tareas{
+    max-height: 500px;
+    width: 50%;
     overflow: scroll;
 }
 
@@ -55,9 +61,9 @@ header, main, footer {
 #fasesVert{
     overflow-y: scroll;
     overflow-x: hidden;
-    white-space: nowrap;
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
+    height: 600px;
 }
 
 #fase{
@@ -67,6 +73,14 @@ header, main, footer {
     border-radius: 8px;
     width: 25%;
     display: inline-block;
+}
+
+#faseVert{
+    background-color: #9abecf;
+    margin: 0 0 10px 0;
+    border-radius: 8px;
+    width: 100%;
+    padding-bottom: 5px;
 }
 
 #tarea-en-fase{
@@ -93,7 +107,9 @@ header, main, footer {
 #fases::-webkit-scrollbar {
     display: none;
 }
-
+#fasesVert::-webkit-scrollbar {
+    display: none;
+}
 .bajar_tabla{
     margin-top: 10%;
 }

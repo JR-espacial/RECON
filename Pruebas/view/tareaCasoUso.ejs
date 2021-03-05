@@ -2,169 +2,250 @@
 <%- include('includes/navbar.ejs'); %>
 <main>
 <div>
-
     <div class="row">
         <div class="col s6 offset-s3">
             <h2>Tareas por Caso de Uso</h2>
         </div>
     </div>
-    
-    <div class="row">
+    <hr>
+    <br>
+    <div class="row container">
+        <div class="col s6 m6 l6" id="tabla_caso_uso_tareas">
+            <table class="highlight">
+                <thead>
+                <tr>
+                    <th class="center-align">Quiero</th>
+                </tr>
+                </thead>
+        
+                <tbody>
+                <tr>
+                    <td>consultar preaprobación con el método FICO</td>
+                </tr>
+                <tr>
+                    <td>crear solicitudes de kit de conversión en Impúlsate desde Orígenes</td>
+                </tr>
+                <tr>
+                    <td>ver las solicitudes que requieren agendar visita de preaprobación</td>
+                </tr>
+                <tr>
+                    <td>ver las solicitudes que ya tienen cita</td>
+                </tr>
+                <tr>
+                    <td>ver las solicitudes que ya tienen cita</td>
+                </tr>
+                <tr>
+                    <td>ver las solicitudes que ya tienen cita</td>
+                </tr>
+                <tr>
+                    <td>ver las solicitudes que ya tienen cita</td>
+                </tr>
+                <tr>
+                    <td>ver las solicitudes que ya tienen cita</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+
+
         <div class="col s6 m6 l6">
+            <div id="fasesVert" class="container">
+                <div id="faseVert" class="center-align">
+                    <div id="titulo-fase">
+                        <span class="">Análisis:</span>
+                    </div>
+                    <div>
+                        <div id="tarea-en-fase">
+                            <label>
+                                <input type="checkbox" class="filled-in" checked="checked" />
+                                <span>Test Cases</span>
+                            </label>
+                            
+                        </div>
+                        <div id="tarea-en-fase">
+                            <label>
+                            <input type="checkbox" class="filled-in" checked="checked" />
+                                <span>Verificación</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="faseVert" class="center-align">
+                    <div id="titulo-fase">
+                        <span class="">Diseño:</span>
+                    </div>
+                    <div>
+                        <div id="tarea-en-fase">
+                            <label>
+                                <input type="checkbox" class="filled-in" checked="checked" />
+                                <span>Wireframes</span>
+                            </label>
+                        </div>
+                        <div id="tarea-en-fase">
+                            <label>
+                                <input type="checkbox" class="filled-in" checked="checked" />
+                                <span>Algoritmo</span>
+                            </label>
+                        </div>
+                        <div id="tarea-en-fase">
+                            <label>
+                                <input type="checkbox" class="filled-in" checked="checked" />
+                                <span>Actualizar documentación</span>
+                            </label>
+                        </div>
+                        <div id="tarea-en-fase">
+                            <label>
+                                <input type="checkbox" class="filled-in" checked="checked" />
+                                <span>Diagrama de Componentes</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="faseVert" class="center-align">
+                    <div id="titulo-fase">
+                        <span class="">Implementación:</span>
+                    </div>
+                    <div>
+                        <div id="tarea-en-fase">
+                            <label>
+                                <input type="checkbox" class="filled-in" checked="checked" />
+                                <span>BackEnd</span>
+                            </label>
+                        </div>
+                        <div id="tarea-en-fase">
+                            <label>
+                                <input type="checkbox" class="filled-in" checked="checked" />
+                                <span>FrontEnd</span>
+                            </label>
+                        </div>
+                        <div id="tarea-en-fase">
+                            <label>
+                                <input type="checkbox" class="filled-in" checked="checked" />
+                                <span>Matriz de Trazabilidad</span>
+                            </label>
+                        </div>
+                        <div id="tarea-en-fase">
+                            <label>
+                                <input type="checkbox" class="filled-in" checked="checked" />
+                                <span>Verificación</span>
+                            </label>
+                        </div>
+                        <div id="tarea-en-fase">
+                            <label>
+                                <input type="checkbox" class="filled-in" checked="checked" />
+                                <span>Validación</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="faseVert" class="center-align">
+                    <div id="titulo-fase">
+                        <span class="">Pruebas:</span>
+                    </div>
+                    <div>
+                        <div id="tarea-en-fase">
+                            <label>
+                                <input type="checkbox" class="filled-in" checked="checked" />
+                                <span>Pruebas de Usabilidad</span>
+                            </label>
+                        </div>
+                        <div id="tarea-en-fase">
+                            <label>
+                                <input type="checkbox" class="filled-in" checked="checked" />
+                                <span>Pruebas de Seguridad</span>
+                            </label>
+                        </div>
+                        <div id="tarea-en-fase">
+                            <label>
+                                <input type="checkbox" class="filled-in" checked="checked" />
+                                <span>Pruebas de Integración</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div id="faseVert" class="center-align">
+                    <div id="titulo-fase">
+                        <span class="">Diseño:</span>
+                    </div>
+                    <div>
+                        <div id="tarea-en-fase">
+                            <label>
+                                <input type="checkbox" class="filled-in" checked="checked" />
+                                <span>Wireframes</span>
+                            </label>
+                        </div>
+                        <div id="tarea-en-fase">
+                            <label>
+                                <input type="checkbox" class="filled-in" checked="checked" />
+                                <span>Algoritmo</span>
+                            </label>
+                        </div>
+                        <div id="tarea-en-fase">
+                            <label>
+                                <input type="checkbox" class="filled-in" checked="checked" />
+                                <span>Actualizar documentación</span>
+                            </label>
+                        </div>
+                        <div id="tarea-en-fase">
+                            <label>
+                                <input type="checkbox" class="filled-in" checked="checked" />
+                                <span>Diagrama de Componentes</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="faseVert" class="center-align">
+                    <div id="titulo-fase">
+                        <span class="">Implementación:</span>
+                    </div>
+                    <div>
+                        <div id="tarea-en-fase">
+                            <label>
+                                <input type="checkbox" class="filled-in" checked="checked" />
+                                <span>BackEnd</span>
+                            </label>
+                        </div>
+                        <div id="tarea-en-fase">
+                            <label>
+                                <input type="checkbox" class="filled-in" checked="checked" />
+                                <span>FrontEnd</span>
+                            </label>
+                        </div>
+                        <div id="tarea-en-fase">
+                            <label>
+                                <input type="checkbox" class="filled-in" checked="checked" />
+                                <span>Matriz de Trazabilidad</span>
+                            </label>
+                        </div>
+                        <div id="tarea-en-fase">
+                            <label>
+                                <input type="checkbox" class="filled-in" checked="checked" />
+                                <span>Verificación</span>
+                            </label>
+                        </div>
+                        <div id="tarea-en-fase">
+                            <label>
+                                <input type="checkbox" class="filled-in" checked="checked" />
+                                <span>Validación</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
             
-        </div>
-        <div class="col s6 m6 l6">
-
-        </div>
-    </div>
-
-
-    <div id="fasesVert" class="container">
-        <div id="fase" class="center-align">
-            <div id="titulo-fase">
-                <span class="">Análisis:</span>
-            </div>
-            <div>
-                <div id="tarea-en-fase">
-                    <span>Test Cases</span>
-                </div>
-                <div id="tarea-en-fase">
-                    <span class="">Verificación</span>
-                </div>
-            </div>
-            <div>
-                <a class="btn-floating cyan lighten-1 pulse boton_añadir"><i class="material-icons">add</i></a>
-            </div>
-        </div>
-
-        <div id="fase" class="center-align">
-            <div id="titulo-fase">
-                <span class="">Diseño:</span>
-            </div>
-            <div>
-                <div id="tarea-en-fase">
-                    <span>Wireframes</span>
-                </div>
-                <div id="tarea-en-fase">
-                    <span class="">Algoritmo</span>
-                </div>
-                <div id="tarea-en-fase">
-                    <span class="">Actualizar documentación</span>
-                </div>
-                <div id="tarea-en-fase">
-                    <span class="">Diagrama de Componentes</span>
-                </div>
-            </div>
-            <div>
-                <a class="btn-floating cyan pulse boton_añadir"><i class="material-icons">add</i></a>
-            </div>
-        </div>
-
-        <div id="fase" class="center-align">
-            <div id="titulo-fase">
-                <span class="">Implementación:</span>
-            </div>
-            <div>
-                <div id="tarea-en-fase">
-                    <span>BackEnd</span>
-                </div>
-                <div id="tarea-en-fase">
-                    <span class="">FrontEnd</span>
-                </div>
-                <div id="tarea-en-fase">
-                    <span class="">Matriz de Trazabilidad</span>
-                </div>
-                <div id="tarea-en-fase">
-                    <span class="">Verificación</span>
-                </div>
-                <div id="tarea-en-fase">
-                    <span class="">Validación</span>
-                </div>
-            </div>
-            <div>
-                <a class="btn-floating cyan pulse boton_añadir"><i class="material-icons">add</i></a>
-            </div>
-        </div>
-
-        <div id="fase" class="center-align">
-            <div id="titulo-fase">
-                <span class="">Pruebas:</span>
-            </div>
-            <div>
-                <div id="tarea-en-fase">
-                    <span>Pruebas de Usabilidad</span>
-                </div>
-                <div id="tarea-en-fase">
-                    <span class="">Pruebas de Seguridad</span>
-                </div>
-                <div id="tarea-en-fase">
-                    <span class="">Pruebas de Integración</span>
-                </div>
-            </div>
-            <div>
-                <a class="btn-floating cyan pulse boton_añadir"><i class="material-icons">add</i></a>
-            </div>
-        </div>
-
-        <div id="fase" class="center-align">
-            <div id="titulo-fase">
-                <span class="">Análisis:</span>
-            </div>
-            <div>
-                <div id="tarea-en-fase">
-                    <span>Test Cases</span>
-                </div>
-                <div id="tarea-en-fase">
-                    <span class="">Verificación</span>
-                </div>
-            </div>
-            <div>
-                <a class="btn-floating cyan pulse boton_añadir"><i class="material-icons">add</i></a>
-            </div>
-        </div>
-
-        <div id="fase" class="center-align">
-            <div id="titulo-fase">
-                <span class="">Diseño:</span>
-            </div>
-            <div>
-                <div id="tarea-en-fase">
-                    <span>Wireframes</span>
-                </div>
-                <div id="tarea-en-fase">
-                    <span class="">Algoritmo</span>
-                </div>
-                <div id="tarea-en-fase">
-                    <span class="">Actualizar documentación</span>
-                </div>
-                <div id="tarea-en-fase">
-                    <span class="">Diagrama de Componentes</span>
-                </div>
-            </div>
-            <div>
-                <a class="btn-floating cyan pulse boton_añadir"><i class="material-icons">add</i></a>
-            </div>
-        </div>
-
-
-        <div id="fase" class="center-align">
-            <div id="titulo-fase">
-                <span class="">Análisis:</span>
-            </div>
-            <div>
-                <div id="tarea-en-fase">
-                    <span>Test Cases</span>
-                </div>
-                <div id="tarea-en-fase">
-                    <span class="">Verificación</span>
-                </div>
-            </div>
-            <div>
-                <a class="btn-floating cyan pulse boton_añadir"><i class="material-icons">add</i></a>
-            </div>
-        </div>
-
-    </div>
 
 </div>
 </main>
