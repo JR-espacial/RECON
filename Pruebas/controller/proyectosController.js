@@ -30,3 +30,6 @@ exports.getTareaCasoUso = (request,response) =>{
 exports.getPromediosAP = (request,response) =>{
     response.render('promediosAP')
 }
+exports.getEstimadosAP = (request,response) =>{
+    response.render('estimadosAP')
+}

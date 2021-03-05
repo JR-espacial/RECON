@@ -20,6 +20,9 @@ router.get('/tarea-caso-uso', proyectsController.getTareaCasoUso);
 
 router.get('/promedios-ap', proyectsController.getPromediosAP);
 
+router.get('/estimados-ap', proyectsController.getEstimadosAP);
+
+
 router.use(express.static(path.join(__dirname, '..', 'public')));
 
 module.exports = router;
