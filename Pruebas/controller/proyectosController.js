@@ -19,3 +19,7 @@ exports.getFasesProyecto = (request,response) =>{
 exports.getAvanceProyecto = (request, response) => {
     response.render('avanceProyecto')
 }
+
+exports.getCapacidadEquipo = (request,response) =>{
+    response.render('capacidadEquipo')
+}
