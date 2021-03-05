@@ -23,3 +23,7 @@ exports.getAvanceProyecto = (request, response) => {
 exports.getCapacidadEquipo = (request,response) =>{
     response.render('capacidadEquipo')
 }
+
+exports.getTareaCasoUso = (request,response) =>{
+    response.render('tareaCasoUso')
+}

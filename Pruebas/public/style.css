@@ -52,6 +52,14 @@ header, main, footer {
     scrollbar-width: none;  /* Firefox */
 }
 
+#fasesVert{
+    overflow-y: scroll;
+    overflow-x: hidden;
+    white-space: nowrap;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
 #fase{
     background-color: #9abecf;
     margin-left: 5px;

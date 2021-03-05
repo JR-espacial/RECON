@@ -16,6 +16,8 @@ router.get('/avance-proyecto', proyectsController.getAvanceProyecto);
 
 router.get('/capacidad-equipo', proyectsController.getCapacidadEquipo);
 
+router.get('/tarea-caso-uso', proyectsController.getTareaCasoUso);
+
 router.use(express.static(path.join(__dirname, '..', 'public')));
 
 module.exports = router;
