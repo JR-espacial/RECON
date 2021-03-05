@@ -1,7 +1,7 @@
 <%- include('includes/openHTML.ejs'); %>
 <%- include('includes/navbar.ejs'); %>
-
-<div class="row">
+<main>
+<div>
 
     <div class="row">
         <div class="col s6 offset-s3">
@@ -9,93 +9,155 @@
         </div>
     </div>
     
-    <div class="row">
-    
-        <div class="col s2 offset-s3">
-            <table class="highlight teal lighten-2">
-                <thead>
-                    <tr>
-                        <th>Análisis</th>
-                    </tr>
-                  </thead>
-            <tbody>
-                <tr>    
-                <td>Test Cases</td>
-                </tr>
-                <tr>
-                <td>Verificación</td>
-                </tr>
-            </tbody>
-            </table>
-            <div class="col s2 offset-s4">
-                <a class="btn-floating green lighten-1 pulse boton_añadir"><i class="material-icons">add</i></a>
+    <div id="fases" class="container">
+        <div id="fase" class="center-align">
+            <div id="titulo-fase">
+                <span class="">Análisis:</span>
+            </div>
+            <div>
+                <div id="tarea-en-fase">
+                    <span>Test Cases</span>
+                </div>
+                <div id="tarea-en-fase">
+                    <span class="">Verificación</span>
+                </div>
+            </div>
+            <div>
+                <a class="btn-floating cyan lighten-1 pulse boton_añadir"><i class="material-icons">add</i></a>
             </div>
         </div>
-        <div class="col s2" >
-            <table class="highlight teal lighten-3">
-                <thead>
-                    <tr>
-                        <th>Diseño</th>
-                    </tr>
-                  </thead>
-            <tbody>
-                <tr>    
-                <td>Wireframes</td>
-                </tr>
-                <tr>
-                <td>Algoritmo</td>
-                </tr>
-                <tr>
-                <td>Actualizar Documentacion</td>
-                </tr>
-                <tr>
-                <td>Diagrama de componentes</td>
-                </tr>
-            </tbody>
-            </table>
+
+        <div id="fase" class="center-align">
+            <div id="titulo-fase">
+                <span class="">Diseño:</span>
+            </div>
+            <div>
+                <div id="tarea-en-fase">
+                    <span>Wireframes</span>
+                </div>
+                <div id="tarea-en-fase">
+                    <span class="">Algoritmo</span>
+                </div>
+                <div id="tarea-en-fase">
+                    <span class="">Actualizar documentación</span>
+                </div>
+                <div id="tarea-en-fase">
+                    <span class="">Diagrama de Componentes</span>
+                </div>
+            </div>
+            <div>
+                <a class="btn-floating cyan pulse boton_añadir"><i class="material-icons">add</i></a>
+            </div>
         </div>
-        <div class="col s2" >
-            <table class="highlight teal lighten-4">
-                <thead>
-                    <tr>
-                        <th>Implementación</th>
-                    </tr>
-                  </thead>
-            <tbody>
-                <tr>    
-                <td>Backend</td>
-                </tr>
-                <tr>
-                <td>Frontend</td>
-                </tr>
-                <tr>
-                <td>Validación</td>
-                </tr>
-            </tbody>
-            </table>
+
+        <div id="fase" class="center-align">
+            <div id="titulo-fase">
+                <span class="">Implementación:</span>
+            </div>
+            <div>
+                <div id="tarea-en-fase">
+                    <span>BackEnd</span>
+                </div>
+                <div id="tarea-en-fase">
+                    <span class="">FrontEnd</span>
+                </div>
+                <div id="tarea-en-fase">
+                    <span class="">Matriz de Trazabilidad</span>
+                </div>
+                <div id="tarea-en-fase">
+                    <span class="">Verificación</span>
+                </div>
+                <div id="tarea-en-fase">
+                    <span class="">Validación</span>
+                </div>
+            </div>
+            <div>
+                <a class="btn-floating cyan pulse boton_añadir"><i class="material-icons">add</i></a>
+            </div>
         </div>
-        <div class="col s2" >
-            <table class="highlight teal lighten-5">
-                <thead>
-                    <tr>
-                        <th>Pruebas</th>
-                    </tr>
-                  </thead>
-            <tbody>
-                <tr>    
-                <td>Pruebas de usabilidad</td>
-                </tr>
-                <tr>
-                <td>Pruebas de Seguridad</td>
-                </tr>
-            </tbody>
-            </table>
+
+        <div id="fase" class="center-align">
+            <div id="titulo-fase">
+                <span class="">Pruebas:</span>
+            </div>
+            <div>
+                <div id="tarea-en-fase">
+                    <span>Pruebas de Usabilidad</span>
+                </div>
+                <div id="tarea-en-fase">
+                    <span class="">Pruebas de Seguridad</span>
+                </div>
+                <div id="tarea-en-fase">
+                    <span class="">Pruebas de Integración</span>
+                </div>
+            </div>
+            <div>
+                <a class="btn-floating cyan pulse boton_añadir"><i class="material-icons">add</i></a>
+            </div>
         </div>
-    
+
+        <div id="fase" class="center-align">
+            <div id="titulo-fase">
+                <span class="">Análisis:</span>
+            </div>
+            <div>
+                <div id="tarea-en-fase">
+                    <span>Test Cases</span>
+                </div>
+                <div id="tarea-en-fase">
+                    <span class="">Verificación</span>
+                </div>
+            </div>
+            <div>
+                <a class="btn-floating cyan pulse boton_añadir"><i class="material-icons">add</i></a>
+            </div>
+        </div>
+
+        <div id="fase" class="center-align">
+            <div id="titulo-fase">
+                <span class="">Diseño:</span>
+            </div>
+            <div>
+                <div id="tarea-en-fase">
+                    <span>Wireframes</span>
+                </div>
+                <div id="tarea-en-fase">
+                    <span class="">Algoritmo</span>
+                </div>
+                <div id="tarea-en-fase">
+                    <span class="">Actualizar documentación</span>
+                </div>
+                <div id="tarea-en-fase">
+                    <span class="">Diagrama de Componentes</span>
+                </div>
+            </div>
+            <div>
+                <a class="btn-floating cyan pulse boton_añadir"><i class="material-icons">add</i></a>
+            </div>
+        </div>
+
+
+        <div id="fase" class="center-align">
+            <div id="titulo-fase">
+                <span class="">Análisis:</span>
+            </div>
+            <div>
+                <div id="tarea-en-fase">
+                    <span>Test Cases</span>
+                </div>
+                <div id="tarea-en-fase">
+                    <span class="">Verificación</span>
+                </div>
+            </div>
+            <div>
+                <a class="btn-floating cyan pulse boton_añadir"><i class="material-icons">add</i></a>
+            </div>
+        </div>
+
     </div>
 
 </div>
-
+</main>
 
 
 <%- include('includes/closeHTML.ejs'); %>

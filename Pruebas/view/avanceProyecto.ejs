@@ -1,0 +1,178 @@
+<%- include('includes/openHTML.ejs'); %>
+<%- include('includes/navbar.ejs'); %>
+
+<main>
+    <div class="container">
+        <div class="row">
+            <div class="col 12 offset-s2">
+                <div class="center-align">
+                    <h1 class="flow-text"></h1>
+                    <img class="responsive-img" width="100%"
+                        src="https://www.merkleinc.com/es/sites/es/files/inline-images/colum4.png"
+                        alt="Gráfica Avance">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col s4 m4 l4">
+                <div class="card">
+                    <h2 class="card-title flow-text">Inicio:</h2>
+                    <div class="card-content">
+                        <p><strong>10/15/2020</strong></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col s4 m4 l4">
+                <div class="card">
+                    <h2 class="card-title flow-text">Fin:</h2>
+                    <div class="card-content">
+                        <p><strong>10/30/2020<strong></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col s4 m4 l4">
+                <div class="card">
+                    <h2 class="card-title flow-text">Horas Planeadas:</h2>
+                    <div class="card-content">
+                        <strong><p>186.32</p><strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col s6 m6 l6">
+                <div class="card">
+                    <h2 class="card-title flow-text">Información
+                        del proyecto:</h2>
+                    <div class="card-content">
+                        <p>Días Totales: <span>12</span></p>
+                        <p>Velocidad Deseada: <span>15.5</span></p><br>
+                        <p>Valor Planeado: <span>15.5</span></p>
+                        <p>Valor Ganado: <span>11.12</span></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col s6 m6 l6">
+                <div class="card">
+                    <h2 class="card-title flow-text">Información
+                        del proyecto:</h2>
+                    <div class="card-content">
+                        <p>Diferencia Progreso: <span>-4.4</span></p><br>
+                            <p>Total Tareas: <span>108</span></p>
+                            <p>Tareas Completadas: <span>96</span></p>
+                            <p>Tareas Pendientes: <span>0</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col s12 offset-s2" id="tabla_avance">
+            <table class="highlight">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th class="center-align">Valor Ganado
+                            (VG)</th>
+                        <th class="center-align">Costo Real (CR)</th>
+                        <th class="center-align">Valor Planeado
+                            Acumulado (VPA)</th>
+                        <th class="center-align">Valor Ganado
+                            Acumulado (VGA)</th>
+                        <th class="center-align">Costo Real
+                            Acumulado (CRA)</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>10/15/2020</td>
+                        <td>11.1</td>
+                        <td>14.6</td>
+                        <td>15.5</td>
+                        <td>11.1</td>
+                        <td>14.6</td>
+                    </tr>
+                    <tr>
+                        <td>10/16/2020</td>
+                        <td>14.3</td>
+                        <td>4.3</td>
+                        <td>31.1</td>
+                        <td>25.4</td>
+                        <td>18.9</td>
+                    </tr>
+                    <tr>
+                        <td>10/17/2020</td>
+                        <td>0.0</td>
+                        <td>0.0</td>
+                        <td>31.1</td>
+                        <td>25.4</td>
+                        <td>18.9</td>
+                    </tr>
+                    <tr>
+                        <td>10/18/2020</td>
+                        <td>0.0</td>
+                        <td>0.0</td>
+                        <td>31.1</td>
+                        <td>25.4</td>
+                        <td>18.9</td>
+                    </tr>
+                    <tr>
+                        <td>10/19/2020</td>
+                        <td>17.7</td>
+                        <td>46.6</td>
+                        <td>43.2</td>
+                        <td>37.2</td>
+                        <td>5.9</td>
+                    </tr>
+                    <tr>
+                        <td>10/20/2020</td>
+                        <td>12.9</td>
+                        <td>27.0</td>
+                        <td>62.1</td>
+                        <td>56.1</td>
+                        <td>64.2</td>
+                    </tr>
+                    <tr>
+                        <td>10/21/2020</td>
+                        <td>7.9</td>
+                        <td>12.9</td>
+                        <td>77.6</td>
+                        <td>64.0</td>
+                        <td>77.1</td>
+                    </tr>
+                    <tr>
+                        <td>10/22/2020</td>
+                        <td>49.0</td>
+                        <td>21.4</td>
+                        <td>93.2</td>
+                        <td>113.0</td>
+                        <td>98.5</td>
+                    </tr>
+                    <tr>
+                        <td>10/22/2020</td>
+                        <td>4.9</td>
+                        <td>9.0</td>
+                        <td>93.2</td>
+                        <td>108.7</td>
+                        <td>117.9</td>
+                    </tr>
+                    <tr>
+                        <td>10/22/2020</td>
+                        <td>0.0</td>
+                        <td>0.0</td>
+                        <td>93.2</td>
+                        <td>108.7</td>
+                        <td>117.9</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+                <%- include('includes/closeHTML.ejs'); %>
