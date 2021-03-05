@@ -21,9 +21,8 @@ app.use('/home', homeController.getHome);
 app.use('/login', loginController.getLogin);
 
 
-
 app.use("/",(request, response,next) => {   
     response.status(404).send('<html><head><meta charset="UTF-8"><title>Page not found</title></head><body><h1>Error 404</h1></body></html>')
 });
 
-app.listen(3000);
+app.listen(8080);

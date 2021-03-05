@@ -10,6 +10,8 @@ router.get('/resumen-proyecto', proyectsController.getResumenProyecto);
 
 router.get('/casos-uso-proyecto', proyectsController.getCasosUsoProyecto);
 
+router.get('/fases-proyecto', proyectsController.getFasesProyecto);
+
 router.use(express.static(path.join(__dirname, '..', 'public')));
 
 module.exports = router;

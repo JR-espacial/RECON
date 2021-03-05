@@ -11,3 +11,7 @@ exports.getResumenProyecto = (request,response) =>{
 exports.getCasosUsoProyecto = (request,response) =>{
     response.render('casosUso')
 }
+
+exports.getFasesProyecto = (request,response) =>{
+    response.render('fasesProyecto')
+}
