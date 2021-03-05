@@ -18,6 +18,8 @@ router.get('/capacidad-equipo', proyectsController.getCapacidadEquipo);
 
 router.get('/tarea-caso-uso', proyectsController.getTareaCasoUso);
 
+router.get('/promedios-ap', proyectsController.getPromediosAP);
+
 router.use(express.static(path.join(__dirname, '..', 'public')));
 
 module.exports = router;

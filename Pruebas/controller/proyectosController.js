@@ -27,3 +27,6 @@ exports.getCapacidadEquipo = (request,response) =>{
 exports.getTareaCasoUso = (request,response) =>{
     response.render('tareaCasoUso')
 }
+exports.getPromediosAP = (request,response) =>{
+    response.render('promediosAP')
+}
