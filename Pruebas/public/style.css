@@ -24,3 +24,19 @@
     margin-top: 100%;
     
 }
+
+.bajar_tabla{
+    margin-top: 10%;
+}
+
+.disminuir_margen{
+    height: 0px;
+}
+
+.disminuir_padding{
+    padding: -20px;
+}
+
+.thick{
+    font-weight: bold;
+}

@@ -15,3 +15,7 @@ exports.getCasosUsoProyecto = (request,response) =>{
 exports.getFasesProyecto = (request,response) =>{
     response.render('fasesProyecto')
 }
+
+exports.getCapacidadEquipo = (request,response) =>{
+    response.render('capacidadEquipo')
+}
