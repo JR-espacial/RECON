@@ -1,0 +1,50 @@
+U0001,AP05,I0001,cualquier mesa,ver cuando una solicitud es nueva,identificarlas con mayor facilidad,Revisado,2860,4060,0.66
+U0002,AP05,I0002,comercial,agregar mi teléfono,recibir notificaciones via whatsapp,Terminar,2770,4506,0.89
+U0003,AP05,I0003,mesa de prospectos,agregar el documento de FICO,complementar el expediente,Buen Trabajo,3220,5004,0.92
+U0004,AP05,I0004,mesa de prospectos,asignar al analista de crédito al enviar el expediente,repartir las solicitudes,Excelente idea,4300,4990,0.72
+U0005,AP05,I0005,mesa de análisis,aprobar o rechazar un crédito,continuar con el flujo del prospecto,dar seguimiento,3770,5300,0.84
+U0006,AP05,I0006,mesa de análisis,consultar la lista de expedientes rechazados,ver los créditos que rechacé,Necesario,2996,4400,0.59
+U0007,AP05,I0007,mesa de análisis,consultar la lista de expedientes aceptados,ver los créditos que acepté,Indispensable,3450,5117,0.64
+U0008,AP05,I0008,comercial,consultar el mensaje de resolución de crédito,ver porqué aprobaron o rechazaron al prospecto,Trabajar,4222,5233,0.65
+U0009,AP05,I0009,administrador,revertir el estado de rechazado o aceptado,restarurar la solicitud a su estatus anterior,Comunicacion necesitada,3604,5349,0.62
+U0010,AP05,I0010,administrador,consultar la lista de comerciales y sus asignación de coordinador,ver a sus responsables,Vital,2884,5465,0.59
+U0011,AP05,I0011,administrador,asignar comerciales a coordinadores,que los puedan consultar los coordinadores,dar seguimiento,3666,5582,0.57
+U0012,AP03,I0012,administrador,cambiar la asignación de comerciales a coordinadores,modificarlos en caso de algún cambio,Revisado,3713,5698,0.96
+U0013,AP03,I0013,coordinador de comercial,consultar las solicitudes de mis comerciales asignados,ver el proceso de su trabajo,Terminar,3759,4992,0.76
+U0014,AP03,I0014,administrador,actualizar el dashboard de Google Sheets,revisar el estatus de los expedientes actualizados,Buen Trabajo,3806,5230,0.87
+U0015,AP03,I0015,comercial,obterner la información del prospecto con su RFC,automatizar el llenado de la solicitud,Excelente idea,3853,4670,0.79
+U0016,AP03,I0016,administrador,consultar el score del FICO dentro del portal,obtener la información de forma automática,dar seguimiento,3900,4999,0.69
+U0017,AP03,I0017,comercial,ver cuando una solicitud es nueva,identificarlas con mayor facilidad,Necesario,3947,4602,0.99
+U0018,AP03,I0018,administrador,agregar mi teléfono,recibir notificaciones via whatsapp,Indispensable,3994,4430,0.96
+U0019,AP03,I0019,administrador,agregar el documento de FICO,complementar el expediente,Trabajar,4041,4258,0.9
+U0020,AP03,I0020,administrador,asignar al analista de crédito al enviar el expediente,repartir las solicitudes,Comunicacion necesitada,4088,4086,0.91
+U0021,AP03,I0021,administrador,aprobar o rechazar un crédito,continuar con el flujo del prospecto,Revisado,2770,3900,0.92
+U0022,AP03,I0022,coordinador de comercial,consultar la lista de expedientes rechazados,ver los créditos que rechacé,Terminar,3202,4230,0.93
+U0023,AP03,I0023,administrador,consultar la lista de expedientes aceptados,ver los créditos que acepté,Buen Trabajo,4367,4051,0.94
+U0024,AP03,I0024,comercial,consultar el mensaje de resolución de crédito,ver porqué aprobaron o rechazaron al prospecto,Excelente idea,2388,4024,0.95
+U0025,AP08,I0025,administrador,revertir el estado de rechazado o aceptado,restarurar la solicitud a su estatus anterior,dar seguimiento,3187,3997,0.96
+U0026,AP08,I0026,cualquier mesa,consultar la lista de comerciales y sus asignación de coordinador,ver a sus responsables,Necesario,3188,3970,0.97
+U0027,AP08,I0027,comercial,asignar comerciales a coordinadores,que los puedan consultar los coordinadores,Indispensable,3190,3943,0.98
+U0028,AP08,I0028,mesa de prospectos,cambiar la asignación de comerciales a coordinadores,modificarlos en caso de algún cambio,Trabajar,3192,3916,0.67
+U0029,AP08,I0029,mesa de prospectos,consultar las solicitudes de mis comerciales asignados,ver el proceso de su trabajo,Comunicacion necesitada,3194,3889,0.98
+U0030,AP08,I0030,mesa de análisis,actualizar el dashboard de Google Sheets,revisar el estatus de los expedientes actualizados,Revisado,3196,3863,0.77
+U0031,AP08,I0031,mesa de análisis,obterner la información del prospecto con su RFC,automatizar el llenado de la solicitud,Terminar,3198,3836,0.56
+U0032,AP08,I0032,mesa de análisis,consultar el score del FICO dentro del portal,obtener la información de forma automática,Buen Trabajo,3200,3809,0.72
+U0033,AP13,I0033,cualquier mesa,ver cuando una solicitud es nueva,identificarlas con mayor facilidad,Excelente idea,3202,3782,0.67
+U0034,AP13,I0034,comercial,agregar mi teléfono,recibir notificaciones via whatsapp,Revisado,3204,3755,0.539
+U0035,AP13,I0035,mesa de prospectos,agregar el documento de FICO,complementar el expediente,Terminar,3206,5200,0.89
+U0036,AP13,I0036,mesa de prospectos,asignar al analista de crédito al enviar el expediente,repartir las solicitudes,Buen Trabajo,3207,4907,0.45
+U0037,AP13,I0037,administrador,aprobar o rechazar un crédito,continuar con el flujo del prospecto,Excelente idea,3209,5616,0.78
+U0038,AP13,I0038,coordinador de comercial,consultar la lista de expedientes rechazados,ver los créditos que rechacé,dar seguimiento,3211,3690,0.6
+U0039,AP13,I0039,administrador,consultar la lista de expedientes aceptados,ver los créditos que acepté,Terminar,3213,4110,0.78
+U0040,AP13,I0040,cualquier mesa,consultar el mensaje de resolución de crédito,ver porqué aprobaron o rechazaron al prospecto,Buen Trabajo,3215,4990,0.59
+U0041,AP13,I0041,comercial,revertir el estado de rechazado o aceptado,restarurar la solicitud a su estatus anterior,Excelente idea,3217,4237,0.93
+U0042,AP13,I0042,mesa de prospectos,consultar la lista de comerciales y sus asignación de coordinador,ver a sus responsables,Revisado,3219,4091,0.92
+U0043,AP05,I0043,mesa de prospectos,asignar comerciales a coordinadores,que los puedan consultar los coordinadores,Terminar,3221,3945,0.68
+U0044,AP05,I0044,administrador,cambiar la asignación de comerciales a coordinadores,modificarlos en caso de algún cambio,Buen Trabajo,3223,5110,0.55
+U0045,AP05,I0045,administrador,consultar las solicitudes de mis comerciales asignados,ver el proceso de su trabajo,Excelente idea,3225,4964,0.48
+U0046,AP05,I0046,cualquier mesa,actualizar el dashboard de Google Sheets,revisar el estatus de los expedientes actualizados,dar seguimiento,3226,4118,0.94
+U0047,AP05,I0047,comercial,obterner la información del prospecto con su RFC,automatizar el llenado de la solicitud,Terminar,3228,3739,0.28
+U0048,AP05,I0048,mesa de prospectos,consultar el score del FICO dentro del portal,obtener la información de forma automática,Buen Trabajo,3230,3954,0.66
+U0049,AP05,I0049,mesa de prospectos,ver cuando una solicitud es nueva,identificarlas con mayor facilidad,Excelente idea,3232,3813,0.49
+U0050,AP05,I0050,administrador,ver cuando una solicitud es nueva,recibir notificaciones via whatsapp,Terminar,3234,3673,0.86
