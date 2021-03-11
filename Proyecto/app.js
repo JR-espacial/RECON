@@ -2,23 +2,30 @@ const express = require('express')
 const app = express();
 const bodyParser = require('body-parser');
 const path = require('path');
+const session = require('express-session');
 
 app.set('view engine', 'ejs');
 app.set('views', 'view');
 
-const loginController = require('./controller/login');
+const users = require('./routes/users');
 const homeController = require('./controller/homeController');
 const proyectos = require('./routes/proyectos');
 
 app.use(bodyParser.urlencoded({extended: false}));
 
+app.use(session({
+    secret: 'ikjdklfmañsldj', 
+    resave: false,
+    saveUninitialized: false,
+}));
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/proyectos', proyectos);
 
-app.use('/home', homeController.getHome);
+app.use('/users', users);
 
-app.use('/login', loginController.getLogin);
+app.use('/home', homeController.getHome);
 
 
 app.use("/",(request, response,next) => {   
