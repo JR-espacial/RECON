@@ -18,7 +18,10 @@ module.exports =  class Usuario{
     }
 
     static fetchOne(usuario){
-        return db('SELECT * FROM Empleado WHERE usuario =\''+ usuario +'\''
-        );
+        console.log("Fetch one")
+        const consulta = db('SELECT * FROM Empleado WHERE usuario =\''+ usuario +'\'');
+
+        console.log(consulta);
+        return consulta;
     }
 }
