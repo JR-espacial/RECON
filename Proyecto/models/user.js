@@ -1,24 +1,25 @@
-const db = require('../util/database');
+const db = require('../util/mySQL');
 
-module.exports =  class Product{
-    constructor(name, imagen){
-        this.name = name;
-        this.image = imagen;
+module.exports =  class Usuario{
+    constructor(nombre_empleado, usuario, contrasena){
+        this.nombre_empleado = nombre_empleado;
+        this.usuario = usuario;
+        this.contrasena = contrasena;
     }
     save(){ 
-        return db.execute('INSERT INTO productos (nombre, imagen) VALUES (?, ?)',
-        [this.name, this.image]
+        return db.execute('INSERT INTO Empleado (nombre_empleado, usuario, contrasena) VALUES (?, ?, ?)',
+        [this.nombre_empleado, this.usuario, this.contrasena]
     );
     }
     
 
     static fetchAll(){
-        return db.execute('SELECT * FROM productos');
+        return db.execute('SELECT * FROM Empleado');
     }
 
-    static fetchOne(id){
-        return db.execute('SELECT * FROM productos WHERE id = ?'
-        [id]
+    static fetchOne(usuario){
+        return db.execute('SELECT * FROM productos WHERE usuario = ?'
+        [usuario]
         );
     }
 }
