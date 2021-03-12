@@ -26,7 +26,7 @@
 
 const sql = require('mssql')
 
-async function prueba(){
+async function prueba(consulta){
     try {
         // make sure that any items are correctly URL encoded in the connection string
         await sql.connect('mssql://Equip01:hihokeyo@10.25.18.106:10433/Equip01')
@@ -35,13 +35,14 @@ async function prueba(){
         //     user: 'Equip01',
         //     password: 'hihokeyo', 
         //     server: '10.25.18.106',
+        //     port: 10433,
         //     database: 'Equip01',
         //   }
         // )
-        const result = await sql.query`select * from Empleado `
+        const result = await sql.query(consulta);
         console.log(result)
     } catch (err) {
         console.log (err)
     }
 }
-module.exports = prueba();
+module.exports = prueba;
