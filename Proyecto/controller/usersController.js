@@ -2,6 +2,8 @@ const Usuario = require('../models/user');
 
 exports.getLogin = (request, response, next) => {
     response.render("login", {
+        error: request.session.error,
+        csrfToken: request.csrfToken(),
         isLoggedIn: request.session.isLoggedIn === true ? true : false
     });
 };
@@ -16,10 +18,8 @@ exports.postLogin = (request, response, next) => {
                 request.session.error = "El usuario y/o contraseña no coinciden";
                 response.redirect('/users/login');
             } else {
-                console.log(rows[0].contrasena);
                 if(request.body.password === rows[0].contrasena){
                     request.session.isLoggedIn = true;
-                    console.log("Contraseña correcta");
                             request.session.usuario = request.body.usuario;
                             return request.session.save(err => {
                                 response.redirect('/home');
@@ -38,7 +38,6 @@ exports.postLogin = (request, response, next) => {
 
 exports.getLogout = (request, response, next) => {
     request.session.destroy(() => {
-        console.log('Logout');
         response.redirect('/users/login');
     });
 }

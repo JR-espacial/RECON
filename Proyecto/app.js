@@ -4,6 +4,8 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const session = require('express-session');
 const isAuth = require('./util/is_Auth');
+const csrf = require('csurf');
+const csrfProtection = csrf();
 
 app.set('view engine', 'ejs');
 app.set('views', 'view');
@@ -21,6 +23,8 @@ app.use(session({
 }));
 
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(csrfProtection); 
 
 app.use('/proyectos', proyectos);
 
