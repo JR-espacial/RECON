@@ -3,6 +3,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const path = require('path');
 const session = require('express-session');
+const isAuth = require('./util/is_Auth');
 
 app.set('view engine', 'ejs');
 app.set('views', 'view');
@@ -25,7 +26,7 @@ app.use('/proyectos', proyectos);
 
 app.use('/users', users);
 
-app.use('/home', homeController.getHome);
+app.use('/home', isAuth, homeController.getHome);
 
 
 app.use("/",(request, response,next) => {   

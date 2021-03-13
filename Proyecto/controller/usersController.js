@@ -10,19 +10,16 @@ exports.postLogin = (request, response, next) => {
 
     request.session.error = "";
     const username = request.body.usuario;
-    console.log(username);
     Usuario.fetchOne(username)
         .then(([rows, fieldData]) => {
-            console.log("rows")
-            console.log(rows)
             if (rows.length < 1) {
                 request.session.error = "El usuario y/o contraseña no coinciden";
-                response.redirect('/home');
+                response.redirect('/users/login');
             } else {
-                console.log("Imprimir rows0 contraseña-");
                 console.log(rows[0].contrasena);
                 if(request.body.password === rows[0].contrasena){
                     request.session.isLoggedIn = true;
+                    console.log("Contraseña correcta");
                             request.session.usuario = request.body.usuario;
                             return request.session.save(err => {
                                 response.redirect('/home');
@@ -30,7 +27,7 @@ exports.postLogin = (request, response, next) => {
                 }
                 else{
                     request.session.error = "El usuario y/o contraseña no coinciden";
-                    response.redirect('/home');
+                    response.redirect('/users/login');
                 }
             }
         })

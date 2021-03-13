@@ -1,4 +1,4 @@
-const db = require('../util/database');
+const db = require('../util/mySQL');
 
 module.exports =  class Usuario{
     constructor(nombre_empleado, usuario, contrasena){
@@ -18,10 +18,8 @@ module.exports =  class Usuario{
     }
 
     static fetchOne(usuario){
-        console.log("Fetch one")
-        const consulta = db('SELECT * FROM Empleado WHERE usuario =\''+ usuario +'\'');
+        
+        return db.execute('SELECT * FROM Empleado WHERE usuario =?',[usuario]);
 
-        console.log(consulta);
-        return consulta;
     }
 }

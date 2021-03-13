@@ -1,26 +1,27 @@
 const express = require('express');
 const router = express.Router();
 const path = require('path');
+const isAuth = require('../util/is_Auth');
 
 const proyectsController = require('../controller/proyectosController');
 
-router.get('/nuevo-proyecto', proyectsController.getNuevoProyecto);
+router.get('/nuevo-proyecto', isAuth, proyectsController.getNuevoProyecto);
 
-router.get('/resumen-proyecto', proyectsController.getResumenProyecto);
+router.get('/resumen-proyecto', isAuth, proyectsController.getResumenProyecto);
 
-router.get('/casos-uso-proyecto', proyectsController.getCasosUsoProyecto);
+router.get('/casos-uso-proyecto', isAuth, proyectsController.getCasosUsoProyecto);
 
-router.get('/fases-proyecto', proyectsController.getFasesProyecto);
+router.get('/fases-proyecto', isAuth, proyectsController.getFasesProyecto);
 
-router.get('/avance-proyecto', proyectsController.getAvanceProyecto);
+router.get('/avance-proyecto', isAuth, proyectsController.getAvanceProyecto);
 
-router.get('/capacidad-equipo', proyectsController.getCapacidadEquipo);
+router.get('/capacidad-equipo', isAuth, proyectsController.getCapacidadEquipo);
 
-router.get('/tarea-caso-uso', proyectsController.getTareaCasoUso);
+router.get('/tarea-caso-uso', isAuth, proyectsController.getTareaCasoUso);
 
-router.get('/promedios-ap', proyectsController.getPromediosAP);
+router.get('/promedios-ap', isAuth, proyectsController.getPromediosAP);
 
-router.get('/estimados-ap', proyectsController.getEstimadosAP);
+router.get('/estimados-ap', isAuth, proyectsController.getEstimadosAP);
 
 
 router.use(express.static(path.join(__dirname, '..', 'public')));
