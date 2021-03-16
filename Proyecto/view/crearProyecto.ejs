@@ -16,6 +16,16 @@
                 </div>
             </div>
             <div class="row">
+                <div class="input-field col s4">
+                    <select>
+                        <option value="" disabled selected>Selecciona el departamento del proyecto</option>
+                        <option value="1">Finanzas</option>
+                        <option value="2">Mercadotecnia</option>
+                        <option value="3">Produccion</option>
+                      </select>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col s2 offset-s2">
                     <input type="submit" value="Cancelar" >
                     <input type="submit" value="Crear" >
@@ -24,5 +34,12 @@
         </form>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('select');
+        var instances = M.FormSelect.init(elems);
+    }); 
+</script>>
 
 <%- include('includes/closeHTML.ejs'); %>
