@@ -1,6 +1,10 @@
 const { request, response } = require("express");
 
 
+exports.getNuevaIteracion = (request, response) => {
+    response.render('crearIteracion');
+}
+
 exports.getNuevoProyecto = (request, response) => {
     response.render('crearProyecto');
 }

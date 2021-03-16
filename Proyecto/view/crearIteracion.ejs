@@ -1,0 +1,85 @@
+<%- include('includes/openHTML.ejs'); %>
+
+<div class="row">
+    <div class="col s12 offset-s4">
+        <form class="col s12">
+            <div class="row">
+                <div class="input-field col s4">
+                    <select id="selectProyecto">
+                        <option value="" disabled selected>Selecciona el proyecto de la iteración</option>
+                        <option value="1">Proyecto 1</option>
+                        <option value="2">Proyecto 2</option>
+                        <option value="3">Crear proyecto</option>
+                      </select>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s4">
+                    <input  id="descripcion_proyecto" type="text" class="validate">
+                    <label for="descripcion_proyecto">Descripción de la iteración</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="search-wrapper col s4">
+                    <input id="search" placeholder="Busca colaborador por nombre">
+                    <i class="material-icons">search</i>
+                    <div class="search-results">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s4">
+                    <input disabled value="Colaboradores:" type="text" id ="disabled" class="validate">
+                </div>
+            </div>
+            <div class="row "> 
+                <div id="contenedor_colaboradores">
+                    Empty
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s4">
+                    <img src="https://hospitalrealsanlucas.com.mx/wp-content/uploads/2020/11/placeholder-1.png"  class="responsive-img ">
+                </div>
+            </div>
+            <div class="row">
+                <div class="file-field input-field col s4">
+                    <div class="btn">
+                    <span>Sube una Imagen</span>
+                    <input type="file">
+                    </div>
+                    <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text">
+                    </div>
+                </div>
+            </div>        
+            <div class="row">
+                <div class="col s2 offset-s2">
+                    <input type="submit" value="Cancelar" >
+                    <input type="submit" value="Crear" >
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('select');
+        var instances = M.FormSelect.init(elems);
+    });
+
+    let seleccion = document.getElementById("selectProyecto");
+    seleccion.onchange= () => {
+        if(seleccion.value == "3"){
+            location.href = "nuevo-proyecto";
+        }
+        else{
+            console.log("se seleccionó un proyecto");
+        }
+    }
+</script>
+
+<%- include('includes/closeHTML.ejs'); %>
