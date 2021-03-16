@@ -1,0 +1,28 @@
+<%- include('includes/openHTML.ejs'); %>
+
+<div class="row">
+    <div class="col s12 offset-s4">
+        <form class="col s12">
+            <div class="row">
+                <div class="input-field col s4">
+                    <input  id="nombre_proyecto" type="text" class="validate">
+                    <label for="nombre_proyecto">Nombre del proyecto</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s4">
+                    <input  id="descripcion_proyecto" type="text" class="validate">
+                    <label for="descripcion_proyecto">Descripción del proyecto</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s2 offset-s2">
+                    <input type="submit" value="Cancelar" >
+                    <input type="submit" value="Crear" >
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<%- include('includes/closeHTML.ejs'); %>
