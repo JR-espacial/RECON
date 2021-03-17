@@ -6,7 +6,9 @@ exports.getNuevaIteracion = (request, response) => {
 }
 
 exports.getNuevoProyecto = (request, response) => {
-    response.render('crearProyecto');
+    const module_ = request.params.module;
+    const route = request.params.route;
+    response.render('crearProyecto',{module : module_, route :route});
 }
 
 exports.getResumenProyecto = (request,response) =>{

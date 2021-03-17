@@ -7,8 +7,6 @@ const proyectsController = require('../controller/proyectosController');
 
 router.get('/nueva-iteracion', isAuth, proyectsController.getNuevaIteracion);
 
-router.get('/nuevo-proyecto', isAuth, proyectsController.getNuevoProyecto);
-
 router.get('/resumen-proyecto', isAuth, proyectsController.getResumenProyecto);
 
 router.get('/casos-uso-proyecto', isAuth, proyectsController.getCasosUsoProyecto);
@@ -24,6 +22,8 @@ router.get('/tarea-caso-uso', isAuth, proyectsController.getTareaCasoUso);
 router.get('/promedios-ap', isAuth, proyectsController.getPromediosAP);
 
 router.get('/estimados-ap', isAuth, proyectsController.getEstimadosAP);
+
+router.get('/nueva-iteracion', isAuth, proyectsController.getNuevoProyecto);
 
 
 router.use(express.static(path.join(__dirname, '..', 'public')));
