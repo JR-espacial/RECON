@@ -1,8 +1,13 @@
 <%- include('includes/openHTML.ejs'); %>
 
+<% if (alerta) { %>
+    <script>alert("Proyecto creado exitosamente");</script>
+<% } %>
+
 <div class="row">
     <div class="col s12 offset-s4">
         <form class="col s12">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
             <div class="row">
                 <div class="input-field col s4">
                     <select id="selectProyecto">
