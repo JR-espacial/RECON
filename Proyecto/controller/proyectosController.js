@@ -27,13 +27,24 @@ exports.postNuevoProyecto = (request, response) => {
     const nombre_proyecto = request.body.nombre;
     const descripcion = request.body.descripcion;
     const departamento = request.body.departamento;
-    console.log(departamento);
     Proyecto.fetchOne(nombre_proyecto)
         .then(([rows, fieldData]) => {
             if (rows.length < 1) {
                 let proyecto = new Proyecto(nombre_proyecto, descripcion, departamento);
-                proyecto.save();
-            } 
+                proyecto.saveProyecto();
+                Proyecto.fetchOne(nombre_proyecto)
+                    .then(([id_proyecto, fieldData]) =>{
+                        Proyecto.saveProyectoDepto(departamento, id_proyecto[0].id_proyecto)
+                            .then(() => {
+                            })
+                            .catch(err => {
+                                console.log(err);
+                            });
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            }
             else {
                 request.session.error = "Ya hay un proyecto con ese nombre";
                 response.redirect('/proyectos/nuevo-proyecto');

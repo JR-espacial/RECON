@@ -6,10 +6,14 @@ module.exports =  class Proyecto{
         this.descripcion = descripcion;
     }
 
-    save(){ 
+    saveProyecto(){ 
         return db.execute('INSERT INTO Proyecto (nombre_proyecto, descripcion, fecha_inicio, fecha_fin) VALUES (?, ?, CURRENT_DATE(),NULL)',
-        [this.nombre_proyecto, this.descripcion]
-    );
+        [this.nombre_proyecto, this.descripcion]);
+    }
+
+    static saveProyectoDepto(id_departamento, id_proyecto){
+        return db.execute('INSERT INTO Proyecto_Departamento (id_proyecto, id_departamento) VALUES (?, ?)',
+        [id_proyecto, id_departamento]);
     }
     
 
@@ -17,9 +21,7 @@ module.exports =  class Proyecto{
         return db.execute('SELECT * FROM Proyecto');
     }
 
-    static fetchOne(nombre_proyecto){
-        
-        return db.execute('SELECT * FROM Proyecto WHERE nombre_proyecto =?',[nombre_proyecto]);
-
+    static fetchOne(nombre_proyecto){ 
+        return db.execute('SELECT id_proyecto FROM Proyecto WHERE nombre_proyecto =?',[nombre_proyecto]);
     }
 }
