@@ -7,14 +7,14 @@ SET NAMES utf8 ;
 SET character_set_client = utf8mb4 ;
 
 CREATE TABLE Puntos_Agiles (
-    id_ap CHAR(4) NOT NULL,
+    id_ap INT AUTO_INCREMENT NOT NULL,
     ap INT,
     PRIMARY KEY(id_ap)
 );
 
 
 CREATE TABLE Capacidad_Equipo (
-    id_capacidad CHAR(6) NOT NULL,
+    id_capacidad INT AUTO_INCREMENT NOT NULL,
     horas_nominales_totales DECIMAL(5, 2),
     horas_nominales_sin_ovh DECIMAL(5, 2),
     horas_nominales_restantes DECIMAL(5, 2),
@@ -31,7 +31,7 @@ CREATE TABLE Capacidad_Equipo (
 
 
 CREATE TABLE Proyecto (
-	id_proyecto CHAR(6) NOT NULL,
+	id_proyecto INT AUTO_INCREMENT NOT NULL,
     nombre_proyecto VARCHAR(64),
     descripcion VARCHAR(1000),
     fecha_inicio DATE,
@@ -41,9 +41,9 @@ CREATE TABLE Proyecto (
 
 
 CREATE TABLE Iteracion(
-	id_iteracion CHAR(6) NOT NULL,
-	id_proyecto CHAR(6) NOT NULL,
-	id_capacidad CHAR(6) NOT NULL,
+	id_iteracion INT AUTO_INCREMENT NOT NULL,
+	id_proyecto INT NOT NULL,
+	id_capacidad INT NOT NULL,
 	num_iteracion INT NOT NULL,
 	descripcion VARCHAR(1000),
 	fecha_inicio DATE,
@@ -58,21 +58,21 @@ CREATE TABLE Iteracion(
 
 
 CREATE TABLE Departamento (
-    id_departamento CHAR(6) NOT NULL,
+    id_departamento INT AUTO_INCREMENT NOT NULL,
     nombre_departamento VARCHAR(64),
     PRIMARY KEY(id_departamento)
 );
 
 CREATE TABLE Proyecto_Departamento (
-    id_proyecto CHAR(6) NOT NULL,
-    id_departamento CHAR(6) NOT NULL,
+    id_proyecto INT AUTO_INCREMENT NOT NULL,
+    id_departamento INT NOT NULL,
     PRIMARY KEY(id_proyecto, id_departamento), 
     FOREIGN KEY(id_proyecto) REFERENCES Proyecto(id_proyecto),
     FOREIGN KEY(id_departamento) REFERENCES Departamento(id_departamento)
 );
 
 CREATE TABLE Empleado (
-    id_empleado CHAR(6) NOT NULL,
+    id_empleado INT AUTO_INCREMENT NOT NULL,
 	usuario VARCHAR(14),
     contrasena VARCHAR(16),
     nombre_empleado VARCHAR(64),
@@ -81,8 +81,8 @@ CREATE TABLE Empleado (
 
 
 CREATE TABLE Empleado_Iteracion (
-    id_empleado CHAR(6) NOT NULL,
-    id_iteracion CHAR(6) NOT NULL,
+    id_empleado INT AUTO_INCREMENT NOT NULL,
+    id_iteracion INT NOT NULL,
     horas_semanales INT,
     PRIMARY KEY(id_empleado, id_iteracion),
     FOREIGN KEY(id_empleado) REFERENCES Empleado(id_empleado),
@@ -90,23 +90,23 @@ CREATE TABLE Empleado_Iteracion (
 );
 
 CREATE TABLE Fase (
-    id_fase CHAR(6) NOT NULL,
+    id_fase INT AUTO_INCREMENT NOT NULL,
     nombre_fase VARCHAR(64),
     PRIMARY KEY(id_fase)
 );
 
 
 CREATE TABLE Practica_Trabajo (
-	id_trabajo CHAR(6) NOT NULL,
+	id_trabajo INT AUTO_INCREMENT NOT NULL,
     nombre_practica_trabajo VARCHAR(64),
     PRIMARY KEY(id_trabajo)
 );
 
 
 CREATE TABLE Proyecto_Fase_Practica (
-	id_proyecto CHAR(6) NOT NULL,
-    id_fase CHAR(6) NOT NULL,
-	id_trabajo CHAR(6)NOT NULL,
+	id_proyecto INT AUTO_INCREMENT NOT NULL,
+    id_fase INT NOT NULL,
+	id_trabajo INT NOT NULL,
     PRIMARY KEY(id_proyecto, id_fase),
     FOREIGN KEY(id_proyecto) REFERENCES Proyecto(id_proyecto),
     FOREIGN KEY(id_fase) REFERENCES Fase(id_fase),
@@ -115,9 +115,9 @@ CREATE TABLE Proyecto_Fase_Practica (
 
 
 CREATE TABLE AP_Colaborador (
-    id_trabajo CHAR(6) NOT NULL,
-    id_empleado CHAR(6) NOT NULL,
-    id_ap CHAR(4) NOT NULL, 
+    id_trabajo INT AUTO_INCREMENT NOT NULL,
+    id_empleado INT NOT NULL,
+    id_ap INT NOT NULL, 
     min_minutos DECIMAL(5, 1),
     max_minutos DECIMAL(5, 1),
     PRIMARY KEY(id_trabajo, id_empleado, id_ap),
@@ -128,8 +128,8 @@ CREATE TABLE AP_Colaborador (
 
 
 CREATE TABLE AP_Promedios(
-    id_ap CHAR(4) NOT NULL, 
-    id_trabajo CHAR(6) NOT NULL,
+    id_ap INT AUTO_INCREMENT NOT NULL, 
+    id_trabajo INT NOT NULL,
     promedio_min_minutos DECIMAL(5, 1),
     promedio_max_minutos DECIMAL(5, 1), 
     PRIMARY KEY(id_ap, id_trabajo), 
@@ -139,9 +139,9 @@ CREATE TABLE AP_Promedios(
 
 
 CREATE TABLE Casos_Uso(
-    id_casos CHAR(6) NOT NULL, 
-    id_ap CHAR(4) NOT NULL, 
-    id_iteracion CHAR(6) NOT NULL,
+    id_casos INT AUTO_INCREMENT NOT NULL, 
+    id_ap INT NOT NULL, 
+    id_iteracion INT NOT NULL,
     yo_como VARCHAR(64),
     quiero VARCHAR(255), 
     para VARCHAR(255), 
@@ -156,8 +156,8 @@ CREATE TABLE Casos_Uso(
 
 
 CREATE TABLE Entrega (
-    id_trabajo CHAR(6) NOT NULL, 
-    id_casos CHAR(6) NOT NULL, 
+    id_trabajo INT AUTO_INCREMENT NOT NULL, 
+    id_casos INT NOT NULL, 
     entrega_estimada DATE, 
     entrega_real DATE, 
     estimacion TIME, 
