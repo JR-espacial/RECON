@@ -23,7 +23,9 @@ router.get('/promedios-ap', isAuth, proyectsController.getPromediosAP);
 
 router.get('/estimados-ap', isAuth, proyectsController.getEstimadosAP);
 
-router.get('/nueva-iteracion', isAuth, proyectsController.getNuevoProyecto);
+router.get('/nuevo-proyecto:module', isAuth, proyectsController.getNuevoProyecto);
+
+router.post('/nuevo-proyecto:module', isAuth, proyectsController.postNuevoProyecto);
 
 
 router.use(express.static(path.join(__dirname, '..', 'public')));

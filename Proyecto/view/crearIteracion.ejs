@@ -56,7 +56,7 @@
             </div>        
             <div class="row">
                 <div class="col s2 offset-s2">
-                    <input type="submit" value="Cancelar" >
+                    <a class="waves-effect waves-light btn" href="/home">Cancelar</a>
                     <input type="submit" value="Crear" >
                 </div>
             </div>
@@ -74,7 +74,7 @@
     let seleccion = document.getElementById("selectProyecto");
     seleccion.onchange= () => {
         if(seleccion.value == "3"){
-            location.href = "nuevo-proyecto/nueva-iteracion";
+            location.href = "nuevo-proyecto-nueva-iteracion";
         }
     }
 </script>

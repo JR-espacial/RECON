@@ -3,22 +3,23 @@
 
 <div class="row">
     <div class="col s12 offset-s4">
-        <form class="col s12">
+        <form class="col s12" action="nuevo-proyecto-<%= module_ %>" method="POST">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
             <div class="row">
                 <div class="input-field col s4">
-                    <input  id="nombre_proyecto" type="text" class="validate">
+                    <input  id="nombre_proyecto" type="text" class="validate" name="nombre">
                     <label for="nombre_proyecto">Nombre del proyecto</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s4">
-                    <input  id="descripcion_proyecto" type="text" class="validate">
+                    <input  id="descripcion_proyecto" type="text" class="validate" name="descripcion">
                     <label for="descripcion_proyecto">Descripción del proyecto</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s4">
-                    <select>
+                    <select name="departamento">
                         <option value="" disabled selected>Selecciona el departamento del proyecto</option>
                         <option value="1">Finanzas</option>
                         <option value="2">Mercadotecnia</option>
@@ -28,7 +29,7 @@
             </div>
             <div class="row">
                 <div class="col s2 offset-s2">
-                    <a class="waves-effect waves-light btn">Cancelar</a>
+                    <a class="waves-effect waves-light btn" href="<%= module_ %>">Cancelar</a>
                     <input type="submit" value="Crear" >
                 </div>
             </div>
@@ -40,7 +41,10 @@
     document.addEventListener('DOMContentLoaded', function() {
         var elems = document.querySelectorAll('select');
         var instances = M.FormSelect.init(elems);
-    }); 
+    });
+
+
+
 </script>>
 
 <%- include('includes/closeHTML.ejs'); %>

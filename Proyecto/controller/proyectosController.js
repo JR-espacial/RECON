@@ -1,4 +1,4 @@
-const { request, response } = require("express");
+const Proyecto = require('../models/proyecto');
 
 
 exports.getNuevaIteracion = (request, response) => {
@@ -6,9 +6,42 @@ exports.getNuevaIteracion = (request, response) => {
 }
 
 exports.getNuevoProyecto = (request, response) => {
-    const module_ = request.params.module;
-    const route = request.params.route;
-    response.render('crearProyecto',{module : module_, route :route});
+    let module_ = request.params.module;
+    if(module_ == "-nueva-iteracion"){
+        module_ = "nueva-iteracion";
+    }
+    response.render('crearProyecto',{
+        module_ : module_,
+        csrfToken: request.csrfToken(),
+    });
+}
+
+exports.postNuevoProyecto = (request, response) => {
+    let module_ = request.params.module;
+    if(module_ == "-nueva-iteracion"){
+        module_ = "nueva-iteracion";
+    }
+    response.redirect(module_);
+
+    request.session.error = "";
+    const nombre_proyecto = request.body.nombre;
+    const descripcion = request.body.descripcion;
+    const departamento = request.body.departamento;
+    console.log(departamento);
+    Proyecto.fetchOne(nombre_proyecto)
+        .then(([rows, fieldData]) => {
+            if (rows.length < 1) {
+                let proyecto = new Proyecto(nombre_proyecto, descripcion, departamento);
+                proyecto.save();
+            } 
+            else {
+                request.session.error = "Ya hay un proyecto con ese nombre";
+                response.redirect('/proyectos/nuevo-proyecto');
+            }
+        })
+        .catch(err => {
+            console.log(err);
+        });
 }
 
 exports.getResumenProyecto = (request,response) =>{
