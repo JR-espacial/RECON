@@ -10,7 +10,32 @@
     </div>
     
     <div id="fases" class="container">
-        <div id="fase" class="center-align">
+        <% for (let fase of lista_fases) { %>
+            <div id="fase" class="center-align">
+                <div id="titulo-fase">
+                    <span class=""> <%= fase.nombre_fase %>: </span>
+                </div>
+                <div>
+                    <div id="tarea-en-fase">
+                        <span>Wireframes</span>
+                    </div>
+                    <div id="tarea-en-fase">
+                        <span class="">Algoritmo</span>
+                    </div>
+                    <div id="tarea-en-fase">
+                        <span class="">Actualizar documentación</span>
+                    </div>
+                    <div id="tarea-en-fase">
+                        <span class="">Diagrama de Componentes</span>
+                    </div>
+                </div>
+                <div>
+                    <a class="btn-floating cyan pulse boton_añadir"><i class="material-icons">add</i></a>
+                </div>
+            </div>
+        <% } %>
+        
+        <!-- <div id="fase" class="center-align">
             <div id="titulo-fase">
                 <span class="">Análisis:</span>
             </div>
@@ -152,7 +177,7 @@
             <div>
                 <a class="btn-floating cyan pulse boton_añadir"><i class="material-icons">add</i></a>
             </div>
-        </div>
+        </div> -->
 
         <div id="fase" class="center-align">
             <div id="titulo-fase">

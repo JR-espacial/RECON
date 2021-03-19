@@ -1,4 +1,5 @@
 const Proyecto = require('../models/proyecto');
+const Fase = require('../models/fase');
 
 
 exports.getNuevaIteracion = (request, response) => {
@@ -82,7 +83,15 @@ exports.getCasosUsoProyecto = (request,response) =>{
 }
 
 exports.getFasesProyecto = (request,response) =>{
-    response.render('fasesProyecto')
+    Fase.fetchAll()
+        .then(([rows, fieldData]) => {
+            response.render('fasesProyecto', {
+                lista_fases: rows
+            });
+        })
+        .catch(err => {
+            console.log(err);
+        });
 }
 
 exports.getAvanceProyecto = (request, response) => {
