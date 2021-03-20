@@ -1,13 +1,24 @@
 const Proyecto = require('../models/proyecto');
 const Fase = require('../models/fase');
 const Casos_Uso = require('../models/casos_uso');
+const Iteracion = require('../models/iteracion');
 const Puntos_Agiles = require('../models/puntos_agiles');
 
 const { response } = require('express');
 
-exports.getIteracionesProyecto = (request,response)=>{
-    response.render('iteracionesProyecto', {
-        title: "Iteraciones"
+exports.getIteracionesProyecto = (request,response) => {
+    const id = request.params.id_proyecto;
+
+    Iteracion.fetchAllfromProyect(id)
+    .then(([rows, fieldData]) => {
+        response.render('iteracionesProyecto', {
+            title: "Iteraciones",
+            iteraciones : rows,
+            alerta : request.session.alerta
+        });
+    })
+    .catch(err => {
+        console.log(err);
     });
 }
 
