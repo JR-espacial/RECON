@@ -2,6 +2,7 @@ const Usuario = require('../models/user');
 
 exports.getLogin = (request, response, next) => {
     response.render("login", {
+        title: "Log In",
         error: request.session.error,
         csrfToken: request.csrfToken(),
         isLoggedIn: request.session.isLoggedIn === true ? true : false

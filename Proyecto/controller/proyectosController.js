@@ -5,7 +5,9 @@ const Casos_Uso = require('../models/casos_uso');
 const { response } = require('express');
 
 exports.getIteracionesProyecto = (request,response)=>{
-    response.render('iteracionesProyecto');
+    response.render('iteracionesProyecto', {
+        title: "Iteraciones"
+    });
 }
 
 exports.getNuevaIteracion = (request, response) => {
@@ -13,7 +15,8 @@ exports.getNuevaIteracion = (request, response) => {
 
     Proyecto.fetchAll()
     .then(([rows, fieldData]) => {
-        response.render('crearIteracion',{
+        response.render('crearIteracion', {
+            title: "Crear Iteración",
             proyectos : rows,
             alerta : request.session.alerta,
             csrfToken: request.csrfToken(),
@@ -26,7 +29,8 @@ exports.getNuevaIteracion = (request, response) => {
 }
 
 exports.getNuevoProyecto = (request, response) => {
-    response.render('crearProyecto',{
+    response.render('crearProyecto', {
+        title: "Crear Proyecto", 
         error: request.session.error,
         lastUrl : request.session.last,
         csrfToken: request.csrfToken(),
@@ -86,13 +90,16 @@ exports.postNuevoProyecto = (request, response) => {
 }
 
 exports.getResumenProyecto = (request,response) =>{
-    response.render('resumenProyecto')
+    response.render('resumenProyecto', {
+        title: "Resumen del Proyecto"
+    });
 }
 
 exports.getCasosUsoProyecto = (request,response) =>{
     Casos_Uso.fetchAll() 
     .then(([rows, fieldData]) => {
         response.render('casosUso', {
+            title: "Casos de Uso",
             casos_uso: rows 
         });
     })
@@ -107,6 +114,7 @@ exports.getFasesProyecto = (request,response) =>{
     Fase.fetchAll()
         .then(([rows, fieldData]) => {
             response.render('fasesProyecto', {
+                title: "Fases del Proyecto",
                 lista_fases: rows
             });
         })
@@ -116,19 +124,30 @@ exports.getFasesProyecto = (request,response) =>{
 }
 
 exports.getAvanceProyecto = (request, response) => {
-    response.render('avanceProyecto')
+    response.render('avanceProyecto', {
+        title: "Avance del Proyecto"
+    });
 }
 
 exports.getCapacidadEquipo = (request,response) =>{
-    response.render('capacidadEquipo')
+    response.render('capacidadEquipo', {
+        title: "Capacidad de Equipo"
+    });
 }
 
 exports.getTareaCasoUso = (request,response) =>{
-    response.render('tareaCasoUso')
+    response.render('tareaCasoUso', {
+        title: "Tareas por Caso de Uso"
+    });
 }
 exports.getPromediosAP = (request,response) =>{
-    response.render('promediosAP')
+    response.render('promediosAP', {
+        title: "Promedios AP"
+    });
 }
+
 exports.getEstimadosAP = (request,response) =>{
-    response.render('estimadosAP')
+    response.render('estimadosAP', {
+        title: "Estimados AP"
+    });
 }
