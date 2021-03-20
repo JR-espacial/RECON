@@ -39,54 +39,13 @@
         </thead>
 
         <tbody>
+          <% for (caso of casos_uso) { %>
           <tr>
-            <td>comercial</td>
-            <td>consultar preaprobación con el método FICO</td>
-            <td>saber si continuar o no con una solicitud</td>
-            <td>13</td>
+            <td><%= caso.yo_como %></td>
+            <td><%= caso.quiero %></td>
+            <td><%= caso.para %></td>
           </tr>
-          <tr>
-            <td>comercial</td>
-            <td>crear solicitudes de kit de conversión en Impúlsate desde Orígenes</td>
-            <td>sentir que los sistemas están conectados y agilizar el proceso</td>
-            <td>5</td>
-          </tr>
-          <tr>
-            <td>mesa de prospectos</td>
-            <td>ver las solicitudes que requieren agendar visita de preaprobación</td>
-            <td>agendar visita de preaprobación</td>
-            <td>3</td>
-          </tr>
-          <tr>
-            <td>mesa de prospectos</td>
-            <td>ver las solicitudes que ya tienen cita</td>
-            <td>que dependiendo del resultado de la visita pueda preaprobar o no las solicitudes</td>
-            <td>3</td>
-          </tr>
-          <tr>
-            <td>mesa de prospectos</td>
-            <td>ver las solicitudes que ya tienen cita</td>
-            <td>que dependiendo del resultado de la visita pueda preaprobar o no las solicitudes</td>
-            <td>3</td>
-          </tr>
-          <tr>
-            <td>mesa de prospectos</td>
-            <td>ver las solicitudes que ya tienen cita</td>
-            <td>que dependiendo del resultado de la visita pueda preaprobar o no las solicitudes</td>
-            <td>3</td>
-          </tr>
-          <tr>
-            <td>mesa de prospectos</td>
-            <td>ver las solicitudes que ya tienen cita</td>
-            <td>que dependiendo del resultado de la visita pueda preaprobar o no las solicitudes</td>
-            <td>3</td>
-          </tr>
-          <tr>
-            <td>mesa de prospectos</td>
-            <td>ver las solicitudes que ya tienen cita</td>
-            <td>que dependiendo del resultado de la visita pueda preaprobar o no las solicitudes</td>
-            <td>3</td>
-          </tr>
+          <% } %> 
         </tbody>
       </table>
     </div>

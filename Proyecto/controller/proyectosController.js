@@ -1,5 +1,7 @@
 const Proyecto = require('../models/proyecto');
 const Fase = require('../models/fase');
+const Casos_Uso = require('../models/casos_uso');
+
 const { response } = require('express');
 
 exports.getIteracionesProyecto = (request,response)=>{
@@ -86,8 +88,19 @@ exports.postNuevoProyecto = (request, response) => {
 exports.getResumenProyecto = (request,response) =>{
     response.render('resumenProyecto')
 }
+
 exports.getCasosUsoProyecto = (request,response) =>{
-    response.render('casosUso')
+    Casos_Uso.fetchAll() 
+    .then(([rows, fieldData]) => {
+        response.render('casosUso', {
+            casos_uso: rows 
+        });
+    })
+    .catch(err => {
+        console.log(err);
+        response.redirect('/proyectos/casos-uso-proyecto');
+    });
+    
 }
 
 exports.getFasesProyecto = (request,response) =>{
