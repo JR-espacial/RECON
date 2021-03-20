@@ -5,7 +5,7 @@ const isAuth = require('../util/is_Auth');
 
 const proyectsController = require('../controller/proyectosController');
 
-router.get('/iteraciones-proyecto',isAuth,proyectsController.getIteracionesProyecto)
+router.get('/iteraciones-proyecto:id_proyecto',isAuth,proyectsController.getIteracionesProyecto)
 
 router.get('/nueva-iteracion', isAuth, proyectsController.getNuevaIteracion);
 

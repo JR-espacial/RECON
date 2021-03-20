@@ -20,122 +20,22 @@
 <!-- Set de tres tarjetas -->
 <div class="row center">
     <div class="col offset-m3 offset-l3">
+        <% for (let proyecto of proyectos) { %>
         <div class="col s3">
             <div class="card">
                 <div class="card-image">
                     <img src="https://www.esan.edu.pe/conexion/actualidad/2017/10/26/1500x844_portafolio_proyectos.jpg" alt="Proyecto">
                 </div>
-                <span class="card-title">Proyecto 1</span>
+                <span class="card-title"><%= proyecto.nombre_proyecto %></span>
                 <div class="card-action">
-                    <a href="/proyectos/iteraciones-proyecto">Ir al proyecto</a>
+                    <a href="/proyectos/iteraciones-proyecto<%= proyecto.id_proyecto %>">Ir al proyecto</a>
                 </div>
             </div>
         </div>
-        <div class="col s3">
-            <div class="card">
-                <div class="card-image">
-                    <img src="https://hospitalrealsanlucas.com.mx/wp-content/uploads/2020/11/placeholder-1.png" alt="Proyecto">
-                </div>
-                <span class="card-title">Proyecto 2 </span>
-                <div class="card-action">
-                    <a href="#">Ir al proyecto</a>
-                </div>
-            </div>
-        </div>
-        <div class="col s3">
-            <div class="card">
-                <div class="card-image">
-                    <img src="https://hospitalrealsanlucas.com.mx/wp-content/uploads/2020/11/placeholder-1.png" alt="Proyecto">
-                </div>
-                <span class="card-title">Proyecto 3 </span>
-                <div class="card-action">
-                    <a href="#">Ir al proyecto</a>
-                </div>
-            </div>
-        </div>
+        <% } %>
     </div>    
 </div>
 
-<!-- Fin de primer set de tarjetas -->
 
-<div class="row center">
-    <div class="col offset-m3 offset-l3">
-        <div class="col s3">
-            <div class="card">
-                <div class="card-image">
-                    <img src="https://hospitalrealsanlucas.com.mx/wp-content/uploads/2020/11/placeholder-1.png" alt="Proyecto">
-                </div>
-                <span class="card-title">Proyecto 4 </span>
-                <div class="card-action">
-                    <a href="#">Ir al proyecto</a>
-                </div>
-            </div>
-        </div>
-        <div class="col s3">
-            <div class="card">
-                <div class="card-image">
-                    <img src="https://hospitalrealsanlucas.com.mx/wp-content/uploads/2020/11/placeholder-1.png" alt="Proyecto">
-                </div>
-                <span class="card-title">Proyecto 5 </span>
-                <div class="card-action">
-                    <a href="#">Ir al proyecto</a>
-                </div>
-            </div>
-        </div>
-        <div class="col s3">
-            <div class="card">
-                <div class="card-image">
-                    <img src="https://hospitalrealsanlucas.com.mx/wp-content/uploads/2020/11/placeholder-1.png" alt="Proyecto">
-                </div>
-                <span class="card-title">Proyecto 6 </span>
-                <div class="card-action">
-                    <a href="#">Ir al proyecto</a>
-                </div>
-            </div>
-        </div>
-    </div>    
-</div>
-
-<!-- Fin de segundo set de tarjetas -->
-
-<div class="row center">
-    <div class="col offset-m3 offset-l3">
-        <div class="col s3">
-            <div class="card">
-                <div class="card-image">
-                    <img src="https://hospitalrealsanlucas.com.mx/wp-content/uploads/2020/11/placeholder-1.png" alt="Proyecto">
-                </div>
-                <span class="card-title">Proyecto 7 </span>
-                <div class="card-action">
-                    <a href="#">Ir al proyecto</a>
-                </div>
-            </div>
-        </div>
-        <div class="col s3">
-            <div class="card">
-                <div class="card-image">
-                    <img src="https://hospitalrealsanlucas.com.mx/wp-content/uploads/2020/11/placeholder-1.png" alt="Proyecto">
-                </div>
-                <span class="card-title">Proyecto 8</span>
-                <div class="card-action">
-                    <a href="#">Ir al proyecto</a>
-                </div>
-            </div>
-        </div>
-        <div class="col s3">
-            <div class="card">
-                <div class="card-image">
-                    <img src="https://hospitalrealsanlucas.com.mx/wp-content/uploads/2020/11/placeholder-1.png" alt="Proyecto">
-                </div>
-                <span class="card-title">Proyecto  9</span>
-                <div class="card-action">
-                    <a href="#">Ir al proyecto</a>
-                </div>
-            </div>
-        </div>
-    </div>    
-</div>
-
-<!-- Fin de tercer set de tarjetas -->
 
 <%- include('includes/closeHTML.ejs'); %>
