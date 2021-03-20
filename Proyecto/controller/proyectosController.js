@@ -1,6 +1,7 @@
 const Proyecto = require('../models/proyecto');
 const Fase = require('../models/fase');
 const Casos_Uso = require('../models/casos_uso');
+const Puntos_Agiles = require('../models/puntos_agiles');
 
 const { response } = require('express');
 
@@ -97,17 +98,32 @@ exports.getResumenProyecto = (request,response) =>{
 
 exports.getCasosUsoProyecto = (request,response) =>{
     Casos_Uso.fetchAll() 
-    .then(([rows, fieldData]) => {
-        response.render('casosUso', {
-            title: "Casos de Uso",
-            casos_uso: rows 
-        });
-    })
-    .catch(err => {
-        console.log(err);
-        response.redirect('/proyectos/casos-uso-proyecto');
-    });
-    
+        .then(([rows, fieldData]) => {
+            // Obtain the value of the APs 
+            for(let i=0; i<rows.length; i++) {
+                Puntos_Agiles.fetchValorAP(rows[i].id_ap)
+                    .then(([ap_value, fieldData]) => {
+                        rows[i].id_ap = ap_value;
+                    }) 
+                    .catch(err => {
+                        console.log(err);
+                        rows[i].id_ap = "Error";
+                    });
+            }   
+
+            for(let i=0; i<rows.length; i++) {
+                console.log(rows[i].id_ap);
+            }
+
+            response.render('casosUso', {
+                title: "Casos de Uso",
+                casos_uso: rows 
+            });
+        })
+        .catch(err => {
+            console.log(err);
+            response.redirect('/proyectos/casos-uso-proyecto');
+        }); 
 }
 
 exports.getFasesProyecto = (request,response) =>{
