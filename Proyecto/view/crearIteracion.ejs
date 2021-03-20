@@ -38,17 +38,17 @@
                     <input disabled value="Colaboradores:" type="text" id ="disabled" class="validate">
                 </div>
             </div>
-            <div class="row "> 
-                <div id="contenedor_colaboradores">
-                    Empty
+            <div class="row"> 
+                <div id="contenedor_colaboradores" class="col s4 card-panel">
+                    <span class="blue-text text-darken-2">Lista de colaboradores vacia</span>
                 </div>
             </div>
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col s4">
                     <img src="https://hospitalrealsanlucas.com.mx/wp-content/uploads/2020/11/placeholder-1.png"  class="responsive-img ">
                 </div>
-            </div>
-            <div class="row">
+            </div> -->
+            <!-- <div class="row">
                 <div class="file-field input-field col s4">
                     <div class="btn">
                     <span>Sube una Imagen</span>
@@ -58,7 +58,7 @@
                     <input class="file-path validate" type="text">
                     </div>
                 </div>
-            </div>        
+            </div>         -->
             <div class="row">
                 <div class="col s2 offset-s2">
                     <a class="waves-effect waves-light btn" href="/home">Cancelar</a>
@@ -79,7 +79,7 @@
     let seleccion = document.getElementById("selectProyecto");
     seleccion.onchange= () => {
         if(seleccion.value == "3"){
-            location.href = "nuevo-proyecto-nueva-iteracion";
+            location.href = "nuevo-proyecto";
         }
     }
 </script>

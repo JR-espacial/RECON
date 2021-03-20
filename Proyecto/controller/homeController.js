@@ -1,3 +1,6 @@
 exports.getHome = (request, response) => {
-    response.render('home');
+    const alerta= request.session.alerta
+    request.session.alerta = ""
+    request.session.last = '/home';
+    response.render('home',{ alerta : alerta});
 }

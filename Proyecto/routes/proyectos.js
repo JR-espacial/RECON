@@ -5,6 +5,8 @@ const isAuth = require('../util/is_Auth');
 
 const proyectsController = require('../controller/proyectosController');
 
+router.get('/iteraciones-proyecto',isAuth,proyectsController.getIteracionesProyecto)
+
 router.get('/nueva-iteracion', isAuth, proyectsController.getNuevaIteracion);
 
 router.get('/resumen-proyecto', isAuth, proyectsController.getResumenProyecto);
@@ -23,9 +25,9 @@ router.get('/promedios-ap', isAuth, proyectsController.getPromediosAP);
 
 router.get('/estimados-ap', isAuth, proyectsController.getEstimadosAP);
 
-router.get('/nuevo-proyecto:module', isAuth, proyectsController.getNuevoProyecto);
+router.get('/nuevo-proyecto', isAuth, proyectsController.getNuevoProyecto);
 
-router.post('/nuevo-proyecto:module', isAuth, proyectsController.postNuevoProyecto);
+router.post('/nuevo-proyecto', isAuth, proyectsController.postNuevoProyecto);
 
 
 router.use(express.static(path.join(__dirname, '..', 'public')));

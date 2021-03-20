@@ -1,8 +1,13 @@
 const Proyecto = require('../models/proyecto');
 const Fase = require('../models/fase');
+const { response } = require('express');
 
+exports.getIteracionesProyecto = (request,response)=>{
+    response.render('iteracionesProyecto');
+}
 
 exports.getNuevaIteracion = (request, response) => {
+    request.session.last = '/proyectos/nueva-iteracion';
     response.render('crearIteracion',{
         alerta : request.session.alerta,
         csrfToken: request.csrfToken(),
@@ -10,23 +15,15 @@ exports.getNuevaIteracion = (request, response) => {
 }
 
 exports.getNuevoProyecto = (request, response) => {
-    let module_ = request.params.module;
-    if(module_ == "-nueva-iteracion"){
-        module_ = "nueva-iteracion";
-    }
     response.render('crearProyecto',{
         error: request.session.error,
-        module_ : module_,
+        lastUrl : request.session.last,
         csrfToken: request.csrfToken(),
     });
 }
 
 exports.postNuevoProyecto = (request, response) => {
-    let module_ = request.params.module;
-    if(module_ == "-nueva-iteracion"){
-        module_ = "nueva-iteracion";
-    }
-
+    let lastUrl = request.session.last;
     request.session.error = "";
     const nombre_proyecto = request.body.nombre;
     const descripcion = request.body.descripcion;
@@ -34,45 +31,47 @@ exports.postNuevoProyecto = (request, response) => {
 
     if(!nombre_proyecto && !departamento){
         request.session.error = "El nombre y el departamento no han sido seleccionados.";
-        response.redirect('/proyectos/nuevo-proyecto' + module_);
+        response.redirect('/proyectos/nuevo-proyecto');
     }
     else if(!nombre_proyecto){
         request.session.error = "El nombre está vacío";
-        response.redirect('/proyectos/nuevo-proyecto' + module_);
+        response.redirect('/proyectos/nuevo-proyecto');
     }
     else if(!departamento){
         request.session.error = "No se ha seleccionado el departamento";
-        response.redirect('/proyectos/nuevo-proyecto' + module_);
+        response.redirect('/proyectos/nuevo-proyecto');
     }
-
-    Proyecto.fetchOne(nombre_proyecto)
-        .then(([rows, fieldData]) => {
-            if (rows.length < 1) {
-                let proyecto = new Proyecto(nombre_proyecto, descripcion, departamento);
-                proyecto.saveProyecto();
-                Proyecto.fetchOne(nombre_proyecto)
-                    .then(([id_proyecto, fieldData]) =>{
-                        Proyecto.saveProyectoDepto(departamento, id_proyecto[0].id_proyecto)
-                            .then(() => {
-                                request.session.alerta = "Proyecto creado exitosamente";
-                                response.redirect('/proyectos/' + module_);
-                            })
-                            .catch(err => {
-                                console.log(err);
-                            });
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    });
-            }
-            else {
-                request.session.error = "Ya hay un proyecto con ese nombre";
-                response.redirect('/proyectos/nuevo-proyecto' + module_);
-            }
-        })
-        .catch(err => {
-            console.log(err);
-        });
+    else{
+        Proyecto.fetchOne(nombre_proyecto)
+            .then(([rows, fieldData]) => {
+                if (rows.length < 1) {
+                    let proyecto = new Proyecto(nombre_proyecto, descripcion, departamento);
+                    proyecto.saveProyecto();
+                    Proyecto.fetchOne(nombre_proyecto)
+                        .then(([id_proyecto, fieldData]) =>{
+                            Proyecto.saveProyectoDepto(departamento, id_proyecto[0].id_proyecto)
+                                .then(() => {
+                                    request.session.error = "";
+                                    request.session.alerta = "Proyecto creado exitosamente";
+                                    response.redirect(lastUrl);
+                                })
+                                .catch(err => {
+                                    console.log(err);
+                                });
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        });
+                }
+                else {
+                    request.session.error = "Ya hay un proyecto con ese nombre";
+                    response.redirect('/proyectos/nuevo-proyecto');
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
 }
 
 exports.getResumenProyecto = (request,response) =>{
