@@ -8,10 +8,19 @@ exports.getIteracionesProyecto = (request,response)=>{
 
 exports.getNuevaIteracion = (request, response) => {
     request.session.last = '/proyectos/nueva-iteracion';
-    response.render('crearIteracion',{
-        alerta : request.session.alerta,
-        csrfToken: request.csrfToken(),
+
+    Proyecto.fetchAll()
+    .then(([rows, fieldData]) => {
+        response.render('crearIteracion',{
+            proyectos : rows,
+            alerta : request.session.alerta,
+            csrfToken: request.csrfToken(),
+        });
+    })
+    .catch(err => {
+        console.log(err);
     });
+
 }
 
 exports.getNuevoProyecto = (request, response) => {

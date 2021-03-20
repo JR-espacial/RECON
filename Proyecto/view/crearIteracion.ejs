@@ -12,8 +12,9 @@
                 <div class="input-field col s4">
                     <select id="selectProyecto">
                         <option value="" disabled selected>Selecciona el proyecto de la iteración</option>
-                        <option value="1">Proyecto 1</option>
-                        <option value="2">Proyecto 2</option>
+                        <% for (let proyecto of proyectos) { %>
+                            <option value="<%= proyecto.id_proyecto %>"><%= proyecto.nombre_proyecto %></option>
+                        <% } %>
                         <option value="3">Crear proyecto</option>
                       </select>
 
