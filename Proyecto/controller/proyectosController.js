@@ -102,31 +102,15 @@ exports.postNuevoProyecto = (request, response) => {
     }
 }
 
-exports.getResumenProyecto = (request,response) =>{
+exports.getResumenProyecto = (request, response) =>{
     response.render('resumenProyecto', {
         title: "Resumen del Proyecto"
     });
 }
 
-exports.getCasosUsoProyecto = (request,response) =>{
-    Casos_Uso.fetchAll() 
+exports.getCasosUsoProyecto = (request, response) =>{
+    Casos_Uso.fetchAllwithAPvalues() 
         .then(([rows, fieldData]) => {
-            // Obtain the value of the APs 
-            for(let i=0; i<rows.length; i++) {
-                Puntos_Agiles.fetchValorAP(rows[i].id_ap)
-                    .then(([ap_value, fieldData]) => {
-                        rows[i].id_ap = ap_value;
-                    }) 
-                    .catch(err => {
-                        console.log(err);
-                        rows[i].id_ap = "Error";
-                    });
-            }   
-
-            for(let i=0; i<rows.length; i++) {
-                console.log(rows[i].id_ap);
-            }
-
             response.render('casosUso', {
                 title: "Casos de Uso",
                 casos_uso: rows 
@@ -138,7 +122,7 @@ exports.getCasosUsoProyecto = (request,response) =>{
         }); 
 }
 
-exports.getFasesProyecto = (request,response) =>{
+exports.getFasesProyecto = (request, response) =>{
     Fase.fetchAll()
         .then(([rows, fieldData]) => {
             response.render('fasesProyecto', {
@@ -157,24 +141,24 @@ exports.getAvanceProyecto = (request, response) => {
     });
 }
 
-exports.getCapacidadEquipo = (request,response) =>{
+exports.getCapacidadEquipo = (request, response) =>{
     response.render('capacidadEquipo', {
         title: "Capacidad de Equipo"
     });
 }
 
-exports.getTareaCasoUso = (request,response) =>{
+exports.getTareaCasoUso = (request, response) =>{
     response.render('tareaCasoUso', {
         title: "Tareas por Caso de Uso"
     });
 }
-exports.getPromediosAP = (request,response) =>{
+exports.getPromediosAP = (request, response) =>{
     response.render('promediosAP', {
         title: "Promedios AP"
     });
 }
 
-exports.getEstimadosAP = (request,response) =>{
+exports.getEstimadosAP = (request, response) =>{
     response.render('estimadosAP', {
         title: "Estimados AP"
     });

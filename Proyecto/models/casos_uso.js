@@ -15,8 +15,8 @@ module.exports =  class Casos_Uso{
         [this.nombre_fase]);
     }
     */
-    static fetchAll(){
-        return db.execute('SELECT * FROM Casos_Uso');
+    static fetchAllwithAPvalues () {
+        return db.execute('SELECT id_casos, yo_como, quiero, para, ap FROM Casos_Uso, Puntos_Agiles WHERE Casos_Uso.id_ap = Puntos_Agiles.id_ap');
     }
 
     /*
