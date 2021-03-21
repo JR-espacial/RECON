@@ -11,7 +11,7 @@ app.set('view engine', 'ejs');
 app.set('views', 'view');
 
 const users = require('./routes/users');
-const homeController = require('./controller/homeController');
+const home = require('./routes/home');
 const proyectos = require('./routes/proyectos');
 
 app.use(bodyParser.urlencoded({extended: false}));
@@ -30,7 +30,7 @@ app.use('/proyectos', proyectos);
 
 app.use('/users', users);
 
-app.use('/home', isAuth, homeController.getHome);
+app.use('/home', home);
 
 
 app.use("/",(request, response,next) => {   

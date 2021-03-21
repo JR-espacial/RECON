@@ -4,12 +4,10 @@ const Casos_Uso = require('../models/casos_uso');
 const Iteracion = require('../models/iteracion');
 const Puntos_Agiles = require('../models/puntos_agiles');
 
-const { response } = require('express');
+const { response, request } = require('express');
 
 exports.getIteracionesProyecto = (request,response) => {
-    const id = request.params.id_proyecto;
-
-    Iteracion.fetchAllfromProyect(id)
+    Iteracion.fetchAllfromProyect(request.session.idProyecto)
     .then(([rows, fieldData]) => {
         response.render('iteracionesProyecto', {
             title: "Iteraciones",
@@ -24,14 +22,13 @@ exports.getIteracionesProyecto = (request,response) => {
 
 exports.getNuevaIteracion = (request, response) => {
     request.session.last = '/proyectos/nueva-iteracion';
-
     Proyecto.fetchAll()
     .then(([rows, fieldData]) => {
         response.render('crearIteracion', {
             title: "Crear Iteración",
             proyectos : rows,
             alerta : request.session.alerta,
-            csrfToken: request.csrfToken(),
+            csrfToken: request.csrfToken()
         });
     })
     .catch(err => {
@@ -41,17 +38,16 @@ exports.getNuevaIteracion = (request, response) => {
 }
 
 exports.getNuevoProyecto = (request, response) => {
+
     response.render('crearProyecto', {
         title: "Crear Proyecto", 
         error: request.session.error,
-        lastUrl : request.session.last,
+        last : request.session.last,
         csrfToken: request.csrfToken(),
     });
 }
 
 exports.postNuevoProyecto = (request, response) => {
-    let lastUrl = request.session.last;
-    request.session.error = "";
     const nombre_proyecto = request.body.nombre;
     const descripcion = request.body.descripcion;
     const departamento = request.body.departamento;
@@ -73,14 +69,15 @@ exports.postNuevoProyecto = (request, response) => {
             .then(([rows, fieldData]) => {
                 if (rows.length < 1) {
                     let proyecto = new Proyecto(nombre_proyecto, descripcion, departamento);
-                    proyecto.saveProyecto();
-                    Proyecto.fetchOne(nombre_proyecto)
-                        .then(([id_proyecto, fieldData]) =>{
-                            Proyecto.saveProyectoDepto(departamento, id_proyecto[0].id_proyecto)
+                    proyecto.saveProyecto()
+                    .then(() => {
+                        Proyecto.fetchOne(nombre_proyecto)
+                        .then(([rows2, fieldData]) =>{
+                            Proyecto.saveProyectoDepto(departamento, rows2[0].id_proyecto)
                                 .then(() => {
-                                    request.session.error = "";
+                                    response.session.error = "";
                                     request.session.alerta = "Proyecto creado exitosamente";
-                                    response.redirect(lastUrl);
+                                    response.redirect(request.session.last);
                                 })
                                 .catch(err => {
                                     console.log(err);
@@ -89,6 +86,10 @@ exports.postNuevoProyecto = (request, response) => {
                         .catch(err => {
                             console.log(err);
                         });
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
                 }
                 else {
                     request.session.error = "Ya hay un proyecto con ese nombre";
