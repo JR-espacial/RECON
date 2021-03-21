@@ -58,7 +58,8 @@
                   <input type="hidden" name="idCaso" value="<%= caso.id_casos %>">
                   <button name="action" value="editar" type="submit"><i class="small material-icons">mode_edit</i></button>
                 </form>
-                <form action="casos-uso-iteracion" method="POST">
+                <!-- Eliminar -->
+                <form id="forma_eliminar" action="casos-uso-iteracion" method="POST">
                   <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                   <input type="hidden" name="idCaso" value="<%= caso.id_casos %>">
                   <button name="action" value="eliminar" type="submit"><i class="small material-icons">delete</i></button>
@@ -70,6 +71,14 @@
       </table>
     </div>
 </div>
-
+<script> 
+  let form = document.getElementById("forma_eliminar");
+  form.addEventListener('submit', (e) =>{
+    let confirmacion = confirm('¿Estás seguro de eliminar el caso de uso?');
+    if(!confirmacion){
+      e.preventDefault();
+    }  
+  });
+</script>
 
 <%- include('includes/closeHTML.ejs'); %>

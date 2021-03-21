@@ -32,24 +32,19 @@ exports.postCasosUsoIteracion = (request, response) => {
         Casos_Uso.DropEntreCaso(idCaso)
             .then(() => {
                 console.log('Eliminada la entrega');
-                Casos_Uso.DropCasoUso(idCaso)
-                    .then(()=> {
-                        console.log('Eliminado correctamente');
-                        response.redirect('/proyectos/casos-uso-iteracion');  
-                    })
-                    .catch(err => {
-                        console.log(err);
-                        response.redirect('/proyectos/casos-uso-iteracion');
-                    });
             })
             .catch( err => {
                 console.log(err);
-                response.redirect('/proyectos/casos-uso-iteracion');
+            });
+        Casos_Uso.DropCasoUso(idCaso)
+            .then(()=> {
+                console.log('Eliminado correctamente'); 
+            })
+            .catch(err => {
+                console.log(err);
             });
     }
-    else {
-        response.redirect('/proyectos/casos-uso-iteracion');
-    }  
+    response.redirect('/proyectos/casos-uso-iteracion');
 }
 
 exports.getTareaCasoUso = (request, response) =>{
