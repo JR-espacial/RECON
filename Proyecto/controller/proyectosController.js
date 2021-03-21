@@ -56,12 +56,24 @@ exports.postNuevaIteracion = (request, response) => {
     const id_proyecto = request.body.proyecto;
     const descripcion = request.body.descripcion;
 
-    let iteracion = new Iteracion(id_proyecto, descripcion);
     Iteracion.saveCapacidad()
     .then(() => {
-        iteracion.saveIteracion()
-        .then(() => {
-            response.redirect("/proyectos/iteraciones-proyecto");
+        Iteracion.fetchLastCapacidad()
+        .then(([rows, fieldData]) => {
+            Iteracion.fetchLastNumIter(id_proyecto)
+            .then(([rows2, fieldData]) => {
+                let iteracion = new Iteracion(id_proyecto, rows[0].id_capacidad, rows2[0].num_iteracion, descripcion);
+                iteracion.saveIteracion()
+                .then(() => {
+                    response.redirect("/proyectos/iteraciones-proyecto");
+                })
+                .catch(err =>{
+                    console.log(err);
+                });
+            })
+            .catch(err =>{
+                console.log(err);
+            });
         })
         .catch(err =>{
             console.log(err);
