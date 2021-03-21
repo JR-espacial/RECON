@@ -8,10 +8,9 @@ const { response, request } = require('express');
 
 exports.getIteracionesProyecto = (request,response) => {
     const idProyecto = request.session.idProyecto;
-    request.session.idProyecto = "";
     const alerta = request.session.alerta;
     request.session.alerta = "";
-
+    
     Iteracion.fetchAllfromProyect(idProyecto)
     .then(([rows, fieldData]) => {
         response.render('iteracionesProyecto', {
@@ -43,6 +42,31 @@ exports.getNuevaIteracion = (request, response) => {
         console.log(err);
     });
 
+}
+
+exports.postNuevaIteracion = (request, response) => {
+
+    const last = request.session.last;
+    const id_proyecto = request.body.proyecto;
+    const descripcion = request.body.descripcion;
+
+    let iteracion = new Iteracion(id_proyecto, descripcion);
+    Iteracion.saveCapacidad()
+    .then(() => {
+        iteracion.saveIteracion()
+        .then(() => {
+            response.redirect("/proyectos/iteraciones-proyecto");
+        })
+        .catch(err =>{
+            console.log(err);
+        });
+    })
+    .catch(err =>{
+        console.log(err);
+    });
+
+    
+        
 }
 
 exports.getNuevoProyecto = (request, response) => {

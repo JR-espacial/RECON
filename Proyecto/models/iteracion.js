@@ -1,15 +1,19 @@
 const db = require('../util/mySQL');
 
 module.exports =  class Iteracion{
-    constructor(nombre_iteracion, descripcion){
-        this.nombre_iteracion = nombre_iteracion;
+    constructor(id_proyecto, descripcion){
+        this.id_proyecto = id_proyecto;
         this.descripcion = descripcion;
     }
 
     saveIteracion(){ 
-        return db.execute('INSERT INTO Iteracion (nombre_iteracion, descripcion, fecha_inicio, fecha_fin) VALUES (?, ?, CURRENT_DATE(),NULL)',
-        [this.nombre_iteracion, this.descripcion]);
-    }    
+        return db.execute('INSERT INTO Iteracion (id_proyecto, id_capacidad, num_iteracion, descripcion, fecha_inicio, fecha_fin, estado_iteracion, total_min_real, total_min_maximo) VALUES (?, 2, 3, ?, CURRENT_DATE(), NULL, NULL, NULL, NULL)',
+        [this.id_proyecto, this.descripcion]);
+    }
+
+    static saveCapacidad(){
+        return db.execute('INSERT INTO Capacidad_equipo (horas_nominales_totales, horas_nominales_sin_ovh, horas_nominales_restantes, horas_productivas, tiempo_perdido_pc, errores_registro_pc, overhead_pc, productivas_pc, operativos_pc, humano_pc, cmmi_pc) VALUES (NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)')
+    }
 
     static fetchAll(){
         return db.execute('SELECT * FROM Iteracion');
