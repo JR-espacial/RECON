@@ -6,23 +6,23 @@
 
 <div class="row">
     <div class="col s12 offset-s4">
-        <form class="col s12">
+        <form class="col s12" action="nueva-iteracion" method="POST">
             <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
             <div class="row">
                 <div class="input-field col s4">
-                    <select id="selectProyecto">
+                    <select name="proyecto" id="selectProyecto">
                         <option value="" disabled selected>Selecciona el proyecto de la iteración</option>
                         <% for (let proyecto of proyectos) { %>
                             <option value="<%= proyecto.id_proyecto %>"><%= proyecto.nombre_proyecto %></option>
                         <% } %>
-                        <option value="3">Crear proyecto</option>
+                        <option value="Crear proyecto">Crear proyecto</option>
                       </select>
 
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s4">
-                    <input  id="descripcion_proyecto" type="text" class="validate">
+                    <input  id="descripcion_proyecto" name="descripcion" type="text" class="validate">
                     <label for="descripcion_proyecto">Descripción de la iteración</label>
                 </div>
             </div>
@@ -44,22 +44,6 @@
                     <span class="blue-text text-darken-2">Lista de colaboradores vacia</span>
                 </div>
             </div>
-            <!-- <div class="row">
-                <div class="col s4">
-                    <img src="https://hospitalrealsanlucas.com.mx/wp-content/uploads/2020/11/placeholder-1.png"  class="responsive-img ">
-                </div>
-            </div> -->
-            <!-- <div class="row">
-                <div class="file-field input-field col s4">
-                    <div class="btn">
-                    <span>Sube una Imagen</span>
-                    <input type="file">
-                    </div>
-                    <div class="file-path-wrapper">
-                    <input class="file-path validate" type="text">
-                    </div>
-                </div>
-            </div>         -->
             <div class="row">
                 <div class="col s2 offset-s2">
                     <a class="waves-effect waves-light btn" id="cancelbtn" href="/home">Cancelar</a>
@@ -79,7 +63,7 @@
 
     let seleccion = document.getElementById("selectProyecto");
     seleccion.onchange= () => {
-        if(seleccion.value == "3"){
+        if(seleccion.value == "Crear proyecto"){
             location.href = "nuevo-proyecto";
         }
     }

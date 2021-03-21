@@ -6,14 +6,18 @@ const Puntos_Agiles = require('../models/puntos_agiles');
 
 const { response, request } = require('express');
 
-exports.getIteracionesProyecto = (request, response) => {
-    Iteracion.fetchAllfromProyect(request.session.idProyecto)
+exports.getIteracionesProyecto = (request,response) => {
+    const idProyecto = request.session.idProyecto;
+    const alerta = request.session.alerta;
+    request.session.alerta = "";
+    
+    Iteracion.fetchAllfromProyect(idProyecto)
     .then(([rows, fieldData]) => {
         response.render('iteracionesProyecto', {
             title: "Iteraciones",
             iteraciones : rows,
-            csrfToken: request.csrfToken(),
-            alerta : request.session.alerta
+            alerta : alerta,
+            csrfToken: request.csrfToken()
         });
     })
     .catch(err => {
@@ -27,13 +31,16 @@ exports.postIteracionesProyecto = (request, response) => {
 }
 
 exports.getNuevaIteracion = (request, response) => {
+    const alerta = request.session.alerta;
+    request.session.alerta = "";
     request.session.last = '/proyectos/nueva-iteracion';
+
     Proyecto.fetchAll()
     .then(([rows, fieldData]) => {
         response.render('crearIteracion', {
             title: "Crear Iteración",
             proyectos : rows,
-            alerta : request.session.alerta,
+            alerta : alerta,
             csrfToken: request.csrfToken()
         });
     })
@@ -43,17 +50,47 @@ exports.getNuevaIteracion = (request, response) => {
 
 }
 
+exports.postNuevaIteracion = (request, response) => {
+
+    const last = request.session.last;
+    const id_proyecto = request.body.proyecto;
+    const descripcion = request.body.descripcion;
+
+    let iteracion = new Iteracion(id_proyecto, descripcion);
+    Iteracion.saveCapacidad()
+    .then(() => {
+        iteracion.saveIteracion()
+        .then(() => {
+            response.redirect("/proyectos/iteraciones-proyecto");
+        })
+        .catch(err =>{
+            console.log(err);
+        });
+    })
+    .catch(err =>{
+        console.log(err);
+    });
+
+    
+        
+}
+
 exports.getNuevoProyecto = (request, response) => {
+    const error = request.session.error;
+    request.session.error = "";
+    const last = request.session.last;
 
     response.render('crearProyecto', {
         title: "Crear Proyecto", 
-        error: request.session.error,
-        last : request.session.last,
+        error: error,
+        last : last,
         csrfToken: request.csrfToken(),
     });
 }
 
 exports.postNuevoProyecto = (request, response) => {
+    const last = request.session.last;
+
     const nombre_proyecto = request.body.nombre;
     const descripcion = request.body.descripcion;
     const departamento = request.body.departamento;
@@ -81,9 +118,8 @@ exports.postNuevoProyecto = (request, response) => {
                         .then(([rows2, fieldData]) =>{
                             Proyecto.saveProyectoDepto(departamento, rows2[0].id_proyecto)
                                 .then(() => {
-                                    response.session.error = "";
                                     request.session.alerta = "Proyecto creado exitosamente";
-                                    response.redirect(request.session.last);
+                                    response.redirect(last);
                                 })
                                 .catch(err => {
                                     console.log(err);

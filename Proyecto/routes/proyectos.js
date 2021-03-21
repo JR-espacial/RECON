@@ -11,7 +11,7 @@ router.post('/iteraciones-proyecto', isAuth, proyectsController.postIteracionesP
 
 router.get('/nueva-iteracion', isAuth, proyectsController.getNuevaIteracion);
 
-//router.post('/nueva-iteracion', isAuth, proyectsController.postNuevaIteracion);
+router.post('/nueva-iteracion', isAuth, proyectsController.postNuevaIteracion);
 
 router.get('/resumen-proyecto', isAuth, proyectsController.getResumenProyecto);
 
