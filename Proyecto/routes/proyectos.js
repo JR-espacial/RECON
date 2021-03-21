@@ -35,6 +35,8 @@ router.get('/capacidad-equipo', isAuth, iteracionesController.getCapacidadEquipo
 
 router.get('/casos-uso-iteracion', isAuth, casos_usoController.getCasosUsoIteracion);
 
+router.post('/casos-uso-iteracion', isAuth, casos_usoController.postCasosUsoIteracion);
+
 router.get('/tarea-caso-uso', isAuth, casos_usoController.getTareaCasoUso);
 
 

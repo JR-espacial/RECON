@@ -3,7 +3,7 @@
 <%- include('includes/navbar.ejs'); %>
 
 <div class="row">
-    <form class="col s12 offset-s3">
+    <form class="col s12 offset-s3" action="casos-uso-iteracion" method="POST">
         <div class="row">
             <div class="input-field col 1">
               <input id="yo_como" type="text" class="validate">
@@ -18,11 +18,18 @@
                 <label for="para">para</label>
             </div>
             <div class="input-field col 1">
-                <input id="AP" type="text" class="validate">
-                <label for="AP">AP</label>
+              <select class="browser-default">
+                <option value="" disabled selected>AP</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">5</option>
+                <option value="5">8</option>
+                <option value="6">13</option>
+              </select>
             </div>
             <div class="input-field col 2">
-                <input type="submit" value="Registrar" id="boton_casos_uso">
+                <input type="submit" value="registrar" id="boton_casos_uso">
             </div>
         </div>
     </form>
@@ -40,12 +47,24 @@
 
         <tbody>
           <% for (caso of casos_uso) { %>
-          <tr>
-            <td><%= caso.yo_como %></td>
-            <td><%= caso.quiero %></td>
-            <td><%= caso.para %></td>
-            <td><%= caso.ap %></td>
-          </tr>
+            <tr>
+              <td><%= caso.yo_como %></td>
+              <td><%= caso.quiero %></td>
+              <td><%= caso.para %></td>
+              <td><%= caso.ap %></td>
+              <td>
+                <form action="casos-uso-iteracion" method="POST">
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>"> 
+                  <input type="hidden" name="idCaso" value="<%= caso.id_casos %>">
+                  <button name="action" value="editar" type="submit"><i class="small material-icons">mode_edit</i></button>
+                </form>
+                <form action="casos-uso-iteracion" method="POST">
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                  <input type="hidden" name="idCaso" value="<%= caso.id_casos %>">
+                  <button name="action" value="eliminar" type="submit"><i class="small material-icons">delete</i></button>
+                </form>
+              </td>
+            </tr>
           <% } %> 
         </tbody>
       </table>

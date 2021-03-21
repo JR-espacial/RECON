@@ -20,9 +20,17 @@ module.exports =  class Casos_Uso{
     }
 
     static fetchAllIteracion(idIteracion) {
-        return db.execute('SELECT yo_como, quiero, para, ap FROM Casos_Uso, Puntos_Agiles WHERE Casos_Uso.id_iteracion=? AND Casos_Uso.id_ap = Puntos_Agiles.id_ap', 
+        return db.execute('SELECT id_casos, yo_como, quiero, para, ap FROM Casos_Uso, Puntos_Agiles WHERE Casos_Uso.id_iteracion=? AND Casos_Uso.id_ap = Puntos_Agiles.id_ap', 
         [idIteracion]
         );
+    }
+
+    static DropEntreCaso(idCaso) {
+        return db.execute('DELETE FROM entrega WHERE id_casos=?', [idCaso]);
+    }
+
+    static DropCasoUso(idCaso) {
+        return db.execute('DELETE FROM casos_uso WHERE id_casos=?', [idCaso]);
     }
 
     /*
