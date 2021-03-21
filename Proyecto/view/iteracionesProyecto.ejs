@@ -14,7 +14,12 @@
                     </div>
                     <span class="card-title"><%= iteracion.num_iteracion %></span>
                     <div class="card-action">
-                        <a href="/proyectos/resumen-proyecto">Ir al la iteracion</a>
+                        <!-- <a href="/proyectos/resumen-proyecto">Ir a Iteracion</a> -->
+                        <form action="iteraciones-proyecto" method="POST">
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>"> 
+                            <input type="hidden" name="idIteracion" value="<%= iteracion.id_iteracion %>">
+                            <input type="submit" value="Ir a la iteración">
+                        </form>
                     </div>
                 </div>
             </div>

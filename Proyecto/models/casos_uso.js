@@ -19,6 +19,12 @@ module.exports =  class Casos_Uso{
         return db.execute('SELECT id_casos, yo_como, quiero, para, ap FROM Casos_Uso, Puntos_Agiles WHERE Casos_Uso.id_ap = Puntos_Agiles.id_ap');
     }
 
+    static fetchAllIteracion(idIteracion) {
+        return db.execute('SELECT yo_como, quiero, para, ap FROM Casos_Uso, Puntos_Agiles WHERE Casos_Uso.id_iteracion=? AND Casos_Uso.id_ap = Puntos_Agiles.id_ap', 
+        [idIteracion]
+        );
+    }
+
     /*
     static fetchOneIteracion(nombre_fase){ 
         return db.execute('SELECT id_fase FROM Fase WHERE nombre_fase =?',[nombre_fase]);

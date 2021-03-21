@@ -6,18 +6,24 @@ const Puntos_Agiles = require('../models/puntos_agiles');
 
 const { response, request } = require('express');
 
-exports.getIteracionesProyecto = (request,response) => {
+exports.getIteracionesProyecto = (request, response) => {
     Iteracion.fetchAllfromProyect(request.session.idProyecto)
     .then(([rows, fieldData]) => {
         response.render('iteracionesProyecto', {
             title: "Iteraciones",
             iteraciones : rows,
+            csrfToken: request.csrfToken(),
             alerta : request.session.alerta
         });
     })
     .catch(err => {
         console.log(err);
     });
+}
+
+exports.postIteracionesProyecto = (request, response) => {
+    request.session.idIteracion = request.body.idIteracion;
+    response.redirect('/proyectos/resumen-proyecto');
 }
 
 exports.getNuevaIteracion = (request, response) => {
@@ -109,7 +115,9 @@ exports.getResumenProyecto = (request, response) =>{
 }
 
 exports.getCasosUsoProyecto = (request, response) =>{
-    Casos_Uso.fetchAllwithAPvalues() 
+    let idIteracion = request.session.idIteracion;
+
+    Casos_Uso.fetchAllIteracion(idIteracion) 
         .then(([rows, fieldData]) => {
             response.render('casosUso', {
                 title: "Casos de Uso",
