@@ -3,35 +3,39 @@ const router = express.Router();
 const path = require('path');
 const isAuth = require('../util/is_Auth');
 
-const proyectsController = require('../controller/proyectosController');
+const proyectosController = require('../controller/proyectosController');
+const iteracionesController = require('../controller/iteracionesController');
+const casos_usoController = require('../controller/casos_usoController');
+const fasesController = require('../controller/fasesController');
 
-router.get('/iteraciones-proyecto', isAuth, proyectsController.getIteracionesProyecto);
 
-router.post('/iteraciones-proyecto', isAuth, proyectsController.postIteracionesProyecto);
+router.get('/nuevo-proyecto', isAuth, proyectosController.getNuevoProyecto);
 
-router.get('/nueva-iteracion', isAuth, proyectsController.getNuevaIteracion);
+router.post('/nuevo-proyecto', isAuth, proyectosController.postNuevoProyecto);
 
-router.post('/nueva-iteracion', isAuth, proyectsController.postNuevaIteracion);
+router.get('/resumen-proyecto', isAuth, proyectosController.getResumenProyecto);
 
-router.get('/resumen-proyecto', isAuth, proyectsController.getResumenProyecto);
+router.get('/fases-proyecto', isAuth, fasesController.getFasesProyecto);
 
-router.get('/casos-uso-proyecto', isAuth, proyectsController.getCasosUsoProyecto);
+router.get('/avance-proyecto', isAuth, proyectosController.getAvanceProyecto);
 
-router.get('/fases-proyecto', isAuth, proyectsController.getFasesProyecto);
+router.get('/promedios-ap', isAuth, proyectosController.getPromediosAP);
 
-router.get('/avance-proyecto', isAuth, proyectsController.getAvanceProyecto);
+router.get('/estimados-ap', isAuth, proyectosController.getEstimadosAP);
 
-router.get('/capacidad-equipo', isAuth, proyectsController.getCapacidadEquipo);
+router.get('/iteraciones-proyecto', isAuth,iteracionesController.getIteracionesProyecto);
 
-router.get('/tarea-caso-uso', isAuth, proyectsController.getTareaCasoUso);
+router.post('/iteraciones-proyecto', isAuth,iteracionesController.postIteracionesProyecto);
 
-router.get('/promedios-ap', isAuth, proyectsController.getPromediosAP);
+router.get('/nueva-iteracion', isAuth,iteracionesController.getNuevaIteracion);
 
-router.get('/estimados-ap', isAuth, proyectsController.getEstimadosAP);
+router.post('/nueva-iteracion', isAuth,iteracionesController.postNuevaIteracion);
 
-router.get('/nuevo-proyecto', isAuth, proyectsController.getNuevoProyecto);
+router.get('/capacidad-equipo', isAuth, iteracionesController.getCapacidadEquipo);
 
-router.post('/nuevo-proyecto', isAuth, proyectsController.postNuevoProyecto);
+router.get('/casos-uso-iteracion', isAuth, casos_usoController.getCasosUsoIteracion);
+
+router.get('/tarea-caso-uso', isAuth, casos_usoController.getTareaCasoUso);
 
 
 router.use(express.static(path.join(__dirname, '..', 'public')));
