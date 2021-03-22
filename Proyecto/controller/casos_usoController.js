@@ -30,7 +30,7 @@ exports.postCasosUsoIteracion = (request, response) => {
         let casoU = new Casos_Uso(id_ap, idIteracion, yo_como, quiero, para);
         casoU.saveCaso()
             .then(() => {
-               console.log("Caso registrado correctamente"); 
+                response.redirect('/proyectos/casos-uso-iteracion');
             })
             .catch( err => {
                 console.log(err);
@@ -42,20 +42,19 @@ exports.postCasosUsoIteracion = (request, response) => {
     else if(accion === "eliminar") {
         Casos_Uso.DropEntreCaso(idCaso)
             .then(() => {
-                console.log('Eliminada la entrega');
+                Casos_Uso.DropCasoUso(idCaso)
+                    .then(()=> {
+                        response.redirect('/proyectos/casos-uso-iteracion');
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
             })
             .catch( err => {
                 console.log(err);
             });
-        Casos_Uso.DropCasoUso(idCaso)
-            .then(()=> {
-                console.log('Eliminado correctamente'); 
-            })
-            .catch(err => {
-                console.log(err);
-            });
+        
     }
-    response.redirect('/proyectos/casos-uso-iteracion');
 }
 
 exports.getTareaCasoUso = (request, response) =>{
