@@ -1,20 +1,19 @@
 const db = require('../util/mySQL');
 
 module.exports =  class Casos_Uso{
-    constructor(yo_como, quiero, para, ap){
+    constructor(id_ap, id_iteracion, yo_como, quiero, para){
+        this.id_ap = id_ap;
+        this.id_iteracion = id_iteracion;
         this.yo_como = yo_como;
         this.quiero = quiero;
         this.para = para;
-        this.ap = ap;
     }
 
-    // Joaquin 
-    /*
     saveCaso(){ 
-        return db.execute('INSERT INTO Fase (nombre_fase) VALUES (?)',
-        [this.nombre_fase]);
+        return db.execute('INSERT INTO Casos_uso (id_ap, id_iteracion, yo_como, quiero, para) VALUES (?, ?, ?, ?, ?)',
+        [this.id_ap, this.id_iteracion, this.yo_como, this.quiero, this.para]);
     }
-    */
+
     static fetchAllwithAPvalues () {
         return db.execute('SELECT id_casos, yo_como, quiero, para, ap FROM Casos_Uso, Puntos_Agiles WHERE Casos_Uso.id_ap = Puntos_Agiles.id_ap');
     }

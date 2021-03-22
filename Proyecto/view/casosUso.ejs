@@ -5,31 +5,33 @@
 <div class="row">
     <form class="col s12 offset-s3" action="casos-uso-iteracion" method="POST">
         <div class="row">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>" required> 
+
             <div class="input-field col 1">
-              <input id="yo_como" type="text" class="validate">
+              <input name="yo_como" type="text" class="validate" required>
               <label for="yo_como">Yo como</label>
             </div>
             <div class="input-field col 1">
-                <input id="quiero" type="text" class="validate">
+                <input name="quiero" type="text" class="validate" required>
                 <label for="quiero">quiero</label>
             </div>
             <div class="input-field col 1">
-                <input id="para" type="text" class="validate">
+                <input name="para" type="text" class="validate" required>
                 <label for="para">para</label>
             </div>
             <div class="input-field col 1">
-              <select class="browser-default">
+              <select name="id_ap" class="browser-default" required>
                 <option value="" disabled selected>AP</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">5</option>
-                <option value="5">8</option>
-                <option value="6">13</option>
+                <option value="1">1</option> 
+                <option value="2">2</option> 
+                <option value="3">3</option> 
+                <option value="4">5</option> 
+                <option value="5">8</option> 
+                <option value="6">13</option> 
               </select>
             </div>
             <div class="input-field col 2">
-                <input type="submit" value="registrar" id="boton_casos_uso">
+                <input type="submit" name="action" value="registrar">
             </div>
         </div>
     </form>

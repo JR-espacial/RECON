@@ -20,10 +20,21 @@ exports.getCasosUsoIteracion = (request, response) =>{
 exports.postCasosUsoIteracion = (request, response) => {
     let accion = request.body.action;
     let idCaso = request.body.idCaso;
-    console.log(idCaso);
+    let idIteracion = request.session.idIteracion;
 
     if(accion === "registrar") {
-        console.log("Vas a registrar");
+        let yo_como = request.body.yo_como;
+        let quiero = request.body.quiero;
+        let para = request.body.para;
+        let id_ap = request.body.id_ap;
+        let casoU = new Casos_Uso(id_ap, idIteracion, yo_como, quiero, para);
+        casoU.saveCaso()
+            .then(() => {
+               console.log("Caso registrado correctamente"); 
+            })
+            .catch( err => {
+                console.log(err);
+            }); 
     }
     else if(accion === "editar") {
         console.log("Vas a editar?");
