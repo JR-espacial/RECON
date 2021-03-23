@@ -14,16 +14,20 @@ module.exports =  class Casos_Uso{
         [this.id_ap, this.id_iteracion, this.yo_como, this.quiero, this.para]);
     }
 
-    static fetchAllwithAPvalues () {
-        return db.execute('SELECT id_casos, yo_como, quiero, para, ap FROM Casos_Uso, Puntos_Agiles WHERE Casos_Uso.id_ap = Puntos_Agiles.id_ap');
-    }
+    // static fetchAllwithAPvalues () {
+    //     return db.execute('SELECT id_casos, yo_como, quiero, para, ap FROM Casos_Uso, Puntos_Agiles WHERE Casos_Uso.id_ap = Puntos_Agiles.id_ap');
+    // }
 
     static fetchAllIteracion(idIteracion) {
-        return db.execute('SELECT id_casos, yo_como, quiero, para, ap FROM Casos_Uso, Puntos_Agiles WHERE Casos_Uso.id_iteracion=? AND Casos_Uso.id_ap = Puntos_Agiles.id_ap', 
-        [idIteracion]
-        );
+        return db.execute('SELECT id_casos, Casos_Uso.id_ap, yo_como, quiero, para, ap, comentario FROM Casos_Uso, Puntos_Agiles WHERE Casos_Uso.id_iteracion=? AND Casos_Uso.id_ap = Puntos_Agiles.id_ap', 
+        [idIteracion]);
     }
 
+    static ModifyCaso(idCaso, idAp, yo_como, quiero, para, comentario) {
+        return db.execute('UPDATE casos_uso SET id_ap=?, yo_como=?, quiero=?, para=?, comentario=? WHERE id_casos=?', 
+        [idAp, yo_como, quiero, para, comentario, idCaso]);
+    }
+ 
     static DropEntreCaso(idCaso) {
         return db.execute('DELETE FROM entrega WHERE id_casos=?', [idCaso]);
     }

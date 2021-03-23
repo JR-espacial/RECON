@@ -23,6 +23,8 @@ exports.postCasosUsoIteracion = (request, response) => {
     let idIteracion = request.session.idIteracion;
 
     if(accion === "registrar") {
+        console.log('Registrar');
+
         let yo_como = request.body.yo_como;
         let quiero = request.body.quiero;
         let para = request.body.para;
@@ -37,9 +39,29 @@ exports.postCasosUsoIteracion = (request, response) => {
             }); 
     }
     else if(accion === "editar") {
-        console.log("Vas a editar?");
+        console.log("Editar");
+        let idCaso = request.body.idCaso;
+        let idAp = request.body.id_ap;
+        let yo_como = request.body.yo_como;
+        let quiero = request.body.quiero;
+        let para = request.body.para;
+        let comentario = request.body.comentario;
+        let idApPasado = request.body.id_ap_pasado;
+                
+        if (!idAp) idAp = idApPasado;
+        if (!yo_como) yo_como = "";
+        if (!quiero) quiero = "";
+        if (!para) para = "";
+        if (!comentario) comentario = "";
+        
+        Casos_Uso.ModifyCaso(idCaso, idAp, yo_como, quiero, para, comentario)
+        .then(() =>{
+            console.log('Cambio exitoso');
+        })
+        .catch(err => console.log(err) );   
     }
     else if(accion === "eliminar") {
+        console.log('Eliminar');
         Casos_Uso.DropEntreCaso(idCaso)
             .then(() => {
                 console.log('Eliminada la entrega');
