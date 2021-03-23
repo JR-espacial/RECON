@@ -57,6 +57,7 @@ exports.postCasosUsoIteracion = (request, response) => {
         Casos_Uso.ModifyCaso(idCaso, idAp, yo_como, quiero, para, comentario)
         .then(() =>{
             console.log('Cambio exitoso');
+            response.redirect('/proyectos/casos-uso-iteracion');
         })
         .catch(err => console.log(err) );   
     }
@@ -74,9 +75,10 @@ exports.postCasosUsoIteracion = (request, response) => {
             })
             .catch( err => {
                 console.log(err);
-            });
-        
+            });       
     }
+
+    response.redirect('/proyectos/casos-uso-iteracion');
 }
 
 exports.getTareaCasoUso = (request, response) =>{
