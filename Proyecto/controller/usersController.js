@@ -1,4 +1,5 @@
 const Usuario = require('../models/user');
+const bcrypt = require('bcryptjs');
 
 exports.getLogin = (request, response, next) => {
     response.render("login", {
@@ -10,7 +11,6 @@ exports.getLogin = (request, response, next) => {
 };
 
 exports.postLogin = (request, response, next) => {
-
     request.session.error = "";
     const username = request.body.usuario;
     Usuario.fetchOne(username)
@@ -19,17 +19,21 @@ exports.postLogin = (request, response, next) => {
                 request.session.error = "El usuario y/o contraseña no coinciden";
                 response.redirect('/users/login');
             } else {
-                if(request.body.password === rows[0].contrasena){
-                    request.session.isLoggedIn = true;
+                bcrypt.compare(request.body.password, rows[0].contrasena)
+                    .then(doMatch => {
+                        if (doMatch) {
+                            request.session.isLoggedIn = true;
                             request.session.usuario = request.body.usuario;
                             return request.session.save(err => {
                                 response.redirect('/home');
                             });
-                }
-                else{
-                    request.session.error = "El usuario y/o contraseña no coinciden";
-                    response.redirect('/users/login');
-                }
+                        }
+                        request.session.error = "El usuario y/o contraseña no coinciden";
+                        response.redirect('/users/login');
+                    }).catch(err => {
+                        request.session.error = "El usuario y/o contraseña no coinciden";
+                        response.redirect('/users/login');
+                    });
             }
         })
         .catch(err => {
@@ -41,4 +45,23 @@ exports.getLogout = (request, response, next) => {
     request.session.destroy(() => {
         response.redirect('/users/login');
     });
+}
+
+exports.getRegister = (request, response, next) => {
+    response.render('registrar', {
+        title: 'Registra tus datos',
+        csrfToken: request.csrfToken(),
+        isLoggedIn: request.session.isLoggedIn === true ? true : false
+    });
+};
+
+exports.postRegister = (request, response, next) => {
+    const nuevo_usuario = new Usuario(request.body.nombre, request.body.usuario, request.body.password);
+    nuevo_usuario.save()
+        .then(() => {
+            request.session.isLoggedIn = true;
+            request.session.usuario = request.body.usuario;
+            response.redirect('/home');
+        }).catch(err => console.log(err));
+
 }
