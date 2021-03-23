@@ -10,7 +10,7 @@
             <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
             <div class="row">
                 <div class="input-field col s4">
-                    <select name="proyecto" id="selectProyecto">
+                    <select name="proyecto" id="selectProyecto" class="browser-default" required>
                         <option value="" disabled selected>Selecciona el proyecto de la iteración</option>
                         <% for (let proyecto of proyectos) { %>
                             <option value="<%= proyecto.id_proyecto %>"><%= proyecto.nombre_proyecto %></option>
@@ -46,7 +46,7 @@
             </div>
             <div class="row">
                 <div class="col s2 offset-s2">
-                    <a class="waves-effect waves-light btn" id="cancelbtn" href="/home">Cancelar</a>
+                    <a class="waves-effect waves-light btn" id="cancelbtn" href="/proyectos/iteraciones-proyecto">Cancelar</a>
                     <input type="submit" value="Crear" >
                 </div>
             </div>

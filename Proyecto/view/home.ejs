@@ -4,18 +4,19 @@
 
 <% if (alerta) { %>
     <script>alert("Proyecto creado exitosamente");</script>
-<% } %>
+<% } %> 
+
 
 <div class="row">
     <div class="col s2 offset-s9">
-        <div class="search-wrapper focused">
-            <input id="search" placeholder="Search">
-            <i class="material-icons">search</i>
-            <div class="search-results">
-            </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <i class="material-icons prefix">search</i>
+          <input type="text" id="autocomplete-input" class="autocomplete" placeholder="Search">
         </div>
+      </div>
     </div>
-</div>
+  </div>
 
 <!-- Set de tres tarjetas -->
 <div class="row center">
@@ -43,13 +44,18 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        var elems = document.querySelectorAll('.autocomplete');
-        var instances = M.Autocomplete.init({
-        "Apple": null,
-        "Microsoft": null,
-        "Google": 'https://placehold.it/250x250'
-    }, options);
+    let autocomplete = document.getElementById("autocomplete-input");
+    
+    let options = {};
+
+    "<%for (let i = 0; i < proyectos.length; i++) { %>"
+         options["<%=proyectos[i].nombre_proyecto%>"] = null;
+     "<% } %>"
+      
+    var instances = M.Autocomplete.init(autocomplete, { data : options });
+      
     });
+
 </script>
 
 <%- include('includes/closeHTML.ejs'); %>

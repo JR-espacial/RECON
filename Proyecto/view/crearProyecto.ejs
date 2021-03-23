@@ -10,7 +10,7 @@
                     <% if (error) { %>
                         <span style="color:red"><%= error %></span>
                     <% } %>
-                    <input  id="nombre_proyecto" type="text" class="validate" name="nombre">
+                    <input  id="nombre_proyecto" type="text" class="validate" name="nombre" required>
                     <label for="nombre_proyecto">Nombre del proyecto</label>
                 </div>
             </div>
@@ -22,7 +22,7 @@
             </div>
             <div class="row">
                 <div class="input-field col s4">
-                    <select name="departamento">
+                    <select name="departamento" class="browser-default" required>
                         <option value="" disabled selected>Selecciona el departamento del proyecto</option>
                         <option value="1">Finanzas</option>
                         <option value="2">Mercadotecnia</option>
