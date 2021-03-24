@@ -28,24 +28,16 @@
             %>
                 </div>
 
-                <div class="row valign-wrapper">
+                <div class="valign-wrapper row">
                     <div class="center-align">
-                        <a class="btn-floating btn-small cyan pulse boton_añadir"><i class="material-icons">add</i></a>
+                        <a class="btn-floating cyan pulse boton_añadir"><i class="material-icons">add</i></a>
                     </div>
                     <div id="agregar-tarea" class="col s9 m9 l9 center-align">
-                        <span> Prueba </span>
+                        <div class="">
+                            <input placeholder="Nueva Tarea" id="añadir_nombre_fase" name="añadir_nombre_fase" type="text" required>
+                        </div>
                     </div>
                 </div>
-
-                <div class="valign-wrapper">
-                    <div class="center-align">
-                        <a class="btn-floating btn-small cyan pulse boton_añadir"><i class="material-icons">add</i></a>
-                    </div>
-                    <div id="agregar-tarea" class="center-align">
-                        <span> Prueba </span>
-                    </div>
-                </div>
-
             </div>
             <% } %>
         <% } %>
@@ -65,7 +57,6 @@
         </div>
 
         <div id="fase" class="center-align">
-            <br>
             <div id="row">
                 <a class="btn-floating cyan pulse boton_añadir in-line"><i class="material-icons">add</i></a>
                 <div id="tarea-en-fase" class="input-field col s1 in-line">
@@ -73,7 +64,6 @@
                     <label for="añadir_nombre_fase"> Añadir Fase</label>
                 </div>
             </div>
-            <br>
         </div>
 
         <div class="fase">
