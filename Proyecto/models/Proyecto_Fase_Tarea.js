@@ -9,7 +9,7 @@ module.exports =  class Proyecto_Fase_Tarea{
     }
 
     saveProyecto_Fase_Tarea(){ 
-        return db.execute('INSERT INTO proyecto_fase_practica (id_proyecto, id_fase, id_trabajo) VALUES (?)',
+        return db.execute('INSERT INTO proyecto_fase_practica (id_proyecto, id_fase, id_trabajo) VALUES (?, ?, ?)',
         [this.id_proyecto, this.id_fase, this.id_trabajo]);
     }
 

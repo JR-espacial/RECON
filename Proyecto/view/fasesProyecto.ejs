@@ -34,10 +34,35 @@
             <% } %>
         <% } %>
 
+        <div id="fase-agregar" class="center-align">
+            <div id="titulo-fase row">
+                <form action="fases-proyecto" method="POST">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <button name="action" value = "registrar-fase" type="submit" class="btn-floating cyan pulse boton_añadir in-line"><i class="material-icons">add</i></button>
+                    <div class="input-field col s3 in-line">
+                        <input id="añadir_nombre_fase" name="añadir_nombre_fase" type="text" required>
+                        <label for="añadir_nombre_fase"> Añadir Fase</label>
+                    </div>
+                </form>
+                <span>&nbsp&nbsp&nbsp</span>
+            </div>
+        </div>
+
         <div id="fase" class="center-align">
-            <div id="titulo-fase">
-                <a class="btn-floating cyan pulse boton_añadir"><i class="material-icons">add</i></a>
-                <span class="">Añadir Fase</span>
+            <br>
+            <div id="row">
+                <a class="btn-floating cyan pulse boton_añadir in-line"><i class="material-icons">add</i></a>
+                <div id="tarea-en-fase" class="input-field col s1 in-line">
+                    <input id="añadir_nombre_fase" name="añadir_nombre_fase" type="text" required>
+                    <label for="añadir_nombre_fase"> Añadir Fase</label>
+                </div>
+            </div>
+            <br>
+        </div>
+
+        <div class="fase">
+            <div>
+                
             </div>
         </div>
 
