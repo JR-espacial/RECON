@@ -27,9 +27,25 @@
                 if(fase_tarea === lista_tareas.length - 1 || lista_tareas[fase_tarea].nombre_fase !== lista_tareas[fase_tarea + 1].nombre_fase){
             %>
                 </div>
-                <div>
-                    <a class="btn-floating cyan pulse boton_añadir"><i class="material-icons">add</i></a>
+
+                <div class="row valign-wrapper">
+                    <div class="center-align">
+                        <a class="btn-floating btn-small cyan pulse boton_añadir"><i class="material-icons">add</i></a>
+                    </div>
+                    <div id="agregar-tarea" class="col s9 m9 l9 center-align">
+                        <span> Prueba </span>
+                    </div>
                 </div>
+
+                <div class="valign-wrapper">
+                    <div class="center-align">
+                        <a class="btn-floating btn-small cyan pulse boton_añadir"><i class="material-icons">add</i></a>
+                    </div>
+                    <div id="agregar-tarea" class="center-align">
+                        <span> Prueba </span>
+                    </div>
+                </div>
+
             </div>
             <% } %>
         <% } %>

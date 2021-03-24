@@ -27,17 +27,18 @@
 }
 
 #tabla_avance {
-    max-height: 500px;
+500px;
     width: 68%;
     overflow: scroll;
 }
 
 #tabla_avance table td {
-    text-align: center;
+    text-align: center
+                ;
 }
 
 .boton_añadir{
-    margin: 0 10px 5px 10px;
+    margin: 0 5px 5px 10px;
 }
 
 header, main, footer {
@@ -146,15 +147,12 @@ header, main, footer {
     display: inline-block;
 }
 
-.agregar-fase {
+#agregar-tarea {
     background-color: #e1f5fe;
     color: #424242;
+    padding-top:3px;
+    padding-bottom: 3px;
     border-radius: 5px;
-    margin: 0 10px 5px 10px;
-    font-weight: bold;
-    font-size: large;
-    padding-top:5px;
-    padding-bottom: 5px;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    margin: 0 10px 5px 5px;
+    width: 100%;
 }
