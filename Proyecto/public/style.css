@@ -77,6 +77,15 @@ header, main, footer {
     display: inline-block;
 }
 
+#fase-agregar{
+    background-color: #e1f5fe;
+    margin-left: 5px;
+    margin-right: 5px;
+    border-radius: 8px;
+    /* width: 27%; */
+    display: inline-block;
+}
+
 #faseVert{
     background-color: #9abecf;
     margin: 0 0 10px 0;
@@ -126,4 +135,26 @@ header, main, footer {
 
 .thick{
     font-weight: bold;
+}
+
+.in-line{
+    display: inline-block;
+}
+
+#input-field {
+    width: 50%;
+    display: inline-block;
+}
+
+.agregar-fase {
+    background-color: #e1f5fe;
+    color: #424242;
+    border-radius: 5px;
+    margin: 0 10px 5px 10px;
+    font-weight: bold;
+    font-size: large;
+    padding-top:5px;
+    padding-bottom: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }

@@ -18,6 +18,8 @@ router.get('/resumen-proyecto', isAuth, proyectosController.getResumenProyecto);
 
 router.get('/fases-proyecto', isAuth, fasesController.getFasesProyecto);
 
+router.post('/fases-proyecto', isAuth, fasesController.postFasesProyecto);
+
 router.get('/avance-proyecto', isAuth, proyectosController.getAvanceProyecto);
 
 router.get('/promedios-ap', isAuth, proyectosController.getPromediosAP);
