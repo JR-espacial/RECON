@@ -56,6 +56,8 @@ header, main, footer {
     white-space: nowrap;
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
+    width: 98%;
+    margin: 0 auto;
 }
 
 #fasesVert{

@@ -1,6 +1,6 @@
 const Proyecto = require('../models/proyecto');
 const Puntos_Agiles = require('../models/puntos_agiles');
-
+const Proyecto_Fase_Tarea = require('../models/Proyecto_Fase_Tarea');
 
 exports.getNuevoProyecto = (request, response) => {
     const error = request.session.error;
@@ -78,7 +78,16 @@ exports.getPromediosAP = (request, response) =>{
 }
 
 exports.getEstimadosAP = (request, response) =>{
-    response.render('estimadosAP', {
-        title: "Estimados AP"
-    });
+    const id_proyecto = request.session.idProyecto;
+
+    Proyecto_Fase_Tarea.fetchAllTareasFaseProyecto(id_proyecto)
+        .then(([rows, fieldData]) => {
+            response.render('estimadosAP', {
+                title: "Estimados AP",
+                lista_tareas: rows
+            });
+        })
+        .catch(err => {
+            console.log(err);
+        });  
 }

@@ -3,144 +3,35 @@
 <main>
 <div>
 
-    <div class="row">
+    <div class="row center-align">
         <div class="col s6 offset-s3">
             <h2>Fases del proyecto</h2>
         </div>
     </div>
     
     <div id="fases" class="container">
-        <div id="fase" class="center-align">
-            <div id="titulo-fase">
-                <span class="">Análisis:</span>
-            </div>
-            <div>
-                <div id="tarea-en-fase">
-                    <span>Test Cases</span>
+        <% for (let fase_tarea = 0; fase_tarea < lista_tareas.length; fase_tarea++) { %>
+            <%
+                if(fase_tarea === 0 || lista_tareas[fase_tarea].nombre_fase !== lista_tareas[fase_tarea - 1].nombre_fase){
+            %>
+            <div id="fase" class="center-align">
+                <div id="titulo-fase">
+                    <span class=""> <%= lista_tareas[fase_tarea].nombre_fase %>: </span>
                 </div>
-                <div id="tarea-en-fase">
-                    <span class="">Verificación</span>
-                </div>
-            </div>
-    
-        </div>
-
-        <div id="fase" class="center-align">
-            <div id="titulo-fase">
-                <span class="">Diseño:</span>
-            </div>
-            <div>
-                <div id="tarea-en-fase">
-                    <span>Wireframes</span>
-                </div>
-                <div id="tarea-en-fase">
-                    <span class="">Algoritmo</span>
-                </div>
-                <div id="tarea-en-fase">
-                    <span class="">Actualizar documentación</span>
-                </div>
-                <div id="tarea-en-fase">
-                    <span class="">Diagrama de Componentes</span>
+                <div>
+            <% } %>
+                    <div id="tarea-en-fase">
+                        <span> <%= lista_tareas[fase_tarea].nombre_practica_trabajo %> </span>
+                    </div>
+            <%
+                if(fase_tarea === lista_tareas.length - 1 || lista_tareas[fase_tarea].nombre_fase !== lista_tareas[fase_tarea + 1].nombre_fase){
+            %>
                 </div>
             </div>
-            
-        </div>
-
-        <div id="fase" class="center-align">
-            <div id="titulo-fase">
-                <span class="">Implementación:</span>
-            </div>
-            <div>
-                <div id="tarea-en-fase">
-                    <span>BackEnd</span>
-                </div>
-                <div id="tarea-en-fase">
-                    <span class="">FrontEnd</span>
-                </div>
-                <div id="tarea-en-fase">
-                    <span class="">Matriz de Trazabilidad</span>
-                </div>
-                <div id="tarea-en-fase">
-                    <span class="">Verificación</span>
-                </div>
-                <div id="tarea-en-fase">
-                    <span class="">Validación</span>
-                </div>
-            </div>
-            
-        </div>
-
-        <div id="fase" class="center-align">
-            <div id="titulo-fase">
-                <span class="">Pruebas:</span>
-            </div>
-            <div>
-                <div id="tarea-en-fase">
-                    <span>Pruebas de Usabilidad</span>
-                </div>
-                <div id="tarea-en-fase">
-                    <span class="">Pruebas de Seguridad</span>
-                </div>
-                <div id="tarea-en-fase">
-                    <span class="">Pruebas de Integración</span>
-                </div>
-            </div>
-            
-        </div>
-
-        <div id="fase" class="center-align">
-            <div id="titulo-fase">
-                <span class="">Análisis:</span>
-            </div>
-            <div>
-                <div id="tarea-en-fase">
-                    <span>Test Cases</span>
-                </div>
-                <div id="tarea-en-fase">
-                    <span class="">Verificación</span>
-                </div>
-            </div>
-            
-        </div>
-
-        <div id="fase" class="center-align">
-            <div id="titulo-fase">
-                <span class="">Diseño:</span>
-            </div>
-            <div>
-                <div id="tarea-en-fase">
-                    <span>Wireframes</span>
-                </div>
-                <div id="tarea-en-fase">
-                    <span class="">Algoritmo</span>
-                </div>
-                <div id="tarea-en-fase">
-                    <span class="">Actualizar documentación</span>
-                </div>
-                <div id="tarea-en-fase">
-                    <span class="">Diagrama de Componentes</span>
-                </div>
-            </div>
-            
-        </div>
-
-
-        <div id="fase" class="center-align">
-            <div id="titulo-fase">
-                <span class="">Análisis:</span>
-            </div>
-            <div>
-                <div id="tarea-en-fase">
-                    <span>Test Cases</span>
-                </div>
-                <div id="tarea-en-fase">
-                    <span class="">Verificación</span>
-                </div>
-            </div>
-            
-        </div>
-
+            <% } %>
+        <% } %>
     </div>
+
 </div>
 <br>
 <br>

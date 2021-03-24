@@ -107,7 +107,7 @@
         id_proyecto INT NOT NULL,
         id_fase INT NOT NULL,
         id_trabajo INT NOT NULL,
-        PRIMARY KEY(id_proyecto, id_fase),
+        PRIMARY KEY(id_proyecto, id_fase, id_trabajo),
         FOREIGN KEY(id_proyecto) REFERENCES Proyecto(id_proyecto),
         FOREIGN KEY(id_fase) REFERENCES Fase(id_fase),
         FOREIGN KEY(id_trabajo) REFERENCES Practica_Trabajo(id_trabajo)

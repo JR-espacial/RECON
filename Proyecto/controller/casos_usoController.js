@@ -1,4 +1,5 @@
 const Casos_Uso = require('../models/casos_uso');
+const Proyecto_Fase_Tarea = require('../models/Proyecto_Fase_Tarea');
 
 exports.getCasosUsoIteracion = (request, response) =>{
     let idIteracion = request.session.idIteracion;
@@ -82,7 +83,16 @@ exports.postCasosUsoIteracion = (request, response) => {
 }
 
 exports.getTareaCasoUso = (request, response) =>{
-    response.render('tareaCasoUso', {
-        title: "Tareas por Caso de Uso"
-    });
+    const id_proyecto = request.session.idProyecto;
+
+    Proyecto_Fase_Tarea.fetchAllTareasFaseProyecto(id_proyecto)
+        .then(([rows, fieldData]) => {
+            response.render('tareaCasoUso', {
+                title: "Tareas por Caso de Uso",
+                lista_tareas: rows
+            });
+        })
+        .catch(err => {
+            console.log(err);
+        });
 }

@@ -17,4 +17,8 @@ module.exports =  class Fase{
     static fetchOne(nombre_fase){ 
         return db.execute('SELECT id_fase FROM Fase WHERE nombre_fase =?',[nombre_fase]);
     }
+
+    static fetchAllFromProyecto(id_proyecto){
+        return db.execute('SELECT * FROM Fase WHERE id_fase IN (SELECT id_fase FROM proyecto_fase_practica WHERE id_proyecto =?)', [id_proyecto]);
+    }
 }

@@ -340,6 +340,11 @@ INSERT INTO `practica_trabajo` (`id_trabajo`, `nombre_practica_trabajo`) VALUES(
 INSERT INTO `practica_trabajo` (`id_trabajo`, `nombre_practica_trabajo`) VALUES(52, 'Trabajo 4');
 
 INSERT INTO `proyecto_fase_practica` (`id_proyecto`, `id_fase`, `id_trabajo`) VALUES(1, 1, 1);
+INSERT INTO `proyecto_fase_practica` (`id_proyecto`, `id_fase`, `id_trabajo`) VALUES(1, 1, 3);
+INSERT INTO `proyecto_fase_practica` (`id_proyecto`, `id_fase`, `id_trabajo`) VALUES(1, 1, 4);
+INSERT INTO `proyecto_fase_practica` (`id_proyecto`, `id_fase`, `id_trabajo`) VALUES(1, 2, 1);
+INSERT INTO `proyecto_fase_practica` (`id_proyecto`, `id_fase`, `id_trabajo`) VALUES(1, 2, 5);
+INSERT INTO `proyecto_fase_practica` (`id_proyecto`, `id_fase`, `id_trabajo`) VALUES(1, 4, 7);
 INSERT INTO `proyecto_fase_practica` (`id_proyecto`, `id_fase`, `id_trabajo`) VALUES(35, 2, 1);
 INSERT INTO `proyecto_fase_practica` (`id_proyecto`, `id_fase`, `id_trabajo`) VALUES(1, 2, 2);
 INSERT INTO `proyecto_fase_practica` (`id_proyecto`, `id_fase`, `id_trabajo`) VALUES(3, 1, 2);
