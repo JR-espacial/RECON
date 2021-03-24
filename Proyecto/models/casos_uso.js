@@ -7,11 +7,12 @@ module.exports =  class Casos_Uso{
         this.yo_como = yo_como;
         this.quiero = quiero;
         this.para = para;
+        this.comentario = "";
     }
 
     saveCaso(){ 
-        return db.execute('INSERT INTO Casos_uso (id_ap, id_iteracion, yo_como, quiero, para) VALUES (?, ?, ?, ?, ?)',
-        [this.id_ap, this.id_iteracion, this.yo_como, this.quiero, this.para]);
+        return db.execute('INSERT INTO Casos_uso (id_ap, id_iteracion, yo_como, quiero, para, comentario) VALUES (?, ?, ?, ?, ?, ?)',
+        [this.id_ap, this.id_iteracion, this.yo_como, this.quiero, this.para, this.comentario]);
     }
 
     // static fetchAllwithAPvalues () {
