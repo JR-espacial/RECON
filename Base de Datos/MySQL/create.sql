@@ -74,7 +74,7 @@
     CREATE TABLE Empleado (
         id_empleado INT AUTO_INCREMENT NOT NULL,
         usuario VARCHAR(14),
-        contrasena VARCHAR(16),
+        contrasena VARCHAR(100),
         nombre_empleado VARCHAR(64),
         PRIMARY KEY(id_empleado)
     );
@@ -107,7 +107,7 @@
         id_proyecto INT NOT NULL,
         id_fase INT NOT NULL,
         id_trabajo INT NOT NULL,
-        PRIMARY KEY(id_proyecto, id_fase),
+        PRIMARY KEY(id_proyecto, id_fase, id_trabajo),
         FOREIGN KEY(id_proyecto) REFERENCES Proyecto(id_proyecto),
         FOREIGN KEY(id_fase) REFERENCES Fase(id_fase),
         FOREIGN KEY(id_trabajo) REFERENCES Practica_Trabajo(id_trabajo)

@@ -251,7 +251,7 @@ CREATE TABLE Proyecto_Fase_Practica (
 	id_proyecto CHAR(6) NOT NULL,
     id_fase CHAR(6) NOT NULL,
 	id_trabajo CHAR(6)NOT NULL,
-    PRIMARY KEY(id_proyecto, id_fase),
+    PRIMARY KEY(id_proyecto, id_fase, id_trabajo),
     FOREIGN KEY(id_proyecto) REFERENCES Proyecto(id_proyecto),
     FOREIGN KEY(id_fase) REFERENCES Fase(id_fase),
 	FOREIGN KEY(id_trabajo) REFERENCES Practica_Trabajo(id_trabajo)
