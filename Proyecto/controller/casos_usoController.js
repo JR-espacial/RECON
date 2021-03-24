@@ -82,17 +82,3 @@ exports.postCasosUsoIteracion = (request, response) => {
     response.redirect('/proyectos/casos-uso-iteracion');
 }
 
-exports.getTareaCasoUso = (request, response) =>{
-    const id_proyecto = request.session.idProyecto;
-
-    Proyecto_Fase_Tarea.fetchAllTareasFaseProyecto(id_proyecto)
-        .then(([rows, fieldData]) => {
-            response.render('tareaCasoUso', {
-                title: "Tareas por Caso de Uso",
-                lista_tareas: rows
-            });
-        })
-        .catch(err => {
-            console.log(err);
-        });
-}

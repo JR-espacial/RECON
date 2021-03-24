@@ -7,6 +7,7 @@ const proyectosController = require('../controller/proyectosController');
 const iteracionesController = require('../controller/iteracionesController');
 const casos_usoController = require('../controller/casos_usoController');
 const fasesController = require('../controller/fasesController');
+const tareaCasosUsoController = require('../controller/tareaCasoUsoController');
 
 
 router.get('/nuevo-proyecto', isAuth, proyectosController.getNuevoProyecto);
@@ -37,7 +38,7 @@ router.get('/casos-uso-iteracion', isAuth, casos_usoController.getCasosUsoIterac
 
 router.post('/casos-uso-iteracion', isAuth, casos_usoController.postCasosUsoIteracion);
 
-router.get('/tarea-caso-uso', isAuth, casos_usoController.getTareaCasoUso);
+router.get('/tarea-caso-uso', isAuth, tareaCasosUsoController.getTareaCasoUso);
 
 
 router.use(express.static(path.join(__dirname, '..', 'public')));
