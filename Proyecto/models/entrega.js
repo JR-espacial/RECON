@@ -14,14 +14,12 @@ module.exports =  class Entrega {
     // }
 
     static fetchAll() {
-        return db.execute('SELECT * FROM Iteracion');
+        return db.execute('SELECT * FROM Entrega');
+    }
+    
+    static fetchTareaDeCaso(idCaso) {
+        return db.execute('SELECT id_trabajo FROM entrega WHERE id_casos=?', 
+        [idCaso]);
     }
 
-    static fetchAllfromProyect(id_proyecto) {
-        return db.execute('SELECT * FROM Iteracion WHERE id_proyecto =?',[id_proyecto]);
-    }
-
-    static fetchOne(num_iteracion) { 
-        return db.execute('SELECT id_iteracion FROM Iteracion WHERE num_iteracion =?',[num_iteracion]);
-    }
 }

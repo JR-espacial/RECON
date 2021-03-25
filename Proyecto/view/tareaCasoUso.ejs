@@ -14,30 +14,26 @@
                 <!-- Quiero -->
                 <div class="col s6 m6 l6" id="tabla_caso_uso_tareas">
                     <table class="highlight">
-                        <thead>
-                        <tr>
-                            <th class="center-align">Quiero</th>
-                            <th class="right-align">
-                                <button class="btn waves-effect waves-light" type="submit" name="action">
-                                    <i class="material-icons">forward</i>
-                                </button>
-                            </th>
-                        </tr>
+                        <thead> 
+                            <tr>
+                                <th class="center-align">Quiero</th>
+                                <th></th>      
+                            </tr>
                         </thead>
-                
                         <tbody>
                             <% for (quiero of lista_quiero) { %>
                                 <tr>
-                                    <td>
-                                        <label>
-                                            <input name="group1" type="radio" />
-                                            <span>
-                                                <div><strong><%= quiero.quiero %></strong></div>
-                                            </span>
-                                        </label> 
-                                    </td>
+                                    <td><%= quiero.quiero %></td>
+
+                                    <form action="tarea-caso-uso" method="POST">
+                                        <input type="hidden" name="_csrf" value="<%= csrfToken %>"> 
+                                        <input type="hidden" name="idCaso" value="<%= quiero.id_casos %>">
+                                        <td>
+                                            <button type="submit"><i class="small material-icons">forward</i></button>
+                                        </td>
+                                    </form>
                                 </tr>
-                            <% } %>    
+                            <% } %>
                         </tbody>
                     </table>
                 </div>
@@ -60,7 +56,19 @@
                             <!-- Despliegue de tareas de la fase -->
                             <div id="tarea-en-fase">
                                 <label>
-                                    <input type="checkbox" class="filled-in" checked="checked" />
+                                    <!-- Verificar si debe o no estar checada (asociada al caso de uso) -->
+                                    <% let found = false; %> 
+                                    <% for(let i=0; i < tareas_Caso.length; i++) { 
+                                        if(tareas_Caso[i].id_trabajo === lista_tareas[fase_tarea].id_trabajo) {   
+                                            found = true;
+                                            break; 
+                                        } 
+                                    } %>
+                                    <% if(found) { %>
+                                        <input type="checkbox" class="filled-in" checked="checked" />
+                                    <% } else { %>
+                                        <input type="checkbox" class="filled-in"/> 
+                                    <% } %> 
                                     <span> <%= lista_tareas[fase_tarea].nombre_practica_trabajo %> </span>
                                 </label>
                             </div>
