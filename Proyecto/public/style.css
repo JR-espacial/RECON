@@ -125,3 +125,7 @@ header, main, footer {
 .thick{
     font-weight: bold;
 }
+
+.input-field .prefix.right{
+    right: 0;
+  }

@@ -27,11 +27,13 @@
                 </div>
             </div>
             <div class="row">
-                <div class="search-wrapper col s4">
-                    <input id="search" placeholder="Busca colaborador por nombre">
-                    <i class="material-icons">search</i>
-                    <div class="search-results">
+                <div class="col s4">
+                  <div class="row">
+                    <div class="input-field col s12">
+                      <i class="material-icons prefix ">search</i>
+                      <input type="text" id="autocomplete-input" name="colaborador" class="autocomplete" placeholder="Añadir colaboradores">
                     </div>
+                  </div>
                 </div>
             </div>
             <div class="row">
@@ -67,6 +69,21 @@
             location.href = "nuevo-proyecto";
         }
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+    let autocomplete = document.getElementById("autocomplete-input");
+    
+    let options = {};
+
+    "<%for (let i = 0; i < empleados.length; i++) { %>"
+         options["<%=empleados[i].nombre_empleado%>"] = null;
+     "<% } %>"
+    
+      
+    var instances = M.Autocomplete.init(autocomplete, { data : options });
+      
+    });
+
 </script>
 
 <%- include('includes/closeHTML.ejs'); %>
