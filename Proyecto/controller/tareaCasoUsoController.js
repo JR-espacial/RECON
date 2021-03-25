@@ -24,3 +24,11 @@ exports.getTareaCasoUso = (request, response) =>{
             console.log(err);
         })
 }
+
+exports.postTareaCasoUso = (request, response) => {
+    const id_caso = request.body.idCaso;
+    console.log(request.body.boton_radio);
+    console.log(id_caso);
+
+    response.redirect('/proyectos/tarea-caso-uso')
+}

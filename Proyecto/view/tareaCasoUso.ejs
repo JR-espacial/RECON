@@ -14,31 +14,38 @@
                 <!-- Quiero -->
                 <div class="col s6 m6 l6" id="tabla_caso_uso_tareas">
                     <table class="highlight">
-                        <thead>
-                        <tr>
-                            <th class="center-align">Quiero</th>
-                            <th class="right-align">
-                                <button class="btn waves-effect waves-light" type="submit" name="action">
-                                    <i class="material-icons">forward</i>
-                                </button>
-                            </th>
-                        </tr>
-                        </thead>
-                
-                        <tbody>
-                            <% for (quiero of lista_quiero) { %>
+                        <form action="tarea-caso-uso" method="POST">
+                            <thead> 
                                 <tr>
-                                    <td>
-                                        <label>
-                                            <input name="group1" type="radio" />
-                                            <span>
-                                                <div><strong><%= quiero.quiero %></strong></div>
-                                            </span>
-                                        </label> 
-                                    </td>
+                                    <th class="center-align">Quiero</th>
+                                    <th class="right-align">
+                                        <button class="btn waves-effect waves-light" type="submit" name="action">
+                                            <i class="material-icons">forward</i>
+                                        </button>
+                                    </th>      
                                 </tr>
-                            <% } %>    
-                        </tbody>
+                            </thead>
+                    
+                            <tbody>
+                                <% for (quiero of lista_quiero) { %>
+                                    <tr>
+                                        <td>
+                                            <label>
+                                                <input name="boton_radio" type="radio" value="<%= quiero.id_casos %>"/>
+                                                <span>
+                                                    <div><strong><%= quiero.quiero %></strong></div>
+                                                </span>
+                                            </label> 
+                                        </td>
+                                        <!-- Alargar la linea... -->
+                                        <td></td>
+                                    </tr>
+                                <% } %>
+                            </tbody>
+                            <!-- Cerrar y mandar parametros de forma para hacer submit -->
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>"> 
+                            <input type="hidden" name="idCaso" value="<%= quiero.id_casos %>">
+                        </form>
                     </table>
                 </div>
                 
