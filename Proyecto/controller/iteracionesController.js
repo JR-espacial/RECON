@@ -1,5 +1,6 @@
 const Proyecto = require('../models/proyecto');
 const Iteracion = require('../models/iteracion');
+const Usuario = require('../models/user');
 
 exports.getIteracionesProyecto = (request,response) => {
     const idProyecto = request.session.idProyecto;
@@ -32,11 +33,18 @@ exports.getNuevaIteracion = (request, response) => {
 
     Proyecto.fetchAll()
     .then(([rows, fieldData]) => {
-        response.render('crearIteracion', {
-            title: "Crear Iteración",
-            proyectos : rows,
-            alerta : alerta,
-            csrfToken: request.csrfToken()
+        Usuario.fetchAll()
+        .then(([rows2, fieldData]) => {
+            response.render('crearIteracion', {
+                title: "Crear Iteración",
+                empleados: rows2,
+                proyectos : rows,
+                alerta : alerta,
+                csrfToken: request.csrfToken()
+            });
+        })
+        .catch(err => {
+            console.log(err);
         });
     })
     .catch(err => {
@@ -50,6 +58,9 @@ exports.postNuevaIteracion = (request, response) => {
     const last = request.session.last;
     const id_proyecto = request.body.proyecto;
     const descripcion = request.body.descripcion;
+    const colaborador = request.body.colaborador;
+    console.log(colaborador);
+    
 
     Iteracion.saveCapacidad()
     .then(() => {
