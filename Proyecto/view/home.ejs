@@ -25,10 +25,9 @@
             <div class="card">
                 <div class="card-image">
                     <img src="https://www.esan.edu.pe/conexion/actualidad/2017/10/26/1500x844_portafolio_proyectos.jpg" alt="Proyecto">
-                    <button data-target="modal1_<%= proyecto.id_proyecto %>" class="btn-floating halfway-fab waves-effect waves-light modal-trigger" name="action" value="editar"><i class="small material-icons">mode_edit</i></button>
                     <div id="modal1_<%= proyecto.id_proyecto %>" class="modal large">
                         <form action="home/modificar" method="POST">
-                          <!-- Modal Content -->
+                        <!-- Modal Content -->
                             <div class="modal-content">
                                 <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
                                 <input type="hidden" name="id_proyecto" value="<%= proyecto.id_proyecto %>">
@@ -66,7 +65,28 @@
                         </form>
                     </div>
                 </div>
-                <span class="card-title"><%= proyecto.nombre_proyecto %></span>
+                <div class="card-content">
+                    <span><%= proyecto.nombre_proyecto %></span>
+                    <a class='dropdown-trigger grey-text text-darken-4' href='#' data-target='dropdown1'><i class="material-icons right">more_vert</i></a>
+                    <ul id='dropdown1' class='dropdown-content'>
+                        <li ><a data-target="modal1_<%= proyecto.id_proyecto %>" class="modal-trigger"><i class="material-icons">mode_edit</i>Editar</a></li>
+                        <li >
+                            <form action="/home/eliminar" method="POST" id="eliminar_<%= proyecto.id_proyecto %>">
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                <input type="hidden" name="id_proyecto" value="<%= proyecto.id_proyecto %>">
+                                <button type="submit"><i class="material-icons">delete</i>Eliminar</button>
+                                <script> 
+                                    document.getElementById("eliminar_<%= proyecto.id_proyecto %>").addEventListener('submit', (e) => {
+                                      let confirmacion = confirm('¿Estás seguro de eliminar el caso de uso?');
+                                      if(!confirmacion){
+                                        e.preventDefault();
+                                      }  
+                                    });
+                                </script>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
                 <div class="card-action">
                     <form action="home" method="POST">
                         <input type="hidden" name="_csrf" value="<%= csrfToken %>" >

@@ -57,3 +57,15 @@ exports.postEditarProyecto = (request, response) => {
             console.log(err);
         });
 }
+
+exports.postEliminarProyecto = (request, response) => {
+    const id_proyecto = request.body.id_proyecto;
+    Proyecto.eliminarProyecto(id_proyecto)
+    .then(() => {
+        request.session.alerta = "Proyecto eliminado exitosamente";
+        response.redirect('/home');
+    })
+    .catch(err => {
+        console.log(err);
+    });
+}

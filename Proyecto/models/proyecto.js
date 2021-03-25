@@ -37,4 +37,8 @@ module.exports =  class Proyecto{
         return db.execute('UPDATE Proyecto_Departamento SET id_departamento = ? WHERE id_proyecto = ?', [id_departamento, id_proyecto])
     }
 
+    static eliminarProyecto(id_proyecto){
+        return db.execute('DELETE FROM Proyecto_Departamento WHERE id_proyecto = ?; DELETE FROM Proyecto WHERE id_proyecto = ?', [id_proyecto, id_proyecto]);
+    }
+
 }
