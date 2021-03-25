@@ -7,6 +7,8 @@ const homeController = require('../controller/homeController');
 
 router.get('/', isAuth, homeController.getHome);
 router.post('/', isAuth, homeController.postProyectoID);
+router.post('/modificar', isAuth, homeController.postEditarProyecto);
+
 
 router.use(express.static(path.join(__dirname, '..', 'public')));
 

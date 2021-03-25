@@ -3,7 +3,7 @@
 <%- include('includes/navbarPrincipal.ejs'); %>
 
 <% if (alerta) { %>
-    <script>alert("Proyecto creado exitosamente");</script>
+    <script>alert("<%= alerta %>");</script>
 <% } %> 
 
 <div class="row">
@@ -25,6 +25,46 @@
             <div class="card">
                 <div class="card-image">
                     <img src="https://www.esan.edu.pe/conexion/actualidad/2017/10/26/1500x844_portafolio_proyectos.jpg" alt="Proyecto">
+                    <button data-target="modal1_<%= proyecto.id_proyecto %>" class="btn-floating halfway-fab waves-effect waves-light modal-trigger" name="action" value="editar"><i class="small material-icons">mode_edit</i></button>
+                    <div id="modal1_<%= proyecto.id_proyecto %>" class="modal large">
+                        <form action="home/modificar" method="POST">
+                          <!-- Modal Content -->
+                            <div class="modal-content">
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
+                                <input type="hidden" name="id_proyecto" value="<%= proyecto.id_proyecto %>">
+                                    <div class="col s6 offset-s4">
+                                        <div class="row">
+                                            <div class="input-field col s8">
+                                                <input  id="nombre_proyecto" type="text" class="validate" name="nombre" value="<%= proyecto.nombre_proyecto %>" required>
+                                                <label for="nombre_proyecto">Nombre del proyecto</label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="input-field col s8">
+                                                <input  id="descripcion_proyecto" type="text" class="validate" name="descripcion" value="<%= proyecto.descripcion %>">
+                                                <label for="descripcion_proyecto">Descripción del proyecto</label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="input-field col s8">
+                                                <select name="departamento" class="browser-default" required>
+                                                    <option value="" disabled selected>Selecciona el departamento del proyecto</option>
+                                                    <option value="1">Finanzas</option>
+                                                    <option value="2">Mercadotecnia</option>
+                                                    <option value="3">Produccion</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col s8">
+                                                <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
+                                                <button type="submit" class="waves-effect waves-green btn-flat" name="action" value="editar">Aceptar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>  
+                        </form>
+                    </div>
                 </div>
                 <span class="card-title"><%= proyecto.nombre_proyecto %></span>
                 <div class="card-action">

@@ -156,3 +156,8 @@ header, main, footer {
     margin: 15px 10px 0px 5px;
     width: 100%;
 }
+
+div#modal5 {
+    width: 50%
+}
+    

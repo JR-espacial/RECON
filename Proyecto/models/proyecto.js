@@ -24,4 +24,17 @@ module.exports =  class Proyecto{
     static fetchOne(nombre_proyecto){ 
         return db.execute('SELECT id_proyecto FROM Proyecto WHERE nombre_proyecto =?',[nombre_proyecto]);
     }
+
+    static fetchOneModificar(nombre_proyecto, id_proyecto){ 
+        return db.execute('SELECT id_proyecto FROM Proyecto WHERE nombre_proyecto =? AND NOT id_proyecto = ?',[nombre_proyecto, id_proyecto]);
+    }
+
+    static modificarProyecto(nombre_proyecto, descripcion, id_proyecto){
+        return db.execute('UPDATE Proyecto SET nombre_proyecto = ?, descripcion = ? WHERE id_proyecto = ?', [nombre_proyecto, descripcion, id_proyecto]);
+    }
+
+    static modificarProyectoDepto(id_departamento, id_proyecto){
+        return db.execute('UPDATE Proyecto_Departamento SET id_departamento = ? WHERE id_proyecto = ?', [id_departamento, id_proyecto])
+    }
+
 }
