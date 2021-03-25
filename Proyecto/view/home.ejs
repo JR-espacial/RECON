@@ -3,7 +3,7 @@
 <%- include('includes/navbarPrincipal.ejs'); %>
 
 <% if (alerta) { %>
-    <script>alert("Proyecto creado exitosamente");</script>
+    <script>alert("<%= alerta %>");</script>
 <% } %> 
 
 <div class="row">
@@ -25,8 +25,68 @@
             <div class="card">
                 <div class="card-image">
                     <img src="https://www.esan.edu.pe/conexion/actualidad/2017/10/26/1500x844_portafolio_proyectos.jpg" alt="Proyecto">
+                    <div id="modal1_<%= proyecto.id_proyecto %>" class="modal large">
+                        <form action="home/modificar" method="POST">
+                        <!-- Modal Content -->
+                            <div class="modal-content">
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
+                                <input type="hidden" name="id_proyecto" value="<%= proyecto.id_proyecto %>">
+                                    <div class="col s6 offset-s4">
+                                        <div class="row">
+                                            <div class="input-field col s8">
+                                                <input  id="nombre_proyecto" type="text" class="validate" name="nombre" value="<%= proyecto.nombre_proyecto %>" required>
+                                                <label for="nombre_proyecto">Nombre del proyecto</label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="input-field col s8">
+                                                <input  id="descripcion_proyecto" type="text" class="validate" name="descripcion" value="<%= proyecto.descripcion %>">
+                                                <label for="descripcion_proyecto">Descripción del proyecto</label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="input-field col s8">
+                                                <select name="departamento" class="browser-default" required>
+                                                    <option value="" disabled selected>Selecciona el departamento del proyecto</option>
+                                                    <option value="1">Finanzas</option>
+                                                    <option value="2">Mercadotecnia</option>
+                                                    <option value="3">Produccion</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col s8">
+                                                <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
+                                                <button type="submit" class="waves-effect waves-green btn-flat" name="action" value="editar">Aceptar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>  
+                        </form>
+                    </div>
                 </div>
-                <span class="card-title"><%= proyecto.nombre_proyecto %></span>
+                <div class="card-content">
+                    <span><%= proyecto.nombre_proyecto %></span>
+                    <a class='dropdown-trigger grey-text text-darken-4' href='#' data-target='dropdown1'><i class="material-icons right">more_vert</i></a>
+                    <ul id='dropdown1' class='dropdown-content'>
+                        <li ><a data-target="modal1_<%= proyecto.id_proyecto %>" class="modal-trigger"><i class="material-icons">mode_edit</i>Editar</a></li>
+                        <li >
+                            <form action="/home/eliminar" method="POST" id="eliminar_<%= proyecto.id_proyecto %>">
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                <input type="hidden" name="id_proyecto" value="<%= proyecto.id_proyecto %>">
+                                <button type="submit"><i class="material-icons">delete</i>Eliminar</button>
+                                <script> 
+                                    document.getElementById("eliminar_<%= proyecto.id_proyecto %>").addEventListener('submit', (e) => {
+                                      let confirmacion = confirm('¿Estás seguro de eliminar el caso de uso?');
+                                      if(!confirmacion){
+                                        e.preventDefault();
+                                      }  
+                                    });
+                                </script>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
                 <div class="card-action">
                     <form action="home" method="POST">
                         <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
