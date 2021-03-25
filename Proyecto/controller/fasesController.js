@@ -21,22 +21,17 @@ exports.getFasesProyecto = (request, response) =>{
 exports.postFasesProyecto = (request, response) => {
     const id_proyecto = request.session.idProyecto * 1;
     let accion = request.body.action;
-    console.log(id_proyecto);
-    console.log(accion);
+    
     if (accion === "registrar-fase") {
         let nombre_fase = request.body.añadir_nombre_fase;
         let fase = new Fase(nombre_fase);
-        console.log(nombre_fase);
 
         fase.saveFase()
             .then(() => {
                 Fase.fetchOne(nombre_fase) 
                     .then(([rows, fieldData]) => {
-                        console.log(rows);
                         let id_fase = rows[0].id_fase;
-                        console.log(id_fase);
                         let proyecto_fase_tarea = new Proyecto_Fase_Tarea(id_proyecto, id_fase, 1);
-                        console.log(proyecto_fase_tarea);
                         proyecto_fase_tarea.saveProyecto_Fase_Tarea()
                             .then(() => {
                                 response.redirect('fases-proyecto');
@@ -47,11 +42,38 @@ exports.postFasesProyecto = (request, response) => {
                     })
                     .catch(err => {
                         console.log(err);
-                    });   
+                    });
             })
             .catch( err => {
                 console.log(err);
             }); 
+    }
+
+    if(accion === "registrar-tarea"){
+        const id_fase = request.body.id_fase;
+        const nombre_tarea = request.body.añadir_nombre_tarea;
+        const tarea = new Tarea(nombre_tarea);
+        tarea.saveTarea()
+            .then(() => {
+                Tarea.fetchOne(nombre_tarea)
+                    .then(([rows, fieldData]) => {
+                        const id_tarea = rows[0].id_trabajo;
+                        const proyecto_fase_tarea = new Proyecto_Fase_Tarea(id_proyecto, id_fase, id_tarea);
+                        proyecto_fase_tarea.saveProyecto_Fase_Tarea()
+                            .then(() => {
+                                response.redirect('fases-proyecto');
+                            })
+                            .catch(err => {
+                                console.log(err);
+                            });
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            })
+            .catch(err => {
+                console.log(err);
+            });
     }
 
 }

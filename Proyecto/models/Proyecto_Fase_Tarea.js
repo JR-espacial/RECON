@@ -18,7 +18,7 @@ module.exports =  class Proyecto_Fase_Tarea{
     }
 
     static fetchAllTareasFaseProyecto(id_proyecto){
-        return db.execute('SELECT nombre_fase, nombre_practica_trabajo FROM proyecto_fase_practica PFP INNER JOIN practica_trabajo PT ON PFP.id_trabajo = PT.id_trabajo INNER JOIN Fase F ON F.id_fase = PFP.id_fase WHERE id_proyecto =? ORDER BY PFP.id_fase, PFP.id_trabajo', [id_proyecto]);
+        return db.execute('SELECT PFP.id_fase, nombre_fase, PFP.id_trabajo, nombre_practica_trabajo FROM proyecto_fase_practica PFP INNER JOIN practica_trabajo PT ON PFP.id_trabajo = PT.id_trabajo INNER JOIN Fase F ON F.id_fase = PFP.id_fase WHERE id_proyecto =? ORDER BY PFP.id_fase, PFP.id_trabajo', [id_proyecto]);
     }
 
 }
