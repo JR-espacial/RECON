@@ -14,38 +14,27 @@
                 <!-- Quiero -->
                 <div class="col s6 m6 l6" id="tabla_caso_uso_tareas">
                     <table class="highlight">
-                        <form action="tarea-caso-uso" method="POST">
-                            <thead> 
+                        <thead> 
+                            <tr>
+                                <th class="center-align">Quiero</th>
+                                <th></th>      
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% for (quiero of lista_quiero) { %>
                                 <tr>
-                                    <th class="center-align">Quiero</th>
-                                    <th class="right-align">
-                                        <button class="btn waves-effect waves-light" type="submit" name="action">
-                                            <i class="material-icons">forward</i>
-                                        </button>
-                                    </th>      
-                                </tr>
-                            </thead>
-                    
-                            <tbody>
-                                <% for (quiero of lista_quiero) { %>
-                                    <tr>
+                                    <td><%= quiero.quiero %></td>
+
+                                    <form action="tarea-caso-uso" method="POST">
+                                        <input type="hidden" name="_csrf" value="<%= csrfToken %>"> 
+                                        <input type="hidden" name="idCaso" value="<%= quiero.id_casos %>">
                                         <td>
-                                            <label>
-                                                <input name="boton_radio" type="radio" value="<%= quiero.id_casos %>"/>
-                                                <span>
-                                                    <div><strong><%= quiero.quiero %></strong></div>
-                                                </span>
-                                            </label> 
+                                            <button type="submit"><i class="small material-icons">forward</i></button>
                                         </td>
-                                        <!-- Alargar la linea... -->
-                                        <td></td>
-                                    </tr>
-                                <% } %>
-                            </tbody>
-                            <!-- Cerrar y mandar parametros de forma para hacer submit -->
-                            <input type="hidden" name="_csrf" value="<%= csrfToken %>"> 
-                            <input type="hidden" name="idCaso" value="<%= quiero.id_casos %>">
-                        </form>
+                                    </form>
+                                </tr>
+                            <% } %>
+                        </tbody>
                     </table>
                 </div>
                 
@@ -67,7 +56,14 @@
                             <!-- Despliegue de tareas de la fase -->
                             <div id="tarea-en-fase">
                                 <label>
-                                    <input type="checkbox" class="filled-in" checked="checked" />
+                                    <!-- Verificar si debe o no estar checada (asociada al caso de uso) -->
+                                    <% for(let i=0; i < tareas_Caso.length; i++) { 
+                                        if(tareas_Caso[i].id_practica === lista_tareas[fase_tarea].id_practica) { %>   
+                                            <input type="checkbox" class="filled-in" checked="checked" />
+                                        <% break;
+                                        } else if(i === tareas_Caso.length-1) { %> 
+                                            <input type="checkbox" class="filled-in"/>     
+                                        <% } %>
                                     <span> <%= lista_tareas[fase_tarea].nombre_practica_trabajo %> </span>
                                 </label>
                             </div>
