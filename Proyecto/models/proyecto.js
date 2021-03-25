@@ -18,7 +18,7 @@ module.exports =  class Proyecto{
     
 
     static fetchAll(){
-        return db.execute('SELECT * FROM Proyecto');
+        return db.execute('SELECT * FROM Proyecto WHERE estado_proyecto = 1');
     }
 
     static fetchOne(nombre_proyecto){ 
@@ -34,11 +34,11 @@ module.exports =  class Proyecto{
     }
 
     static modificarProyectoDepto(id_departamento, id_proyecto){
-        return db.execute('UPDATE Proyecto_Departamento SET id_departamento = ? WHERE id_proyecto = ?', [id_departamento, id_proyecto])
+        return db.execute('UPDATE Proyecto_Departamento SET id_departamento = ? WHERE id_proyecto = ?', [id_departamento, id_proyecto]);
     }
 
     static eliminarProyecto(id_proyecto){
-        return db.execute('DELETE FROM Proyecto_Departamento WHERE id_proyecto = ?; DELETE FROM Proyecto WHERE id_proyecto = ?', [id_proyecto, id_proyecto]);
+        return db.execute('UPDATE Proyecto SET estado_proyecto = 0 WHERE id_proyecto = ?', [id_proyecto]);
     }
 
 }
