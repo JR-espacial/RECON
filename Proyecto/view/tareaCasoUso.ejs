@@ -57,13 +57,18 @@
                             <div id="tarea-en-fase">
                                 <label>
                                     <!-- Verificar si debe o no estar checada (asociada al caso de uso) -->
+                                    <% let found = false; %> 
                                     <% for(let i=0; i < tareas_Caso.length; i++) { 
-                                        if(tareas_Caso[i].id_practica === lista_tareas[fase_tarea].id_practica) { %>   
-                                            <input type="checkbox" class="filled-in" checked="checked" />
-                                        <% break;
-                                        } else if(i === tareas_Caso.length-1) { %> 
-                                            <input type="checkbox" class="filled-in"/>     
-                                        <% } %>
+                                        if(tareas_Caso[i].id_trabajo === lista_tareas[fase_tarea].id_trabajo) {   
+                                            found = true;
+                                            break; 
+                                        } 
+                                    } %>
+                                    <% if(found) { %>
+                                        <input type="checkbox" class="filled-in" checked="checked" />
+                                    <% } else { %>
+                                        <input type="checkbox" class="filled-in"/> 
+                                    <% } %> 
                                     <span> <%= lista_tareas[fase_tarea].nombre_practica_trabajo %> </span>
                                 </label>
                             </div>
