@@ -36,6 +36,7 @@
         descripcion VARCHAR(1000),
         fecha_inicio DATE,
         fecha_fin DATE,
+        estado_proyecto BIT,
         PRIMARY KEY(id_proyecto)
     );
 

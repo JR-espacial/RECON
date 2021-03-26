@@ -118,6 +118,18 @@ exports.postEditarIteracion = (request, response) =>{
     });
 }
 
+exports.postEliminarIteracion = (request, response) => {
+    const id_iteracion = request.body.iteracion;
+    Proyecto.postEliminarIteracion(id_iteracion)
+    .then(() => {
+        request.session.alerta = "Iteración eliminada exitosamente";
+        response.redirect('/proyectos/iteraciones-proyecto');
+    })
+    .catch(err => {
+        console.log(err);
+    });
+}
+
 exports.getCapacidadEquipo = (request, response) =>{
     response.render('capacidadEquipo', {
         title: "Capacidad de Equipo"

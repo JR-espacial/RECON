@@ -28,7 +28,7 @@ module.exports =  class Iteracion{
     }
 
     static fetchAll() {
-        return db.execute('SELECT * FROM Iteracion');
+        return db.execute('SELECT * FROM Iteracion WHERE estado_iteracion = 1');
     }
 
     static fetchAllfromProyect(id_proyecto) {
@@ -41,5 +41,9 @@ module.exports =  class Iteracion{
 
     static modificarIteracion(id_proyecto, descripcion, id_iteracion){
         return db.execute('UPDATE Iteracion SET id_proyecto = ?, descripcion = ? WHERE id_iteracion = ?', [id_proyecto, descripcion, id_iteracion]);
+    }
+
+    static eliminarIteracion(id_iteracion){
+        return db.execute('UPDATE Iteracion SET estado_iteracion = 0 WHERE id_iteracion = ?', [id_iteracion]);
     }
 }

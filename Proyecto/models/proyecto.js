@@ -16,7 +16,6 @@ module.exports =  class Proyecto{
         [id_proyecto, id_departamento]);
     }
     
-
     static fetchAll(){
         return db.execute('SELECT * FROM Proyecto WHERE estado_proyecto = 1');
     }
