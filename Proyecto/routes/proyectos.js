@@ -34,6 +34,8 @@ router.get('/nueva-iteracion', isAuth,iteracionesController.getNuevaIteracion);
 
 router.post('/nueva-iteracion', isAuth,iteracionesController.postNuevaIteracion);
 
+router.post('/modificar-iteracion', isAuth, iteracionesController.postEditarIteracion);
+
 router.get('/capacidad-equipo', isAuth, iteracionesController.getCapacidadEquipo);
 
 router.get('/casos-uso-iteracion', isAuth, casos_usoController.getCasosUsoIteracion);

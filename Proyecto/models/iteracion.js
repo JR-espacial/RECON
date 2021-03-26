@@ -38,4 +38,8 @@ module.exports =  class Iteracion{
     static fetchOne(num_iteracion) { 
         return db.execute('SELECT id_iteracion FROM Iteracion WHERE num_iteracion =?',[num_iteracion]);
     }
+
+    static modificarIteracion(id_proyecto, descripcion, id_iteracion){
+        return db.execute('UPDATE Iteracion SET id_proyecto = ?, descripcion = ? WHERE id_iteracion = ?', [id_proyecto, descripcion, id_iteracion]);
+    }
 }

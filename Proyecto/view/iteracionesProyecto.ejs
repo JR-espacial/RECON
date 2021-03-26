@@ -11,8 +11,84 @@
                 <div class="card">
                     <div class="card-image">
                         <img src="https://www.esan.edu.pe/conexion/actualidad/2017/10/26/1500x844_portafolio_proyectos.jpg" alt="Proyecto">
+                        <div id="modal1_<%= iteracion.id_iteracion %>" class="modal large">
+                            <form action="/proyectos/modificar-iteracion" method="POST">
+                            <!-- Modal Content -->
+                                <div class="modal-content">
+                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
+                                    <input type="hidden" name="id_iteracion" value="<%= iteracion.id_iteracion %>">
+                                        <div class="col s6 offset-s4">
+                                            <div class="row">
+                                                <div class="input-field col s10">
+                                                    <select name="proyecto" id="selectProyecto" class="browser-default" required>
+                                                        <option value="Crear proyecto">Crear proyecto</option>
+                                                        <option value="" disabled selected>Selecciona el proyecto de la iteración</option>
+                                                        <% for (let proyecto of proyectos) { %>
+                                                            <option value="<%= proyecto.id_proyecto %>"><%= proyecto.nombre_proyecto %></option>
+                                                        <% } %>
+                                                      </select>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="input-field col s10">
+                                                    <input  id="descripcion_proyecto" name="descripcion" type="text" class="validate">
+                                                    <label for="descripcion_proyecto">Descripción de la iteración</label>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col s10">
+                                                  <div class="row">
+                                                    <div class="input-field col s12">
+                                                      <i class="material-icons prefix ">search</i>
+                                                      <input type="text" id="autocomplete-input" name="colaborador" class="autocomplete" placeholder="Añadir colaboradores">
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="input-field col s10">
+                                                    <input disabled value="Colaboradores:" type="text" id ="disabled" class="validate">
+                                                </div>
+                                            </div>
+                                            <div class="row"> 
+                                                <div id="contenedor_colaboradores" class="col s4 card-panel">
+                                                    <span class="blue-text text-darken-2">Lista de colaboradores vacia</span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col s8">
+                                                    <a class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
+                                                    <button type="submit" class="waves-effect waves-green btn-flat" name="action" value="editar">Aceptar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>  
+                            </form>
+                        </div>
                     </div>
-                    <span class="card-title"><%= iteracion.num_iteracion %></span>
+                    <div class="card-content">
+                        <span><%= iteracion.num_iteracion %></span>
+                        <a class='dropdown-trigger grey-text text-darken-4' data-target='dropdown1_<%= iteracion.num_iteracion %>'><i class="material-icons right">more_vert</i></a>
+                        <ul id='dropdown1_<%= iteracion.num_iteracion %>' class='dropdown-content'>
+                            <li><a data-target="modal1_<%= iteracion.id_iteracion %>" class="modal-trigger"><i class="material-icons">mode_edit</i>Editar</a></li>
+                            <li>
+                                <form action="/home/eliminar" method="POST" id="eliminar_<%= iteracion.id_iteracion %>">
+                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                    <input type="hidden" name="id_iteracion" value="<%= iteracion.id_iteracion %>">
+                                    <button type="submit" class="waves-effect waves-green btn-flat"><i class="material-icons">delete</i>Eliminar</button>
+                                    <p>Eliminar</p>
+                                    <script> 
+                                        document.getElementById("eliminar_<%= iteracion.id_iteracion %>").addEventListener('submit', (e) => {
+                                          let confirmacion = confirm('¿Estás seguro de eliminar la iteración?');
+                                          if(!confirmacion){
+                                            e.preventDefault();
+                                          }  
+                                        });
+                                    </script>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
                     <div class="card-action">
                         <!-- <a href="/proyectos/resumen-proyecto">Ir a Iteracion</a> -->
                         <form action="iteraciones-proyecto" method="POST">
@@ -27,6 +103,22 @@
     
     </div>    
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    let autocomplete = document.getElementById("autocomplete-input");
+    
+    let options = {};
+
+    "<%for (let i = 0; i < empleados.length; i++) { %>"
+         options["<%=empleados[i].nombre_empleado%>"] = null;
+     "<% } %>"
+    
+      
+    var instances = M.Autocomplete.init(autocomplete, { data : options });
+      
+    });
+</script>
 
 
 <%- include('includes/closeHTML.ejs'); %>

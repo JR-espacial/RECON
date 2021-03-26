@@ -6,14 +6,27 @@ exports.getIteracionesProyecto = (request,response) => {
     const idProyecto = request.session.idProyecto;
     const alerta = request.session.alerta;
     request.session.alerta = "";
-    
-    Iteracion.fetchAllfromProyect(idProyecto)
-    .then(([rows, fieldData]) => {
-        response.render('iteracionesProyecto', {
-            title: "Iteraciones",
-            iteraciones : rows,
-            alerta : alerta,
-            csrfToken: request.csrfToken()
+    Proyecto.fetchAll()
+    .then(([rows1, fieldData]) => {
+        Iteracion.fetchAllfromProyect(idProyecto)
+        .then(([rows2, fieldData]) => {
+            Usuario.fetchAll()
+            .then(([rows3, fieldData]) => {
+                response.render('iteracionesProyecto', {
+                    title: "Iteraciones",
+                    proyectos : rows1,
+                    iteraciones : rows2,
+                    empleados : rows3,
+                    alerta : alerta,
+                    csrfToken: request.csrfToken()
+                });
+            })
+            .catch(err => {
+                console.log(err);
+            });
+        })
+        .catch(err => {
+            console.log(err);
         });
     })
     .catch(err => {
@@ -59,8 +72,6 @@ exports.postNuevaIteracion = (request, response) => {
     const id_proyecto = request.body.proyecto;
     const descripcion = request.body.descripcion;
     const colaborador = request.body.colaborador;
-    console.log(colaborador);
-    
 
     Iteracion.saveCapacidad()
     .then(() => {
@@ -88,6 +99,23 @@ exports.postNuevaIteracion = (request, response) => {
     .catch(err =>{
         console.log(err);
     });  
+}
+
+exports.postEditarIteracion = (request, response) =>{
+    const last = request.session.last;
+    const id_proyecto = request.body.proyecto;
+    const id_iteracion = request.body.id_iteracion;
+    const descripcion = request.body.descripcion;
+    const colaborador = request.body.colaborador;
+
+    Iteracion.modificarIteracion(id_proyecto, descripcion, id_iteracion)
+    .then(() => {
+        request.session.alerta = "Iteración modificada exitosamente";
+        response.redirect("/proyectos/iteraciones-proyecto");
+    })
+    .catch(err =>{
+        console.log(err);
+    });
 }
 
 exports.getCapacidadEquipo = (request, response) =>{
