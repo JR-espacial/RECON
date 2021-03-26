@@ -36,7 +36,7 @@
                             <button name = "action" value= "registrar-tarea" type="submit" class="boton_añadir"><i class="material-icons">add</i></button>
                         </div>
                         <div id="agregar-tarea" class="center-align">
-                            <input placeholder="Nueva Tarea" id="añadir_nombre_tarea" name="añadir_nombre_tarea" type="text" required>
+                            <input placeholder="Nueva Tarea" name="añadir_nombre_tarea" type="text" required>
                         </div>
                     </div>
                 </form>
@@ -51,15 +51,32 @@
                     <div class="center-align">
                         <button name="action" value = "registrar-fase" type="submit" class="btn-floating cyan pulse boton_añadir"><i class="material-icons">add</i></button>
                     </div>
-                    <div id="agregar-fase" class="center-align">
-                        <input placeholder="Añadir Fase" id="añadir_nombre_fase" name="añadir_nombre_fase" type="text" required>
+                    <div id="agregar-fase"  class="input-field" class="center-align">
+                        <input placeholder="Añadir Fase" id="autocomplete-input" class="autocomplete" name="añadir_nombre_fase" type="text" required>
                     </div>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let autocomplete = document.getElementById("autocomplete-input");
+
+        let recomendacionFases = {};
+        console.log("siuuu");
+        
+        "<% for (let i = 0; i < lista_tareas.length; i++){ %>"
+            recomendacionFases["<%= lista_tareas[i].nombre_fase%>"] = null;
+        "<% } %>"
+
+        console.log(recomendacionFases);
+
+        let instances = M.Autocomplete.init(autocomplete, { data : recomendacionFases });
+    });
+</script>
+
 </main>
-
-
 <%- include('includes/closeHTML.ejs'); %>
