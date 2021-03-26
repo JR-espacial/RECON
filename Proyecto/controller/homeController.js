@@ -9,6 +9,7 @@ exports.getHome = (request, response) => {
 
     Proyecto.fetchAll()
     .then(([rows1, fieldData]) => {
+        console.log(rows1);
         Departamento.fetchAll()
         .then(([rows2, fieldData]) => {
             response.render('home',{

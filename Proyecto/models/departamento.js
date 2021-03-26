@@ -9,5 +9,4 @@ module.exports =  class Departamento{
     static fetchAll(){
         return db.execute('SELECT * FROM Departamento');
     }
-
 }

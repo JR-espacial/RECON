@@ -20,19 +20,8 @@
                                         <div class="col s6 offset-s4">
                                             <div class="row">
                                                 <div class="input-field col s10">
-                                                    <select name="proyecto" id="selectProyecto" class="browser-default" required>
-                                                        <option value="Crear proyecto">Crear proyecto</option>
-                                                        <option value="" disabled selected>Selecciona el proyecto de la iteración</option>
-                                                        <% for (let proyecto of proyectos) { %>
-                                                            <option value="<%= proyecto.id_proyecto %>"><%= proyecto.nombre_proyecto %></option>
-                                                        <% } %>
-                                                      </select>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="input-field col s10">
-                                                    <input  id="descripcion_proyecto" name="descripcion" type="text" class="validate">
-                                                    <label for="descripcion_proyecto"><%=iteracion.descripcion%></label>
+                                                    <input  id="descripcion_proyecto" name="descripcion" type="text" class="validate" value = "<%=iteracion.descripcion%>">
+                                                    <label for="descripcion_proyecto">Descripcion de la iteracion</label>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -56,7 +45,7 @@
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col s8">
+                                                <div class="col s10">
                                                     <a class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
                                                     <button type="submit" class="waves-effect waves-green btn-flat" name="action" value="editar">Aceptar</button>
                                                 </div>

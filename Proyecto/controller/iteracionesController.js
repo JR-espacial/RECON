@@ -6,23 +6,17 @@ exports.getIteracionesProyecto = (request,response) => {
     const idProyecto = request.session.idProyecto;
     const alerta = request.session.alerta;
     request.session.alerta = "";
-    Proyecto.fetchAll()
-    .then(([rows1, fieldData]) => {
-        Iteracion.fetchAllfromProyect(idProyecto)
+  
+    Iteracion.fetchAllfromProyect(idProyecto)
+    .then(([rows, fieldData]) => {
+        Usuario.fetchAll()
         .then(([rows2, fieldData]) => {
-            Usuario.fetchAll()
-            .then(([rows3, fieldData]) => {
-                response.render('iteracionesProyecto', {
-                    title: "Iteraciones",
-                    proyectos : rows1,
-                    iteraciones : rows2,
-                    empleados : rows3,
-                    alerta : alerta,
-                    csrfToken: request.csrfToken()
-                });
-            })
-            .catch(err => {
-                console.log(err);
+            response.render('iteracionesProyecto', {
+                title: "Iteraciones",
+                iteraciones : rows,
+                empleados : rows2,
+                alerta : alerta,
+                csrfToken: request.csrfToken()
             });
         })
         .catch(err => {
@@ -44,20 +38,13 @@ exports.getNuevaIteracion = (request, response) => {
     request.session.alerta = "";
     request.session.last = '/proyectos/nueva-iteracion';
 
-    Proyecto.fetchAll()
+    Usuario.fetchAll()
     .then(([rows, fieldData]) => {
-        Usuario.fetchAll()
-        .then(([rows2, fieldData]) => {
-            response.render('crearIteracion', {
-                title: "Crear Iteración",
-                empleados: rows2,
-                proyectos : rows,
-                alerta : alerta,
-                csrfToken: request.csrfToken()
-            });
-        })
-        .catch(err => {
-            console.log(err);
+        response.render('crearIteracion', {
+            title: "Crear Iteración",
+            empleados: rows,
+            alerta : alerta,
+            csrfToken: request.csrfToken()
         });
     })
     .catch(err => {
@@ -69,7 +56,7 @@ exports.getNuevaIteracion = (request, response) => {
 exports.postNuevaIteracion = (request, response) => {
 
     const last = request.session.last;
-    const id_proyecto = request.body.proyecto;
+    const id_proyecto = request.session.idProyecto;
     const descripcion = request.body.descripcion;
     const colaborador = request.body.colaborador;
 
@@ -103,7 +90,7 @@ exports.postNuevaIteracion = (request, response) => {
 
 exports.postEditarIteracion = (request, response) =>{
     const last = request.session.last;
-    const id_proyecto = request.body.proyecto;
+    const id_proyecto = request.session.idProyecto;
     const id_iteracion = request.body.id_iteracion;
     const descripcion = request.body.descripcion;
     const colaborador = request.body.colaborador;

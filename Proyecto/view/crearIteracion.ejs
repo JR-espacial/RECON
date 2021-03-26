@@ -10,17 +10,6 @@
             <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
             <div class="row">
                 <div class="input-field col s4">
-                    <select name="proyecto" id="selectProyecto" class="browser-default" required>
-                        <option value="Crear proyecto">Crear proyecto</option>
-                        <option value="" disabled selected>Selecciona el proyecto de la iteración</option>
-                        <% for (let proyecto of proyectos) { %>
-                            <option value="<%= proyecto.id_proyecto %>"><%= proyecto.nombre_proyecto %></option>
-                        <% } %>
-                      </select>
-                </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s4">
                     <input  id="descripcion_proyecto" name="descripcion" type="text" class="validate">
                     <label for="descripcion_proyecto">Descripción de la iteración</label>
                 </div>
@@ -57,18 +46,7 @@
 
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var elems = document.querySelectorAll('select');
-        var instances = M.FormSelect.init(elems);
-    });
-
-    let seleccion = document.getElementById("selectProyecto");
-    seleccion.onchange= () => {
-        if(seleccion.value == "Crear proyecto"){
-            location.href = "nuevo-proyecto";
-        }
-    }
-
+   
     document.addEventListener('DOMContentLoaded', function() {
     let autocomplete = document.getElementById("autocomplete-input");
     
