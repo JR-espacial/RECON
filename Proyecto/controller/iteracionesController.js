@@ -119,8 +119,8 @@ exports.postEditarIteracion = (request, response) =>{
 }
 
 exports.postEliminarIteracion = (request, response) => {
-    const id_iteracion = request.body.iteracion;
-    Proyecto.postEliminarIteracion(id_iteracion)
+    const id_iteracion = request.body.id_iteracion;
+    Iteracion.eliminarIteracion(id_iteracion)
     .then(() => {
         request.session.alerta = "Iteración eliminada exitosamente";
         response.redirect('/proyectos/iteraciones-proyecto');

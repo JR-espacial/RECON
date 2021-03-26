@@ -72,7 +72,7 @@
                         <ul id='dropdown1_<%= iteracion.num_iteracion %>' class='dropdown-content'>
                             <li><a data-target="modal1_<%= iteracion.id_iteracion %>" class="modal-trigger"><i class="material-icons">mode_edit</i>Editar</a></li>
                             <li>
-                                <form action="/home/eliminar" method="POST" id="eliminar_<%= iteracion.id_iteracion %>">
+                                <form action="/proyectos/eliminar-iteracion" method="POST" id="eliminar_<%= iteracion.id_iteracion %>">
                                     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                                     <input type="hidden" name="id_iteracion" value="<%= iteracion.id_iteracion %>">
                                     <button type="submit" class="waves-effect waves-green btn-flat"><i class="material-icons">delete</i>Eliminar</button>

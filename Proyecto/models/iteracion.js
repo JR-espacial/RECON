@@ -32,7 +32,7 @@ module.exports =  class Iteracion{
     }
 
     static fetchAllfromProyect(id_proyecto) {
-        return db.execute('SELECT * FROM Iteracion WHERE id_proyecto =?',[id_proyecto]);
+        return db.execute('SELECT * FROM Iteracion WHERE id_proyecto =? AND estado_iteracion = 1',[id_proyecto]);
     }
 
     static fetchOne(num_iteracion) { 
