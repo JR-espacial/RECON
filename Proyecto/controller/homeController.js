@@ -1,17 +1,26 @@
 const { request, response } = require('express');
 const Proyecto = require('../models/proyecto');
+const Departamento = require('../models/departamento');
+
 exports.getHome = (request, response) => {
     let alerta = request.session.alerta
     request.session.alerta = "";
     request.session.last = '/home';
 
     Proyecto.fetchAll()
-    .then(([rows, fieldData]) => {
-        response.render('home',{
-            title: "Home", 
-            proyectos : rows,
-            alerta : alerta,
-            csrfToken: request.csrfToken()
+    .then(([rows1, fieldData]) => {
+        Departamento.fetchAll()
+        .then(([rows2, fieldData]) => {
+            response.render('home',{
+                title: "Home", 
+                proyectos : rows1,
+                departamentos : rows2,
+                alerta : alerta,
+                csrfToken: request.csrfToken()
+            });
+        })
+        .catch(err => {
+            console.log(err);
         });
     })
     .catch(err => {
@@ -25,10 +34,13 @@ exports.postProyectoID = (request, response) => {
 }
 
 exports.postEditarProyecto = (request, response) => {
+    console.log("postEditarProyecto");
     const nombre_proyecto = request.body.nombre;
     const descripcion = request.body.descripcion;
     const id_departamento = request.body.departamento;
     const id_proyecto = request.body.id_proyecto;
+
+    console.log(id_departamento);
   
     Proyecto.fetchOneModificar(nombre_proyecto, id_proyecto)
         .then(([rows, fieldData]) => {

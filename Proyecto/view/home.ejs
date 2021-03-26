@@ -26,7 +26,7 @@
                 <div class="card-image">
                     <img src="https://www.esan.edu.pe/conexion/actualidad/2017/10/26/1500x844_portafolio_proyectos.jpg" alt="Proyecto">
                     <div id="modal1_<%= proyecto.id_proyecto %>" class="modal large">
-                        <form action="proyectos/modificar-iteracion" method="POST">
+                        <form action="/home/modificar-proyecto" method="POST">
                         <!-- Modal Content -->
                             <div class="modal-content">
                                 <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
@@ -48,9 +48,9 @@
                                             <div class="input-field col s8">
                                                 <select name="departamento" class="browser-default" required>
                                                     <option value="" disabled selected>Selecciona el departamento del proyecto</option>
-                                                    <option value="1">Finanzas</option>
-                                                    <option value="2">Mercadotecnia</option>
-                                                    <option value="3">Produccion</option>
+                                                    <% for (let departamento of departamentos) { %>
+                                                        <option value="<%= departamento.id_departamento %>"><%= departamento.nombre_departamento %></option>
+                                                    <% } %>
                                                 </select>
                                             </div>
                                         </div>
@@ -69,13 +69,12 @@
                     <span><%= proyecto.nombre_proyecto %></span>
                     <a class='dropdown-trigger grey-text text-darken-4' data-target='dropdown1_<%= proyecto.nombre_proyecto %>'><i class="material-icons right">more_vert</i></a>
                     <ul id='dropdown1_<%= proyecto.nombre_proyecto %>' class='dropdown-content'>
-                        <li><a data-target="modal1_<%= proyecto.id_proyecto %>" class="modal-trigger"><i class="material-icons">mode_edit</i>Editar</a></li>
+                        <li><a data-target="modal1_<%= proyecto.id_proyecto %>" class="modal-trigger"><i class="material-icons right">mode_edit</i></a></li>
                         <li>
-                            <form action="/home/eliminar" method="POST" id="eliminar_<%= proyecto.id_proyecto %>">
+                            <form action="/home/eliminar-proyecto" method="POST" id="eliminar_<%= proyecto.id_proyecto %>">
                                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                                 <input type="hidden" name="id_proyecto" value="<%= proyecto.id_proyecto %>">
                                 <button type="submit" class="waves-effect waves-green btn-flat"><i class="material-icons">delete</i>Eliminar</button>
-                                <p>Eliminar</p>
                                 <script> 
                                     document.getElementById("eliminar_<%= proyecto.id_proyecto %>").addEventListener('submit', (e) => {
                                       let confirmacion = confirm('¿Estás seguro de eliminar el proyecto?');

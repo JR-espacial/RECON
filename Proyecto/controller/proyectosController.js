@@ -1,18 +1,23 @@
 const Proyecto = require('../models/proyecto');
+const Departamento = require('../models/departamento');
 const Puntos_Agiles = require('../models/puntos_agiles');
 const Proyecto_Fase_Tarea = require('../models/Proyecto_Fase_Tarea');
+const { request } = require('express');
 
 exports.getNuevoProyecto = (request, response) => {
     const error = request.session.error;
     request.session.error = "";
     const last = request.session.last;
-
-    response.render('crearProyecto', {
-        title: "Crear Proyecto", 
-        error: error,
-        last : last,
-        csrfToken: request.csrfToken(),
-    });
+    Departamento.fetchAll()
+    .then(([rows, fieldData]) => {
+        response.render('crearProyecto', {
+            title: "Crear Proyecto", 
+            departamentos : rows,
+            error: error,
+            last : last,
+            csrfToken: request.csrfToken(),
+        });
+    })
 }
 
 exports.postNuevoProyecto = (request, response) => {
@@ -25,7 +30,7 @@ exports.postNuevoProyecto = (request, response) => {
     Proyecto.fetchOne(nombre_proyecto)
         .then(([rows, fieldData]) => {
             if (rows.length < 1) {
-                let proyecto = new Proyecto(nombre_proyecto, descripcion, departamento);
+                let proyecto = new Proyecto(nombre_proyecto, descripcion, departamento, '1');
                 proyecto.saveProyecto()
                 .then(() => {
                     Proyecto.fetchOne(nombre_proyecto)

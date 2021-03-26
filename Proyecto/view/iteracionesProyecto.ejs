@@ -32,7 +32,7 @@
                                             <div class="row">
                                                 <div class="input-field col s10">
                                                     <input  id="descripcion_proyecto" name="descripcion" type="text" class="validate">
-                                                    <label for="descripcion_proyecto">Descripción de la iteración</label>
+                                                    <label for="descripcion_proyecto"><%=iteracion.descripcion%></label>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -70,13 +70,12 @@
                         <span><%= iteracion.num_iteracion %></span>
                         <a class='dropdown-trigger grey-text text-darken-4' data-target='dropdown1_<%= iteracion.num_iteracion %>'><i class="material-icons right">more_vert</i></a>
                         <ul id='dropdown1_<%= iteracion.num_iteracion %>' class='dropdown-content'>
-                            <li><a data-target="modal1_<%= iteracion.id_iteracion %>" class="modal-trigger"><i class="material-icons">mode_edit</i>Editar</a></li>
+                            <li><a data-target="modal1_<%= iteracion.id_iteracion %>" class="modal-trigger"><i class="material-icons right">mode_edit</i></a></li>
                             <li>
                                 <form action="/proyectos/eliminar-iteracion" method="POST" id="eliminar_<%= iteracion.id_iteracion %>">
                                     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                                     <input type="hidden" name="id_iteracion" value="<%= iteracion.id_iteracion %>">
                                     <button type="submit" class="waves-effect waves-green btn-flat"><i class="material-icons">delete</i>Eliminar</button>
-                                    <p>Eliminar</p>
                                     <script> 
                                         document.getElementById("eliminar_<%= iteracion.id_iteracion %>").addEventListener('submit', (e) => {
                                           let confirmacion = confirm('¿Estás seguro de eliminar la iteración?');
