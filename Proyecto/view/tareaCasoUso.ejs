@@ -29,7 +29,7 @@
                                         <input type="hidden" name="_csrf" value="<%= csrfToken %>"> 
                                         <input type="hidden" name="idCaso" value="<%= quiero.id_casos %>">
                                         <td>
-                                            <button type="submit"><i class="small material-icons">forward</i></button>
+                                            <button name="action" value="consultar" type="submit"><i class="small material-icons">forward</i></button>
                                         </td>
                                     </form>
                                 </tr>
@@ -41,14 +41,16 @@
                 <!-- Tareas del Proyecto -->
                 <div class="col s6 m6 l6">
                     <div id="fasesVert" class="container">
-                        <% for (let fase_tarea = 0; fase_tarea < lista_tareas.length; fase_tarea++) { 
+                        <% const idspractica = []; %>
+                        
+                        <% for (let tarea = 0; tarea < lista_tareas.length; tarea++) { 
                             <!-- Si va empezando o cambia de fase  -->
-                            if(fase_tarea === 0 || lista_tareas[fase_tarea].nombre_fase !== lista_tareas[fase_tarea - 1].nombre_fase){ %>
+                            if(tarea === 0 || lista_tareas[tarea].nombre_fase !== lista_tareas[tarea - 1].nombre_fase){ %>
                                 <!-- Empieza bloque de la fase -->
                                 <div id="faseVert" class="center-align">
                                     <!-- Título de la fase -->
                                     <div id="titulo-fase">
-                                        <span class=""> <%= lista_tareas[fase_tarea].nombre_fase %>: </span>
+                                        <span class=""> <%= lista_tareas[tarea].nombre_fase %>: </span>
                                     </div>
                                 <!-- Empieza div para desplegar tareas de la fase -->
                                 <div>
@@ -58,28 +60,52 @@
                                 <label>
                                     <!-- Verificar si debe o no estar checada (asociada al caso de uso) -->
                                     <% let found = false; %> 
-                                    <% for(let i=0; i < tareas_Caso.length; i++) { 
-                                        if(tareas_Caso[i].id_trabajo === lista_tareas[fase_tarea].id_trabajo) {   
+                                    <% for(let i=0; i < tareas_Caso.length; i++) {
+                                        if(tareas_Caso[i].id_trabajo === lista_tareas[tarea].id_trabajo) {   
                                             found = true;
                                             break; 
                                         } 
                                     } %>
                                     <% if(found) { %>
-                                        <input type="checkbox" class="filled-in" checked="checked" />
+                                        <input type="checkbox" id="botonCheck_<%= tarea %>" class="filled-in" checked="checked"/>
                                     <% } else { %>
-                                        <input type="checkbox" class="filled-in"/> 
+                                        <input type="checkbox" id="botonCheck_<%= tarea %>" class="filled-in"/> 
                                     <% } %> 
-                                    <span> <%= lista_tareas[fase_tarea].nombre_practica_trabajo %> </span>
+                                    <span> <%= lista_tareas[tarea].nombre_practica_trabajo %> </span>
                                 </label>
                             </div>
                             <!-- Si es la última tarea de todas o de una fase, cierra la división para la fase -->
-                            <% if(fase_tarea === lista_tareas.length - 1 || lista_tareas[fase_tarea].nombre_fase !== lista_tareas[fase_tarea + 1].nombre_fase) { %> 
+                            <% if(tarea === lista_tareas.length - 1 || lista_tareas[tarea].nombre_fase !== lista_tareas[tarea + 1].nombre_fase) { %> 
                                 <!-- Cierra bloque de tareas  -->
                                 </div>
                                 <!-- Cierra bloque de fase -->
                                 </div>
                             <% } %>
-                        <% } %>
+                            <% idspractica.push(lista_tareas[tarea].id_trabajo); %>
+                        <% } %>   
+                        <form action="tarea-caso-uso" method="POST">
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                            <input type="hidden" id="checks" name="checks">
+                            <input type="hidden" name="idspractica" value="<%= idspractica %>">
+                            <button class="waves-effect waves-light btn" name="action" value="cambiar" type="submit" onclick="getValues()">Aceptar cambios<i class="material-icons right">check</i></button>
+                            <script>
+                                function getValues() {
+                                    let inputt = document.getElementById("checks"); 
+                                    const checksJS = [];
+                                    for(let i=0; i < "<%= lista_tareas.length %>"; i++) {
+                                        let id = 'botonCheck_' + i;
+                                        let check = document.getElementById(id);
+                                        if(check.checked === true) {
+                                            checksJS.push(1);
+                                        }
+                                        else {
+                                            checksJS.push(0);
+                                        }
+                                    }
+                                    inputt.value = checksJS;
+                                }
+                            </script>
+                        </form>            
                     </div>
                 </div>
             <% } else { %>
@@ -88,6 +114,5 @@
         </div>
     </div>
 </main>
-
 
 <%- include('includes/closeHTML.ejs'); %>

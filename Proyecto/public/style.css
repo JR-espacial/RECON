@@ -27,7 +27,6 @@
 }
 
 #tabla_avance {
-500px;
     width: 68%;
     overflow: scroll;
 }
@@ -160,4 +159,6 @@ header, main, footer {
 div#modal5 {
     width: 50%
 }
+
+
     
