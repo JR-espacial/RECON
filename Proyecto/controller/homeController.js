@@ -9,7 +9,6 @@ exports.getHome = (request, response) => {
 
     Proyecto.fetchAll()
     .then(([rows1, fieldData]) => {
-        console.log(rows1);
         Departamento.fetchAll()
         .then(([rows2, fieldData]) => {
             response.render('home',{
@@ -35,13 +34,11 @@ exports.postProyectoID = (request, response) => {
 }
 
 exports.postEditarProyecto = (request, response) => {
-    console.log("postEditarProyecto");
     const nombre_proyecto = request.body.nombre;
     const descripcion = request.body.descripcion;
     const id_departamento = request.body.departamento;
     const id_proyecto = request.body.id_proyecto;
 
-    console.log(id_departamento);
   
     Proyecto.fetchOneModificar(nombre_proyecto, id_proyecto)
         .then(([rows, fieldData]) => {

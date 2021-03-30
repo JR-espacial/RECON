@@ -1,0 +1,13 @@
+<%- include('includes/openHTML.ejs') %>
+
+    <% for (elemento of workitemlist) { %>
+        <p><%=elemento.name%></p>
+        <% if (elemento.assigned) { %>
+            <% for(persona of elemento.assigned) { %>
+                <span><%=persona.name%></span>
+            <% } %>
+        <% } %>
+    <% } %>
+
+
+<%- include('includes/closeHTML.ejs') %>

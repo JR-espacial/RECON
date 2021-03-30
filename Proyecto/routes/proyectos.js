@@ -8,7 +8,9 @@ const iteracionesController = require('../controller/iteracionesController');
 const casos_usoController = require('../controller/casos_usoController');
 const fasesController = require('../controller/fasesController');
 const tareaCasosUsoController = require('../controller/tareaCasoUsoController');
+const testController = require('../controller/test_Controller');
 
+router.get('/test', isAuth,testController.getTest)
 
 router.get('/nuevo-proyecto', isAuth, proyectosController.getNuevoProyecto);
 
