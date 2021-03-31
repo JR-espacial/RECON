@@ -8,6 +8,7 @@
     <div class="col s12 offset-s4">
         <form class="col s12" action="nueva-iteracion" method="POST">
             <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
+            <input type="hidden" name="colaboradores" value="" id="myInputField">
             <div class="row">
                 <div class="input-field col s4">
                     <input  id="descripcion_proyecto" name="descripcion" type="text" class="validate">
@@ -15,29 +16,27 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col s4">
-                  <div class="row">
-                    <div class="input-field col s12">
-                      <i class="material-icons prefix ">search</i>
-                      <input type="text" id="autocomplete-input" name="colaborador" class="autocomplete" placeholder="Añadir colaboradores">
-                    </div>
-                  </div>
+                <div class="input-field col s4">
+                    <input  id="inicio_iteracion" name="fecha_inicio"type="text" class="datepicker">
+                    <label for="inicio_iteracion">Selecciona la fecha de inicio de la iteración</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s4">
-                    <input disabled value="Colaboradores:" type="text" id ="disabled" class="validate">
-                </div>
-            </div>
-            <div class="row"> 
-                <div id="contenedor_colaboradores" class="col s4 card-panel">
-                    <span class="blue-text text-darken-2">Lista de colaboradores vacia</span>
+                    <input  id="fin_iteracion" name="fecha_fin"type="text" class="datepicker">
+                    <label for="fin_iteracion">Selecciona la fecha de fin de la iteración</label>
                 </div>
             </div>
             <div class="row">
-                <div class="col s2 offset-s2">
+                <div class="col s4">
+                    <div class="chips chips-autocomplete"  id="chip1"></div>
+                    <i class="material-icons">search</i> 
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s4 offset-s1">
                     <a class="waves-effect waves-light btn" id="cancelbtn" href="/proyectos/iteraciones-proyecto">Cancelar</a>
-                    <input type="submit" value="Crear" >
+                    <button class="waves-effect waves-light btn" type="submit" value="Crear">Crear</button>
                 </div>
             </div>
         </form>
@@ -48,19 +47,44 @@
 <script>
    
     document.addEventListener('DOMContentLoaded', function() {
-    let autocomplete = document.getElementById("autocomplete-input");
-    
+    var elems = document.querySelectorAll('.chips-autocomplete');
+
     let options = {};
 
     "<%for (let i = 0; i < empleados.length; i++) { %>"
-         options["<%=empleados[i].nombre_empleado%>"] = null;
+         options["<%=empleados[i].nombre_empleado%>"] = "<%=empleados[i].id_empleado%>";
      "<% } %>"
-    
-      
-    var instances = M.Autocomplete.init(autocomplete, { data : options });
-      
+
+    var instances = M.Chips.init(elems,{
+        autocompleteOptions:{ data : options},
+        placeholder: 'Añadir usuario',
+        secondaryPlaceholder : 'Añade usuario',
+        onChipAdd: chips2Input,
+        onChipDelete: chips2Input,
+        });
+
+        function chips2Input(){
+            var instance = M.Chips.getInstance(document.getElementById('chip1')), inpt = document.getElementById('myInputField');
+            inpt.value =  null;
+            for(var i=0; i<instance.chipsData.length; i++){
+                console.log(instance.chipsData[i]);
+                if(inpt.value == null)
+                    inpt.value = instance.chipsData[i].tag;
+                else{
+                        inpt.value += instance.chipsData[i].tag +','; //csv
+                    }
+            }
+        }
     });
+
+    document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.datepicker');
+    var instances = M.Datepicker.init(elems, {
+        format:'yyyy-mm-dd'
+        });
+    });
+   
 
 </script>
 
-<%- include('includes/closeHTML.ejs'); %>
+<%- include('includes/closeHTML.ejs'); %>   

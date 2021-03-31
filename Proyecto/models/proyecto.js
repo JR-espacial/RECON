@@ -1,16 +1,17 @@
 const db = require('../util/mySQL');
 
 module.exports =  class Proyecto{
-    constructor(nombre_proyecto, descripcion, departamento, estado_proyecto){
+    constructor(nombre_proyecto, descripcion, departamento, estado_proyecto, imagen, proyecto_terminado){
         this.nombre_proyecto = nombre_proyecto;
         this.descripcion = descripcion;
         this.estado_proyecto = estado_proyecto;
-
+        this.imagen = imagen;
+        this.proyecto_terminado = proyecto_terminado;
     }
 
     saveProyecto(){ 
-        return db.execute('INSERT INTO Proyecto (nombre_proyecto, descripcion, fecha_inicio, fecha_fin, estado_proyecto) VALUES (?, ?, CURRENT_DATE(), NULL, ?)',
-        [this.nombre_proyecto, this.descripcion, this.estado_proyecto]);
+        return db.execute('INSERT INTO Proyecto (nombre_proyecto, descripcion, imagen, fecha_inicio, fecha_fin, estado_proyecto, proyecto_terminado) VALUES (?, ?, ?, CURRENT_DATE(), NULL, ?,?)',
+        [this.nombre_proyecto, this.descripcion, this.imagen, this.estado_proyecto, this.proyecto_terminado]);
     }
 
     static saveProyectoDepto(id_departamento, id_proyecto){

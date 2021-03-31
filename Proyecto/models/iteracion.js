@@ -1,17 +1,18 @@
 const db = require('../util/mySQL');
 
 module.exports =  class Iteracion{
-    constructor(id_proyecto, id_capacidad, num_iteracion, descripcion){
+    constructor(id_proyecto, id_capacidad, num_iteracion, descripcion , fecha_inicio, fecha_fin){
         this.id_proyecto = id_proyecto;
         this.id_capacidad = id_capacidad;
         this.num_iteracion = num_iteracion;
         this.descripcion = descripcion;
-
+        this.fecha_inicio = fecha_inicio;
+        this.fecha_fin = fecha_fin;
     }
 
     saveIteracion(){ 
-        return db.execute('INSERT INTO Iteracion (id_proyecto, id_capacidad, num_iteracion, descripcion, fecha_inicio, fecha_fin, estado_iteracion, total_min_real, total_min_maximo) VALUES (?, ?, ?, ?, CURRENT_DATE(), NULL, 1, NULL, NULL)',
-        [this.id_proyecto, this.id_capacidad, this.num_iteracion, this.descripcion]);
+        return db.execute('INSERT INTO Iteracion (id_proyecto, id_capacidad, num_iteracion, descripcion, fecha_inicio, fecha_fin, estado_iteracion, total_min_real, total_min_maximo) VALUES (?, ?, ?, ?, ?, ?, 1, NULL, NULL)',
+        [this.id_proyecto, this.id_capacidad, this.num_iteracion, this.descripcion, this.fecha_inicio, this.fecha_fin]);
     }
 
     static saveCapacidad(){

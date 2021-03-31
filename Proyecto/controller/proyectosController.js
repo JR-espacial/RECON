@@ -26,11 +26,18 @@ exports.postNuevoProyecto = (request, response) => {
     const nombre_proyecto = request.body.nombre;
     const descripcion = request.body.descripcion;
     const departamento = request.body.departamento;
+
+    const image = request.file;
+
+    if(!image) {
+        console.error('Error al subir la imagen');
+        return response.status(422).redirect('/');
+    }
   
     Proyecto.fetchOne(nombre_proyecto)
         .then(([rows, fieldData]) => {
             if (rows.length < 1) {
-                let proyecto = new Proyecto(nombre_proyecto, descripcion, departamento, '1');
+                let proyecto = new Proyecto(nombre_proyecto, descripcion, departamento, '1', image.filename, 0);
                 proyecto.saveProyecto()
                 .then(() => {
                     Proyecto.fetchOne(nombre_proyecto)

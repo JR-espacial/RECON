@@ -58,7 +58,25 @@ exports.postNuevaIteracion = (request, response) => {
     const last = request.session.last;
     const id_proyecto = request.session.idProyecto;
     const descripcion = request.body.descripcion;
-    const colaborador = request.body.colaborador;
+    const fecha_inicio = request.body.fecha_inicio;
+    const fecha_fin = request.body.fecha_fin;
+    const colaboradores = request.body.colaboradores;
+
+    const colabs =[];
+
+    let colaborador = "";
+    for (let i = 0; i < colaboradores.length; i++) {
+        if(colaboradores[i] != ",") {
+            colaborador += colaboradores[i];
+        }
+        else{
+            colabs.push(colaborador);
+            colaborador = "";
+        }
+    }
+    console.log(colaboradores);
+    console.log(colabs);
+
 
     Iteracion.saveCapacidad()
     .then(() => {
@@ -66,7 +84,7 @@ exports.postNuevaIteracion = (request, response) => {
         .then(([rows, fieldData]) => {
             Iteracion.fetchLastNumIter(id_proyecto)
             .then(([rows2, fieldData]) => {
-                let iteracion = new Iteracion(id_proyecto, rows[0].id_capacidad, rows2[0].num_iteracion, descripcion);
+                let iteracion = new Iteracion(id_proyecto, rows[0].id_capacidad, rows2[0].num_iteracion, descripcion, fecha_inicio, fecha_fin);
                 iteracion.saveIteracion()
                 .then(() => {
                     response.redirect("/proyectos/iteraciones-proyecto");

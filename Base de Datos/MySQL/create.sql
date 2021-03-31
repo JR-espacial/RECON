@@ -34,9 +34,11 @@
         id_proyecto INT AUTO_INCREMENT NOT NULL,
         nombre_proyecto VARCHAR(64),
         descripcion VARCHAR(1000),
+        imagen VARCHAR(400),
         fecha_inicio DATE,
         fecha_fin DATE,
         estado_proyecto BIT,
+        proyecto_terminado BIT,
         PRIMARY KEY(id_proyecto)
     );
 
@@ -50,6 +52,7 @@
         fecha_inicio DATE,
         fecha_fin DATE,
         estado_iteracion BIT,
+        iteracion_terminada BIT,
         total_min_real INT,
         total_min_maximo INT,
         PRIMARY KEY(id_iteracion),

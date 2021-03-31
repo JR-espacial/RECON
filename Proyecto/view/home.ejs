@@ -22,9 +22,9 @@
     <div class="col offset-m3 offset-l3">
         <% for (let proyecto of proyectos) { %>
         <div class="col s3">
-            <div class="card">
+            <div class="card small">
                 <div class="card-image">
-                    <img src="https://www.esan.edu.pe/conexion/actualidad/2017/10/26/1500x844_portafolio_proyectos.jpg" alt="Proyecto">
+                    <img src="<%= proyecto.imagen %>" alt="Proyecto">
                     <div id="modal1_<%= proyecto.id_proyecto %>" class="modal large">
                         <form action="/home/modificar-proyecto" method="POST">
                         <!-- Modal Content -->
