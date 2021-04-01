@@ -55,7 +55,6 @@ exports.getNuevaIteracion = (request, response) => {
 
 exports.postNuevaIteracion = (request, response) => {
 
-    const last = request.session.last;
     const id_proyecto = request.session.idProyecto;
     const descripcion = request.body.descripcion;
     const fecha_inicio = request.body.fecha_inicio;
@@ -74,8 +73,9 @@ exports.postNuevaIteracion = (request, response) => {
             colaborador = "";
         }
     }
-    console.log(colaboradores);
+   
     console.log(colabs);
+    console.log(colabs.length);
 
 
     Iteracion.saveCapacidad()
@@ -87,7 +87,25 @@ exports.postNuevaIteracion = (request, response) => {
                 let iteracion = new Iteracion(id_proyecto, rows[0].id_capacidad, rows2[0].num_iteracion, descripcion, fecha_inicio, fecha_fin);
                 iteracion.saveIteracion()
                 .then(() => {
-                    response.redirect("/proyectos/iteraciones-proyecto");
+                    Iteracion.fetchOne(id_proyecto,rows2[0].num_iteracion)
+                    .then(([rows3, fieldData]) => {
+                        Usuario.fetchOne(colabs[0])
+                        .then(([rows4, fieldData]) => {
+                            Iteracion.saveColaborador(rows3[0].id_iteracion, rows4[0].id_empleado)
+                            .then(() => {
+                                response.redirect("/proyectos/iteraciones-proyecto");
+                            })
+                            .catch(err =>{
+                                console.log(err);
+                            });
+                        })
+                        .catch(err =>{
+                            console.log(err);
+                        });
+                    })
+                    .catch(err =>{
+                        console.log(err);
+                    });
                 })
                 .catch(err =>{
                     console.log(err);

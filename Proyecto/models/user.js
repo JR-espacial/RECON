@@ -19,11 +19,10 @@ module.exports =  class Usuario{
     }
 
     static fetchAll(){
-        return db.execute('SELECT nombre_empleado FROM Empleado');
+        return db.execute('SELECT * FROM Empleado');
     }
 
     static fetchOne(usuario){
-        
         return db.execute('SELECT * FROM Empleado WHERE usuario =?',[usuario]);
 
     }

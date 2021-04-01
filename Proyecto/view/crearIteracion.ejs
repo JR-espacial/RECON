@@ -8,7 +8,7 @@
     <div class="col s12 offset-s4">
         <form class="col s12" action="nueva-iteracion" method="POST">
             <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
-            <input type="hidden" name="colaboradores" value="" id="myInputField">
+            <input type="hidden" name="colaboradores" value="" id="myInputField" required>
             <div class="row">
                 <div class="input-field col s4">
                     <input  id="descripcion_proyecto" name="descripcion" type="text" class="validate">
@@ -17,13 +17,13 @@
             </div>
             <div class="row">
                 <div class="input-field col s4">
-                    <input  id="inicio_iteracion" name="fecha_inicio"type="text" class="datepicker">
+                    <input  id="inicio_iteracion" name="fecha_inicio"type="text" class="datepicker" required>
                     <label for="inicio_iteracion">Selecciona la fecha de inicio de la iteración</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s4">
-                    <input  id="fin_iteracion" name="fecha_fin"type="text" class="datepicker">
+                    <input  id="fin_iteracion" name="fecha_fin"type="text" class="datepicker" required>
                     <label for="fin_iteracion">Selecciona la fecha de fin de la iteración</label>
                 </div>
             </div>
@@ -52,7 +52,7 @@
     let options = {};
 
     "<%for (let i = 0; i < empleados.length; i++) { %>"
-         options["<%=empleados[i].nombre_empleado%>"] = "<%=empleados[i].id_empleado%>";
+         options["<%=empleados[i].usuario%>"] = null;
      "<% } %>"
 
     var instances = M.Chips.init(elems,{

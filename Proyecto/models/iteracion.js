@@ -36,8 +36,8 @@ module.exports =  class Iteracion{
         return db.execute('SELECT * FROM Iteracion WHERE id_proyecto =? AND estado_iteracion = 1',[id_proyecto]);
     }
 
-    static fetchOne(num_iteracion) { 
-        return db.execute('SELECT id_iteracion FROM Iteracion WHERE num_iteracion =?',[num_iteracion]);
+    static fetchOne(id_proyecto,num_iteracion) { 
+        return db.execute('SELECT id_iteracion FROM Iteracion WHERE num_iteracion =? AND id_proyecto=?',[num_iteracion, id_proyecto]);
     }
 
     static modificarIteracion(id_proyecto, descripcion, id_iteracion){
@@ -46,5 +46,9 @@ module.exports =  class Iteracion{
 
     static eliminarIteracion(id_iteracion){
         return db.execute('UPDATE Iteracion SET estado_iteracion = 0 WHERE id_iteracion = ?', [id_iteracion]);
+    }
+    static saveColaborador(id_iteracion,id_empleado){
+        return db.execute('INSERT INTO Empleado_Iteracion (id_empleado, id_iteracion, horas_semanales) VALUES (?, ?, NULL)', 
+        [id_empleado,id_iteracion]);
     }
 }
