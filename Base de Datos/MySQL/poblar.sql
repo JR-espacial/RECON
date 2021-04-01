@@ -210,19 +210,19 @@ INSERT INTO `empleado` (`id_empleado`, `usuario`, `contrasena`, `nombre_empleado
 INSERT INTO `empleado` (`id_empleado`, `usuario`, `contrasena`, `nombre_empleado`) VALUES(8, 'Casas', '$2a$12$DfIFZZhzWrcFWak5EI3NsueTQJQroLP5M7/Tjo1/tVBHeW7XEVspq', 'Armando');
 INSERT INTO `empleado` (`id_empleado`, `usuario`, `contrasena`, `nombre_empleado`) VALUES(9, 'gero33', '$2a$12$Vwe8vp24iKhpgqcYfoiyKecLW7GwmsanDiZNsyI9Dsc/nKCl9ua7u', 'Gerónimo');
 INSERT INTO `empleado` (`id_empleado`, `usuario`, `contrasena`, `nombre_empleado`) VALUES(10, 'cafe45', '$2a$12$LQofiw.Gv8IhTK/fw2qWkOy0tWVRlWJ0LaC19HyOKeEB20.gYvAEu', 'Benji');
-INSERT INTO `empleado` (`id_empleado`, `usuario`, `contrasena`, `nombre_empleado`) VALUES(11, 'Barney', '$2a$12$bLg4ZyoBnG4dqUGvNkesnubi3W57dPJRj9xuX76pxfJ05HlvZp63m', 'Bernardo');
-INSERT INTO `empleado` (`id_empleado`, `usuario`, `contrasena`, `nombre_empleado`) VALUES(12, 'MauGM', '$2a$12$IlszwHPCKxew9Kxm8UZfoe2Pdy9I6.f9YqcZoLu8goTqAxsiftyG.', 'Mauricio');
+INSERT INTO `empleado` (`id_empleado`, `usuario`, `contrasena`, `nombre_empleado`) VALUES(11, 'Bernardo', '$2a$12$bLg4ZyoBnG4dqUGvNkesnubi3W57dPJRj9xuX76pxfJ05HlvZp63m', 'Bernardo');
+INSERT INTO `empleado` (`id_empleado`, `usuario`, `contrasena`, `nombre_empleado`) VALUES(12, 'Mau', '$2a$12$IlszwHPCKxew9Kxm8UZfoe2Pdy9I6.f9YqcZoLu8goTqAxsiftyG.', 'Mauricio');
 INSERT INTO `empleado` (`id_empleado`, `usuario`, `contrasena`, `nombre_empleado`) VALUES(13, 'rcortese', '$2a$12$qyMdnA9uol5vhFrQkMhl3ek1V/HUP46f9mYHjDgyTv99drV8jAnLW', 'Ricardo');
 INSERT INTO `empleado` (`id_empleado`, `usuario`, `contrasena`, `nombre_empleado`) VALUES(14, 'Lalito4', '$2a$12$TovbtqxcZWrCc8eUCIGoqOx78gN/EEG2/C2x.Gr12SLTDugU2Hgwi', 'Lalo');
 INSERT INTO `empleado` (`id_empleado`, `usuario`, `contrasena`, `nombre_empleado`) VALUES(15, 'pperez', '$2a$12$ktcCS/fIPz.KER/L/Xnc4uoBEK7r4CyRCaHAPYioWBu5mGnXu1P1e', 'Pedro');
 INSERT INTO `empleado` (`id_empleado`, `usuario`, `contrasena`, `nombre_empleado`) VALUES(16, 'styles', '$2a$12$tE91sZ0wam9Qi49965lD1OrtgBYU6Dnw8lF4CuxVktHe6InYWUhKG', 'Harry');
 INSERT INTO `empleado` (`id_empleado`, `usuario`, `contrasena`, `nombre_empleado`) VALUES(17, 'tigre', '$2a$12$/ebGDlN9sXmcVPDUxfpwAuOAOQ0qkLlCkIyAVUAl0/l2d4SERhPdO', 'Toño');
 INSERT INTO `empleado` (`id_empleado`, `usuario`, `contrasena`, `nombre_empleado`) VALUES(18, 'pantera', '$2a$12$xUNg1OBIkxuGF1m2zt8qeu1E3yjAj1fGI4tPwG/fJa/h0ATdcaX/y', 'Pancho');
-INSERT INTO `empleado` (`id_empleado`, `usuario`, `contrasena`, `nombre_empleado`) VALUES(19, 'PauMyLove', '$2a$12$AFwwlyHFRZV.Df6bTAPZsuLLEkJGga7sQ/oS0zDsPPTrTwgMjYUEy', 'Paulina');
-INSERT INTO `empleado` (`id_empleado`, `usuario`, `contrasena`, `nombre_empleado`) VALUES(20, 'JorgeMyLove', '$2a$12$Uq0GnJ4E/TikMM8n8zWl5O.JIeBrCkLoK7h48BxKBTFVqrL6d84IS', 'Jorge');
-INSERT INTO `empleado` (`id_empleado`, `usuario`, `contrasena`, `nombre_empleado`) VALUES(21, 'RaulMyLove', '$2a$12$Sk/OOZKd5Ursy680J8NtW.WgnB83lpvmou1APrTcqW742I6Jb6jum', 'Raúl');
-INSERT INTO `empleado` (`id_empleado`, `usuario`, `contrasena`, `nombre_empleado`) VALUES(22, 'RafasLove', '$2a$12$29PJmzM4D/tqYY.5guO4E.7hNNxFS47m3V2PoVncYJY20w25Wer/e', 'NoviaRafa');
-INSERT INTO `empleado` (`id_empleado`, `usuario`, `contrasena`, `nombre_empleado`) VALUES(23, 'JoakozersLove', '$2a$12$IM91ryFV4KwvUAz.ijlbFejgtk3ddAbnI44yEZ7FnyyvKx9AIzWla', 'NoviaJoak');
+INSERT INTO `empleado` (`id_empleado`, `usuario`, `contrasena`, `nombre_empleado`) VALUES(19, 'Pau', '$2a$12$AFwwlyHFRZV.Df6bTAPZsuLLEkJGga7sQ/oS0zDsPPTrTwgMjYUEy', 'Paulina');
+INSERT INTO `empleado` (`id_empleado`, `usuario`, `contrasena`, `nombre_empleado`) VALUES(20, 'Jorge', '$2a$12$Uq0GnJ4E/TikMM8n8zWl5O.JIeBrCkLoK7h48BxKBTFVqrL6d84IS', 'Jorge');
+INSERT INTO `empleado` (`id_empleado`, `usuario`, `contrasena`, `nombre_empleado`) VALUES(21, 'Raul', '$2a$12$Sk/OOZKd5Ursy680J8NtW.WgnB83lpvmou1APrTcqW742I6Jb6jum', 'Raúl');
+INSERT INTO `empleado` (`id_empleado`, `usuario`, `contrasena`, `nombre_empleado`) VALUES(22, 'Rafa2', '$2a$12$29PJmzM4D/tqYY.5guO4E.7hNNxFS47m3V2PoVncYJY20w25Wer/e', 'NoviaRafa');
+INSERT INTO `empleado` (`id_empleado`, `usuario`, `contrasena`, `nombre_empleado`) VALUES(23, 'Joakozer2', '$2a$12$IM91ryFV4KwvUAz.ijlbFejgtk3ddAbnI44yEZ7FnyyvKx9AIzWla', 'NoviaJoak');
 
 INSERT INTO `empleado_iteracion` (`id_empleado`, `id_iteracion`, `horas_semanales`) VALUES(1, 1, 20);
 INSERT INTO `empleado_iteracion` (`id_empleado`, `id_iteracion`, `horas_semanales`) VALUES(1, 21, 15);

@@ -47,8 +47,8 @@ module.exports =  class Iteracion{
     static eliminarIteracion(id_iteracion){
         return db.execute('UPDATE Iteracion SET estado_iteracion = 0 WHERE id_iteracion = ?', [id_iteracion]);
     }
-    static saveColaborador(id_iteracion,id_empleado){
+    static saveColaborador(id_empleado,id_iteracion){
         return db.execute('INSERT INTO Empleado_Iteracion (id_empleado, id_iteracion, horas_semanales) VALUES (?, ?, NULL)', 
-        [id_empleado,id_iteracion]);
+        [id_empleado, id_iteracion]);
     }
 }
