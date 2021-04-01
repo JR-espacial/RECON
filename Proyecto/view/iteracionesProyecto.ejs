@@ -3,6 +3,11 @@
 <%- include('includes/navbarProyecto.ejs'); %>
 
 
+<% if (alerta) { %>
+    <script>alert("<%= alerta %>");</script>
+<% } %> 
+
+
 <!-- Set de tres tarjetas -->
 <div class="row center">
     <div class="col offset-s3">
