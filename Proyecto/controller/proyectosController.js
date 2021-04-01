@@ -4,6 +4,7 @@ const Usuario = require('../models/user');
 const Departamento = require('../models/departamento');
 const Puntos_Agiles = require('../models/puntos_agiles');
 const Proyecto_Fase_Tarea = require('../models/Proyecto_Fase_Tarea');
+const Fase = require('../models/fase');
 const { request } = require('express');
 
 exports.getNuevoProyecto = (request, response) => {
@@ -45,9 +46,17 @@ exports.postNuevoProyecto = async function (request, response) {
         let proyecto = new Proyecto(nombre_proyecto, descripcion, departamento, '1', image_file_name, 0);
         await proyecto.saveProyecto();
         const id_proyecto = await Proyecto.fetchOne(nombre_proyecto);
+
+        const fases = await Fase.fetchAll();
+        for(let i = 0; i < fases[0].length; i++){
+            let fase_tarea = new Proyecto_Fase_Tarea(id_proyecto[0][0].id_proyecto, fases[0][i].id_fase, 0);
+            await fase_tarea.saveProyecto_Fase_Tarea();
+        }
+
         await Proyecto.saveProyectoDepto(departamento, id_proyecto[0][0].id_proyecto);
         await Iteracion.saveCapacidad();
         const fetchLastCapacidad =  await Iteracion.fetchLastCapacidad();
+        
         let iteracion = new Iteracion(id_proyecto[0][0].id_proyecto, fetchLastCapacidad[0][0].id_capacidad, 0, 'NULL', 'NULL', 'NULL', 0);
         await iteracion.saveIteracion();
         const fetchOneIteracion = await Iteracion.fetchOne(id_proyecto[0][0].id_proyecto, 0);

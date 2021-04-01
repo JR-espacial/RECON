@@ -286,6 +286,7 @@ INSERT INTO `fase` (`id_fase`, `nombre_fase`) VALUES(8, 'Fase 8');
 INSERT INTO `fase` (`id_fase`, `nombre_fase`) VALUES(9, 'Fase 9');
 INSERT INTO `fase` (`id_fase`, `nombre_fase`) VALUES(10, 'Fase 10');
 
+INSERT INTO `practica_trabajo` (`id_trabajo`, `nombre_practica_trabajo`) VALUES(0, 'Trabajo fantasma');
 INSERT INTO `practica_trabajo` (`id_trabajo`, `nombre_practica_trabajo`) VALUES(1, 'Trabajo 1');
 INSERT INTO `practica_trabajo` (`id_trabajo`, `nombre_practica_trabajo`) VALUES(2, 'Trabajo 2');
 INSERT INTO `practica_trabajo` (`id_trabajo`, `nombre_practica_trabajo`) VALUES(3, 'Trabajo 3');

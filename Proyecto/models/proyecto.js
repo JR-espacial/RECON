@@ -18,7 +18,7 @@ module.exports =  class Proyecto{
         return db.execute('INSERT INTO Proyecto_Departamento (id_proyecto, id_departamento) VALUES (?, ?)',
         [id_proyecto, id_departamento]);
     }
-    
+
     static fetchAll(usuario){
         return db.execute('SELECT * FROM Proyecto P, Iteracion I, Empleado_Iteracion EI, Empleado E  WHERE estado_proyecto = 1 AND P.id_proyecto = I.id_proyecto AND I.id_iteracion = EI.id_iteracion AND EI.id_empleado = E.id_empleado AND E.usuario = ? GROUP BY P.id_proyecto', [usuario]);
     }
