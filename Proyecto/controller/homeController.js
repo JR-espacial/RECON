@@ -1,30 +1,21 @@
 const { request, response } = require('express');
 const Proyecto = require('../models/proyecto');
 const Departamento = require('../models/departamento');
+const Usuario = require('../models/user');
 
-exports.getHome = (request, response) => {
+exports.getHome = async function (request, response){
     let alerta = request.session.alerta
     request.session.alerta = "";
     request.session.last = '/home';
 
-    Proyecto.fetchAll()
-    .then(([rows1, fieldData]) => {
-        Departamento.fetchAll()
-        .then(([rows2, fieldData]) => {
-            response.render('home',{
-                title: "Home", 
-                proyectos : rows1,
-                departamentos : rows2,
-                alerta : alerta,
-                csrfToken: request.csrfToken()
-            });
-        })
-        .catch(err => {
-            console.log(err);
-        });
-    })
-    .catch(err => {
-        console.log(err);
+    const proyectos = await Proyecto.fetchAll(request.session.usuario);
+    const departamentos = await Departamento.fetchAll();
+    response.render('home',{
+        title: "Home", 
+        proyectos : proyectos[0],
+        departamentos : departamentos,
+        alerta : alerta,
+        csrfToken: request.csrfToken()
     });
 }
 

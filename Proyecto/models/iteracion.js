@@ -1,18 +1,19 @@
 const db = require('../util/mySQL');
 
 module.exports =  class Iteracion{
-    constructor(id_proyecto, id_capacidad, num_iteracion, descripcion , fecha_inicio, fecha_fin){
+    constructor(id_proyecto, id_capacidad, num_iteracion, descripcion , fecha_inicio, fecha_fin, estado_iteracion){
         this.id_proyecto = id_proyecto;
         this.id_capacidad = id_capacidad;
         this.num_iteracion = num_iteracion;
         this.descripcion = descripcion;
         this.fecha_inicio = fecha_inicio;
         this.fecha_fin = fecha_fin;
+        this.estado_iteracion = estado_iteracion;
     }
 
     saveIteracion(){ 
-        return db.execute('INSERT INTO Iteracion (id_proyecto, id_capacidad, num_iteracion, descripcion, fecha_inicio, fecha_fin, estado_iteracion, total_min_real, total_min_maximo) VALUES (?, ?, ?, ?, ?, ?, 1, NULL, NULL)',
-        [this.id_proyecto, this.id_capacidad, this.num_iteracion, this.descripcion, this.fecha_inicio, this.fecha_fin]);
+        return db.execute('INSERT INTO Iteracion (id_proyecto, id_capacidad, num_iteracion, descripcion, fecha_inicio, fecha_fin, estado_iteracion, total_min_real, total_min_maximo) VALUES (?, ?, ?, ?, ?, ?, ?, NULL, NULL)',
+        [this.id_proyecto, this.id_capacidad, this.num_iteracion, this.descripcion, this.fecha_inicio, this.fecha_fin, this.estado_iteracion]);
     }
 
     static saveCapacidad(){
@@ -32,8 +33,8 @@ module.exports =  class Iteracion{
         return db.execute('SELECT * FROM Iteracion WHERE estado_iteracion = 1');
     }
 
-    static fetchAllfromProyect(id_proyecto) {
-        return db.execute('SELECT * FROM Iteracion WHERE id_proyecto =? AND estado_iteracion = 1',[id_proyecto]);
+    static fetchAllfromProyect(id_proyecto, usuario) {
+        return db.execute('SELECT * FROM Iteracion I, Empleado_Iteracion EI, Empleado E WHERE I.id_proyecto =? AND I.estado_iteracion = 1 AND I.id_iteracion = EI.id_iteracion AND EI.id_empleado = E.id_empleado AND E.usuario =?',[id_proyecto, usuario]);
     }
 
     static fetchOne(id_proyecto,num_iteracion) { 

@@ -19,12 +19,17 @@ module.exports =  class Proyecto{
         [id_proyecto, id_departamento]);
     }
     
-    static fetchAll(){
-        return db.execute('SELECT * FROM Proyecto P, Proyecto_Departamento PD, Departamento D WHERE estado_proyecto = 1 AND P.id_proyecto = PD.id_proyecto AND PD.id_departamento = D.id_departamento');
+    static fetchAll(usuario){
+        return db.execute('SELECT * FROM Proyecto P, Iteracion I, Empleado_Iteracion EI, Empleado E  WHERE estado_proyecto = 1 AND P.id_proyecto = I.id_proyecto AND I.id_iteracion = EI.id_iteracion AND EI.id_empleado = E.id_empleado AND E.usuario = ? GROUP BY P.id_proyecto', [usuario]);
     }
 
     static fetchOne(nombre_proyecto){ 
         return db.execute('SELECT id_proyecto FROM Proyecto WHERE nombre_proyecto =?',[nombre_proyecto]);
+    }
+
+    static fetchAllProyectoIter(id_iteracion) {
+        console.log(id_iteracion);
+        return db.execute('SELECT id_proyecto FROM Iteracion WHERE id_iteracion IN ? AND estado_iteracion = 1',[id_iteracion]);
     }
 
     static fetchOneModificar(nombre_proyecto, id_proyecto){ 

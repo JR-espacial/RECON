@@ -8,7 +8,7 @@ exports.getIteracionesProyecto = (request,response) => {
     const alerta = request.session.alerta;
     request.session.alerta = "";
   
-    Iteracion.fetchAllfromProyect(idProyecto)
+    Iteracion.fetchAllfromProyect(idProyecto, request.session.usuario)
     .then(([rows, fieldData]) => {
         Usuario.fetchAll()
         .then(([rows2, fieldData]) => {
@@ -62,7 +62,7 @@ exports.postNuevaIteracion = async function (request, response){
     const fecha_fin = request.body.fecha_fin;
     const colaboradores = request.body.colaboradores;
     const colabs =[];
-    let alerta = " La iteacion fue crada exitosamente \n Sin embargo los usuarios :";
+    let alerta = "La iteracion fue creada exitosamente. Sin embargo los usuarios:";
 
     let colaborador = "";
     for (let i = 0; i < colaboradores.length; i++) {
@@ -75,32 +75,33 @@ exports.postNuevaIteracion = async function (request, response){
         }
     }
 
+    colabs.push(request.session.usuario);
+
     await Iteracion.saveCapacidad();
     const fetchLastCapacidad =  await Iteracion.fetchLastCapacidad();
     const fetchLastNumIter =  await Iteracion.fetchLastNumIter(id_proyecto);
-    let iteracion = new Iteracion(id_proyecto, fetchLastCapacidad[0][0].id_capacidad, fetchLastNumIter[0][0].num_iteracion, descripcion, fecha_inicio, fecha_fin);
+    let iteracion = new Iteracion(id_proyecto, fetchLastCapacidad[0][0].id_capacidad, fetchLastNumIter[0][0].num_iteracion, descripcion, fecha_inicio, fecha_fin, 1);
     await iteracion.saveIteracion(); 
     const fetchOneIteracion = await Iteracion.fetchOne(id_proyecto,fetchLastNumIter[0][0].num_iteracion);
     for (let i = 0; i < colabs.length; i++) {
         const fetchOneUsuario =  await Usuario.fetchOne(colabs[i]);
         if(fetchOneUsuario[0][0]){
-            console.log(fetchOneUsuario[0][0]);
             await Iteracion.saveColaborador(fetchOneUsuario[0][0].id_empleado, fetchOneIteracion[0][0].id_iteracion);
         }
         else{
             alerta += " "+ colabs[i] + " ";
         }
     }
-    alerta += "no existen y no fueron registrados en la iteracion"
-    if(alerta != "Los usuarios :"){
+    
+    if(alerta != "La iteracion fue creada exitosamente. Sin embargo los usuarios:"){
+        alerta += "no existen y no fueron registrados en la iteracion";
         request.session.alerta = alerta;
-        response.redirect("/proyectos/nueva-iteracion");
     }
     else{
-        request.session.alerta = "Nueva iteracion creada Exitosamente"
-        response.redirect("/proyectos/iteraciones-proyecto");
+        request.session.alerta = "Nueva iteracion creada exitosamente"
     }
 
+    response.redirect("/proyectos/iteraciones-proyecto");
 }
 
 exports.postEditarIteracion = (request, response) =>{

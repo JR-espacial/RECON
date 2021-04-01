@@ -26,4 +26,8 @@ module.exports =  class Usuario{
         return db.execute('SELECT * FROM Empleado WHERE usuario =?',[usuario]);
 
     }
+
+    static fetchEmpleadoIter(id_empleado){
+        return db.execute('SELECT id_iteracion FROM Empleado_Iteracion WHERE id_empleado =?', [id_empleado]);
+    }
 }
