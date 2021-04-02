@@ -33,8 +33,12 @@ module.exports =  class Iteracion{
         return db.execute('SELECT * FROM Iteracion WHERE estado_iteracion = 1');
     }
 
-    static fetchAllfromProyect(id_proyecto, usuario) {
-        return db.execute('SELECT * FROM Iteracion I, Empleado_Iteracion EI, Empleado E WHERE I.id_proyecto =? AND I.estado_iteracion = 1 AND I.id_iteracion = EI.id_iteracion AND EI.id_empleado = E.id_empleado AND E.usuario =?',[id_proyecto, usuario]);
+    static fetchAllfromProyect(id_proyecto, usuario, iteracion_actual) {
+        return db.execute('SELECT * FROM Iteracion I, Empleado_Iteracion EI, Empleado E WHERE I.id_proyecto =? AND I.estado_iteracion = 1 AND I.id_iteracion = EI.id_iteracion AND EI.id_empleado = E.id_empleado AND E.usuario =? AND NOT I.id_iteracion =?',[id_proyecto, usuario, iteracion_actual]);
+    }
+
+    static fetchOnefromProyect(id_proyecto, usuario) {
+        return db.execute('SELECT * FROM Iteracion I, Empleado_Iteracion EI, Empleado E WHERE I.id_proyecto =? AND I.estado_iteracion = 1 AND I.id_iteracion = EI.id_iteracion AND EI.id_empleado = E.id_empleado AND E.usuario =? AND num_iteracion = (SELECT MAX(I.num_iteracion) FROM Iteracion I, Empleado_Iteracion EI, Empleado E WHERE I.id_proyecto =? AND I.estado_iteracion = 1 AND I.id_iteracion = EI.id_iteracion AND EI.id_empleado = E.id_empleado AND E.usuario =?)',[id_proyecto, usuario, id_proyecto, usuario]);
     }
 
     static fetchOne(id_proyecto,num_iteracion) { 

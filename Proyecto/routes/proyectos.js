@@ -28,9 +28,13 @@ router.get('/promedios-ap', isAuth, proyectosController.getPromediosAP);
 
 router.get('/estimados-ap', isAuth, proyectosController.getEstimadosAP);
 
-router.get('/iteraciones-proyecto', isAuth,iteracionesController.getIteracionesProyecto);
+router.get('/iteraciones-proyecto-desarrollo', isAuth,iteracionesController.getIteracionesProyecto);
 
-router.post('/iteraciones-proyecto', isAuth,iteracionesController.postIteracionesProyecto);
+router.post('/iteraciones-proyecto-desarrollo', isAuth,iteracionesController.postIteracionesProyecto);
+
+router.get('/iteraciones-proyecto-terminado', isAuth,iteracionesController.getIteracionesProyecto);
+
+router.post('/iteraciones-proyecto-terminado', isAuth,iteracionesController.postIteracionesProyecto);
 
 router.get('/nueva-iteracion', isAuth,iteracionesController.getNuevaIteracion);
 

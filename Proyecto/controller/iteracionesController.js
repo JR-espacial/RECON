@@ -3,30 +3,35 @@ const Iteracion = require('../models/iteracion');
 const Usuario = require('../models/user');
 const { fetchLastNumIter } = require('../models/iteracion');
 
-exports.getIteracionesProyecto = (request,response) => {
+exports.getIteracionesProyecto = async function(request,response){
     const idProyecto = request.session.idProyecto;
     const alerta = request.session.alerta;
     request.session.alerta = "";
-  
-    Iteracion.fetchAllfromProyect(idProyecto, request.session.usuario)
-    .then(([rows, fieldData]) => {
-        Usuario.fetchAll()
-        .then(([rows2, fieldData]) => {
-            response.render('iteracionesProyecto', {
-                title: "Iteraciones",
-                iteraciones : rows,
-                empleados : rows2,
-                alerta : alerta,
-                csrfToken: request.csrfToken()
-            });
-        })
-        .catch(err => {
-            console.log(err);
-        });
-    })
-    .catch(err => {
-        console.log(err);
+    let iteraciones;
+    iteracion_actual = await Iteracion.fetchOnefromProyect(idProyecto, request.session.usuario);
+    
+    if(request.url == '/iteraciones-proyecto-desarrollo'){
+        iteraciones = iteracion_actual;
+        
+    }
+    else if(request.url == '/iteraciones-proyecto-terminado') {
+        if(iteracion_actual[0][0]){
+            iteraciones = await Iteracion.fetchAllfromProyect(idProyecto, request.session.usuario, iteracion_actual[0][0].id_iteracion);
+        }
+    }
+    if(iteraciones == undefined){
+        iteraciones = [[]];
+    }
+
+    const empleados = Usuario.fetchAll()
+    response.render('iteracionesProyecto', {
+        title: "Iteraciones",
+        iteraciones : iteraciones[0],
+        empleados : empleados,
+        alerta : alerta,
+        csrfToken: request.csrfToken()
     });
+       
 }
 
 exports.postIteracionesProyecto = (request, response) => {
@@ -63,6 +68,7 @@ exports.postNuevaIteracion = async function (request, response){
     const colaboradores = request.body.colaboradores;
     const colabs =[];
     let alerta = "La iteracion fue creada exitosamente. Sin embargo los usuarios:";
+
 
     let colaborador = "";
     for (let i = 0; i < colaboradores.length; i++) {
@@ -101,7 +107,7 @@ exports.postNuevaIteracion = async function (request, response){
         request.session.alerta = "Nueva iteracion creada exitosamente"
     }
 
-    response.redirect("/proyectos/iteraciones-proyecto");
+    response.redirect("/proyectos/iteraciones-proyecto-desarrollo");
 }
 
 exports.postEditarIteracion = (request, response) =>{
@@ -114,7 +120,7 @@ exports.postEditarIteracion = (request, response) =>{
     Iteracion.modificarIteracion(id_proyecto, descripcion, id_iteracion)
     .then(() => {
         request.session.alerta = "Iteración modificada exitosamente";
-        response.redirect("/proyectos/iteraciones-proyecto");
+        response.redirect("/proyectos/iteraciones-proyecto-desarrollo");
     })
     .catch(err =>{
         console.log(err);
@@ -124,7 +130,7 @@ exports.postEditarIteracion = (request, response) =>{
 exports.postEliminarIteracion =  async function(request, response){
     await Iteracion.eliminarIteracion(request.body.id_iteracion);
     request.session.alerta = "Iteración eliminada exitosamente";
-    response.redirect('/proyectos/iteraciones-proyecto');
+    response.redirect('/proyectos/iteraciones-proyecto-desarrollo');
 }
 
 exports.getCapacidadEquipo = (request, response) =>{
