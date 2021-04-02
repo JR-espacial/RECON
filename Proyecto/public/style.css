@@ -55,9 +55,11 @@ header, main, footer {
         padding-left: 0;
     }
 }
-
+html, body {
+    height: 100%;
+  }
 .max{
-    height: 600px;
+    height: 100%;
 }
 
 #fases{
@@ -68,7 +70,6 @@ header, main, footer {
     scrollbar-width: none;  /* Firefox */
     width: 98%;
     margin: 0 auto;
-    height:max-content;
 }
 
 #fasesVert{
