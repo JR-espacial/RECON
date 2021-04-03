@@ -3,18 +3,18 @@
 
 <div class="row">
   <!-- Registrar -->
-  <form class="col s12 offset-s3" action="casos-uso-iteracion" method="POST">
+  <form class="col s8 offset-s3" action="casos-uso-iteracion" method="POST">
       <div class="row">
           <div class="input-field col 1">
-            <input id="yo_como" name="yo_como" type="text" class="validate" required>
+            <input id="yo_como" name="yo_como" type="text" class="validate" maxlength="64" required>
             <label for="yo_como">Yo como</label>
           </div>
           <div class="input-field col 1">
-              <input id="quiero" name="quiero" type="text" class="validate" required>
+              <input id="quiero" name="quiero" type="text" class="validate" maxlength="255" required>
               <label for="quiero">quiero</label>
           </div>
           <div class="input-field col 1">
-              <input id="para" name="para" type="text" class="validate">
+              <input id="para" name="para" type="text" class="validate" maxlength="255">
               <label for="para">para</label>
           </div>
           <div class="input-field col 1">
@@ -30,124 +30,126 @@
           </div>
           <div class="input-field col 2">
             <input type="hidden" name="_csrf" value="<%= csrfToken %>"> 
-            <input type="submit" name="action" value="registrar">
+            <button class="btn waves-effect waves-light" type="submit" name="action" value="registrar">Registrar</button>
           </div>
       </div>
   </form>
 
   <!-- Consultar -->
-  <div class="col s12 offset-s3" id="tabla_caso_uso">
-    <table class="highlight">
-      <thead>
-        <tr>
-            <th>id</th> 
-            <th>Yo como</th>
-            <th>quiero</th>
-            <th>para</th>
-            <th>AP</th>
-            <th></th> 
-            <th></th>
-            <th></th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <% for (caso of casos_uso) { %>
+  <div class="col s8 offset-s3">
+    <div class="tabla_cu">
+      <table class="highlight tabla_cu">
+        <thead>
           <tr>
-            <td><%= caso.id_casos %></td>
-            <td><%= caso.yo_como %></td>
-            <td><%= caso.quiero %></td>
-            <td><%= caso.para %></td>
-            <td><%= caso.ap %></td>
-            
-            <!-- Botones -->
-            <div class="col s3 offset-s8">
-            
-              <!-- Modificar -->
-              <td>
-                <button data-target="modal1_<%= caso.id_casos %>" class="btn modal-trigger" name="action" value="editar"><i class="small material-icons">mode_edit</i></button>
-                <div id="modal1_<%= caso.id_casos %>" class="modal">
-                  <form action="casos-uso-iteracion" method="POST">
-                    <div class="modal-content">
-                      <!-- Input Data -->
-                      <div class="row">
-                        <h4>Editar</h4>
-                        <div class="input-field col 1">
-                          <input id="yo_como" name="yo_como" type="text" class="validate" value="<%= caso.yo_como %>">
-                          <label for="yo_como">Yo como</label>
-                        </div>
-                        <div class="input-field col 1">
-                          <input id="quiero" name="quiero" type="text" class="validate" value="<%= caso.quiero %>">
-                          <label for="quiero">quiero</label>
-                        </div>
-                        <div class="input-field col 1">
-                          <% let placeHolder = "";
-                             let valorPara = caso.para; 
-                            if (caso.para === "") { 
-                              placeHolder = "No hay para"; 
-                              valorPara = "";
-                            } %> 
-                          <input placeholder="<%= placeHolder %>" id="para" name="para" type="text" class="validate"  value="<%= valorPara %>">
-                          <label for="para">para</label>
-                        </div>
-                        <div class="input-field col 1">
-                          <select name="id_ap" class="browser-default">
-                            <option value="" disabled selected>AP</option>
-                            <option value="1">1</option> 
-                            <option value="2">2</option> 
-                            <option value="3">3</option> 
-                            <option value="4">5</option> 
-                            <option value="5">8</option> 
-                            <option value="6">13</option> 
-                          </select>
-                        </div>
-                      </div>
-                      <input id="comentario" name="comentario" type="text" class="validate" value="<%= caso.comentario %>" >
-                      <label for="comentario">Comentario</label>
-                    </div>
-                    
-                    <!-- Submit Hidden Data -->
-                    <input type="hidden" name="_csrf" value="<%= csrfToken %>"> 
-                    <input type="hidden" name="idCaso" value="<%= caso.id_casos %>">
-                    <input type="hidden" name="id_ap_pasado" value="<%= caso.id_ap %>">
-
-                    <!-- Botones de aceptar y cancelar -->
-                    <div class="modal-footer">
-                      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
-                      <button type="submit" class="modal-close waves-effect waves-green btn-flat" name="action" value="editar">Aceptar</button>  
-                    </div>
-                  </form>
-                </div>
-              </td>
-              
-              <!-- Comentario -->
-              <td>
-                <% if(caso.comentario !== ""){ %>
-                    <a class="btn tooltipped" data-position="bottom" data-tooltip="<%= caso.comentario %>"><i class="material-icons">forum</i></a>
-                <% } %>
-              </td>
-              
-              <!-- Eliminar -->
-              <td>
-                <form id="forma_eliminar_<%= caso.id_casos %>" action="casos-uso-iteracion" method="POST">
-                  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                  <input type="hidden" name="idCaso" value="<%= caso.id_casos %>">
-                  <button name="action" value="eliminar" type="submit"><i class="small material-icons">delete</i></button>
-                  <script> 
-                    document.getElementById("forma_eliminar_<%= caso.id_casos %>").addEventListener('submit', (e) => {
-                      let confirmacion = confirm('¿Estás seguro de eliminar el caso de uso?');
-                      if(!confirmacion){
-                        e.preventDefault();
-                      }  
-                    });
-                  </script>
-                </form>
-              </td>
-            </div>
+              <th class="row-idCasos-ap-botones">id</th> 
+              <th class="row-yo_como">Yo como</th>
+              <th class="row-quiero-para">quiero</th>
+              <th class="row-quiero-para">para</th>
+              <th class="row-idCasos-ap-botones">AP</th>
+              <th class="row-botones"></th> 
+              <th class="row-botones"></th>
+              <th class="row-botones"></th>
           </tr>
-        <% } %> 
-      </tbody>
-    </table>
+        </thead>
+        
+        <tbody>
+          <% for (caso of casos_uso) { %>
+            <tr>
+              <td><%= caso.id_casos %></td>
+              <td><%= caso.yo_como %></td>
+              <td><%= caso.quiero %></td>
+              <td><%= caso.para %></td>
+              <td><%= caso.ap %></td>
+              
+              <!-- Botones -->
+              <div class="col s3 offset-s8">
+              
+                <!-- Modificar -->
+                <td>
+                  <button data-target="modal1_<%= caso.id_casos %>" class="btn modal-trigger" name="action" value="editar"><i class="small material-icons">mode_edit</i></button>
+                  <div id="modal1_<%= caso.id_casos %>" class="modal">
+                    <form action="casos-uso-iteracion" method="POST">
+                      <div class="modal-content">
+                        <!-- Input Data -->
+                        <div class="row">
+                          <h4>Editar</h4>
+                          <div class="input-field col 1">
+                            <input id="yo_como" name="yo_como" type="text" class="validate" maxlength="64" value="<%= caso.yo_como %>">
+                            <label for="yo_como">Yo como</label>
+                          </div>
+                          <div class="input-field col 1">
+                            <input id="quiero" name="quiero" type="text" class="validate" maxlength="255" value="<%= caso.quiero %>">
+                            <label for="quiero">quiero</label>
+                          </div>
+                          <div class="input-field col 1">
+                            <% let placeHolder = "";
+                              let valorPara = caso.para; 
+                              if (caso.para === "") { 
+                                placeHolder = "No hay para"; 
+                                valorPara = "";
+                              } %> 
+                            <input placeholder="<%= placeHolder %>" id="para" name="para" type="text" class="validate"  maxlength="255" value="<%= valorPara %>">
+                            <label for="para">para</label>
+                          </div>
+                          <div class="input-field col 1">
+                            <select name="id_ap" class="browser-default">
+                              <option value="" disabled selected>AP</option>
+                              <option value="1">1</option> 
+                              <option value="2">2</option> 
+                              <option value="3">3</option> 
+                              <option value="4">5</option> 
+                              <option value="5">8</option> 
+                              <option value="6">13</option> 
+                            </select>
+                          </div>
+                        </div>
+                        <input id="comentario" name="comentario" type="text" class="validate" maxlength="255" value="<%= caso.comentario %>" >
+                        <label for="comentario">Comentario</label>
+                      </div>
+                      
+                      <!-- Submit Hidden Data -->
+                      <input type="hidden" name="_csrf" value="<%= csrfToken %>"> 
+                      <input type="hidden" name="idCaso" value="<%= caso.id_casos %>">
+                      <input type="hidden" name="id_ap_pasado" value="<%= caso.id_ap %>">
+
+                      <!-- Botones de aceptar y cancelar -->
+                      <div class="modal-footer">
+                        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
+                        <button type="submit" class="modal-close waves-effect waves-green btn-flat" name="action" value="editar">Aceptar</button>  
+                      </div>
+                    </form>
+                  </div>
+                </td>
+                
+                <!-- Comentario -->
+                <td>
+                  <% if(caso.comentario !== ""){ %>
+                      <a class="btn tooltipped" data-position="bottom" data-tooltip="<%= caso.comentario %>"><i class="material-icons">forum</i></a>
+                  <% } %>
+                </td>
+                
+                <!-- Eliminar -->
+                <td>
+                  <form id="forma_eliminar_<%= caso.id_casos %>" action="casos-uso-iteracion" method="POST">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <input type="hidden" name="idCaso" value="<%= caso.id_casos %>">
+                    <button name="action" value="eliminar" type="submit"><i class="small material-icons">delete</i></button>
+                    <script> 
+                      document.getElementById("forma_eliminar_<%= caso.id_casos %>").addEventListener('submit', (e) => {
+                        let confirmacion = confirm('¿Estás seguro de eliminar el caso de uso?');
+                        if(!confirmacion){
+                          e.preventDefault();
+                        }  
+                      });
+                    </script>
+                  </form>
+                </td>
+              </div>
+            </tr>
+          <% } %> 
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
 
