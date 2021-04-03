@@ -69,8 +69,6 @@
             recomendacionFases["<%= sugerencia_fases[i].nombre_fase%>"] = null;
         "<% } %>"
 
-        console.log(recomendacionFases);
-
         let instances = M.Autocomplete.init(autocomplete, { data : recomendacionFases });
     });
 

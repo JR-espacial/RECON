@@ -45,7 +45,7 @@ exports.postFasesProyecto = (request, response) => {
                             response.redirect('fases-proyecto');
                         })
                         .catch( err => {
-                            request.session.alerta = "Dicha Fase ya existe dentro del Proyecto";
+                            request.session.alerta = nombre_fase + " ya existe dentro del Proyecto.";
                             response.redirect('fases-proyecto');
                         });
                 }
@@ -56,7 +56,6 @@ exports.postFasesProyecto = (request, response) => {
                         .then(() => {
                             Fase.fetchOne(nombre_fase) 
                                 .then(([rows2, fieldData]) => {
-                                    console.log(rows2);
                                     let id_fase = rows2[0].id_fase;
                                     let proyecto_fase_tarea = new Proyecto_Fase_Tarea(id_proyecto, id_fase, 0);
                                     proyecto_fase_tarea.saveProyecto_Fase_Tarea()
@@ -84,28 +83,47 @@ exports.postFasesProyecto = (request, response) => {
     if(accion === "registrar-tarea"){
         const id_fase = request.body.id_fase;
         const nombre_tarea = request.body.añadir_nombre_tarea;
-        const tarea = new Tarea(nombre_tarea);
-        tarea.saveTarea()
-            .then(() => {
-                Tarea.fetchOne(nombre_tarea)
-                    .then(([rows, fieldData]) => {
-                        const id_tarea = rows[0].id_trabajo;
-                        const proyecto_fase_tarea = new Proyecto_Fase_Tarea(id_proyecto, id_fase, id_tarea);
-                        proyecto_fase_tarea.saveProyecto_Fase_Tarea()
-                            .then(() => {
-                                response.redirect('fases-proyecto');
-                            })
-                            .catch(err => {
-                                console.log(err);
-                            });
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    });
+        Tarea.fetchOne(nombre_tarea)
+            .then(([rows, fieldData]) => {
+                if(rows.length > 0){
+                    const proyecto_fase_tarea = new Proyecto_Fase_Tarea(id_proyecto, id_fase, rows[0].id_trabajo);
+                    proyecto_fase_tarea.saveProyecto_Fase_Tarea()
+                        .then(() => {
+                            response.redirect('fases-proyecto');
+                        })
+                        .catch(err => {
+                            // Chequear error ya existe en fase
+                            request.session.alerta = nombre_tarea + " ya existe dentro de la Fase.";
+                            response.redirect('fases-proyecto');
+                        });
+                }
+                else{
+                    const tarea = new Tarea(nombre_tarea);
+                    tarea.saveTarea()
+                        .then(() => {
+                            Tarea.fetchOne(nombre_tarea)
+                                .then(([rows, fieldData]) => {
+                                    const id_tarea = rows[0].id_trabajo;
+                                    const proyecto_fase_tarea = new Proyecto_Fase_Tarea(id_proyecto, id_fase, id_tarea);
+                                    proyecto_fase_tarea.saveProyecto_Fase_Tarea()
+                                        .then(() => {
+                                            response.redirect('fases-proyecto');
+                                        })
+                                        .catch(err => {
+                                            console.log(err);
+                                        });
+                                })
+                                .catch(err => {
+                                    console.log(err);
+                                });
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        });
+                }
             })
             .catch(err => {
                 console.log(err);
-            });
+            }); 
     }
-
 }
