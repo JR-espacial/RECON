@@ -1,24 +1,19 @@
 const express = require('express')
 const app = express();
-const bodyParser = require('body-parser');
-const path = require('path');
-const session = require('express-session');
-const isAuth = require('./util/is_Auth');
-const csrf = require('csurf');
-const csrfProtection = csrf();
 
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({extended: false}));
+
+const path = require('path');
+//Para acceder a los recursos de la carpeta public
+app.use(express.static(path.join(__dirname, 'public')));
+//Para acceder a los recursos de la carpeta uploads
+app.use(express.static(path.join(__dirname, 'uploads')));
 
 app.set('view engine', 'ejs');
 app.set('views', 'view');
 
-const users = require('./routes/users');
-const home = require('./routes/home');
-const proyectos = require('./routes/proyectos');
-
-app.use(bodyParser.urlencoded({extended: false}));
-
 const multer = require('multer');
-
 //fileStorage: Es nuestra constante de configuración para manejar el almacenamiento
 const fileStorage = multer.diskStorage({
     destination: (request, file, callback) => {
@@ -31,7 +26,6 @@ const fileStorage = multer.diskStorage({
         callback(null, new Date().toISOString().replace(/:/g, '-') + '-' + file.originalname);
     },
 });
-
 //En el registro, pasamos la constante de configuración y
 //usamos single porque es un sólo archivo el que vamos a subir, 
 //pero hay diferentes opciones si se quieren subir varios archivos. 
@@ -39,30 +33,26 @@ const fileStorage = multer.diskStorage({
 app.use(multer(
     { storage: fileStorage }
     //{ dest: 'uploads' }
-    ).single('imagen_proyecto'));  
+    ).single('imagen_proyecto'));
 
-//Para acceder a los recursos de la carpeta public
-app.use(express.static(path.join(__dirname, 'public')));
-
-//Para acceder a los recursos de la carpeta uploads
-app.use(express.static(path.join(__dirname, 'uploads')));
-
-
+const session = require('express-session');
 app.use(session({
     secret: 'ikjdklfmañsldj', 
     resave: false,
     saveUninitialized: false,
 }));
 
-app.use(csrfProtection); 
+const csrf = require('csurf');
+const csrfProtection = csrf();
+app.use(csrfProtection);
+
+const users = require('./routes/users');
+const home = require('./routes/home');
+const proyectos = require('./routes/proyectos');
 
 app.use('/proyectos', proyectos);
-
 app.use('/users', users);
-
 app.use('/home', home);
-
-
 app.use("/",(request, response,next) => {   
     response.status(404).send('<html><head><meta charset="UTF-8"><title>Page not found</title></head><body><h1>Error 404</h1></body></html>')
 });
