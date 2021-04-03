@@ -25,7 +25,7 @@ module.exports =  class Casos_Uso{
     }
 
     static fetchQuiero (idIteracion) {
-        return db.execute('SELECT id_casos, id_iteracion, quiero FROM Casos_Uso WHERE id_iteracion=?', 
+        return db.execute('SELECT id_casos, id_iteracion, quiero FROM Casos_Uso WHERE id_iteracion=? ORDER BY id_casos', 
         [idIteracion]);
     }
 

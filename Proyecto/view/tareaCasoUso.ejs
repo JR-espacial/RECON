@@ -12,34 +12,39 @@
         <div class="row container">
             <% if(lista_quiero.length !== 0) { %>
                 <!-- Quiero -->
-                <div class="col s6 m6 l6" id="tabla_caso_uso_tareas">
-                    <table class="highlight">
-                        <thead> 
-                            <tr>
-                                <th class="center-align">Quiero</th>
-                                <th></th>      
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% for (quiero of lista_quiero) { %>
+                <div class="col s6 m6 l6">
+                    <div class="tabla_cu">
+                        <table class="highlight tabla_cu">
+                            <thead> 
                                 <tr>
-                                    <td><%= quiero.quiero %></td>
-
-                                    <form action="tarea-caso-uso" method="POST">
-                                        <input type="hidden" name="_csrf" value="<%= csrfToken %>"> 
-                                        <input type="hidden" name="idCaso" value="<%= quiero.id_casos %>">
-                                        <td>
-                                            <button name="action" value="consultar" type="submit"><i class="small material-icons">visibility</i></button>
-                                        </td>
-                                    </form>
+                                    <th class="row-idCaso-Tarea">id</th>
+                                    <th class="row-quiero">Quiero</th>
+                                    <th class="row-botonTareas"></th>      
                                 </tr>
-                            <% } %>
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                <% for (quiero of lista_quiero) { %>
+                                    <tr>
+                                        <td><%= quiero.id_casos %></td>
+                                        <td><%= quiero.quiero %></td>
+
+                                        <form action="tarea-caso-uso" method="POST">
+                                            <input type="hidden" name="_csrf" value="<%= csrfToken %>"> 
+                                            <input type="hidden" name="idCaso" value="<%= quiero.id_casos %>">
+                                            <td>
+                                                <button name="action" value="consultar" type="submit"><i class="small material-icons">visibility</i></button>
+                                            </td>
+                                        </form>
+                                    </tr>
+                                <% } %>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 
                 <!-- Tareas del Proyecto -->
                 <div class="col s6 m6 l6">
+                    <!-- Imprimir id caso y quiero... -->
                     <div id="fasesVert" class="container">
                         <% const idspractica = []; %>
                         

@@ -22,7 +22,7 @@
     max-height: 400px;
 }
 
-.tabla_cu thead th{
+.tabla_cu thead th {
     position: sticky;
     top: 0;
     background-color: azure;
@@ -48,6 +48,17 @@
 .row-botones {
     width: 8%;
 }
+
+.row-idCaso-Tarea {
+    width: 10%;
+}
+.row-quiero {
+    width: 70%;
+}
+.row-botonTareas {
+    width: 20%;
+}
+
 
 #tabla_caso_uso_tareas{
     max-height: 500px;

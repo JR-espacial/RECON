@@ -16,8 +16,8 @@ exports.getTareaCasoUso = (request, response) =>{
         .then(([rowsQ, fieldData]) => {
             Proyecto_Fase_Tarea.fetchAllTareasFaseProyecto(id_proyecto)
                 .then(([rowsPFT, fieldData]) => {
-                    console.log(rowsPFT.length);
-                    console.log(rowsPFT);
+                    // console.log(rowsPFT.length);
+                    // console.log(rowsPFT);
                     Entrega.fetchTareaDeCaso(id_CasoParaTarea)
                         .then(([tareasDelCaso, fieldData]) => {
                             response.render('tareaCasoUso', {
