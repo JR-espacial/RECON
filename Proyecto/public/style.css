@@ -11,13 +11,42 @@
 
 #boton_casos_uso{
     margin-top: 7%;
-
 }
 
-#tabla_caso_uso{
-    max-height: 500px;
-    width: 63%;
-    overflow: scroll;
+/* Tabla de los casos de uso */
+.tabla_cu {
+    table-layout: fixed;
+    width: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 400px;
+}
+
+.tabla_cu thead th{
+    position: sticky;
+    top: 0;
+    background-color: azure;
+}
+
+.tabla_cu td {
+    overflow-wrap: break-word;
+    text-overflow: ellipsis;
+}
+
+.row-idCasos-ap {
+    width: 6.5%;
+}
+
+.row-yo_como {
+    width: 12.5%;
+}
+
+.row-quiero-para {
+    width: 25.25%;
+} 
+
+.row-botones {
+    width: 8%;
 }
 
 #tabla_caso_uso_tareas{
@@ -39,7 +68,7 @@
 .boton_añadir{
     margin: 0 5px 5px 10px;
     background-color: Transparent;
-    background-repeat:no-repeat;
+    background-repeat: no-repeat;
     border: none;
     cursor:pointer;
     overflow: hidden;

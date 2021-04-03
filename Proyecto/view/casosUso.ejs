@@ -1,57 +1,61 @@
 <%- include('includes/openHTML.ejs'); %>
-
 <%- include('includes/navbarIteracion.ejs'); %>
 
 <div class="row">
-    <form class="col s12 offset-s3" action="casos-uso-iteracion" method="POST">
-        <div class="row">
-            <div class="input-field col 1">
-              <input id="yo_como" name="yo_como" type="text" class="validate" required>
-              <label for="yo_como">Yo como</label>
-            </div>
-            <div class="input-field col 1">
-                <input id="quiero" name="quiero" type="text" class="validate" required>
-                <label for="quiero">quiero</label>
-            </div>
-            <div class="input-field col 1">
-                <input id="para" name="para" type="text" class="validate" required>
-                <label for="para">para</label>
-            </div>
-            <div class="input-field col 1">
-              <select name="id_ap" class="browser-default" required>
-                <option value="" disabled selected>AP</option>
-                <option value="1">1</option> 
-                <option value="2">2</option> 
-                <option value="3">3</option> 
-                <option value="4">5</option> 
-                <option value="5">8</option> 
-                <option value="6">13</option> 
-              </select>
-            </div>
-            <div class="input-field col 2">
-              <input type="hidden" name="_csrf" value="<%= csrfToken %>"> 
-              <input type="submit" name="action" value="registrar">
-            </div>
-        </div>
-    </form>
+  <!-- Registrar -->
+  <form class="col s8 offset-s3" action="casos-uso-iteracion" method="POST">
+      <div class="row">
+          <div class="input-field col 1">
+            <input id="yo_como" name="yo_como" type="text" class="validate" maxlength="64" required>
+            <label for="yo_como">Yo como</label>
+          </div>
+          <div class="input-field col 1">
+              <input id="quiero" name="quiero" type="text" class="validate" maxlength="255" required>
+              <label for="quiero">quiero</label>
+          </div>
+          <div class="input-field col 1">
+              <input id="para" name="para" type="text" class="validate" maxlength="255">
+              <label for="para">para</label>
+          </div>
+          <div class="input-field col 1">
+            <select name="id_ap" class="browser-default" required>
+              <option value="" disabled selected>AP</option>
+              <option value="1">1</option> 
+              <option value="2">2</option> 
+              <option value="3">3</option> 
+              <option value="4">5</option> 
+              <option value="5">8</option> 
+              <option value="6">13</option> 
+            </select>
+          </div>
+          <div class="input-field col 2">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>"> 
+            <button class="btn waves-effect waves-light" type="submit" name="action" value="registrar">Registrar</button>
+          </div>
+      </div>
+  </form>
 
-    <div class="col s12 offset-s3" id="tabla_caso_uso">
-      <table class="highlight">
+  <!-- Consultar -->
+  <div class="col s8 offset-s3">
+    <div class="tabla_cu">
+      <table class="highlight tabla_cu">
         <thead>
           <tr>
-              <th>Yo como</th>
-              <th>quiero</th>
-              <th>para</th>
-              <th>AP</th>
-              <th></th> 
-              <th></th>
-              <th></th>
+              <th class="row-idCasos-ap-botones">id</th> 
+              <th class="row-yo_como">Yo como</th>
+              <th class="row-quiero-para">quiero</th>
+              <th class="row-quiero-para">para</th>
+              <th class="row-idCasos-ap-botones">AP</th>
+              <th class="row-botones"></th> 
+              <th class="row-botones"></th>
+              <th class="row-botones"></th>
           </tr>
         </thead>
-
+        
         <tbody>
           <% for (caso of casos_uso) { %>
             <tr>
+              <td><%= caso.id_casos %></td>
               <td><%= caso.yo_como %></td>
               <td><%= caso.quiero %></td>
               <td><%= caso.para %></td>
@@ -63,25 +67,28 @@
                 <!-- Modificar -->
                 <td>
                   <button data-target="modal1_<%= caso.id_casos %>" class="btn modal-trigger" name="action" value="editar"><i class="small material-icons">mode_edit</i></button>
-
-                  <!-- Modal Structure -->
                   <div id="modal1_<%= caso.id_casos %>" class="modal">
                     <form action="casos-uso-iteracion" method="POST">
-                      <!-- Modal Content -->
                       <div class="modal-content">
                         <!-- Input Data -->
                         <div class="row">
                           <h4>Editar</h4>
                           <div class="input-field col 1">
-                            <input id="yo_como" name="yo_como" type="text" class="validate" value="<%= caso.yo_como %>">
+                            <input id="yo_como" name="yo_como" type="text" class="validate" maxlength="64" value="<%= caso.yo_como %>">
                             <label for="yo_como">Yo como</label>
                           </div>
                           <div class="input-field col 1">
-                            <input id="quiero" name="quiero" type="text" class="validate" value="<%= caso.quiero %>">
+                            <input id="quiero" name="quiero" type="text" class="validate" maxlength="255" value="<%= caso.quiero %>">
                             <label for="quiero">quiero</label>
                           </div>
                           <div class="input-field col 1">
-                            <input id="para" name="para" type="text" class="validate"  value="<%= caso.para %>">
+                            <% let placeHolder = "";
+                              let valorPara = caso.para; 
+                              if (caso.para === "") { 
+                                placeHolder = "No hay para"; 
+                                valorPara = "";
+                              } %> 
+                            <input placeholder="<%= placeHolder %>" id="para" name="para" type="text" class="validate"  maxlength="255" value="<%= valorPara %>">
                             <label for="para">para</label>
                           </div>
                           <div class="input-field col 1">
@@ -95,9 +102,8 @@
                               <option value="6">13</option> 
                             </select>
                           </div>
-                          <!-- holaa voy a seleccionar lo que se cambio si quieres dame follow en el pin -->
                         </div>
-                        <input id="comentario" name="comentario" type="text" value="<%= caso.comentario %>" class="validate">
+                        <input id="comentario" name="comentario" type="text" class="validate" maxlength="255" value="<%= caso.comentario %>" >
                         <label for="comentario">Comentario</label>
                       </div>
                       
@@ -144,9 +150,8 @@
         </tbody>
       </table>
     </div>
+  </div>
 </div>
-
-
 
 <%- include('includes/closeHTML.ejs'); %>
 
