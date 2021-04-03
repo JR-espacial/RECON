@@ -28,6 +28,9 @@ exports.postCasosUsoIteracion = (request, response) => {
         let quiero = request.body.quiero;
         let para = request.body.para;
         let id_ap = request.body.id_ap;
+
+        if (!para) para = "";
+        
         let casoU = new Casos_Uso(id_ap, idIteracion, yo_como, quiero, para);
         casoU.saveCaso()
             .then(() => {
