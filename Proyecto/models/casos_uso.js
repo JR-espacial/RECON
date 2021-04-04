@@ -29,6 +29,11 @@ module.exports =  class Casos_Uso{
         [idIteracion]);
     }
 
+    static fetchOneQuiero (idIteracion, idCaso) {
+        return db.execute('SELECT id_iteracion, id_casos, quiero FROM Casos_Uso WHERE id_iteracion=? AND id_casos=?',
+        [idIteracion, idCaso]);
+    }
+
     static ModifyCaso(idCaso, idAp, yo_como, quiero, para, comentario) {
         return db.execute('UPDATE casos_uso SET id_ap=?, yo_como=?, quiero=?, para=?, comentario=? WHERE id_casos=?', 
         [idAp, yo_como, quiero, para, comentario, idCaso]);

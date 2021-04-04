@@ -12,33 +12,42 @@ exports.getTareaCasoUso = (request, response) =>{
     }
     const id_CasoParaTarea = request.session.idCaso_tareasCU;
     
-    Casos_Uso.fetchQuiero(id_iteracion)
-        .then(([rowsQ, fieldData]) => {
-            Proyecto_Fase_Tarea.fetchAllTareasFaseProyecto(id_proyecto)
-                .then(([rowsPFT, fieldData]) => {
-                    // console.log(rowsPFT.length);
-                    // console.log(rowsPFT);
-                    Entrega.fetchTareaDeCaso(id_CasoParaTarea)
-                        .then(([tareasDelCaso, fieldData]) => {
-                            response.render('tareaCasoUso', {
-                                title: "Tareas por Caso de Uso",
-                                lista_quiero: rowsQ, 
-                                lista_tareas: rowsPFT,
-                                tareas_Caso: tareasDelCaso,
-                                csrfToken: request.csrfToken()
-                            });
-                        })  
+    // si idCasoPara Tarea != 0, sacamos id y nombre
+    //si es 0, entonces, el nombre no existe o es "Selecciona un caso para ver sus tareas"
+      
+    Casos_Uso.fetchOneQuiero(id_iteracion, id_CasoParaTarea) 
+        .then(([caso_seleccionado, fieldData]) => {
+            console.log(caso_seleccionado);
+            Casos_Uso.fetchQuiero(id_iteracion)
+                .then(([rowsQ, fieldData]) => {
+                    Proyecto_Fase_Tarea.fetchAllTareasFaseProyecto(id_proyecto)
+                        .then(([rowsPFT, fieldData]) => {
+                            // console.log(rowsPFT.length);
+                            // console.log(rowsPFT);
+                            Entrega.fetchTareaDeCaso(id_CasoParaTarea)
+                                .then(([tareasDelCaso, fieldData]) => {
+                                    response.render('tareaCasoUso', {
+                                        title: "Tareas por Caso de Uso",
+                                        lista_quiero: rowsQ, 
+                                        lista_tareas: rowsPFT,
+                                        tareas_Caso: tareasDelCaso,
+                                        caso_seleccionado: caso_seleccionado,
+                                        csrfToken: request.csrfToken()
+                                    });
+                                })  
+                                .catch(err => {
+                                    console.log(err);
+                                });  
+                        })
                         .catch(err => {
                             console.log(err);
-                        });  
+                        });
                 })
-                .catch(err => {
+                .catch(err =>{
                     console.log(err);
                 });
-        })
-        .catch(err =>{
-            console.log(err);
-        });
+            })
+        .catch( err => console.log(err));   
 }
 
 exports.postTareaCasoUso = (request, response) => {

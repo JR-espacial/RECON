@@ -43,9 +43,16 @@
                 </div>
                 
                 <!-- Tareas del Proyecto -->
-                <div class="col s6 m6 l6">
-                    <!-- Imprimir id caso y quiero... -->
+                <div class="col s6 m6 l6">                    
                     <div id="fasesVert" class="container">
+                        <% if(caso_seleccionado.length > 0) { %>
+                            <div> 
+                                <h6>
+                                    <%= caso_seleccionado[0].id_casos %>, 
+                                    quiero <%= caso_seleccionado[0].quiero %>
+                                </h6>    
+                            </div>
+                        <% } %>
                         <% const idspractica = []; %>
                         
                         <% for (let tarea = 0; tarea < lista_tareas.length; tarea++) { 
