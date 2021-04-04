@@ -21,9 +21,9 @@ module.exports =  class Entrega {
         return db.execute('SELECT * FROM Entrega');
     }
     
-    static fetchTareaDeCaso(idCaso) {
-        return db.execute('SELECT id_trabajo FROM entrega WHERE id_casos=?', 
-        [idCaso]);
+    static fetchTareaDeCaso(idIteracion, idCaso) {
+        return db.execute('SELECT id_trabajo FROM entrega, casos_uso WHERE id_iteracion=? AND Casos_Uso.id_casos=? AND Casos_Uso.id_casos = Entrega.id_casos', 
+        [idIteracion, idCaso]);
     }
 
     static dropEntrega(idCaso, idTarea) {
