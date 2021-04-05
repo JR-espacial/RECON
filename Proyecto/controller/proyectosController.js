@@ -14,6 +14,7 @@ exports.getNuevoProyecto = (request, response) => {
     Departamento.fetchAll()
     .then(([rows, fieldData]) => {
         response.render('crearProyecto', {
+            user: request.session.usuario,
             title: "Crear Proyecto", 
             departamentos : rows,
             error: error,
@@ -74,6 +75,7 @@ exports.postNuevoProyecto = async function (request, response) {
 
 exports.getResumenProyecto = (request, response) =>{
     response.render('resumenProyecto', {
+        user: request.session.usuario,
         title: "Resumen del Proyecto"
     });
 }
@@ -81,12 +83,14 @@ exports.getResumenProyecto = (request, response) =>{
 
 exports.getAvanceProyecto = (request, response) => {
     response.render('avanceProyecto', {
+        user: request.session.usuario,
         title: "Avance del Proyecto"
     });
 }
 
 exports.getPromediosAP = (request, response) =>{
     response.render('promediosAP', {
+        user: request.session.usuario,
         title: "Promedios AP"
     });
 }
@@ -97,6 +101,7 @@ exports.getEstimadosAP = (request, response) =>{
     Proyecto_Fase_Tarea.fetchAllTareasFaseProyecto(id_proyecto)
         .then(([rows, fieldData]) => {
             response.render('estimadosAP', {
+                user: request.session.usuario,
                 title: "Estimados AP",
                 lista_tareas: rows
             });

@@ -25,6 +25,7 @@ exports.getIteracionesProyecto = async function(request,response){
 
     const empleados = Usuario.fetchAll()
     response.render('iteracionesProyecto', {
+        user: request.session.usuario,
         title: "Iteraciones",
         iteraciones : iteraciones[0],
         empleados : empleados,
@@ -47,6 +48,7 @@ exports.getNuevaIteracion = (request, response) => {
     Usuario.fetchAll()
     .then(([rows, fieldData]) => {
         response.render('crearIteracion', {
+            user: request.session.usuario,
             title: "Crear Iteración",
             empleados: rows,
             alerta : alerta,
@@ -135,6 +137,7 @@ exports.postEliminarIteracion =  async function(request, response){
 
 exports.getCapacidadEquipo = (request, response) =>{
     response.render('capacidadEquipo', {
+        user: request.session.usuario,
         title: "Capacidad de Equipo"
     });
 }

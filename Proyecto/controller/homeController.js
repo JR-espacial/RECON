@@ -11,6 +11,7 @@ exports.getHome = async function (request, response){
     const proyectos = await Proyecto.fetchAll(request.session.usuario);
     const departamentos = await Departamento.fetchAll();
     response.render('home',{
+        user: request.session.usuario,
         title: "Home", 
         proyectos : proyectos[0],
         departamentos : departamentos,

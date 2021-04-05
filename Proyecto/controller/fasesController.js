@@ -12,6 +12,7 @@ exports.getFasesProyecto = (request, response) =>{
             Fase.fetchAllNotInProject(id_proyecto)
                 .then(([rows2, fieldData]) => {
                     response.render('fasesProyecto', {
+                        user: request.session.usuario,
                         title: "Fases del Proyecto",
                         lista_tareas: rows,
                         sugerencia_fases: rows2,
