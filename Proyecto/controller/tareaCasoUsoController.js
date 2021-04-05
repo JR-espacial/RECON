@@ -21,6 +21,9 @@ exports.getTareaCasoUso = (request, response) =>{
                     Entrega.fetchTareaDeCaso(id_CasoParaTarea)
                         .then(([tareasDelCaso, fieldData]) => {
                             response.render('tareaCasoUso', {
+                                navegacion : request.session.navegacion,
+                                proyecto_actual : request.session.nombreProyecto,
+                                user: request.session.usuario,
                                 title: "Tareas por Caso de Uso",
                                 lista_quiero: rowsQ, 
                                 lista_tareas: rowsPFT,

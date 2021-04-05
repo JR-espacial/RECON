@@ -5,10 +5,16 @@
             <div class="background">
                 <img src="https://wallpapercave.com/wp/wp3194552.png">
             </div>
-            <a href="#user"><img class="circle"
-                    src="https://storage.googleapis.com/natgas/others/logos/natgas-logo-simple.png"></a>
-            <a href="#name"><span class="white-text name">Bernardo Laing</span></a>
-            <a href="#email"><span class="white-text email">bernardo@email.com</span></a>
+            <a href="#user"><img class="circle"src="https://storage.googleapis.com/natgas/others/logos/natgas-logo-simple.png"></a>
+            <div class="row">
+                <div class="col s10">
+                    <a href="#name"><span class="white-text name"><%=user%></span></a>
+                    <a href="#email"><span class="white-text email"><%=user%>@email.com</span></a>
+                </div>
+                <div class="col s1">
+                    <a href="/home"><i class="white-text material-icons">home</i></a>
+                </div>
+            </div>
         </div>
     </li>
 
@@ -21,6 +27,8 @@
     <li><a class="waves-effect" href="/proyectos/tarea-caso-uso">Tareas por caso de uso</a></li>
     <li><a class="waves-effect" href="/proyectos/avance-proyecto"><i class="material-icons right">timeline</i>Avance de la iteración</a></li>
 </ul>
+
+<%- include('breadcrumbs.ejs'); %>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {

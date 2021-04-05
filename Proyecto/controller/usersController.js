@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 
 exports.getLogin = (request, response, next) => {
     response.render("login", {
+        user: request.session.usuario,
         title: "Log In",
         error: request.session.error,
         csrfToken: request.csrfToken(),
@@ -49,6 +50,7 @@ exports.getLogout = (request, response, next) => {
 
 exports.getRegister = (request, response, next) => {
     response.render('registrar', {
+        user: request.session.usuario,
         title: 'Registra tus datos',
         csrfToken: request.csrfToken(),
         isLoggedIn: request.session.isLoggedIn === true ? true : false

@@ -180,3 +180,10 @@ html, body {
 div#modal5 {
     width: 50%
 }
+.breadcrubs-nav{
+    color : #333333
+}
+#logout{
+    position:fixed; 
+    bottom: 10%;
+}
