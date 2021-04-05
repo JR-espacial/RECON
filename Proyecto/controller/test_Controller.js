@@ -3,8 +3,6 @@ let i =0;
 
 const base = require("../util/keys");
 base('Tasks').select({
-    // Selecting the first 254 records in Global view:
-    maxRecords:255,
     view: "Global view",
     sort :[{field: "Name", direction: "asc"}]
     
@@ -36,8 +34,7 @@ base('Tasks').select({
 
 
 exports.getTest = (request, response) => {
-    console.log(workitemlist.length);
-    //console.log(workitemlist);
+    console.log(workitemlist);
     response.render('test',{
         user: request.session.usuario,
         title: "test", 

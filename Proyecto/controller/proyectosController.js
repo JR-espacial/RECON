@@ -74,7 +74,10 @@ exports.postNuevoProyecto = async function (request, response) {
 }
 
 exports.getResumenProyecto = (request, response) =>{
+    request.session.navegacion = 2;
     response.render('resumenProyecto', {
+        navegacion : request.session.navegacion,
+        proyecto_actual : request.session.nombreProyecto,
         user: request.session.usuario,
         title: "Resumen del Proyecto"
     });
@@ -83,6 +86,8 @@ exports.getResumenProyecto = (request, response) =>{
 
 exports.getAvanceProyecto = (request, response) => {
     response.render('avanceProyecto', {
+        navegacion : request.session.navegacion,
+        proyecto_actual : request.session.nombreProyecto,
         user: request.session.usuario,
         title: "Avance del Proyecto"
     });
@@ -90,6 +95,8 @@ exports.getAvanceProyecto = (request, response) => {
 
 exports.getPromediosAP = (request, response) =>{
     response.render('promediosAP', {
+        navegacion : request.session.navegacion,
+        proyecto_actual : request.session.nombreProyecto,
         user: request.session.usuario,
         title: "Promedios AP"
     });
@@ -101,6 +108,8 @@ exports.getEstimadosAP = (request, response) =>{
     Proyecto_Fase_Tarea.fetchAllTareasFaseProyecto(id_proyecto)
         .then(([rows, fieldData]) => {
             response.render('estimadosAP', {
+                navegacion : request.session.navegacion,
+                proyecto_actual : request.session.nombreProyecto,
                 user: request.session.usuario,
                 title: "Estimados AP",
                 lista_tareas: rows

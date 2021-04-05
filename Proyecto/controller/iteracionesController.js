@@ -6,6 +6,7 @@ const { fetchLastNumIter } = require('../models/iteracion');
 exports.getIteracionesProyecto = async function(request,response){
     const idProyecto = request.session.idProyecto;
     const alerta = request.session.alerta;
+    request.session.navegacion = 1;
     request.session.alerta = "";
     let iteraciones;
     iteracion_actual = await Iteracion.fetchOnefromProyect(idProyecto, request.session.usuario);
@@ -25,6 +26,8 @@ exports.getIteracionesProyecto = async function(request,response){
 
     const empleados = Usuario.fetchAll()
     response.render('iteracionesProyecto', {
+        navegacion : request.session.navegacion,
+        proyecto_actual : request.session.nombreProyecto,
         user: request.session.usuario,
         title: "Iteraciones",
         iteraciones : iteraciones[0],
@@ -137,6 +140,8 @@ exports.postEliminarIteracion =  async function(request, response){
 
 exports.getCapacidadEquipo = (request, response) =>{
     response.render('capacidadEquipo', {
+        navegacion : request.session.navegacion,
+        proyecto_actual : request.session.nombreProyecto,
         user: request.session.usuario,
         title: "Capacidad de Equipo"
     });

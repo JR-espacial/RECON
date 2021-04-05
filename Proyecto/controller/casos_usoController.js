@@ -7,6 +7,8 @@ exports.getCasosUsoIteracion = (request, response) =>{
     Casos_Uso.fetchAllIteracion(idIteracion) 
         .then(([rows, fieldData]) => {
             response.render('casosUso', {
+                navegacion : request.session.navegacion,
+                proyecto_actual : request.session.nombreProyecto,
                 user: request.session.usuario,
                 title: "Casos de Uso",
                 casos_uso: rows,
