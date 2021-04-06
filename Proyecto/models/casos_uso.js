@@ -20,13 +20,18 @@ module.exports =  class Casos_Uso{
     // }
 
     static fetchAllIteracion(idIteracion) {
-        return db.execute('SELECT id_casos, Casos_Uso.id_ap, yo_como, quiero, para, ap, comentario FROM Casos_Uso, Puntos_Agiles WHERE Casos_Uso.id_iteracion=? AND Casos_Uso.id_ap = Puntos_Agiles.id_ap', 
+        return db.execute('SELECT id_casos, Casos_Uso.id_ap, yo_como, quiero, para, ap, comentario FROM Casos_Uso, Puntos_Agiles WHERE Casos_Uso.id_iteracion=? AND Casos_Uso.id_ap = Puntos_Agiles.id_ap ORDER BY id_casos ASC', 
         [idIteracion]);
     }
 
     static fetchQuiero (idIteracion) {
-        return db.execute('SELECT id_casos, id_iteracion, quiero FROM Casos_Uso WHERE id_iteracion=?', 
+        return db.execute('SELECT id_casos, id_iteracion, quiero FROM Casos_Uso WHERE id_iteracion=? ORDER BY id_casos', 
         [idIteracion]);
+    }
+
+    static fetchOneQuiero (idIteracion, idCaso) {
+        return db.execute('SELECT id_iteracion, id_casos, quiero FROM Casos_Uso WHERE id_iteracion=? AND id_casos=?',
+        [idIteracion, idCaso]);
     }
 
     static ModifyCaso(idCaso, idAp, yo_como, quiero, para, comentario) {

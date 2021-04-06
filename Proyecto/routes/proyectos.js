@@ -52,7 +52,9 @@ router.post('/casos-uso-iteracion', isAuth, casos_usoController.postCasosUsoIter
 
 router.get('/tarea-caso-uso', isAuth, tareaCasosUsoController.getTareaCasoUso);
 
-router.post('/tarea-caso-uso', isAuth, tareaCasosUsoController.postTareaCasoUso);
+// router.post('/tarea-caso-uso', isAuth, tareaCasosUsoController.postTareaCasoUso);
+
+router.post('/tarea-caso-uso/obtener-tareas', isAuth, tareaCasosUsoController.postObtenerTareas);
 
 router.use(express.static(path.join(__dirname, '..', 'public')));
 

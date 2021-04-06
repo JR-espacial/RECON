@@ -27,12 +27,13 @@ exports.postCasosUsoIteracion = (request, response) => {
     let idIteracion = request.session.idIteracion;
 
     if(accion === "registrar") {
-        console.log('Registrar');
-
         let yo_como = request.body.yo_como;
         let quiero = request.body.quiero;
         let para = request.body.para;
         let id_ap = request.body.id_ap;
+
+        if (!para) para = "";
+        
         let casoU = new Casos_Uso(id_ap, idIteracion, yo_como, quiero, para);
         casoU.saveCaso()
             .then(() => {
@@ -43,7 +44,6 @@ exports.postCasosUsoIteracion = (request, response) => {
             }); 
     }
     else if(accion === "editar") {
-        console.log("Editar");
         let idCaso = request.body.idCaso;
         let idAp = request.body.id_ap;
         let yo_como = request.body.yo_como;
@@ -60,13 +60,13 @@ exports.postCasosUsoIteracion = (request, response) => {
         
         Casos_Uso.ModifyCaso(idCaso, idAp, yo_como, quiero, para, comentario)
         .then(() =>{
-            console.log('Cambio exitoso');
             response.redirect('/proyectos/casos-uso-iteracion');
         })
-        .catch(err => console.log(err) );   
+        .catch(err => {
+            console.log(err);
+        });   
     }
     else if(accion === "eliminar") {
-        console.log('Eliminar');
         Casos_Uso.DropEntreCaso(idCaso)
             .then(() => {
                 Casos_Uso.DropCasoUso(idCaso)
@@ -81,7 +81,8 @@ exports.postCasosUsoIteracion = (request, response) => {
                 console.log(err);
             });       
     }
-
-    response.redirect('/proyectos/casos-uso-iteracion');
+    else {
+        response.redirect('/proyectos/casos-uso-iteracion');
+    }
 }
 

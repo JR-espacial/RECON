@@ -33,15 +33,13 @@ exports.getTareaCasoUso = (request, response) =>{
                         })  
                         .catch(err => {
                             console.log(err);
-                        });  
+                        });
                 })
-                .catch(err => {
+                .catch(err =>{
                     console.log(err);
                 });
-        })
-        .catch(err =>{
-            console.log(err);
-        });
+            })
+        .catch( err => console.log(err));   
 }
 
 exports.postTareaCasoUso = (request, response) => {
@@ -84,3 +82,17 @@ exports.postTareaCasoUso = (request, response) => {
         response.redirect('/proyectos/tarea-caso-uso');
     }
 }
+
+exports.postObtenerTareas = (request, response) => {
+    const id_caso = request.body.id_casos;
+    const id_iteracion = request.session.idIteracion;
+
+    Entrega.fetchTareaDeCaso(id_iteracion, id_caso)
+        .then(([tareasDelCaso, fieldData]) => {
+            response.status(200).json(tareasDelCaso);
+        })  
+        .catch(err => {
+            console.log(err);
+        });  
+}
+
