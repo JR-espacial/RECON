@@ -63,7 +63,7 @@
                     <!-- Dentro de la fase se crean todas sus tareas con 3 puntos para editar -->
                     <div id="tarea-en-fase">
                         <div class="in-line">
-                            <a class = "dropdown-trigger right" data-target='modificarTarea <%= lista_tareas[fase_tarea].id_trabajo %>'>
+                            <a class = "dropdown-trigger right" data-target='modificarTarea <%= lista_tareas[fase_tarea].id_fase %> <%= lista_tareas[fase_tarea].id_trabajo %>'>
                                 <i class="material-icons">more_vert</i>
                             </a>
                             <span>
@@ -72,13 +72,13 @@
                         </div>
                     </div>
                     <!-- Se crea un dropdown para modificar o eliminar cada tarea -->
-                    <ul id='modificarTarea <%= lista_tareas[fase_tarea].id_trabajo %>' class='dropdown-content'>
+                    <ul id='modificarTarea <%= lista_tareas[fase_tarea].id_fase %> <%= lista_tareas[fase_tarea].id_trabajo %>' class='dropdown-content'>
                         <!-- Modal trigger para modificar el nombre de la tarea en fase -->
-                        <li><a class = "modal-trigger" data-target="editarTarea <%= lista_tareas[fase_tarea].id_trabajo %>"><i class="material-icons right">edit</i></a></li>
+                        <li><a class = "modal-trigger" data-target="editarTarea <%= lista_tareas[fase_tarea].id_fase %> <%= lista_tareas[fase_tarea].id_trabajo %>"><i class="material-icons right">edit</i></a></li>
                         <li class="divider" tabindex="-1"></li>
                         <!-- Forma para eliminar tarea de fase -->
                         <li>
-                            <form action = "fases-proyecto" method = "POST" id = "delete <%= lista_tareas[fase_tarea].id_trabajo %>">
+                            <form action = "fases-proyecto" method = "POST" id = "delete <%= lista_tareas[fase_tarea].id_fase %> <%= lista_tareas[fase_tarea].id_trabajo %>">
                                 <input type ="hidden" name = "id_fase" value = "<%= lista_tareas[fase_tarea].id_fase %>">
                                 <input type="hidden" name = "id_trabajo" value = "<%= lista_tareas[fase_tarea].id_trabajo %>">
                                 <input type="hidden" name = "_csrf" value = value="<%= csrfToken %>">
@@ -92,7 +92,7 @@
                         <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
                         <input type ="hidden" name = "id_fase" value = "<%= lista_tareas[fase_tarea].id_fase %>">
                         <input type="hidden" name = "id_trabajo" value = "<%= lista_tareas[fase_tarea].id_trabajo %>">
-                        <div id="editarTarea <%= lista_tareas[fase_tarea].id_trabajo %>" class ="modal_edit modal">
+                        <div id="editarTarea <%= lista_tareas[fase_tarea].id_fase %> <%= lista_tareas[fase_tarea].id_trabajo %>" class ="modal_edit modal">
                             <div class = "modal-content">
                                 <input name = "nuevo_nombre_tarea"value = "<%= lista_tareas[fase_tarea].nombre_practica_trabajo %>"></input>
                             </div>

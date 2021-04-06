@@ -29,4 +29,12 @@ module.exports = class Proyecto_Fase_Tarea {
         return db.execute('UPDATE proyecto_fase_practica SET id_fase =? WHERE id_proyecto =? AND id_fase =?', [id_fase_nuevo, id_proyecto, id_fase_anterior]);
     }
 
+    static fetchTareaInFase(id_proyecto, id_fase, id_tarea) {
+        return db.execute('SELECT id_trabajo FROM proyecto_fase_practica WHERE id_proyecto =? AND id_fase =? AND id_trabajo =?', [id_proyecto, id_fase, id_tarea]);
+    }
+
+    static updateTareaInFase (id_proyecto, id_fase, id_tarea_anterior, id_tarea_nueva) {
+        return db.execute('UPDATE proyecto_fase_practica SET id_trabajo =? WHERE id_proyecto =? AND id_fase =? AND id_trabajo =?', [id_tarea_nueva, id_proyecto, id_fase, id_tarea_anterior]);
+    }
+
 }
