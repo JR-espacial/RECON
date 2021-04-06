@@ -212,6 +212,7 @@ html, body {
     display: none;
 }
 
+
 .bajar_tabla{
     margin-top: 10%;
 }
@@ -237,4 +238,7 @@ div#modal5 {
 #logout{
     position:fixed; 
     bottom: 10%;
+}
+.modal_edit{
+    width: 20%;
 }
