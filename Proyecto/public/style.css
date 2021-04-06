@@ -46,6 +46,16 @@
     outline:none;
 }
 
+.boton_dropdown{
+    height: 50px;
+    padding: 0 35px;
+    line-height: 0;
+}
+
+.boton_dropdown i{
+    font-size: 2rem;
+}
+
 header, main, footer {
     padding-left: 300px;
 }
@@ -70,6 +80,7 @@ html, body {
     scrollbar-width: none;  /* Firefox */
     width: 98%;
     margin: 0 auto;
+    height: calc(100% - 250px);
 }
 
 #fasesVert{

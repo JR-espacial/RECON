@@ -14,17 +14,50 @@
             %>
             <div id="fase" class="center-align">
                 <div id="titulo-fase">
-                    <span class=""> <%= lista_tareas[fase_tarea].nombre_fase %></span>
-                    <i class="material-icons right">more_vert</i>
+                    <a class = "dropdown-trigger right" data-target='modificarFase <%= lista_tareas[fase_tarea].id_fase %>'>
+                        <i class="material-icons">more_vert</i>
+                    </a>
+                    <span>
+                        <%= lista_tareas[fase_tarea].nombre_fase %>
+                    </span>
                 </div>
                 <div>
             <% } %>
                     <div id="tarea-en-fase">
                         <div class="in-line">
-                            <i class="material-icons right">more_vert</i>
-                            <%= lista_tareas[fase_tarea].nombre_practica_trabajo %>
+                            <a class = "dropdown-trigger right" data-target='modificarTarea <%= lista_tareas[fase_tarea].id_trabajo %>'>
+                                <i class="material-icons">more_vert</i>
+                            </a>
+                            <span>
+                                <%= lista_tareas[fase_tarea].nombre_practica_trabajo %>
+                            </span>
                         </div>
                     </div>
+                    
+                    <ul id='modificarFase <%= lista_tareas[fase_tarea].id_fase %>' class='dropdown-content'>
+                        <li><a><i class="material-icons right">edit</i></a></li>
+                        <li class="divider" tabindex="-1"></li>
+                        <li>
+                            <form action = "fases-proyecto" method = "POST" id = "delete <%= lista_tareas[fase_tarea].id_fase %>">
+                                <input type="hidden" name = "id_fase" value = "<%= lista_tareas[fase_tarea].id_fase %>">
+                                <input type="hidden" name = "_csrf" value = value="<%= csrfToken %>">
+                                <button class = "boton_dropdown btn waves-effect waves-light" name = "action" value = "eliminar-fase" type="submit"><i class="small material-icons">delete</i></button>
+                            </form>
+                        </li>
+                    </ul>
+                    
+                    <ul id='modificarTarea <%= lista_tareas[fase_tarea].id_trabajo %>' class='dropdown-content'>
+                        <li><a><i class="material-icons right">edit</i></a></li>
+                        <li class="divider" tabindex="-1"></li>
+                        <li>
+                            <form action = "fases-proyecto" method = "POST" id = "delete <%= lista_tareas[fase_tarea].id_trabajo %>">
+                                <input type="hidden" name = "id_trabajo" value = "<%= lista_tareas[fase_tarea].id_trabajo %>">
+                                <input type="hidden" name = "_csrf" value = value="<%= csrfToken %>">
+                                <button class="boton_dropdown btn waves-effect waves-light" name = "action" value = "eliminar-tarea" type="submit"><i class="small material-icons">delete</i></button>
+                            </form>
+                        </li>
+                    </ul>
+                    
             <%
                 if(fase_tarea === lista_tareas.length - 1 || lista_tareas[fase_tarea].nombre_fase !== lista_tareas[fase_tarea + 1].nombre_fase){
             %>
