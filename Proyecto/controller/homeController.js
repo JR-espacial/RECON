@@ -7,10 +7,12 @@ exports.getHome = async function (request, response){
     let alerta = request.session.alerta
     request.session.alerta = "";
     request.session.last = '/home';
+    request.session.navegacion = 0;
 
     const proyectos = await Proyecto.fetchAll(request.session.usuario);
     const departamentos = await Departamento.fetchAll();
     response.render('home',{
+        user: request.session.usuario,
         title: "Home", 
         proyectos : proyectos[0],
         departamentos : departamentos,
@@ -21,6 +23,7 @@ exports.getHome = async function (request, response){
 
 exports.postProyectoID = (request, response) => {
     request.session.idProyecto = request.body.idProyecto;
+    request.session.nombreProyecto = request.body.nombreProyecto;
     response.redirect("/proyectos/iteraciones-proyecto-desarrollo");
 }
 

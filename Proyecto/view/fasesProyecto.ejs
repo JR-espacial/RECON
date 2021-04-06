@@ -7,19 +7,23 @@
             <h2>Fases del proyecto</h2>
         </div>
     </div>
-    <div id="fases" class="max">
+    <div id="fases" class="">
         <% for (let fase_tarea = 0; fase_tarea < lista_tareas.length; fase_tarea++) { %>
             <%
                 if(fase_tarea === 0 || lista_tareas[fase_tarea].nombre_fase !== lista_tareas[fase_tarea - 1].nombre_fase){
             %>
             <div id="fase" class="center-align">
                 <div id="titulo-fase">
-                    <span class=""> <%= lista_tareas[fase_tarea].nombre_fase %>: </span>
+                    <span class=""> <%= lista_tareas[fase_tarea].nombre_fase %></span>
+                    <i class="material-icons right">more_vert</i>
                 </div>
                 <div>
             <% } %>
                     <div id="tarea-en-fase">
-                        <div class="in-line"> <%= lista_tareas[fase_tarea].nombre_practica_trabajo %> </div>
+                        <div class="in-line">
+                            <i class="material-icons right">more_vert</i>
+                            <%= lista_tareas[fase_tarea].nombre_practica_trabajo %>
+                        </div>
                     </div>
             <%
                 if(fase_tarea === lista_tareas.length - 1 || lista_tareas[fase_tarea].nombre_fase !== lista_tareas[fase_tarea + 1].nombre_fase){

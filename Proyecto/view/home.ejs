@@ -5,8 +5,8 @@
 <% if (alerta) { %>
     <script>alert("<%= alerta %>");</script>
 <% } %> 
-
-<div class="row">
+          
+<div class="row">    
     <div class="col s2 offset-s9">
       <div class="row">
         <div class="input-field col s12">
@@ -94,6 +94,7 @@
                     <form action="home" method="POST">
                         <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
                         <input type="hidden" name="idProyecto" value="<%= proyecto.id_proyecto %>" >
+                        <input type="hidden" name="nombreProyecto" value="<%= proyecto.nombre_proyecto %>" >
                         <button class="btn-flat" type="submit">Ir al proyecto</botton>
                     </form>
                 </div>

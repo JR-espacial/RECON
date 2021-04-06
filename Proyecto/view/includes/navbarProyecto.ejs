@@ -6,36 +6,32 @@
             <img src="https://wallpapercave.com/wp/wp3194552.png">
         </div>
         <a href="#user"><img class="circle" src="https://storage.googleapis.com/natgas/others/logos/natgas-logo-simple.png"></a>
-        <a href="#name"><span class="white-text name">Bernardo Laing</span></a>
-        <a href="#email"><span class="white-text email">bernardo@email.com</span></a>
+        <div class="row">
+            <div class="col s10">
+                <a href="#name"><span class="white-text name"><%=user%></span></a>
+                <a href="#email"><span class="white-text email"><%=user%>@email.com</span></a>
+            </div>
+            <div class="col s1">
+                <a href="/home"><i class="white-text material-icons">home</i></a>
+            </div>
+        </div>
         </div>
     </li>
-    <li><a href="/home"><i class="material-icons right">home</i>Home</a></li>
-    <li><a class="" href="/proyectos/iteraciones-proyecto-desarrollo"><i class="material-icons right">apps</i>Iteraciones</a></li>
-    <li><div class="divider"></div></li>
-    <li class="no-padding">
-        <ul class="collapsible collapsible-accordion">
-            <li>
-                <a class="collapsible-header">Cálculo de Tiempos<i
-                        class="material-icons right">arrow_drop_down</i></a>
-                <div class="collapsible-body">
-                    <ul>
-                        <li><a class="waves-effect" href="/proyectos/fases-proyecto">Fases</a></li>
-                        <li><a class="waves-effect" href="/proyectos/estimados-ap">Estimación AP</a></li>
-                        <li><a class="waves-effect" href="/proyectos/promedios-ap">Promedios AP</a></li>
-                    </ul>
-                </div>
-            </li>
-        </ul>
-    </li>
-    <li><div class="divider"></div></li>
+    
+    
+    
     <li><a class="waves-effect waves-light btn" href="/proyectos/nueva-iteracion"><i class="material-icons left">add</i>Crear Iteracion</a>
-    <li><div class="divider"></div></li>
     <li><a class="waves-effect" href="/proyectos/iteraciones-proyecto-desarrollo">En desarrollo</a></li>
     <li><a class="waves-effect" href="/proyectos/iteraciones-proyecto-terminado">Terminado</a></li>
     <li><div class="divider"></div></li>
+
+    <li><a class="waves-effect" href="/proyectos/fases-proyecto">Fases</a></li>
+    <li><a class="waves-effect" href="/proyectos/estimados-ap">Estimación AP</a></li>
+    <li><a class="waves-effect" href="/proyectos/promedios-ap">Promedios AP</a></li>
     
 </ul>
+
+<%- include('breadcrumbs.ejs'); %>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
