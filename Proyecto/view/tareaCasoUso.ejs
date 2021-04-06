@@ -12,37 +12,56 @@
         <div class="row container">
             <% if(lista_quiero.length !== 0) { %>
                 <!-- Quiero -->
-                <div class="col s6 m6 l6" id="tabla_caso_uso_tareas">
-                    <table class="highlight">
-                        <thead> 
-                            <tr>
-                                <th class="center-align">Quiero</th>
-                                <th></th>      
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% for (quiero of lista_quiero) { %>
+                <div class="col s6 m6 l6">
+                    <div class="tabla_cu">
+                        <table class="highlight tabla_cu">
+                            <thead> 
                                 <tr>
-                                    <td><%= quiero.quiero %></td>
-
-                                    <form action="tarea-caso-uso" method="POST">
-                                        <input type="hidden" name="_csrf" value="<%= csrfToken %>"> 
-                                        <input type="hidden" name="idCaso" value="<%= quiero.id_casos %>">
-                                        <td>
-                                            <button name="action" value="consultar" type="submit"><i class="small material-icons">visibility</i></button>
-                                        </td>
-                                    </form>
+                                    <th class="row-botonTareas"></th>
+                                    <th class="row-idCaso-Tarea">id</th>
+                                    <th class="row-quiero">Quiero</th>      
                                 </tr>
-                            <% } %>
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                <% for (quiero of lista_quiero) { %>
+                                    <tr>
+                                        <td>
+                                            <label>
+                                                <input type="hidden" name="_csrf" id="_csrf" value="<%= csrfToken %>">
+                                                <input name="group1" type="radio" onchange="obtenerTareas('<%= quiero.id_casos %>')"></input>
+                                                <span></span>
+                                            </label>
+                                        </td>
+                                        <td><%= quiero.id_casos %></td>
+                                        <td><%= quiero.quiero %></td>
+                                    
+                                        <!-- <form action="tarea-caso-uso" method="POST">
+                                            <input type="hidden" name="_csrf" value="<%= csrfToken %>"> 
+                                            <input type="hidden" name="idCaso" value="<%= quiero.id_casos %>">
+                                            <td>
+                                                <button name="action" value="consultar" type="submit"><i class="small material-icons">visibility</i></button>
+                                            </td>
+                                        </form> -->
+                                    </tr>
+                                <% } %>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 
                 <!-- Tareas del Proyecto -->
-                <div class="col s6 m6 l6">
+                <div class="col s6 m6 l6">                    
                     <div id="fasesVert" class="container">
+                        <% if(caso_seleccionado.length > 0) { %>
+                            <div> 
+                                <h6>
+                                    <%= caso_seleccionado[0].id_casos %>, 
+                                    quiero <%= caso_seleccionado[0].quiero %>
+                                </h6>    
+                            </div>
+                        <% } %>
                         <% const idspractica = []; %>
-                        
+                        <input type="hidden" id="lista_tareas" value="<%= lista_tareas %>">
                         <% for (let tarea = 0; tarea < lista_tareas.length; tarea++) { 
                             <!-- Si va empezando o cambia de fase  -->
                             if(tarea === 0 || lista_tareas[tarea].nombre_fase !== lista_tareas[tarea - 1].nombre_fase){ %>
@@ -58,19 +77,7 @@
                             <!-- Despliegue de tareas de la fase -->
                             <div id="tarea-en-fase">
                                 <label>
-                                    <!-- Verificar si debe o no estar checada (asociada al caso de uso) -->
-                                    <% let found = false; %> 
-                                    <% for(let i=0; i < tareas_Caso.length; i++) {
-                                        if(tareas_Caso[i].id_trabajo === lista_tareas[tarea].id_trabajo) {   
-                                            found = true;
-                                            break; 
-                                        } 
-                                    } %>
-                                    <% if(found) { %>
-                                        <input type="checkbox" id="botonCheck_<%= tarea %>" class="filled-in" checked="checked"/>
-                                    <% } else { %>
-                                        <input type="checkbox" id="botonCheck_<%= tarea %>" class="filled-in"/> 
-                                    <% } %> 
+                                    <input type="checkbox" id="botonCheck_<%= tarea %>" class="filled-in" /> 
                                     <span> <%= lista_tareas[tarea].nombre_practica_trabajo %> </span>
                                 </label>
                             </div>
@@ -82,30 +89,7 @@
                                 </div>
                             <% } %>
                             <% idspractica.push(lista_tareas[tarea].id_trabajo); %>
-                        <% } %>   
-                        <form action="tarea-caso-uso" method="POST">
-                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                            <input type="hidden" id="checks" name="checks">
-                            <input type="hidden" name="idspractica" value="<%= idspractica %>">
-                            <button class="waves-effect waves-light btn" name="action" value="cambiar" type="submit" onclick="getValues()">Aceptar cambios<i class="material-icons right">check</i></button>
-                            <script>
-                                function getValues() {
-                                    let inputt = document.getElementById("checks"); 
-                                    const checksJS = [];
-                                    for(let i=0; i < "<%= lista_tareas.length %>"; i++) {
-                                        let id = 'botonCheck_' + i;
-                                        let check = document.getElementById(id);
-                                        if(check.checked === true) {
-                                            checksJS.push(1);
-                                        }
-                                        else {
-                                            checksJS.push(0);
-                                        }
-                                    }
-                                    inputt.value = checksJS;
-                                }
-                            </script>
-                        </form>            
+                        <% } %>          
                     </div>
                 </div>
             <% } else { %>
@@ -113,6 +97,56 @@
             <% } %>
         </div>
     </div>
+    <script>
+        function obtenerTareas(idcaso) {
+            let csrf = document.getElementById("_csrf").value;
+            
+            let data = {id_casos: idcaso};
+
+            fetch('/proyectos/tarea-caso-uso/obtener-tareas', {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    'csrf-token': csrf, 
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(result => {
+                return result.json();
+            })
+            .then(data => {
+                const listatareas = document.getElementById('lista_tareas').value;
+                /*for(let e = 0; e < '<%= lista_tareas.length %>'; e++){
+                    listatareas.push('<%= lista_tareas.id_trabajo %>');
+                } */
+                console.log(data.length);
+                for(tarea of listatareas) {
+                    console.log(tarea);
+                }
+                for (let tarea = 0; tarea < listatareas.length; tarea++){
+                    let id = 'botonCheck_' + tarea;
+                    document.getElementById(id).checked = false;
+                    for(let i = 0; i < data.length; i++){
+                        // console.log(data[i].id_trabajo);
+                        // console.log(listatareas[tarea].id_trabajo);
+                        if(data[i].id_trabajo === listatareas[tarea].id_trabajo){
+                            document.getElementById(id).checked = true;
+                            break;
+                        }
+                    } 
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            });
+
+            return;
+        };
+
+ 
+      
+    </script>
+
 </main>
 
 <%- include('includes/closeHTML.ejs'); %>
