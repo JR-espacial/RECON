@@ -52,8 +52,10 @@
     let options = {};
 
     "<%for (let i = 0; i < empleados.length; i++) { %>"
-         options["<%=empleados[i].usuario%>"] = null;
-     "<% } %>"
+        "<% if(empleados[i].usuario != user) { %>"
+            options["<%=empleados[i].usuario%>"] = null;
+        "<% } %>"
+    "<% } %>"
 
     var instances = M.Chips.init(elems,{
         autocompleteOptions:{ data : options},
