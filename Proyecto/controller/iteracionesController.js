@@ -24,14 +24,14 @@ exports.getIteracionesProyecto = async function(request,response){
         iteraciones = [[]];
     }
 
-    const empleados = Usuario.fetchAll()
+    const empleados = await Usuario.fetchAll();
     response.render('iteracionesProyecto', {
         navegacion : request.session.navegacion,
         proyecto_actual : request.session.nombreProyecto,
         user: request.session.usuario,
         title: "Iteraciones",
         iteraciones : iteraciones[0],
-        empleados : empleados,
+        empleados : empleados[0],
         alerta : alerta,
         csrfToken: request.csrfToken()
     });
@@ -71,6 +71,58 @@ exports.postNuevaIteracion = async function (request, response){
     const fecha_inicio = request.body.fecha_inicio;
     const fecha_fin = request.body.fecha_fin;
     const colaboradores = request.body.colaboradores;
+    console.log(colaboradores);
+    const colabs =[];
+    let alerta = "La iteracion fue creada exitosamente. Sin embargo los usuarios:";
+
+    colabs.push(request.session.usuario);
+    let colaborador = "";
+    for (let i = 0; i < colaboradores.length; i++) {
+        if(colaboradores[i] != ",") {
+            colaborador += colaboradores[i];
+        }
+        else{
+            colabs.push(colaborador);
+            colaborador = "";
+        }
+    }
+
+
+    await Iteracion.saveCapacidad();
+    const fetchLastCapacidad =  await Iteracion.fetchLastCapacidad();
+    const fetchLastNumIter =  await Iteracion.fetchLastNumIter(id_proyecto);
+    let iteracion = new Iteracion(id_proyecto, fetchLastCapacidad[0][0].id_capacidad, fetchLastNumIter[0][0].num_iteracion, descripcion, fecha_inicio, fecha_fin, 1);
+    await iteracion.saveIteracion(); 
+    const fetchOneIteracion = await Iteracion.fetchOne(id_proyecto,fetchLastNumIter[0][0].num_iteracion);
+
+    for (let i = 0; i < colabs.length; i++) {
+        const fetchOneUsuario =  await Usuario.fetchOne(request.session.usuario);
+        if(i == 0 || fetchOneUsuario[0][0] && fetchOneUsuario[0][0].usuario != request.session.usuario){
+            await Iteracion.saveColaborador(fetchOneUsuario[0][0].id_empleado, fetchOneIteracion[0][0].id_iteracion);
+        }
+        else if(!fetchOneUsuario[0][0] || fetchOneUsuario[0][0].usuario != request.session.usuario){
+            alerta += " "+ colabs[i] + " ";
+        }
+    }
+    
+    if(alerta != "La iteracion fue creada exitosamente. Sin embargo los usuarios:"){
+        alerta += "no existen y no fueron registrados en la iteracion";
+        request.session.alerta = alerta;
+    }
+    else{
+        request.session.alerta = "Nueva iteracion creada exitosamente"
+    }
+
+    response.redirect("/proyectos/iteraciones-proyecto-desarrollo");
+}
+
+exports.postEditarIteracion = async function (request, response){
+    const id_proyecto = request.session.idProyecto;
+    const id_iteracion = request.body.id_iteracion;
+    const descripcion = request.body.descripcion;
+    const fecha_inicio = request.body.fecha_inicio;
+    const fecha_fin = request.body.fecha_fin;
+    const colaboradores = request.body.colaboradores;
     const colabs =[];
     let alerta = "La iteracion fue creada exitosamente. Sin embargo los usuarios:";
 
@@ -88,15 +140,11 @@ exports.postNuevaIteracion = async function (request, response){
 
     colabs.push(request.session.usuario);
 
-    await Iteracion.saveCapacidad();
-    const fetchLastCapacidad =  await Iteracion.fetchLastCapacidad();
-    const fetchLastNumIter =  await Iteracion.fetchLastNumIter(id_proyecto);
-    let iteracion = new Iteracion(id_proyecto, fetchLastCapacidad[0][0].id_capacidad, fetchLastNumIter[0][0].num_iteracion, descripcion, fecha_inicio, fecha_fin, 1);
-    await iteracion.saveIteracion(); 
-    const fetchOneIteracion = await Iteracion.fetchOne(id_proyecto,fetchLastNumIter[0][0].num_iteracion);
+    await Iteracion.modificarIteracion(id_proyecto, descripcion, fecha_inicio, fecha_fin, id_iteracion);
     for (let i = 0; i < colabs.length; i++) {
         const fetchOneUsuario =  await Usuario.fetchOne(colabs[i]);
         if(fetchOneUsuario[0][0]){
+
             await Iteracion.saveColaborador(fetchOneUsuario[0][0].id_empleado, fetchOneIteracion[0][0].id_iteracion);
         }
         else{
@@ -113,14 +161,6 @@ exports.postNuevaIteracion = async function (request, response){
     }
 
     response.redirect("/proyectos/iteraciones-proyecto-desarrollo");
-}
-
-exports.postEditarIteracion = (request, response) =>{
-    const last = request.session.last;
-    const id_proyecto = request.session.idProyecto;
-    const id_iteracion = request.body.id_iteracion;
-    const descripcion = request.body.descripcion;
-    const colaborador = request.body.colaborador;
 
     Iteracion.modificarIteracion(id_proyecto, descripcion, id_iteracion)
     .then(() => {

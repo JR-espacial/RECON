@@ -3,6 +3,7 @@ const app = express();
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 
 const path = require('path');
 //Para acceder a los recursos de la carpeta public
