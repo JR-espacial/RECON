@@ -83,7 +83,7 @@ exports.postFasesProyecto = (request, response) => {
             }); 
     }
 
-    if(accion === "registrar-tarea"){
+    else if(accion === "registrar-tarea"){
         const id_fase = request.body.id_fase;
         const nombre_tarea = request.body.añadir_nombre_tarea;
         Tarea.fetchOne(nombre_tarea)
@@ -128,5 +128,62 @@ exports.postFasesProyecto = (request, response) => {
             .catch(err => {
                 console.log(err);
             }); 
+    }
+
+    else if (accion === "modificar-fase") {
+        const id_fase_anterior = request.body.id_fase;
+        const nuevo_nombre_fase = request.body.nuevo_nombre_fase;
+        
+        Fase.fetchOne(nuevo_nombre_fase)
+            .then(([rows, fieldData]) => {
+                if (rows.length > 0) {
+                    const id_nueva_fase = rows[0].id_fase;
+                    Proyecto_Fase_Tarea.fetchFaseInProyecto(id_proyecto, id_nueva_fase)
+                        .then(([rows2, fieldData]) => {
+                            if(rows2.length > 0){
+                                request.session.alerta = nuevo_nombre_fase + " ya existe dentro del Proyecto.";
+                                response.redirect('fases-proyecto');
+                            }
+                            else{
+                                Proyecto_Fase_Tarea.updateFaseInProyecto(id_proyecto, id_fase_anterior, id_nueva_fase)
+                                    .then(() => {
+                                        response.redirect('fases-proyecto');
+                                    })
+                                    .catch(err => {
+                                        console.log(err);
+                                    });
+                            }
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        });
+                }
+                else {
+                    let fase = new Fase(nuevo_nombre_fase);
+                    fase.saveFase()
+                        .then(() => {
+                            Fase.fetchOne(nuevo_nombre_fase) 
+                                .then(([rows2, fieldData]) => {
+                                    const id_nueva_fase = rows2[0].id_fase;
+                                    Proyecto_Fase_Tarea.updateFaseInProyecto(id_proyecto, id_fase_anterior, id_nueva_fase)
+                                        .then(() => {
+                                            response.redirect('fases-proyecto');
+                                        })
+                                        .catch(err => {
+                                            console.log(err);
+                                        });
+                                })
+                                .catch(err => {
+                                    console.log(err);
+                                });
+                        })
+                        .catch( err => {
+                            console.log(err);
+                        });
+                }
+            })
+            .catch(err => {
+                console.log(err)
+            });
     }
 }

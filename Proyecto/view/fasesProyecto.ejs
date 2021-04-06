@@ -45,14 +45,18 @@
                 </ul>
 
                 <!-- Estructura Editar Fase Modal -->
-                <div id="editarFase <%= lista_tareas[fase_tarea].id_fase %>" class ="modal_edit modal">
-                    <div class = "modal-content">
-                        <input value = "<%= lista_tareas[fase_tarea].nombre_fase %>"></input>
+                <form action = "fases-proyecto" method = "POST">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
+                    <input type = "hidden" name = "id_fase" value = "<%= lista_tareas[fase_tarea].id_fase %>">
+                    <div id="editarFase <%= lista_tareas[fase_tarea].id_fase %>" class ="modal_edit modal">
+                        <div class = "modal-content">
+                            <input name = "nuevo_nombre_fase" value = "<%= lista_tareas[fase_tarea].nombre_fase %>"></input>
+                        </div>
+                        <div>
+                            <button class = "boton_dropdown btn waves-effect waves-light" name = "action" value = "modificar-fase" type = "submit">Aceptar</button>
+                        </div>
                     </div>
-                    <div>
-                        <button class = "boton_dropdown btn waves-effect waves-light" name = "action" value = "modificar-fase" type = "submit">Aceptar</button>
-                    </div>
-                </div>
+                </form>
 
                 <div>
             <% } %>
@@ -75,6 +79,7 @@
                         <!-- Forma para eliminar tarea de fase -->
                         <li>
                             <form action = "fases-proyecto" method = "POST" id = "delete <%= lista_tareas[fase_tarea].id_trabajo %>">
+                                <input type ="hidden" name = "id_fase" value = "<%= lista_tareas[fase_tarea].id_fase %>">
                                 <input type="hidden" name = "id_trabajo" value = "<%= lista_tareas[fase_tarea].id_trabajo %>">
                                 <input type="hidden" name = "_csrf" value = value="<%= csrfToken %>">
                                 <button class="boton_dropdown btn waves-effect waves-light" name = "action" value = "eliminar-tarea" type="submit"><i class="small material-icons">delete</i></button>
@@ -83,14 +88,19 @@
                     </ul>
 
                     <!-- Estructura Editar Tarea Modal -->
-                    <div id="editarTarea <%= lista_tareas[fase_tarea].id_trabajo %>" class ="modal_edit modal">
-                        <div class = "modal-content">
-                            <input value = "<%= lista_tareas[fase_tarea].nombre_practica_trabajo %>"></input>
+                    <form action = "fases-proyecto" method = "POST">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
+                        <input type ="hidden" name = "id_fase" value = "<%= lista_tareas[fase_tarea].id_fase %>">
+                        <input type="hidden" name = "id_trabajo" value = "<%= lista_tareas[fase_tarea].id_trabajo %>">
+                        <div id="editarTarea <%= lista_tareas[fase_tarea].id_trabajo %>" class ="modal_edit modal">
+                            <div class = "modal-content">
+                                <input name = "nuevo_nombre_tarea"value = "<%= lista_tareas[fase_tarea].nombre_practica_trabajo %>"></input>
+                            </div>
+                            <div>
+                                <button class = "boton_dropdown btn waves-effect waves-light" name = "action" value = "modificar-tarea" type = "submit">Aceptar</button>
+                            </div>
                         </div>
-                        <div>
-                            <button class = "boton_dropdown btn waves-effect waves-light" name = "action" value = "modificar-fase" type = "submit">Aceptar</button>
-                        </div>
-                    </div>
+                    </form>
             
             <!-- Si ya no existen más tareas dentro de la fase, se añade el input para poder crear nuevas tareas.  -->
             <%

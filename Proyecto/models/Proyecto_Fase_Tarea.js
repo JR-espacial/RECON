@@ -21,4 +21,12 @@ module.exports = class Proyecto_Fase_Tarea {
         return db.execute('SELECT PFP.id_fase, nombre_fase, PFP.id_trabajo, nombre_practica_trabajo FROM proyecto_fase_practica PFP INNER JOIN practica_trabajo PT ON PFP.id_trabajo = PT.id_trabajo INNER JOIN Fase F ON F.id_fase = PFP.id_fase WHERE id_proyecto =? AND PFP.id_trabajo <> 0 ORDER BY PFP.id_fase, PFP.id_trabajo', [id_proyecto]);
     }
 
+    static fetchFaseInProyecto(id_proyecto, id_fase) {
+        return db.execute('SELECT id_fase FROM proyecto_fase_practica WHERE id_proyecto =? AND id_fase =?', [id_proyecto, id_fase]);
+    }
+
+    static updateFaseInProyecto(id_proyecto, id_fase_anterior, id_fase_nuevo) {
+        return db.execute('UPDATE proyecto_fase_practica SET id_fase =? WHERE id_proyecto =? AND id_fase =?', [id_fase_nuevo, id_proyecto, id_fase_anterior]);
+    }
+
 }
