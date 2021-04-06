@@ -13,7 +13,7 @@ module.exports =  class Entrega {
     //     [this.id_proyecto, this.id_capacidad, this.num_iteracion, this.descripcion]);
     // }
     static crearEntrega(idCaso, idTarea) {
-        return db.execute('INSERT into entrega (id_casos, id_trabajo) VALUES (?, ?)', 
+        return db.execute('INSERT INTO entrega (id_casos, id_trabajo) VALUES (?, ?)', 
         [idCaso, idTarea]);
     }
 

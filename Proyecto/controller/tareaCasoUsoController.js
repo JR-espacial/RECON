@@ -23,7 +23,7 @@ exports.getTareaCasoUso = (request, response) =>{
                     Proyecto_Fase_Tarea.fetchAllTareasFaseProyecto(id_proyecto)
                         .then(([rowsPFT, fieldData]) => {
                             // console.log(rowsPFT.length);
-                            // console.log(rowsPFT);
+                            console.log(rowsPFT);
                             Entrega.fetchTareaDeCaso(id_iteracion, id_CasoParaTarea)
                                 .then(([tareasDelCaso, fieldData]) => {
                                     console.log('id_iteracion ' + id_iteracion);
@@ -93,3 +93,17 @@ exports.postTareaCasoUso = (request, response) => {
         response.redirect('/proyectos/tarea-caso-uso');
     }
 }
+
+exports.postObtenerTareas = (request, response) => {
+    const id_caso = request.body.id_casos;
+    const id_iteracion = request.session.idIteracion;
+
+    Entrega.fetchTareaDeCaso(id_iteracion, id_caso)
+        .then(([tareasDelCaso, fieldData]) => {
+            response.status(200).json(tareasDelCaso);
+        })  
+        .catch(err => {
+            console.log(err);
+        });  
+}
+
