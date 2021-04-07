@@ -19,9 +19,10 @@
                             <form action="/proyectos/modificar-iteracion" method="POST">
                             <!-- Modal Content -->
                                 <div class="modal-content">
-                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
+                                    <input type="hidden" id="_csrf" name="_csrf" value="<%= csrfToken %>" >
                                     <input type="hidden" name="id_iteracion" value="<%= iteracion.id_iteracion %>">
-                                    <input type="hidden" name="colaboradores" value="" id="myInputField" required>
+                                    <input type="hidden" name="colaboradores" value="" id="colabsAdd">
+                                    <input type="hidden" name="colaboradoresBorrados" value="" id="colabsDelete">
                                         <div class="col s6 offset-s4">
                                             <div class="row">
                                                 <div class="input-field col s10">
@@ -62,7 +63,7 @@
                         <span><%= iteracion.num_iteracion %></span>
                         <a class='dropdown-trigger grey-text text-darken-4' data-target='dropdown1_<%= iteracion.num_iteracion %>'><i class="material-icons right">more_vert</i></a>
                         <ul id='dropdown1_<%= iteracion.num_iteracion %>' class='dropdown-content'>
-                            <li><a data-target="modal1_<%= iteracion.id_iteracion %>" class="modal-trigger"><i class="material-icons right">mode_edit</i></a></li>
+                            <li><a data-target="modal1_<%= iteracion.id_iteracion %>" class="modal-trigger" onclick='loadChips("<%= iteracion.id_iteracion %>")''><i class="material-icons right">mode_edit</i></a></li>
                             <li>
                                 <form action="/proyectos/eliminar-iteracion" method="POST" id="eliminar_<%= iteracion.id_iteracion %>">
                                     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
@@ -96,6 +97,34 @@
 </div>
 
 <script>
+    const colaboradores_anteriores = [];
+    function loadChips(id_iteracion){
+        const csrf = document.getElementById('_csrf').value;
+        let data = {id_iteracion: id_iteracion};
+        let chipContainer = M.Chips.getInstance(document.getElementById('chip1'))
+        fetch('/proyectos/iteraciones-proyecto-editar',{
+            method : 'POST',
+            body : JSON.stringify(data),
+            headers:{
+                'csrf-token': csrf,
+                'Content-Type': 'application/json'
+            },
+        }).then(result => {
+         return result.json(); 
+        }).then(data => {
+            data.forEach(element => {
+                if (element.usuario!= "<%= user%>"){
+                    chipContainer.addChip({
+                    tag: element.usuario,
+                    });
+                    colaboradores_anteriores.push(element.usuario)
+                }
+            });
+            
+        }).catch(err => {
+            console.error(err);
+        });
+    }
 
     document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('.chips-autocomplete');
@@ -107,7 +136,6 @@
             options["<%=empleados[i].usuario%>"] = null;
         "<% } %>"
     "<% } %>"
-
     var instances = M.Chips.init(elems,{
         autocompleteOptions:{ data : options},
         placeholder: 'Añadir usuario',
@@ -117,16 +145,24 @@
         });
 
         function chips2Input(){
-            var instance = M.Chips.getInstance(document.getElementById('chip1')), inpt = document.getElementById('myInputField');
+            var instance = M.Chips.getInstance(document.getElementById('chip1')), inpt = document.getElementById('colabsAdd'),inpt2 = document.getElementById('colabsDelete');
             inpt.value =  null;
-            for(var i=0; i<instance.chipsData.length; i++){
-                console.log(instance.chipsData[i]);
-                if(inpt.value == null)
-                    inpt.value = instance.chipsData[i].tag;
-                else{
-                        inpt.value += instance.chipsData[i].tag +','; //csv
+            let deleted = [];
+            for(var i=0; i<colaboradores_anteriores.length; i++){
+                    deleted.push(colaboradores_anteriores[i]);
+                for(var j=0; j<instance.chipsData.length; j++){
+                    if(colaboradores_anteriores[i] == instance.chipsData[j].tag){
+                        deleted.pop();
                     }
+                    if(inpt.value == null && i == 0)
+                        inpt.value = instance.chipsData[j].tag;
+                    else if(i == 0){
+                            inpt.value += instance.chipsData[j].tag +','; //csv
+                        }
+                }
             }
+            inpt2.value = deleted;
+            console.log(inpt2);
         }
     });
 

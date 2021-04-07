@@ -9,7 +9,8 @@ exports.getIteracionesProyecto = async function(request,response){
     request.session.navegacion = 1;
     request.session.alerta = "";
     let iteraciones;
-    iteracion_actual = await Iteracion.fetchOnefromProyect(idProyecto, request.session.usuario);
+    iteracion_actual = await Iteracion.fetchOnefromProyect(idProyecto, request.session.usuario)
+   
     
     if(request.url == '/iteraciones-proyecto-desarrollo'){
         iteraciones = iteracion_actual;
@@ -42,6 +43,16 @@ exports.postIteracionesProyecto = (request, response) => {
     request.session.idIteracion = request.body.idIteracion;
     response.redirect('/proyectos/resumen-proyecto');
 }
+exports.postChipsIteracionesProyecto = (request,response) =>{
+    const id_iteracion = request.body.id_iteracion;
+    Iteracion.fetchUsersfromIter(id_iteracion)
+        .then(([rows, fieldData]) => {
+            response.status(200).json(rows);
+        })
+        .catch(err => {
+            console.log(err);
+        });
+}
 
 exports.getNuevaIteracion = (request, response) => {
     const alerta = request.session.alerta;
@@ -71,7 +82,6 @@ exports.postNuevaIteracion = async function (request, response){
     const fecha_inicio = request.body.fecha_inicio;
     const fecha_fin = request.body.fecha_fin;
     const colaboradores = request.body.colaboradores;
-    console.log(colaboradores);
     const colabs =[];
     let alerta = "La iteracion fue creada exitosamente. Sin embargo los usuarios:";
 
@@ -86,21 +96,26 @@ exports.postNuevaIteracion = async function (request, response){
             colaborador = "";
         }
     }
+    
 
-
-    await Iteracion.saveCapacidad();
+    try {
+        await Iteracion.saveCapacidad();
+    }catch(e){
+        console.log(e);
+    }
     const fetchLastCapacidad =  await Iteracion.fetchLastCapacidad();
     const fetchLastNumIter =  await Iteracion.fetchLastNumIter(id_proyecto);
     let iteracion = new Iteracion(id_proyecto, fetchLastCapacidad[0][0].id_capacidad, fetchLastNumIter[0][0].num_iteracion, descripcion, fecha_inicio, fecha_fin, 1);
     await iteracion.saveIteracion(); 
-    const fetchOneIteracion = await Iteracion.fetchOne(id_proyecto,fetchLastNumIter[0][0].num_iteracion);
+    const infoIteracion = await Iteracion.fetchOne(id_proyecto,fetchLastNumIter[0][0].num_iteracion);
 
     for (let i = 0; i < colabs.length; i++) {
-        const fetchOneUsuario =  await Usuario.fetchOne(request.session.usuario);
-        if(i == 0 || fetchOneUsuario[0][0] && fetchOneUsuario[0][0].usuario != request.session.usuario){
-            await Iteracion.saveColaborador(fetchOneUsuario[0][0].id_empleado, fetchOneIteracion[0][0].id_iteracion);
+        const infoUsuario =  await Usuario.fetchOne(colabs[i]);
+        console.log(infoUsuario[0][0]);
+        if(i == 0 || infoUsuario[0][0] && infoUsuario[0][0].usuario != request.session.usuario){
+            await Iteracion.saveColaborador(infoUsuario[0][0].id_empleado, infoIteracion[0][0].id_iteracion);
         }
-        else if(!fetchOneUsuario[0][0] || fetchOneUsuario[0][0].usuario != request.session.usuario){
+        else if(!infoUsuario[0][0] || infoUsuario[0][0].usuario != request.session.usuario){
             alerta += " "+ colabs[i] + " ";
         }
     }
@@ -117,13 +132,14 @@ exports.postNuevaIteracion = async function (request, response){
 }
 
 exports.postEditarIteracion = async function (request, response){
-    const id_proyecto = request.session.idProyecto;
     const id_iteracion = request.body.id_iteracion;
     const descripcion = request.body.descripcion;
     const fecha_inicio = request.body.fecha_inicio;
     const fecha_fin = request.body.fecha_fin;
     const colaboradores = request.body.colaboradores;
+    const colaboradoresBorrados = request.body.colaboradoresBorrados;
     const colabs =[];
+    const colabsDeleted =[];
     let alerta = "La iteracion fue creada exitosamente. Sin embargo los usuarios:";
 
 
@@ -137,15 +153,23 @@ exports.postEditarIteracion = async function (request, response){
             colaborador = "";
         }
     }
+    colaborador = "";
+    for (let i = 0; i < colaboradoresBorrados.length; i++) {
+        if(colaboradoresBorrados[i] != ",") {
+            colaborador += colaboradoresBorrados[i];
+        }
+        else{
+            colabsDeleted.push(colaborador);
+            colaborador = "";
+        }
+    }
+    console.log(colabsDeleted);
 
-    colabs.push(request.session.usuario);
-
-    await Iteracion.modificarIteracion(id_proyecto, descripcion, fecha_inicio, fecha_fin, id_iteracion);
+    await Iteracion.modificarIteracion(descripcion, fecha_inicio, fecha_fin, id_iteracion);
     for (let i = 0; i < colabs.length; i++) {
         const fetchOneUsuario =  await Usuario.fetchOne(colabs[i]);
         if(fetchOneUsuario[0][0]){
-
-            await Iteracion.saveColaborador(fetchOneUsuario[0][0].id_empleado, fetchOneIteracion[0][0].id_iteracion);
+            await Iteracion.saveColaborador(fetchOneUsuario[0][0].id_empleado, id_iteracion);
         }
         else{
             alerta += " "+ colabs[i] + " ";
@@ -162,14 +186,6 @@ exports.postEditarIteracion = async function (request, response){
 
     response.redirect("/proyectos/iteraciones-proyecto-desarrollo");
 
-    Iteracion.modificarIteracion(id_proyecto, descripcion, id_iteracion)
-    .then(() => {
-        request.session.alerta = "Iteración modificada exitosamente";
-        response.redirect("/proyectos/iteraciones-proyecto-desarrollo");
-    })
-    .catch(err =>{
-        console.log(err);
-    });
 }
 
 exports.postEliminarIteracion =  async function(request, response){
