@@ -13,6 +13,7 @@
             <%
                 if(fase_tarea === 0 || lista_tareas[fase_tarea].nombre_fase !== lista_tareas[fase_tarea - 1].nombre_fase){
             %>
+            
             <div id="fase" class="center-align">
                 <!-- Para cada una de las fases en el título se añade el nombre de la fase y los 
                 3 puntos para editar. -->
@@ -38,12 +39,22 @@
                         <!-- Se crean los inputs escondidos con el Csrf Token y de id_fase para saber qué fase es la que se eliminará -->
                         <form action = "fases-proyecto" method = "POST" id = "delete <%= lista_tareas[fase_tarea].id_fase %>">
                             <input type="hidden" name = "id_fase" value = "<%= lista_tareas[fase_tarea].id_fase %>">
-                            <input type="hidden" name = "_csrf" value = value="<%= csrfToken %>">
+                            <input type="hidden" name = "_csrf" value = "<%= csrfToken %>">
                             <button class = "boton_dropdown btn waves-effect waves-light" name = "action" value = "eliminar-fase" type="submit"><i class="small material-icons">delete</i></button>
+                            <script>
+                                document.getElementById("delete <%= lista_tareas[fase_tarea].id_fase %>").addEventListener('submit', stopFase);
+                                
+                                function stopFase(event) {
+                                    let confirmacion = confirm('¿Estás seguro de eliminar <%= lista_tareas[fase_tarea].nombre_fase %> del Proyecto? Se eliminará toda su información dentro de este proyecto.');
+                                    if(!confirmacion) {
+                                        event.preventDefault();
+                                    }
+                                }
+                            </script>
                         </form>
                     </li>
                 </ul>
-
+                
                 <!-- Estructura Editar Fase Modal -->
                 <form action = "fases-proyecto" method = "POST">
                     <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
@@ -60,6 +71,8 @@
 
                 <div>
             <% } %>
+            <% if(lista_tareas[fase_tarea].id_trabajo !== 0) { %>
+
                     <!-- Dentro de la fase se crean todas sus tareas con 3 puntos para editar -->
                     <div id="tarea-en-fase">
                         <div class="in-line">
@@ -80,9 +93,19 @@
                         <li>
                             <form action = "fases-proyecto" method = "POST" id = "delete <%= lista_tareas[fase_tarea].id_fase %> <%= lista_tareas[fase_tarea].id_trabajo %>">
                                 <input type ="hidden" name = "id_fase" value = "<%= lista_tareas[fase_tarea].id_fase %>">
-                                <input type="hidden" name = "id_trabajo" value = "<%= lista_tareas[fase_tarea].id_trabajo %>">
-                                <input type="hidden" name = "_csrf" value = value="<%= csrfToken %>">
+                                <input type="hidden" name = "id_tarea" value = "<%= lista_tareas[fase_tarea].id_trabajo %>">
+                                <input type="hidden" name = "_csrf" value ="<%= csrfToken %>">
                                 <button class="boton_dropdown btn waves-effect waves-light" name = "action" value = "eliminar-tarea" type="submit"><i class="small material-icons">delete</i></button>
+                                <script>
+                                    document.getElementById("delete <%= lista_tareas[fase_tarea].id_fase %> <%= lista_tareas[fase_tarea].id_trabajo %>").addEventListener('submit', stopTarea);
+                                    
+                                    function stopTarea(event) {
+                                        let confirmacion = confirm('¿Estás seguro de eliminar <%= lista_tareas[fase_tarea].nombre_practica_trabajo %> de <%= lista_tareas[fase_tarea].nombre_fase %> ');
+                                        if(!confirmacion) {
+                                            event.preventDefault();
+                                        }
+                                    }
+                                </script>
                             </form>
                         </li>
                     </ul>
@@ -91,7 +114,7 @@
                     <form action = "fases-proyecto" method = "POST">
                         <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
                         <input type ="hidden" name = "id_fase" value = "<%= lista_tareas[fase_tarea].id_fase %>">
-                        <input type="hidden" name = "id_trabajo" value = "<%= lista_tareas[fase_tarea].id_trabajo %>">
+                        <input type="hidden" name = "id_tarea" value = "<%= lista_tareas[fase_tarea].id_trabajo %>">
                         <div id="editarTarea <%= lista_tareas[fase_tarea].id_fase %> <%= lista_tareas[fase_tarea].id_trabajo %>" class ="modal_edit modal">
                             <div class = "modal-content">
                                 <input name = "nuevo_nombre_tarea"value = "<%= lista_tareas[fase_tarea].nombre_practica_trabajo %>"></input>
@@ -101,7 +124,7 @@
                             </div>
                         </div>
                     </form>
-            
+            <% } %>
             <!-- Si ya no existen más tareas dentro de la fase, se añade el input para poder crear nuevas tareas.  -->
             <%
                 if(fase_tarea === lista_tareas.length - 1 || lista_tareas[fase_tarea].nombre_fase !== lista_tareas[fase_tarea + 1].nombre_fase){

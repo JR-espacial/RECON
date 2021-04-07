@@ -189,7 +189,7 @@ exports.postFasesProyecto = (request, response) => {
 
     else if(accion == "modificar-tarea"){
         const id_fase = request.body.id_fase;
-        const id_tarea_anterior = request.body.id_trabajo;
+        const id_tarea_anterior = request.body.id_tarea;
         const nuevo_nombre_tarea = request.body.nuevo_nombre_tarea;
         console.log(id_fase);
 
@@ -240,6 +240,31 @@ exports.postFasesProyecto = (request, response) => {
                             console.log(err);
                         });
                 }
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
+
+    else if (accion === "eliminar-fase") {
+        const id_fase = request.body.id_fase;
+
+        Proyecto_Fase_Tarea.deleteFaseFromProject(id_proyecto, id_fase)
+            .then(() => {
+                response.redirect('fases-proyecto');
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
+
+    else if(accion === "eliminar-tarea"){
+        const id_fase = request.body.id_fase;
+        const id_tarea = request.body.id_tarea;
+
+        Proyecto_Fase_Tarea.deleteTareaFromFase(id_proyecto, id_fase, id_tarea)
+            .then(() => {
+                response.redirect('fases-proyecto');
             })
             .catch(err => {
                 console.log(err);
