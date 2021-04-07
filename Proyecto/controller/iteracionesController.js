@@ -140,7 +140,7 @@ exports.postEditarIteracion = async function (request, response){
     const colaboradoresBorrados = request.body.colaboradoresBorrados;
     const colabs =[];
     const colabsDeleted =[];
-    let alerta = "La iteracion fue creada exitosamente. Sin embargo los usuarios:";
+    let alerta = "La iteracion fue modificada exitosamente. Sin embargo los usuarios:";
 
 
     let colaborador = "";
@@ -163,9 +163,13 @@ exports.postEditarIteracion = async function (request, response){
             colaborador = "";
         }
     }
-    console.log(colabsDeleted);
+    console.log(colabs,"añadir");
+    console.log(colabsDeleted,"borrar");
+    
 
     await Iteracion.modificarIteracion(descripcion, fecha_inicio, fecha_fin, id_iteracion);
+
+    //Añadir colaboradores Empleado_iteracion
     for (let i = 0; i < colabs.length; i++) {
         const fetchOneUsuario =  await Usuario.fetchOne(colabs[i]);
         if(fetchOneUsuario[0][0]){
@@ -175,13 +179,17 @@ exports.postEditarIteracion = async function (request, response){
             alerta += " "+ colabs[i] + " ";
         }
     }
+    //Eliminar colaboradores Empleado_iteracion
+    for (let i = 0; i < colabsDeleted.length; i++) {
+        Iteracion.removeUserfromIter(id_iteracion,colabsDeleted[i]);
+    }
     
-    if(alerta != "La iteracion fue creada exitosamente. Sin embargo los usuarios:"){
+    if(alerta != "La iteracion fue modificada exitosamente. Sin embargo los usuarios:"){
         alerta += "no existen y no fueron registrados en la iteracion";
         request.session.alerta = alerta;
     }
     else{
-        request.session.alerta = "Nueva iteracion creada exitosamente"
+        request.session.alerta = "Iteración modificada  exitosamente"
     }
 
     response.redirect("/proyectos/iteraciones-proyecto-desarrollo");
