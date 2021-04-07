@@ -41,16 +41,16 @@ module.exports =  class Iteracion{
         return db.execute('SELECT * FROM Iteracion I WHERE I.id_proyecto =? AND num_iteracion = (SELECT MAX(I.num_iteracion) FROM Iteracion I, Empleado_Iteracion EI, Empleado E WHERE I.id_proyecto =? AND I.estado_iteracion = 1 AND I.id_iteracion = EI.id_iteracion AND EI.id_empleado = E.id_empleado AND E.usuario =?)',[id_proyecto, id_proyecto, usuario]);
     }
 
-    static fetchAllColabs(id_iteracion){
-        
+    static fetchUsersfromIter(id_iteracion){
+        return db.execute('SELECT usuario FROM Empleado_Iteracion EI, Empleado E WHERE id_iteracion =? AND EI.id_empleado = E.id_empleado',[id_iteracion]);
     }
 
     static fetchOne(id_proyecto,num_iteracion) { 
         return db.execute('SELECT id_iteracion FROM Iteracion WHERE num_iteracion =? AND id_proyecto=?',[num_iteracion, id_proyecto]);
     }
 
-    static modificarIteracion(id_proyecto, descripcion, fecha_inicio, fecha_fin, id_iteracion){
-        return db.execute('UPDATE Iteracion SET descripcion =?, fecha_inicio =?, fecha_fin =? WHERE id_iteracion =?', [id_proyecto, descripcion, fecha_inicio, fecha_fin, id_iteracion]);
+    static modificarIteracion(descripcion, fecha_inicio, fecha_fin, id_iteracion){
+        return db.execute('UPDATE Iteracion SET descripcion =?, fecha_inicio =?, fecha_fin =? WHERE id_iteracion =?', [descripcion, fecha_inicio, fecha_fin, id_iteracion]);
     }
 
     static eliminarIteracion(id_iteracion){

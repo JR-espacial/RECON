@@ -36,6 +36,8 @@ router.get('/iteraciones-proyecto-terminado', isAuth,iteracionesController.getIt
 
 router.post('/iteraciones-proyecto-terminado', isAuth,iteracionesController.postIteracionesProyecto);
 
+router.post('/iteraciones-proyecto-editar', isAuth,iteracionesController.postChipsIteracionesProyecto);
+
 router.get('/nueva-iteracion', isAuth,iteracionesController.getNuevaIteracion);
 
 router.post('/nueva-iteracion', isAuth,iteracionesController.postNuevaIteracion);
