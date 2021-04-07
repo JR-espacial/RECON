@@ -34,11 +34,14 @@ module.exports =  class Iteracion{
     }
 
     static fetchAllfromProyect(id_proyecto, usuario, iteracion_actual) {
-        return db.execute('SELECT * FROM Iteracion I, Empleado_Iteracion EI, Empleado E WHERE I.id_proyecto =? AND I.estado_iteracion = 1 AND I.id_iteracion = EI.id_iteracion AND EI.id_empleado = E.id_empleado AND E.usuario =? AND NOT I.id_iteracion =?',[id_proyecto, usuario, iteracion_actual]);
+        return db.execute('SELECT *, DATE_FORMAT(fecha_inicio, "%Y-%m-%d")AS fecha_inicio_YMD,DATE_FORMAT(fecha_fin, "%Y-%m-%d")AS fecha_fin_YMD FROM Iteracion I, Empleado_Iteracion EI, Empleado E WHERE I.id_proyecto =? AND I.estado_iteracion = 1 AND I.id_iteracion = EI.id_iteracion AND EI.id_empleado = E.id_empleado AND E.usuario =? AND NOT I.id_iteracion =?',[id_proyecto, usuario, iteracion_actual]);
     }
 
     static fetchOnefromProyect(id_proyecto, usuario) {
-        return db.execute('SELECT * FROM Iteracion I WHERE I.id_proyecto =? AND num_iteracion = (SELECT MAX(I.num_iteracion) FROM Iteracion I, Empleado_Iteracion EI, Empleado E WHERE I.id_proyecto =? AND I.estado_iteracion = 1 AND I.id_iteracion = EI.id_iteracion AND EI.id_empleado = E.id_empleado AND E.usuario =?)',[id_proyecto, id_proyecto, usuario]);
+        return db.execute('SELECT *, DATE_FORMAT(fecha_inicio, "%Y-%m-%d")AS fecha_inicio_YMD,DATE_FORMAT(fecha_fin, "%Y-%m-%d")AS fecha_fin_YMD FROM Iteracion I WHERE id_proyecto =? AND num_iteracion = (SELECT MAX(I.num_iteracion) FROM Iteracion I, Empleado_Iteracion EI, Empleado E WHERE I.id_proyecto =? AND I.estado_iteracion = 1 AND I.id_iteracion = EI.id_iteracion AND EI.id_empleado = E.id_empleado AND E.usuario =?)',[id_proyecto, id_proyecto, usuario]);
+    }
+    static removeUserfromIter(id_iteracion,usuario){
+        return db.execute('DELETE FROM Empleado_Iteracion WHERE id_iteracion = ? AND id_empleado= (SELECT id_empleado FROM empleado WHERE usuario =?)',[id_iteracion,usuario]);
     }
 
     static fetchUsersfromIter(id_iteracion){
