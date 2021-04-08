@@ -26,7 +26,7 @@
                 <div class="card-image">
                     <img src="<%= proyecto.imagen %>" alt="Proyecto">
                     <div id="modal1_<%= proyecto.id_proyecto %>" class="modal large">
-                        <form action="/home/modificar-proyecto" method="POST">
+                        <form action="/home/modificar-proyecto?_csrf=<%=csrfToken%>" method="POST"  enctype="multipart/form-data">
                         <!-- Modal Content -->
                             <div class="modal-content">
                                 <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
@@ -34,14 +34,14 @@
                                     <div class="col s6 offset-s3">
                                         <div class="row">
                                             <div class="input-field col s11">
-                                                <input  id="nombre_proyecto" type="text" class="validate" name="nombre" value="<%= proyecto.nombre_proyecto %>" required>
-                                                <label for="nombre_proyecto">Nombre del proyecto</label>
+                                                <input  id="nombre_proyecto<%= proyecto.id_proyecto %>" type="text" class="validate" name="nombre" value="<%= proyecto.nombre_proyecto %>" required>
+                                                <label for="nombre_proyecto<%= proyecto.id_proyecto %>">Nombre del proyecto</label>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="input-field col s11">
-                                                <input  id="descripcion_proyecto" type="text" class="validate" name="descripcion" value="<%= proyecto.descripcion %>">
-                                                <label for="descripcion_proyecto">Descripción del proyecto</label>
+                                                <input  id="descripcion_proyecto<%= proyecto.id_proyecto %>" type="text" class="validate" name="descripcion" value="<%= proyecto.descripcion_proyecto %>">
+                                                <label for="descripcion_proyecto<%= proyecto.id_proyecto %>">Descripción del proyecto</label>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -55,6 +55,20 @@
                                                         <% } %>
                                                     <% } %>
                                                 </select>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="input-field col s11">
+                                                <div class="file-field input-field">
+                                                    <div class="btn">
+                                                      <span>File</span>
+                                                      <input type="file" name="imagen_proyecto">
+                                                    </div>
+                                                    <div class="file-path-wrapper">
+                                                        <input  class="file-path validate" type="text" placeholder="Sube una imagen">
+                                                        <input type="hidden" value="<%= proyecto.imagen %>" name="imagen_previa">
+                                                    </div>
+                                                  </div>
                                             </div>
                                         </div>
                                         <div class="row">

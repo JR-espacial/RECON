@@ -44,7 +44,7 @@ exports.postNuevoProyecto = async function (request, response) {
   
     const proyecto_existente = await Proyecto.fetchOne(nombre_proyecto);
     if (proyecto_existente[0].length < 1) {
-        let proyecto = new Proyecto(nombre_proyecto, descripcion, departamento, '1', image_file_name, 0);
+        let proyecto = new Proyecto(nombre_proyecto, descripcion, departamento, 1, image_file_name, 0);
         await proyecto.saveProyecto();
         const id_proyecto = await Proyecto.fetchOne(nombre_proyecto);
 

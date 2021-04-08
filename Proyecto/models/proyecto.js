@@ -20,7 +20,7 @@ module.exports =  class Proyecto{
     }
 
     static fetchAll(usuario){
-        return db.execute('SELECT * FROM Proyecto P, Iteracion I, Empleado_Iteracion EI, Empleado E  WHERE estado_proyecto = 1 AND P.id_proyecto = I.id_proyecto AND I.id_iteracion = EI.id_iteracion AND EI.id_empleado = E.id_empleado AND E.usuario = ? GROUP BY P.id_proyecto', [usuario]);
+        return db.execute('SELECT *, P.descripcion AS descripcion_proyecto FROM Proyecto P, Iteracion I, Empleado_Iteracion EI, Empleado E, Departamento D, Proyecto_departamento PD WHERE estado_proyecto = 1 AND P.id_proyecto = I.id_proyecto AND I.id_iteracion = EI.id_iteracion AND EI.id_empleado = E.id_empleado AND P.id_proyecto = PD.id_proyecto AND PD.id_departamento = D.id_departamento AND E.usuario =? GROUP BY P.id_proyecto', [usuario]);
     }
 
     static fetchOne(nombre_proyecto){ 
@@ -33,11 +33,11 @@ module.exports =  class Proyecto{
     }
 
     static fetchOneModificar(nombre_proyecto, id_proyecto){ 
-        return db.execute('SELECT id_proyecto FROM Proyecto WHERE nombre_proyecto =? AND NOT id_proyecto = ?',[nombre_proyecto, id_proyecto]);
+        return db.execute('SELECT id_proyecto FROM Proyecto WHERE nombre_proyecto =? AND NOT id_proyecto =?',[nombre_proyecto, id_proyecto]);
     }
 
-    static modificarProyecto(nombre_proyecto, descripcion, id_proyecto){
-        return db.execute('UPDATE Proyecto SET nombre_proyecto = ?, descripcion = ? WHERE id_proyecto = ?', [nombre_proyecto, descripcion, id_proyecto]);
+    static modificarProyecto(nombre_proyecto, descripcion, image_file_name, id_proyecto){
+        return db.execute('UPDATE Proyecto SET nombre_proyecto = ?, descripcion = ?, imagen = ? WHERE id_proyecto = ?', [nombre_proyecto, descripcion, image_file_name, id_proyecto]);
     }
 
     static modificarProyectoDepto(id_departamento, id_proyecto){

@@ -3,21 +3,31 @@ const Proyecto = require('../models/proyecto');
 const Departamento = require('../models/departamento');
 const Usuario = require('../models/user');
 
-exports.getHome = async function (request, response){
+exports.getHome = (request, response) => {
     let alerta = request.session.alerta
     request.session.alerta = "";
     request.session.last = '/home';
     request.session.navegacion = 0;
 
-    const proyectos = await Proyecto.fetchAll(request.session.usuario);
-    const departamentos = await Departamento.fetchAll();
-    response.render('home',{
-        user: request.session.usuario,
-        title: "Home", 
-        proyectos : proyectos[0],
-        departamentos : departamentos,
-        alerta : alerta,
-        csrfToken: request.csrfToken()
+    Proyecto.fetchAll(request.session.usuario)
+    .then(([rows, fieldData]) => {
+        Departamento.fetchAll()
+        .then(([rows2, fieldData]) => {
+            response.render('home',{
+                user: request.session.usuario,
+                title: "Home", 
+                proyectos : rows,
+                departamentos : rows2,
+                alerta : alerta,
+                csrfToken: request.csrfToken()
+            });
+        })
+        .catch(err => {
+            console.log(err);
+        });
+    })
+    .catch(err => {
+        console.log(err);
     });
 }
 
@@ -32,12 +42,22 @@ exports.postEditarProyecto = (request, response) => {
     const descripcion = request.body.descripcion;
     const id_departamento = request.body.departamento;
     const id_proyecto = request.body.id_proyecto;
+    const imagen_previa = request.body.imagen_previa;
 
-  
+    const image = request.file;
+    let image_file_name = '';
+
+    if(!image) {
+        image_file_name = imagen_previa;
+    }
+    else{
+        image_file_name = image.filename;
+    }
+
     Proyecto.fetchOneModificar(nombre_proyecto, id_proyecto)
         .then(([rows, fieldData]) => {
             if (rows.length < 1) {
-                Proyecto.modificarProyecto(nombre_proyecto, descripcion, id_proyecto)
+                Proyecto.modificarProyecto(nombre_proyecto, descripcion, image_file_name, id_proyecto)
                 .then(() => {
                     Proyecto.modificarProyectoDepto(id_departamento, id_proyecto)
                         .then(() => {

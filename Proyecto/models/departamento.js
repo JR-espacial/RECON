@@ -9,4 +9,8 @@ module.exports =  class Departamento{
     static fetchAll(){
         return db.execute('SELECT * FROM Departamento');
     }
+
+    static fetchAllProyecto(){
+        return db.execute('SELECT * FROM Proyecto_Departamento');
+    }
 }

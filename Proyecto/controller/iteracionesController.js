@@ -121,7 +121,7 @@ exports.postNuevaIteracion = async function (request, response){
     }
     const fetchLastCapacidad =  await Iteracion.fetchLastCapacidad();
     const fetchLastNumIter =  await Iteracion.fetchLastNumIter(id_proyecto);
-    let iteracion = new Iteracion(id_proyecto, fetchLastCapacidad[0][0].id_capacidad, fetchLastNumIter[0][0].num_iteracion, descripcion, fecha_inicio, fecha_fin);
+    let iteracion = new Iteracion(id_proyecto, fetchLastCapacidad[0][0].id_capacidad, fetchLastNumIter[0][0].num_iteracion, descripcion, fecha_inicio, fecha_fin, 1);
     await iteracion.saveIteracion(); 
     const infoIteracion = await Iteracion.fetchOne(id_proyecto,fetchLastNumIter[0][0].num_iteracion);
 
