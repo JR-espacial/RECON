@@ -24,7 +24,7 @@ exports.getHome = async function (request, response){
 exports.postProyectoID = (request, response) => {
     request.session.idProyecto = request.body.idProyecto;
     request.session.nombreProyecto = request.body.nombreProyecto;
-    response.redirect("/proyectos/iteraciones-proyecto-desarrollo");
+    response.redirect("/proyectos/iteraciones-desarrollo-proyecto");
 }
 
 exports.postEditarProyecto = (request, response) => {

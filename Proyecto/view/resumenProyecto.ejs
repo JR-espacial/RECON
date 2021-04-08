@@ -1,6 +1,15 @@
 <%- include('includes/openHTML.ejs'); %>
 <%- include('includes/navbarIteracion.ejs'); %>
+
 <main>
+        <form action="/proyectos/terminar-iteracion" method="POST">
+            <input type="hidden" id="_csrf" name="_csrf" value="<%= csrfToken %>" >
+            <div class="row">
+                <div class="col s12 offset-s9">
+                    <button class="waves-effect waves-light btn" type="submit">Terminar iteración</button>
+                </div>
+            </div>
+        </form>
     <div class="row">
         <div class="col 12 offset-s1">
             <div class="center-align">

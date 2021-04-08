@@ -3,24 +3,39 @@ const Iteracion = require('../models/iteracion');
 const Usuario = require('../models/user');
 const { fetchLastNumIter } = require('../models/iteracion');
 
-exports.getIteracionesProyecto = async function(request,response){
+exports.getIteracionesDesarrolloProyecto = async function(request,response){
     const idProyecto = request.session.idProyecto;
     const alerta = request.session.alerta;
     request.session.navegacion = 1;
     request.session.alerta = "";
-    let iteraciones;
-    iteracion_actual = await Iteracion.fetchOnefromProyect(idProyecto, request.session.usuario)
-   
-    
-    if(request.url == '/iteraciones-proyecto-desarrollo'){
-        iteraciones = iteracion_actual;
-        
+    let iteraciones = await Iteracion.fetchIteracionesDesarrollo(idProyecto, request.session.usuario);
+
+    if(iteraciones == undefined){
+        iteraciones = [[]];
     }
-    else if(request.url == '/iteraciones-proyecto-terminado') {
-        if(iteracion_actual[0][0]){
-            iteraciones = await Iteracion.fetchAllfromProyect(idProyecto, request.session.usuario, iteracion_actual[0][0].id_iteracion);
-        }
-    }
+
+    const empleados = await Usuario.fetchAll();
+    response.render('iteracionesProyecto', {
+        navegacion : request.session.navegacion,
+        proyecto_actual : request.session.nombreProyecto,
+        user: request.session.usuario,
+        title: "Iteraciones",
+        iteraciones : iteraciones[0],
+        empleados : empleados[0],
+        alerta : alerta,
+        csrfToken: request.csrfToken()
+    });
+       
+}
+
+exports.getIteracionesTerminadasProyecto = async function(request,response){
+    const idProyecto = request.session.idProyecto;
+    const alerta = request.session.alerta;
+    request.session.navegacion = 1;
+    request.session.alerta = "";
+
+    let iteraciones = await Iteracion.fetchIteracionesTerminadas(idProyecto, request.session.usuario);
+
     if(iteraciones == undefined){
         iteraciones = [[]];
     }
@@ -43,6 +58,7 @@ exports.postIteracionesProyecto = (request, response) => {
     request.session.idIteracion = request.body.idIteracion;
     response.redirect('/proyectos/resumen-proyecto');
 }
+
 exports.postChipsIteracionesProyecto = (request,response) =>{
     const id_iteracion = request.body.id_iteracion;
     Iteracion.fetchUsersfromIter(id_iteracion)
@@ -105,13 +121,12 @@ exports.postNuevaIteracion = async function (request, response){
     }
     const fetchLastCapacidad =  await Iteracion.fetchLastCapacidad();
     const fetchLastNumIter =  await Iteracion.fetchLastNumIter(id_proyecto);
-    let iteracion = new Iteracion(id_proyecto, fetchLastCapacidad[0][0].id_capacidad, fetchLastNumIter[0][0].num_iteracion, descripcion, fecha_inicio, fecha_fin, 1);
+    let iteracion = new Iteracion(id_proyecto, fetchLastCapacidad[0][0].id_capacidad, fetchLastNumIter[0][0].num_iteracion, descripcion, fecha_inicio, fecha_fin);
     await iteracion.saveIteracion(); 
     const infoIteracion = await Iteracion.fetchOne(id_proyecto,fetchLastNumIter[0][0].num_iteracion);
 
     for (let i = 0; i < colabs.length; i++) {
         const infoUsuario =  await Usuario.fetchOne(colabs[i]);
-        console.log(infoUsuario[0][0]);
         if(i == 0 || infoUsuario[0][0] && infoUsuario[0][0].usuario != request.session.usuario){
             await Iteracion.saveColaborador(infoUsuario[0][0].id_empleado, infoIteracion[0][0].id_iteracion);
         }
@@ -128,7 +143,7 @@ exports.postNuevaIteracion = async function (request, response){
         request.session.alerta = "Nueva iteracion creada exitosamente"
     }
 
-    response.redirect("/proyectos/iteraciones-proyecto-desarrollo");
+    response.redirect("/proyectos/iteraciones-desarrollo-proyecto");
 }
 
 exports.postEditarIteracion = async function (request, response){
@@ -142,15 +157,17 @@ exports.postEditarIteracion = async function (request, response){
     const colabsDeleted =[];
     let alerta = "La iteracion fue modificada exitosamente. Sin embargo los usuarios:";
 
-
     let colaborador = "";
     for (let i = 0; i < colaboradores.length; i++) {
-        if(colaboradores[i] != ",") {
+        if(colaboradores[i] != "," ) {
             colaborador += colaboradores[i];
         }
         else{
             colabs.push(colaborador);
             colaborador = "";
+        }
+        if(i == colaboradores.length-1){
+            colabs.push(colaborador);
         }
     }
     colaborador = "";
@@ -162,9 +179,10 @@ exports.postEditarIteracion = async function (request, response){
             colabsDeleted.push(colaborador);
             colaborador = "";
         }
+        if(i == colaboradoresBorrados.length-1){
+            colabsDeleted.push(colaborador);
+        }
     }
-    console.log(colabs,"añadir");
-    console.log(colabsDeleted,"borrar");
     
 
     await Iteracion.modificarIteracion(descripcion, fecha_inicio, fecha_fin, id_iteracion);
@@ -192,14 +210,20 @@ exports.postEditarIteracion = async function (request, response){
         request.session.alerta = "Iteración modificada  exitosamente"
     }
 
-    response.redirect("/proyectos/iteraciones-proyecto-desarrollo");
+    response.redirect("/proyectos/iteraciones-desarrollo-proyecto");
 
 }
 
 exports.postEliminarIteracion =  async function(request, response){
     await Iteracion.eliminarIteracion(request.body.id_iteracion);
     request.session.alerta = "Iteración eliminada exitosamente";
-    response.redirect('/proyectos/iteraciones-proyecto-desarrollo');
+    response.redirect('/proyectos/iteraciones-desarrollo-proyecto');
+}
+
+exports.postTerminarIteracion = async function(request, response){
+    await Iteracion.terminarIteracion(request.session.idIteracion);
+    request.session.alerta = "Iteración terminada exitosamente";
+    response.redirect('/proyectos/iteraciones-desarrollo-proyecto');
 }
 
 exports.getCapacidadEquipo = (request, response) =>{
@@ -207,6 +231,7 @@ exports.getCapacidadEquipo = (request, response) =>{
         navegacion : request.session.navegacion,
         proyecto_actual : request.session.nombreProyecto,
         user: request.session.usuario,
-        title: "Capacidad de Equipo"
+        title: "Capacidad de Equipo",
+        csrfToken: request.csrfToken()
     });
 }

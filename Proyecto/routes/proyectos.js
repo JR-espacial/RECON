@@ -28,13 +28,11 @@ router.get('/promedios-ap', isAuth, proyectosController.getPromediosAP);
 
 router.get('/estimados-ap', isAuth, proyectosController.getEstimadosAP);
 
-router.get('/iteraciones-proyecto-desarrollo', isAuth,iteracionesController.getIteracionesProyecto);
+router.get('/iteraciones-desarrollo-proyecto', isAuth,iteracionesController.getIteracionesDesarrolloProyecto);
 
-router.post('/iteraciones-proyecto-desarrollo', isAuth,iteracionesController.postIteracionesProyecto);
+router.get('/iteraciones-terminadas-proyecto', isAuth,iteracionesController.getIteracionesTerminadasProyecto);
 
-router.get('/iteraciones-proyecto-terminado', isAuth,iteracionesController.getIteracionesProyecto);
-
-router.post('/iteraciones-proyecto-terminado', isAuth,iteracionesController.postIteracionesProyecto);
+router.post('/iteraciones-proyecto', isAuth,iteracionesController.postIteracionesProyecto);
 
 router.post('/iteraciones-proyecto-editar', isAuth,iteracionesController.postChipsIteracionesProyecto);
 
@@ -45,6 +43,8 @@ router.post('/nueva-iteracion', isAuth,iteracionesController.postNuevaIteracion)
 router.post('/modificar-iteracion', isAuth, iteracionesController.postEditarIteracion);
 
 router.post('/eliminar-iteracion', isAuth, iteracionesController.postEliminarIteracion);
+
+router.post('/terminar-iteracion', isAuth, iteracionesController.postTerminarIteracion);
 
 router.get('/capacidad-equipo', isAuth, iteracionesController.getCapacidadEquipo);
 

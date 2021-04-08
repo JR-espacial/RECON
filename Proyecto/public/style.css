@@ -235,10 +235,14 @@ div#modal5 {
 .breadcrubs-nav{
     color : #333333
 }
-#logout{
+.logout{
     position:fixed; 
     bottom: 10%;
 }
 .modal_edit{
     width: 20%;
+}
+.terminarIteracion{
+    position:fixed; 
+    bottom: 15%;
 }

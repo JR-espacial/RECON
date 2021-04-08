@@ -79,7 +79,8 @@ exports.getResumenProyecto = (request, response) =>{
         navegacion : request.session.navegacion,
         proyecto_actual : request.session.nombreProyecto,
         user: request.session.usuario,
-        title: "Resumen del Proyecto"
+        title: "Resumen del Proyecto",
+        csrfToken: request.csrfToken()
     });
 }
 
@@ -89,7 +90,8 @@ exports.getAvanceProyecto = (request, response) => {
         navegacion : request.session.navegacion,
         proyecto_actual : request.session.nombreProyecto,
         user: request.session.usuario,
-        title: "Avance del Proyecto"
+        title: "Avance del Proyecto",
+        csrfToken: request.csrfToken()
     });
 }
 
@@ -98,7 +100,8 @@ exports.getPromediosAP = (request, response) =>{
         navegacion : request.session.navegacion,
         proyecto_actual : request.session.nombreProyecto,
         user: request.session.usuario,
-        title: "Promedios AP"
+        title: "Promedios AP",
+        csrfToken: request.csrfToken()
     });
 }
 
@@ -112,7 +115,8 @@ exports.getEstimadosAP = (request, response) =>{
                 proyecto_actual : request.session.nombreProyecto,
                 user: request.session.usuario,
                 title: "Estimados AP",
-                lista_tareas: rows
+                lista_tareas: rows,
+                csrfToken: request.csrfToken()
             });
         })
         .catch(err => {

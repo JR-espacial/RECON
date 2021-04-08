@@ -21,8 +21,8 @@
                                 <div class="modal-content">
                                     <input type="hidden" id="_csrf" name="_csrf" value="<%= csrfToken %>" >
                                     <input type="hidden" name="id_iteracion" value="<%= iteracion.id_iteracion %>">
-                                    <input type="hidden" name="colaboradores" value="" id="colabsAdd">
-                                    <input type="hidden" name="colaboradoresBorrados" value="" id="colabsDelete">
+                                    <input type="hidden" name="colaboradores" value="" id="colabsAdd_<%= iteracion.id_iteracion %>">
+                                    <input type="hidden" name="colaboradoresBorrados" value="" id="colabsDelete_<%= iteracion.id_iteracion %>">
                                         <div class="col s6 offset-s3">
                                             <div class="row">
                                                 <div class="input-field col s12">
@@ -44,7 +44,7 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col s12">
-                                                    <div class="chips chips-autocomplete"  id="chip1"></div>
+                                                    <div class="chips chips-autocomplete"  id="chip_<%= iteracion.id_iteracion %>"></div>
                                                     <i class="material-icons left">search</i> 
                                                 </div>
                                             </div>
@@ -83,10 +83,10 @@
                     </div>
                     <div class="card-action">
                         <!-- <a href="/proyectos/resumen-proyecto">Ir a Iteracion</a> -->
-                        <form action="iteraciones-proyecto-desarrollo" method="POST">
+                        <form action="iteraciones-proyecto" method="POST">
                             <input type="hidden" name="_csrf" value="<%= csrfToken %>"> 
                             <input type="hidden" name="idIteracion" value="<%= iteracion.id_iteracion %>">
-                            <button class="btn-flat" type="submit">Ir al la iteracion</botton>
+                            <button class="btn-flat" type="submit">Ir a la iteracion</botton>
                         </form>
                     </div>
                 </div>
@@ -97,11 +97,13 @@
 </div>
 
 <script>
+    let id;
     const colaboradores_anteriores = [];
     function loadChips(id_iteracion){
         const csrf = document.getElementById('_csrf').value;
         let data = {id_iteracion: id_iteracion};
-        let chipContainer = M.Chips.getInstance(document.getElementById('chip1'))
+        id = id_iteracion;
+        let chipContainer = M.Chips.getInstance(document.getElementById('chip_' + id))
         fetch('/proyectos/iteraciones-proyecto-editar',{
             method : 'POST',
             body : JSON.stringify(data),
@@ -114,10 +116,10 @@
         }).then(data => {
             data.forEach(element => {
                 if (element.usuario!= "<%= user%>"){
+                    colaboradores_anteriores.push(element.usuario);
                     chipContainer.addChip({
-                    tag: element.usuario,
+                        tag: element.usuario,
                     });
-                    colaboradores_anteriores.push(element.usuario)
                 }
             });
             
@@ -125,6 +127,7 @@
             console.error(err);
         });
     }
+
 
     document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('.chips-autocomplete');
@@ -136,6 +139,7 @@
             options["<%=empleados[i].usuario%>"] = null;
         "<% } %>"
     "<% } %>"
+
     var instances = M.Chips.init(elems,{
         autocompleteOptions:{ data : options},
         placeholder: 'Añadir usuario',
@@ -145,10 +149,9 @@
         });
 
         function chips2Input(){
-            var instance = M.Chips.getInstance(document.getElementById('chip1')), inpt = document.getElementById('colabsAdd'),inpt2 = document.getElementById('colabsDelete');
-            inpt.value =  null;
+            var instance = M.Chips.getInstance(document.getElementById('chip_' + id)), inpt = document.getElementById('colabsAdd_' + id),inpt2 = document.getElementById('colabsDelete_' + id);
             let deleted = [];
-            for(var i=0; i<colaboradores_anteriores.length; i++){
+            for(var i = 0; i < colaboradores_anteriores.length; i++){
                     deleted.push(colaboradores_anteriores[i]);
                 for(var j=0; j<instance.chipsData.length; j++){
                     if(colaboradores_anteriores[i] == instance.chipsData[j].tag){
@@ -156,19 +159,27 @@
                     }
                 }
             }
-            for(var i=0; i<instance.chipsData.length; i++){
-                console.log(instance.chipsData[i]);
-                if(inpt.value == null)
-                    inpt.value = instance.chipsData[i].tag;
-                else{
-                        inpt.value += instance.chipsData[i].tag +','; //csv
+
+            let added = [];
+            let add;
+            for(var i = 0; i < instance.chipsData.length; i++){
+                    add = true;
+                for(var j = 0; j < colaboradores_anteriores.length; j++){
+                    if(colaboradores_anteriores[j] == instance.chipsData[i].tag){
+                        add = false;
                     }
+                    else{
+                    }
+                }
+                if(add){
+                    added.push(instance.chipsData[i].tag);
+                }
             }
+
+            inpt.value = null;
+            inpt.value = added;
             inpt2.value = null;
             inpt2.value = deleted;
-            console.log(colaboradores_anteriores);
-            console.log(inpt);
-            console.log(inpt2);
         }
     });
 
