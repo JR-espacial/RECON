@@ -907,8 +907,6 @@ INSERT INTO `casos_uso` (`id_casos`, `id_ap`, `id_iteracion`, `yo_como`, `quiero
 INSERT INTO `casos_uso` (`id_casos`, `id_ap`, `id_iteracion`, `yo_como`, `quiero`, `para`, `comentario`, `real_minutos`, `max_minutos_caso_uso`, `porcentaje_avance`) VALUES(49, 5, 49, 'mesa de prospectos', 'ver cuando una solicitud es nueva', 'identificarlas con mayor facilidad', 'Excelente idea', 3232, 3813, '0.49');
 INSERT INTO `casos_uso` (`id_casos`, `id_ap`, `id_iteracion`, `yo_como`, `quiero`, `para`, `comentario`, `real_minutos`, `max_minutos_caso_uso`, `porcentaje_avance`) VALUES(50, 5, 50, 'administrador', 'ver cuando una solicitud es nueva', 'recibir notificaciones via whatsapp', 'Terminar', 3234, 3673, '0.86');
 
-
-
 -- INSERT INTO `entrega` (`id_proyecto, id_fase, id_trabajo`, `id_casos`, `entrega_estimada`, `entrega_real`, `estimacion`, `valor_ganado`, `costo_real`, `estado_entrega`) VALUES(1, 21, '2021-02-28', '2021-04-28', '01:12:55', '2.60', '7.79', b'1');
 -- INSERT INTO `entrega` (`id_proyecto, id_fase, id_trabajo`, `id_casos`, `entrega_estimada`, `entrega_real`, `estimacion`, `valor_ganado`, `costo_real`, `estado_entrega`) VALUES(1, 41, '2021-02-28', '2021-04-28', '03:22:13', '2.82', '7.15', b'1');
 -- INSERT INTO `entrega` (`id_proyecto, id_fase, id_trabajo`, `id_casos`, `entrega_estimada`, `entrega_real`, `estimacion`, `valor_ganado`, `costo_real`, `estado_entrega`) VALUES(2, 2, '2021-02-28', '2021-04-28', '02:11:40', '2.93', '9.94', b'1');
