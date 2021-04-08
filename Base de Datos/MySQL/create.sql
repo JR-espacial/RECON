@@ -172,8 +172,6 @@
         costo_real DECIMAL(5, 2), 
         estado_entrega BIT, 
         PRIMARY KEY(id_proyecto, id_fase ,id_trabajo, id_casos),
-        FOREIGN KEY(id_proyecto) REFERENCES Proyecto_Fase_Practica(id_proyecto),
-        FOREIGN KEY(id_fase) REFERENCES Proyecto_Fase_Practica(id_fase),
-        FOREIGN KEY(id_trabajo) REFERENCES Proyecto_Fase_Practica(id_trabajo),
+        FOREIGN KEY(id_proyecto, id_fase, id_trabajo) REFERENCES Proyecto_Fase_Practica(id_proyecto, id_fase, id_trabajo),
         FOREIGN KEY(id_casos) REFERENCES Casos_Uso(id_casos)
     );

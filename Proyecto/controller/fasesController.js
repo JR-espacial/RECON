@@ -191,7 +191,6 @@ exports.postFasesProyecto = (request, response) => {
         const id_fase = request.body.id_fase;
         const id_tarea_anterior = request.body.id_tarea;
         const nuevo_nombre_tarea = request.body.nuevo_nombre_tarea;
-        console.log(id_fase);
 
         Tarea.fetchOne(nuevo_nombre_tarea)
             .then(([rows, fieldData]) => {
@@ -254,6 +253,8 @@ exports.postFasesProyecto = (request, response) => {
                 response.redirect('fases-proyecto');
             })
             .catch(err => {
+                request.session.alerta = "No se puede eliminar esta fase debido a que fue utilizada en una iteración dentro del proyecto.";
+                response.redirect('fases-proyecto');
                 console.log(err);
             });
     }
@@ -267,8 +268,9 @@ exports.postFasesProyecto = (request, response) => {
                 response.redirect('fases-proyecto');
             })
             .catch(err => {
+                request.session.alerta = "No se puede eliminar esta tarea debido a que fue utilizada en una iteración dentro del proyecto.";
+                response.redirect('fases-proyecto');
                 console.log(err);
             });
     }
-
 }
