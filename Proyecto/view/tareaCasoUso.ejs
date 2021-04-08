@@ -34,14 +34,6 @@
                                         </td>
                                         <td><%= quiero.id_casos %></td>
                                         <td><%= quiero.quiero %></td>
-                                    
-                                        <!-- <form action="tarea-caso-uso" method="POST">
-                                            <input type="hidden" name="_csrf" value="<%= csrfToken %>"> 
-                                            <input type="hidden" name="idCaso" value="<%= quiero.id_casos %>">
-                                            <td>
-                                                <button name="action" value="consultar" type="submit"><i class="small material-icons">visibility</i></button>
-                                            </td>
-                                        </form> -->
                                     </tr>
                                 <% } %>
                             </tbody>
@@ -52,16 +44,8 @@
                 <!-- Tareas del Proyecto -->
                 <div class="col s6 m6 l6">                    
                     <div id="fasesVert" class="container">
-                        <% if(caso_seleccionado.length > 0) { %>
-                            <div> 
-                                <h6>
-                                    <%= caso_seleccionado[0].id_casos %>, 
-                                    quiero <%= caso_seleccionado[0].quiero %>
-                                </h6>    
-                            </div>
-                        <% } %>
+                        
                         <% const idspractica = []; %>
-                        <input type="hidden" id="lista_tareas" value="<%= lista_tareas %>">
                         <% for (let tarea = 0; tarea < lista_tareas.length; tarea++) { 
                             <!-- Si va empezando o cambia de fase  -->
                             if(tarea === 0 || lista_tareas[tarea].nombre_fase !== lista_tareas[tarea - 1].nombre_fase){ %>
@@ -77,7 +61,7 @@
                             <!-- Despliegue de tareas de la fase -->
                             <div id="tarea-en-fase">
                                 <label>
-                                    <input type="checkbox" id="botonCheck_<%= tarea %>" class="filled-in" /> 
+                                    <input type="checkbox" id="botonCheck_<%= tarea %>" class="filled-in" disabled="disabled" onclick="modificarAsociacion('<%= lista_tareas[tarea].id_fase %>','<%= lista_tareas[tarea].id_trabajo %>', '<%= tarea %>')"/> 
                                     <span> <%= lista_tareas[tarea].nombre_practica_trabajo %> </span>
                                 </label>
                             </div>
@@ -97,10 +81,13 @@
             <% } %>
         </div>
     </div>
+    
     <script>
+        let casoactual = ""; 
         function obtenerTareas(idcaso) {
+            casoactual = idcaso;
             let csrf = document.getElementById("_csrf").value;
-            
+
             let data = {id_casos: idcaso};
 
             fetch('/proyectos/tarea-caso-uso/obtener-tareas', {
@@ -115,25 +102,24 @@
                 return result.json();
             })
             .then(data => {
-                const listatareas = document.getElementById('lista_tareas').value;
-                /*for(let e = 0; e < '<%= lista_tareas.length %>'; e++){
-                    listatareas.push('<%= lista_tareas.id_trabajo %>');
-                } */
-                console.log(data.length);
-                for(tarea of listatareas) {
-                    console.log(tarea);
-                }
-                for (let tarea = 0; tarea < listatareas.length; tarea++){
-                    let id = 'botonCheck_' + tarea;
+                const listatareas = [];
+                const listafases = [];
+                "<% for (let tarea of lista_tareas){ %>"
+                    listatareas.push("<%= tarea.id_trabajo %>");
+                    listafases.push("<%= tarea.id_fase %>");
+                "<% } %>"
+                let i = 0;
+                for(let tarea of listatareas) {
+                    let id = 'botonCheck_' + i;
+                    document.getElementById(id).disabled = false;
                     document.getElementById(id).checked = false;
-                    for(let i = 0; i < data.length; i++){
-                        // console.log(data[i].id_trabajo);
-                        // console.log(listatareas[tarea].id_trabajo);
-                        if(data[i].id_trabajo === listatareas[tarea].id_trabajo){
+                    for (let dato of data) {
+                        if(dato.id_trabajo == tarea && dato.id_fase == listafases[i]){
                             document.getElementById(id).checked = true;
                             break;
                         }
                     } 
+                    i++;
                 }
             })
             .catch(err => {
@@ -143,10 +129,45 @@
             return;
         };
 
- 
+        function modificarAsociacion(idFase, idTrabajo, index) {
+            M.AutoInit();
+
+            let csrf = document.getElementById("_csrf").value;
+            let valorCheck = document.getElementById("botonCheck_" + index).checked;
+            
+            let accion = (valorCheck === true) ? "registrar" : "eliminar";
+
+            if(accion === "registrar") {
+                M.toast({html: 'Asociación registrada'});
+            }
+            else if(accion === "eliminar") {
+                M.toast({html: 'Asociación eliminada'});
+            } 
+            
+            let data = {id_fase: idFase, id_casos: casoactual, id_trabajo: idTrabajo, accion: accion};
+
+            fetch('/proyectos/tarea-caso-uso/modificarAsociacion', {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    'csrf-token': csrf, 
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(result => {
+                return result.json();
+            })
+            .then(data => {            
+            })
+            .catch(err => {
+                console.log(err);
+                M.toast({html: 'Error'});
+            });
+
+            return;
+        }
       
     </script>
-
 </main>
 
 <%- include('includes/closeHTML.ejs'); %>
