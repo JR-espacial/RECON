@@ -246,3 +246,7 @@ div#modal5 {
     position:fixed; 
     bottom: 15%;
 }
+.imagen_card{
+    max-height: 150px;
+    width: auto;
+}
