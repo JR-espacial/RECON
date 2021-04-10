@@ -11,7 +11,7 @@
                         <span style="color:red"><%= error %></span>
                     <% } %>
                     <input  id="nombre_proyecto" type="text" class="validate" name="nombre" required>
-                    <label for="nombre_proyecto">Nombre del proyecto</label>
+                    <label for="nombre_proyecto">Nombre del proyecto*</label>
                 </div>
             </div>
             <div class="row">
@@ -23,7 +23,7 @@
             <div class="row">
                 <div class="input-field col s4">
                     <select name="departamento" class="browser-default" required>
-                        <option value="" disabled selected>Selecciona el departamento del proyecto</option>
+                        <option value="" disabled selected>Selecciona el departamento del proyecto*</option>
                         <% for (let departamento of departamentos) { %>
                             <option value="<%= departamento.id_departamento %>"><%= departamento.nombre_departamento %></option>
                         <% } %>
