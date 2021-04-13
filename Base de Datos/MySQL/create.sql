@@ -101,32 +101,32 @@
     );
 
 
-    CREATE TABLE Practica_Trabajo (
-        id_trabajo INT AUTO_INCREMENT NOT NULL,
-        nombre_practica_trabajo VARCHAR(64),
-        PRIMARY KEY(id_trabajo)
+    CREATE TABLE tarea (
+        id_tarea INT AUTO_INCREMENT NOT NULL,
+        nombre_tarea VARCHAR(64),
+        PRIMARY KEY(id_tarea)
     );
 
 
     CREATE TABLE Proyecto_Fase_Practica (
         id_proyecto INT NOT NULL,
         id_fase INT NOT NULL,
-        id_trabajo INT NOT NULL,
-        PRIMARY KEY(id_proyecto, id_fase, id_trabajo),
+        id_tarea INT NOT NULL,
+        PRIMARY KEY(id_proyecto, id_fase, id_tarea),
         FOREIGN KEY(id_proyecto) REFERENCES Proyecto(id_proyecto),
         FOREIGN KEY(id_fase) REFERENCES Fase(id_fase),
-        FOREIGN KEY(id_trabajo) REFERENCES Practica_Trabajo(id_trabajo)
+        FOREIGN KEY(id_tarea) REFERENCES tarea(id_tarea)
     );
 
 
     CREATE TABLE AP_Colaborador (
-        id_trabajo INT  NOT NULL,
+        id_tarea INT  NOT NULL,
         id_empleado INT NOT NULL,
         id_ap INT NOT NULL, 
         min_minutos DECIMAL(5, 1),
         max_minutos DECIMAL(5, 1),
-        PRIMARY KEY(id_trabajo, id_empleado, id_ap),
-        FOREIGN KEY(id_trabajo) REFERENCES Practica_Trabajo(id_trabajo),
+        PRIMARY KEY(id_tarea, id_empleado, id_ap),
+        FOREIGN KEY(id_tarea) REFERENCES tarea(id_tarea),
         FOREIGN KEY(id_empleado) REFERENCES Empleado(id_empleado),
         FOREIGN KEY(id_ap) REFERENCES Puntos_Agiles(id_ap)
     );
@@ -134,12 +134,12 @@
 
     CREATE TABLE AP_Promedios(
         id_ap INT NOT NULL, 
-        id_trabajo INT NOT NULL,
+        id_tarea INT NOT NULL,
         promedio_min_minutos DECIMAL(5, 1),
         promedio_max_minutos DECIMAL(5, 1), 
-        PRIMARY KEY(id_ap, id_trabajo), 
+        PRIMARY KEY(id_ap, id_tarea), 
         FOREIGN KEY(id_ap) REFERENCES Puntos_Agiles(id_ap), 
-        FOREIGN KEY(id_trabajo) REFERENCES Practica_Trabajo(id_trabajo)
+        FOREIGN KEY(id_tarea) REFERENCES tarea(id_tarea)
     );
 
 
@@ -163,7 +163,7 @@
     CREATE TABLE Entrega (
         id_proyecto INT NOT NULL,
         id_fase INT NOT NULL,
-        id_trabajo INT NOT NULL, 
+        id_tarea INT NOT NULL, 
         id_casos INT NOT NULL, 
         entrega_estimada DATE, 
         entrega_real DATE, 
@@ -171,7 +171,7 @@
         valor_ganado DECIMAL(5, 2), 
         costo_real DECIMAL(5, 2), 
         estado_entrega BIT, 
-        PRIMARY KEY(id_proyecto, id_fase ,id_trabajo, id_casos),
-        FOREIGN KEY(id_proyecto, id_fase, id_trabajo) REFERENCES Proyecto_Fase_Practica(id_proyecto, id_fase, id_trabajo),
+        PRIMARY KEY(id_proyecto, id_fase ,id_tarea, id_casos),
+        FOREIGN KEY(id_proyecto, id_fase, id_tarea) REFERENCES Proyecto_Fase_Practica(id_proyecto, id_fase, id_tarea),
         FOREIGN KEY(id_casos) REFERENCES Casos_Uso(id_casos)
     );
