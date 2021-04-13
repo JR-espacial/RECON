@@ -101,49 +101,56 @@ exports.postNuevaIteracion = async function (request, response){
     const colabs =[];
     let alerta = "La iteracion fue creada exitosamente. Sin embargo los usuarios:";
 
-    colabs.push(request.session.usuario);
-    let colaborador = "";
-    for (let i = 0; i < colaboradores.length; i++) {
-        if(colaboradores[i] != ",") {
-            colaborador += colaboradores[i];
+    if(fecha_fin < fecha_inicio){
+        request.session.alerta = "La iteración no fue creada porque la fecha final debe de ser posterior a la de inicio";
+        response.redirect("/proyectos/nueva-iteracion");
+    }
+
+    else{
+        colabs.push(request.session.usuario);
+        let colaborador = "";
+        for (let i = 0; i < colaboradores.length; i++) {
+            if(colaboradores[i] != ",") {
+                colaborador += colaboradores[i];
+            }
+            else{
+                colabs.push(colaborador);
+                colaborador = "";
+            }
+        }
+        
+
+        try {
+            await Iteracion.saveCapacidad();
+        }catch(e){
+            console.log(e);
+        }
+        const fetchLastCapacidad =  await Iteracion.fetchLastCapacidad();
+        const fetchLastNumIter =  await Iteracion.fetchLastNumIter(id_proyecto);
+        let iteracion = new Iteracion(id_proyecto, fetchLastCapacidad[0][0].id_capacidad, fetchLastNumIter[0][0].num_iteracion, descripcion, fecha_inicio, fecha_fin, 1);
+        await iteracion.saveIteracion(); 
+        const infoIteracion = await Iteracion.fetchOne(id_proyecto,fetchLastNumIter[0][0].num_iteracion);
+
+        for (let i = 0; i < colabs.length; i++) {
+            const infoUsuario =  await Usuario.fetchOne(colabs[i]);
+            if(i == 0 || infoUsuario[0][0] && infoUsuario[0][0].usuario != request.session.usuario){
+                await Iteracion.saveColaborador(infoUsuario[0][0].id_empleado, infoIteracion[0][0].id_iteracion);
+            }
+            else if(!infoUsuario[0][0] || infoUsuario[0][0].usuario != request.session.usuario){
+                alerta += " "+ colabs[i] + " ";
+            }
+        }
+        
+        if(alerta != "La iteracion fue creada exitosamente. Sin embargo los usuarios:"){
+            alerta += "no existen y no fueron registrados en la iteracion";
+            request.session.alerta = alerta;
         }
         else{
-            colabs.push(colaborador);
-            colaborador = "";
+            request.session.alerta = "Nueva iteracion creada exitosamente"
         }
-    }
-    
 
-    try {
-        await Iteracion.saveCapacidad();
-    }catch(e){
-        console.log(e);
+        response.redirect("/proyectos/iteraciones-desarrollo-proyecto");
     }
-    const fetchLastCapacidad =  await Iteracion.fetchLastCapacidad();
-    const fetchLastNumIter =  await Iteracion.fetchLastNumIter(id_proyecto);
-    let iteracion = new Iteracion(id_proyecto, fetchLastCapacidad[0][0].id_capacidad, fetchLastNumIter[0][0].num_iteracion, descripcion, fecha_inicio, fecha_fin, 1);
-    await iteracion.saveIteracion(); 
-    const infoIteracion = await Iteracion.fetchOne(id_proyecto,fetchLastNumIter[0][0].num_iteracion);
-
-    for (let i = 0; i < colabs.length; i++) {
-        const infoUsuario =  await Usuario.fetchOne(colabs[i]);
-        if(i == 0 || infoUsuario[0][0] && infoUsuario[0][0].usuario != request.session.usuario){
-            await Iteracion.saveColaborador(infoUsuario[0][0].id_empleado, infoIteracion[0][0].id_iteracion);
-        }
-        else if(!infoUsuario[0][0] || infoUsuario[0][0].usuario != request.session.usuario){
-            alerta += " "+ colabs[i] + " ";
-        }
-    }
-    
-    if(alerta != "La iteracion fue creada exitosamente. Sin embargo los usuarios:"){
-        alerta += "no existen y no fueron registrados en la iteracion";
-        request.session.alerta = alerta;
-    }
-    else{
-        request.session.alerta = "Nueva iteracion creada exitosamente"
-    }
-
-    response.redirect("/proyectos/iteraciones-desarrollo-proyecto");
 }
 
 exports.postEditarIteracion = async function (request, response){

@@ -12,7 +12,7 @@
         <div class="input-field col s12">
           <i class="material-icons prefix">search</i>
           <input type="text" id="autocomplete-input" class="autocomplete" placeholder="Search">
-        </div>
+        </div>  
       </div>
     </div>
   </div>
@@ -64,7 +64,7 @@
                                                 <div class="file-field input-field">
                                                     <div class="btn">
                                                       <span>File</span>
-                                                      <input type="file" name="imagen_proyecto">
+                                                      <input type="file" name="imagen_proyecto" accept="image/*">
                                                     </div>
                                                     <div class="file-path-wrapper">
                                                         <input  class="file-path validate" type="text" placeholder="Sube una imagen">
@@ -131,8 +131,15 @@
          options["<%=proyectos[i].nombre_proyecto%>"] = null;
      "<% } %>"
       
-    var instances = M.Autocomplete.init(autocomplete, { data : options });
-      
+    var instances = M.Autocomplete.init(autocomplete, { 
+        data : options,
+        onAutocomplete: GotoProyect
+     });
+
+    function GotoProyect(){
+       
+    }
+    
     });
 
 </script>

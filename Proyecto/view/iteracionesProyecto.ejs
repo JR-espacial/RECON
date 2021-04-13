@@ -10,6 +10,9 @@
 <!-- Set de tres tarjetas -->
 <div class="row center">
     <div class="col offset-s3">
+        <% if (!iteraciones[0]) { %>
+            <h4>No hay iteraciones que mostrar</h4>
+        <% } %>  
         <% for (let iteracion of iteraciones) { %>
             <div class="col s4">
                 <div class="card">
