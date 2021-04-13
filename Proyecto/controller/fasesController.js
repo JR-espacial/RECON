@@ -255,7 +255,6 @@ exports.postFasesProyecto = (request, response) => {
             .catch(err => {
                 request.session.alerta = "No se puede eliminar esta fase debido a que fue utilizada en una iteración dentro del proyecto.";
                 response.redirect('fases-proyecto');
-                console.log(err);
             });
     }
 
@@ -270,7 +269,6 @@ exports.postFasesProyecto = (request, response) => {
             .catch(err => {
                 request.session.alerta = "No se puede eliminar esta tarea debido a que fue utilizada en una iteración dentro del proyecto.";
                 response.redirect('fases-proyecto');
-                console.log(err);
             });
     }
 }
