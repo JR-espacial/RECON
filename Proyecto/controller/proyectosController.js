@@ -22,6 +22,9 @@ exports.getNuevoProyecto = (request, response) => {
             csrfToken: request.csrfToken(),
         });
     })
+    .catch(err => {
+        console.log(err);
+    }); 
 }
 
 exports.postNuevoProyecto = async function (request, response) {
@@ -72,18 +75,6 @@ exports.postNuevoProyecto = async function (request, response) {
         response.redirect('/proyectos/nuevo-proyecto');
     }
 }
-
-exports.getResumenProyecto = (request, response) =>{
-    request.session.navegacion = 2;
-    response.render('resumenProyecto', {
-        navegacion : request.session.navegacion,
-        proyecto_actual : request.session.nombreProyecto,
-        user: request.session.usuario,
-        title: "Resumen del Proyecto",
-        csrfToken: request.csrfToken()
-    });
-}
-
 
 exports.getAvanceProyecto = (request, response) => {
     response.render('avanceProyecto', {

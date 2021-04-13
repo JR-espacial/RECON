@@ -5,6 +5,7 @@ const isAuth = require('../util/is_Auth');
 
 const proyectosController = require('../controller/proyectosController');
 const iteracionesController = require('../controller/iteracionesController');
+const resumenController = require('../controller/resumenController');
 const casos_usoController = require('../controller/casos_usoController');
 const fasesController = require('../controller/fasesController');
 const tareaCasosUsoController = require('../controller/tareaCasoUsoController');
@@ -16,7 +17,7 @@ router.get('/nuevo-proyecto', isAuth, proyectosController.getNuevoProyecto);
 
 router.post('/nuevo-proyecto', isAuth, proyectosController.postNuevoProyecto);
 
-router.get('/resumen-proyecto', isAuth, proyectosController.getResumenProyecto);
+router.get('/resumen-proyecto', isAuth, resumenController.getResumenProyecto);
 
 router.get('/fases-proyecto', isAuth, fasesController.getFasesProyecto);
 

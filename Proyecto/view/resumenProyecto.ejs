@@ -13,7 +13,7 @@
     <div class="row">
         <div class="col 12 offset-s1">
             <div class="center-align">
-                <h1 class="flow-text">IT14</h1>
+                <h1 class="flow-text"> Iteración <%= iteracion.num_iteracion %>  </h1>
                 <img class="responsive-img" width="40%"
                     src="https://www.esan.edu.pe/conexion/actualidad/2017/10/26/1500x844_portafolio_proyectos.jpg"
                     alt="Trabajo en equipo">
@@ -21,28 +21,22 @@
             <div class="container">
                 <div class="row">
                     <div class="card">
-                        <h2 class="card-title flow-text">Objetivos:</h2>
+                        <h2 class="card-title flow-text">Descripcion:</h2>
                         <div class="card-content">
-                            <p>Los objetivos son los resultados deseados que se esperan
-                                alcanzar con la ejecución de las actividades que integran un
-                                proyecto, empresa o entidad. Medibles o cuantificables.</p>
+                            <p><%= iteracion.descripcion %></p>
                         </div>
                     </div>
                 </div>
-                <h2 class="flow-text">Objetivos:</h2>
-                <p>Los objetivos son los resultados deseados que se esperan
-                    alcanzar con la ejecución de las actividades que integran un
-                    proyecto, empresa o entidad. Medibles o cuantificables.</p>
                 <div class="row">
                     <div class="col s6 m6 l6">
                         <div class="card">
                             <h2 class="card-title flow-text">Estimación de tiempo:</h2>
                             <div class="card-content">
-                                <p>Total en Minutos: <span>30</span></p>
-                                <p>Total en Horas: <span>30</span></p>
-                                <p>Horas semanales de capacidad: <span>30</span></p>
-                                <p>Total en Semanas: <span>30</span></p>
-                                <p>Total en Meses: <span>30</span></p>
+                                <p>Total en Minutos: <span><%= total_min_maximo %></span></p>
+                                <p>Total en Horas: <span><%= total_horas_maximo %></span></p>
+                                <p>Horas semanales de capacidad: <span><%= horas_semanales %></span></p>
+                                <p>Total en Semanas: <span><%= total_semanas_maximo %></span></p>
+                                <p>Total en Meses: <span><%= total_meses_maximo %></span></p>
                             </div>
                         </div>
                     </div>
@@ -51,9 +45,8 @@
                             <h2 class="card-title flow-text">Proyección de avances:</h2>
                             <div class="card-content">
                                 <div class="center-align">
-                                    <img class="responsive-img" width="40%"
-                                        src="https://datoweb.com/img/post/3_71_calendario-html.jpg"
-                                        alt="Calendario">
+                                    <p>Fecha inicio: <%= iteracion.fecha_inicio_YMD %></p>
+                                    <p>Fecha fin: <%= iteracion.fecha_fin_YMD %></p>
                                 </div>
                             </div>
                         </div>
