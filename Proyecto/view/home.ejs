@@ -137,7 +137,10 @@
      });
 
     function GotoProyect(){
-       
+        let autocomplete = document.getElementById("autocomplete-input");
+        let url = "/proyectos/iteraciones-" + autocomplete.value;
+        console.log(url);
+        location.replace(url);
     }
     
     });
