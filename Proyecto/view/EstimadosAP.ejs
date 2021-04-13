@@ -1,0 +1,87 @@
+<%- include('includes/openHTML.ejs'); %>
+<%- include('includes/navbarProyecto.ejs'); %>
+<main>
+<div>
+
+    <div class="row center-align">
+        <div class="col s6 offset-s3">
+            <h2>Fases del proyecto</h2>
+        </div>
+    </div>
+    
+    <div id="fases" class="container">
+        <% for (let fase_tarea = 0; fase_tarea < lista_tareas.length; fase_tarea++) { %>
+            <%
+                if(fase_tarea === 0 || lista_tareas[fase_tarea].nombre_fase !== lista_tareas[fase_tarea - 1].nombre_fase){
+            %>
+            <div id="fase" class="center-align">
+                <div id="titulo-fase">
+                    <span class=""> <%= lista_tareas[fase_tarea].nombre_fase %>: </span>
+                </div>
+                <div>
+            <% } %>
+                    <div id="tarea-en-fase">
+                        <span> <%= lista_tareas[fase_tarea].nombre_tarea %> </span>
+                    </div>
+            <%
+                if(fase_tarea === lista_tareas.length - 1 || lista_tareas[fase_tarea].nombre_fase !== lista_tareas[fase_tarea + 1].nombre_fase){
+            %>
+                </div>
+            </div>
+            <% } %>
+        <% } %>
+    </div>
+
+</div>
+<br>
+<br>
+<br>
+<br>
+
+<div class="row">
+    <div class="col s12 offset-s2">
+      <ul class="tabs">
+        <li class="tab col s3"><a href="#test1">Min</a></li>
+        <li class="tab col s3"><a class="active" href="#test2">Max</a></li>
+      </ul>
+    </div>
+    <div id="test1" class="col s12"></div>
+    <div id="test2" class="col s12"></div>
+  </div>
+
+
+
+
+ <div class="row">
+     <div class="col s6 offset-s2">
+         <table class="highlight">
+             <thead>
+                 <tr>
+                    <th>1</th>
+                    <th>2</th>
+                    <th>3</th>
+                    <th>5</th>
+                    <th>8</th>
+                    <th>13</th>
+                 </tr>
+             </thead>
+             <tbody>
+                 <tr>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                 </tr>
+             </tbody>
+         </table>
+     </div>
+     <div class="col s2 offset-s8">
+        <a class="btn-floating  btn-large cyan pulse boton_añadir"><i class="material-icons">edit</i></a>
+    </div>  
+ </div>
+</main>
+
+
+<%- include('includes/closeHTML.ejs'); %>

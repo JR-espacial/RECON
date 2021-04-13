@@ -1,0 +1,42 @@
+
+<a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+<ul class="sidenav sidenav-fixed" id="slide-out">
+    <li><div class="user-view">
+        <div class="background">
+            <img src="https://wallpapercave.com/wp/wp3194552.png">
+        </div>
+        <a href="#user"><img class="circle" src="https://storage.googleapis.com/natgas/others/logos/natgas-logo-simple.png"></a>
+        <div class="row">
+            <div class="col s10">
+                <a href="#name"><span class="white-text name"><%=user%></span></a>
+                <a href="#email"><span class="white-text email"><%=user%>@email.com</span></a>
+            </div>
+            <div class="col s1">
+                <a href="/home"><i class="white-text material-icons">home</i></a>
+            </div>
+        </div>
+        </div>
+    </li>
+    
+    
+    
+    <li><a class="waves-effect waves-light btn" href="/proyectos/nueva-iteracion"><i class="material-icons left">add</i>Crear Iteracion</a>
+    <li><a class="waves-effect" href="/proyectos/iteraciones-desarrollo-proyecto">En desarrollo</a></li>
+    <li><a class="waves-effect" href="/proyectos/iteraciones-terminadas-proyecto">Terminado</a></li>
+    <li><div class="divider"></div></li>
+
+    <li><a class="waves-effect" href="/proyectos/fases-proyecto">WBS</a></li>
+    <li><a class="waves-effect" href="/proyectos/estimados-ap">Estimación AP</a></li>
+    <li><a class="waves-effect" href="/proyectos/promedios-ap">Promedios AP</a></li>
+
+    <li class="logout"><a href="/users/logout"><i class="material-icons right">input</i>Logout &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a></li>
+    
+</ul>
+
+<%- include('breadcrumbs.ejs'); %>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        M.AutoInit();
+    });
+</script>

@@ -1,0 +1,193 @@
+<%- include('includes/openHTML.ejs'); %>
+<%- include('includes/navbarProyecto.ejs'); %>
+<main class="max">
+<div class="max">
+    <div class="row center-align">
+        <div class="col s6 offset-s3">
+            <h2>WBS</h2>
+        </div>
+    </div>
+    <div id="fases" class="">
+        <% for (let fase_tarea = 0; fase_tarea < lista_tareas.length; fase_tarea++) { %>
+            <!-- Para cada fase se crea una tarjeta exterior -->
+            <%
+                if(fase_tarea === 0 || lista_tareas[fase_tarea].nombre_fase !== lista_tareas[fase_tarea - 1].nombre_fase){
+            %>
+            
+            <div id="fase" class="center-align">
+                <!-- Para cada una de las fases en el título se añade el nombre de la fase y los 
+                3 puntos para editar. -->
+                <div id="titulo-fase">
+                    <a class = "dropdown-trigger right" data-target='modificarFase <%= lista_tareas[fase_tarea].id_fase %>'>
+                        <i class="material-icons">more_vert</i>
+                    </a>
+                    <span>
+                        <%= lista_tareas[fase_tarea].nombre_fase %>
+                    </span>
+                </div>
+
+                <!-- Se genera un dropdown para poder modificar o eliminar cada fase -->
+                <ul id='modificarFase <%= lista_tareas[fase_tarea].id_fase %>' class='dropdown-content'>
+                    <!-- Modal trigger para la ventana de Editar Fase -->
+                    <li>
+                        <a class = "modal-trigger" data-target="editarFase <%= lista_tareas[fase_tarea].id_fase %>"><i class="material-icons right">edit</i></a>
+                    </li>
+                    
+                    <li class="divider" tabindex="-1"></li>
+                    <!-- Forma para eliminar la Fase -->
+                    <li>
+                        <!-- Se crean los inputs escondidos con el Csrf Token y de id_fase para saber qué fase es la que se eliminará -->
+                        <form action = "fases-proyecto" method = "POST" id = "delete <%= lista_tareas[fase_tarea].id_fase %>">
+                            <input type="hidden" name = "id_fase" value = "<%= lista_tareas[fase_tarea].id_fase %>">
+                            <input type="hidden" name = "_csrf" value = "<%= csrfToken %>">
+                            <button class = "boton_dropdown btn waves-effect waves-light" name = "action" value = "eliminar-fase" type="submit"><i class="small material-icons">delete</i></button>
+                            <script>
+                                document.getElementById("delete <%= lista_tareas[fase_tarea].id_fase %>").addEventListener('submit', stopFase);
+                                
+                                function stopFase(event) {
+                                    let confirmacion = confirm('¿Estás seguro de eliminar <%= lista_tareas[fase_tarea].nombre_fase %> del Proyecto? Se eliminará toda su información dentro de este proyecto.');
+                                    if(!confirmacion) {
+                                        event.preventDefault();
+                                    }
+                                }
+                            </script>
+                        </form>
+                    </li>
+                </ul>
+                
+                <!-- Estructura Editar Fase Modal -->
+                <form action = "fases-proyecto" method = "POST">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
+                    <input type = "hidden" name = "id_fase" value = "<%= lista_tareas[fase_tarea].id_fase %>">
+                    <div id="editarFase <%= lista_tareas[fase_tarea].id_fase %>" class ="modal_edit modal">
+                        <div class = "modal-content">
+                            <input name = "nuevo_nombre_fase" value = "<%= lista_tareas[fase_tarea].nombre_fase %>" required>
+                        </div>
+                        <div>
+                            <button class = "boton_dropdown btn waves-effect waves-light" name = "action" value = "modificar-fase" type = "submit">Aceptar</button>
+                        </div>
+                    </div>
+                </form>
+
+                <div>
+            <% } %>
+            <% if(lista_tareas[fase_tarea].id_tarea !== 0) { %>
+
+                    <!-- Dentro de la fase se crean todas sus tareas con 3 puntos para editar -->
+                    <div id="tarea-en-fase">
+                        <div class="in-line">
+                            <a class = "dropdown-trigger right" data-target='modificarTarea <%= lista_tareas[fase_tarea].id_fase %> <%= lista_tareas[fase_tarea].id_tarea %>'>
+                                <i class="material-icons">more_vert</i>
+                            </a>
+                            <span>
+                                <%= lista_tareas[fase_tarea].nombre_tarea %>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- Se crea un dropdown para modificar o eliminar cada tarea -->
+                    <ul id='modificarTarea <%= lista_tareas[fase_tarea].id_fase %> <%= lista_tareas[fase_tarea].id_tarea %>' class='dropdown-content'>
+                        <!-- Modal trigger para modificar el nombre de la tarea en fase -->
+                        <li><a class = "modal-trigger" data-target="editarTarea <%= lista_tareas[fase_tarea].id_fase %> <%= lista_tareas[fase_tarea].id_tarea %>"><i class="material-icons right">edit</i></a></li>
+                        <li class="divider" tabindex="-1"></li>
+                        <!-- Forma para eliminar tarea de fase -->
+                        <li>
+                            <form action = "fases-proyecto" method = "POST" id = "delete <%= lista_tareas[fase_tarea].id_fase %> <%= lista_tareas[fase_tarea].id_tarea %>">
+                                <input type ="hidden" name = "id_fase" value = "<%= lista_tareas[fase_tarea].id_fase %>">
+                                <input type="hidden" name = "id_tarea" value = "<%= lista_tareas[fase_tarea].id_tarea %>">
+                                <input type="hidden" name = "_csrf" value ="<%= csrfToken %>">
+                                <button class="boton_dropdown btn waves-effect waves-light" name = "action" value = "eliminar-tarea" type="submit"><i class="small material-icons">delete</i></button>
+                                <script>
+                                    document.getElementById("delete <%= lista_tareas[fase_tarea].id_fase %> <%= lista_tareas[fase_tarea].id_tarea %>").addEventListener('submit', stopTarea);
+                                    
+                                    function stopTarea(event) {
+                                        let confirmacion = confirm('¿Estás seguro de eliminar <%= lista_tareas[fase_tarea].nombre_tarea %> de <%= lista_tareas[fase_tarea].nombre_fase %> ');
+                                        if(!confirmacion) {
+                                            event.preventDefault();
+                                        }
+                                    }
+                                </script>
+                            </form>
+                        </li>
+                    </ul>
+
+                    <!-- Estructura Editar Tarea Modal -->
+                    <form action = "fases-proyecto" method = "POST">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
+                        <input type ="hidden" name = "id_fase" value = "<%= lista_tareas[fase_tarea].id_fase %>">
+                        <input type="hidden" name = "id_tarea" value = "<%= lista_tareas[fase_tarea].id_tarea %>">
+                        <div id="editarTarea <%= lista_tareas[fase_tarea].id_fase %> <%= lista_tareas[fase_tarea].id_tarea %>" class ="modal_edit modal">
+                            <div class = "modal-content">
+                                <input name = "nuevo_nombre_tarea"value = "<%= lista_tareas[fase_tarea].nombre_tarea %>" required>
+                            </div>
+                            <div>
+                                <button class = "boton_dropdown btn waves-effect waves-light" name = "action" value = "modificar-tarea" type = "submit">Aceptar</button>
+                            </div>
+                        </div>
+                    </form>
+            <% } %>
+            <!-- Si ya no existen más tareas dentro de la fase, se añade el input para poder crear nuevas tareas.  -->
+            <%
+                if(fase_tarea === lista_tareas.length - 1 || lista_tareas[fase_tarea].nombre_fase !== lista_tareas[fase_tarea + 1].nombre_fase){
+            %>
+                </div>
+                <!-- Forma para crear tarea en fase al final de la tarjeta de fase -->
+                <form action="fases-proyecto" method="POST">
+                    <div class="valign-wrapper">
+                        <input type="hidden" name= "id_fase" value ="<%= lista_tareas[fase_tarea].id_fase %>">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                        <div class="center-align">
+                            <button name = "action" value= "registrar-tarea" type="submit" class="boton_añadir"><i class="material-icons">add</i></button>
+                        </div>
+                        <div id="agregar-tarea" class="center-align">
+                            <input placeholder="Nueva Tarea" name="añadir_nombre_tarea" type="text" required>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <% } %>
+        <% } %>
+
+        <!-- Si ya no existen más fases, se añade el input para poder crear una nueva.  -->
+        <div id="fase-agregar" class="center-align">
+            <form action="fases-proyecto" method="POST">
+                <div class="valign-wrapper">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <div class="center-align">
+                        <button name="action" value = "registrar-fase" type="submit" class="btn-floating cyan pulse boton_añadir"><i class="material-icons">add</i></button>
+                    </div>
+                    <div id="agregar-fase"  class="input-field" class="center-align">
+                        <!-- Se crea un input con autocomplete, que se usa en el script más abajo para sugerir fases. -->
+                        <input placeholder="Añadir Fase" id="autocomplete-input" class="autocomplete" name="añadir_nombre_fase" type="text" required>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Se obtiene el elemento con id Autocomplete
+        let autocomplete = document.getElementById("autocomplete-input");
+
+        let recomendacionFases = {};
+        
+        // Se guarda el nombre de todas las fases que existen en un objeto json.
+        "<% for (let i = 0; i < sugerencia_fases.length; i++){ %>"
+            recomendacionFases["<%= sugerencia_fases[i].nombre_fase%>"] = null;
+        "<% } %>"
+
+        // Se instancía el objeto Autocomplete, y para las sugerencias se usa json anterior.
+        let instances = M.Autocomplete.init(autocomplete, { data : recomendacionFases });
+    });
+
+    // Si existe alguna alerta, se imprime su valor.
+    "<% if (alerta) { %>"
+        alert("<%= alerta %>");
+    "<% } %>"
+
+</script>
+
+</main>
+<%- include('includes/closeHTML.ejs'); %>

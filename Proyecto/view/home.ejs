@@ -1,0 +1,147 @@
+<%- include('includes/openHTML.ejs'); %>
+
+<%- include('includes/navbarPrincipal.ejs'); %>
+
+<% if (alerta) { %>
+    <script>alert("<%= alerta %>");</script>
+<% } %> 
+          
+<div class="row">    
+    <div class="col s2 offset-s9">
+      <div class="row">
+        <div class="input-field col s12">
+          <i class="material-icons prefix">search</i>
+          <input type="text" id="autocomplete-input" class="autocomplete" placeholder="Search">
+        </div>  
+      </div>
+    </div>
+  </div>
+
+<!-- Set de tres tarjetas -->
+<div class="row center">
+    <div class="col offset-m3 offset-l3">
+        <% for (let proyecto of proyectos) { %>
+        <div class="col s3">
+            <div class="card small">
+                <div class="card-image">
+                    <img class="imagen_card" src="<%= proyecto.imagen %>">
+                    <!-- <img class="materialboxed"   src="<%= proyecto.imagen %>"> -->
+                    <!-- <img src="<%= proyecto.imagen %>"  alt="Proyecto"> -->
+                    <div id="modal1_<%= proyecto.id_proyecto %>" class="modal large">
+                        <form action="/home/modificar-proyecto?_csrf=<%=csrfToken%>" method="POST"  enctype="multipart/form-data">
+                        <!-- Modal Content -->
+                            <div class="modal-content">
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
+                                <input type="hidden" name="id_proyecto" value="<%= proyecto.id_proyecto %>">
+                                    <div class="col s6 offset-s3">
+                                        <div class="row">
+                                            <div class="input-field col s11">
+                                                <input  id="nombre_proyecto<%= proyecto.id_proyecto %>" type="text" class="validate" name="nombre" value="<%= proyecto.nombre_proyecto %>" required>
+                                                <label for="nombre_proyecto<%= proyecto.id_proyecto %>">Nombre del proyecto*</label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="input-field col s11">
+                                                <input  id="descripcion_proyecto<%= proyecto.id_proyecto %>" type="text" class="validate" name="descripcion" value="<%= proyecto.descripcion_proyecto %>">
+                                                <label for="descripcion_proyecto<%= proyecto.id_proyecto %>">Descripción del proyecto</label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="input-field col s11">
+                                                <select name="departamento" class="browser-default" required>
+                                                    <% for (let departamento of departamentos) { %>
+                                                        <% if ( departamento.id_departamento == proyecto.id_departamento) { %>
+                                                            <option value="<%= proyecto.id_departamento %>" selected><%= proyecto.nombre_departamento %> </option>
+                                                        <% } else{ %>
+                                                            <option value="<%= departamento.id_departamento %>"><%= departamento.nombre_departamento %></option>
+                                                        <% } %>
+                                                    <% } %>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="input-field col s11">
+                                                <div class="file-field input-field">
+                                                    <div class="btn">
+                                                      <span>File</span>
+                                                      <input type="file" name="imagen_proyecto" accept="image/*">
+                                                    </div>
+                                                    <div class="file-path-wrapper">
+                                                        <input  class="file-path validate" type="text" placeholder="Sube una imagen">
+                                                        <input type="hidden" value="<%= proyecto.imagen %>" name="imagen_previa">
+                                                    </div>
+                                                  </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col s11 ">
+                                                <a class="modal-close waves-effect waves-green btn-flat " href="/home">Cancelar</a>
+                                                <button type="submit" class="waves-effect waves-green btn-flat" name="action" value="editar">Aceptar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>  
+                        </form>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <a class='dropdown-trigger  grey-text text-darken-4' data-target='dropdown1_<%= proyecto.nombre_proyecto %>'><i class="material-icons right">more_vert</i></a>
+                    <span><%= proyecto.nombre_proyecto %></span>
+                    <ul id='dropdown1_<%= proyecto.nombre_proyecto %>' class='dropdown-content'>
+                        <li><a data-target="modal1_<%= proyecto.id_proyecto %>" class="modal-trigger"><i class="material-icons right">mode_edit</i></a></li>
+                        <li>
+                            <form action="/home/eliminar-proyecto" method="POST" id="eliminar_<%= proyecto.id_proyecto %>">
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                <input type="hidden" name="id_proyecto" value="<%= proyecto.id_proyecto %>">
+                                <button type="submit" class="waves-effect waves-green btn-flat"><i class="material-icons">delete</i>Eliminar</button>
+                                <script> 
+                                    document.getElementById("eliminar_<%= proyecto.id_proyecto %>").addEventListener('submit', (e) => {
+                                      let confirmacion = confirm('¿Estás seguro de eliminar el proyecto?');
+                                      if(!confirmacion){
+                                        e.preventDefault();
+                                      }  
+                                    });
+                                </script>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-action">
+                    <form action="home" method="POST">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
+                        <input type="hidden" name="idProyecto" value="<%= proyecto.id_proyecto %>" >
+                        <input type="hidden" name="nombreProyecto" value="<%= proyecto.nombre_proyecto %>" >
+                        <button class="btn-flat" type="submit">Ir al proyecto</botton>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <% } %>
+    </div>    
+</div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    let autocomplete = document.getElementById("autocomplete-input");
+    
+    let options = {};
+
+    "<%for (let i = 0; i < proyectos.length; i++) { %>"
+         options["<%=proyectos[i].nombre_proyecto%>"] = null;
+     "<% } %>"
+      
+    var instances = M.Autocomplete.init(autocomplete, { 
+        data : options,
+        onAutocomplete: GotoProyect
+     });
+
+    function GotoProyect(){
+       
+    }
+    
+    });
+
+</script>
+
+<%- include('includes/closeHTML.ejs'); %>
