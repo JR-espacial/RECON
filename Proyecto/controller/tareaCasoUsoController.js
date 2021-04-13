@@ -46,17 +46,17 @@ exports.postObtenerTareas = (request, response) => {
 exports.postModificarAsocioacion = (request, response) => {
     const id_proyecto = request.session.idProyecto;
     const id_fase = request.body.id_fase;
-    const id_trabajo = request.body.id_trabajo;
+    const id_tarea = request.body.id_tarea;
     const id_caso = request.body.id_casos; 
     const accion = request.body.accion;
 
     if(accion === "registrar") {
-        Entrega.crearEntrega(id_proyecto, id_fase, id_trabajo, id_caso)
+        Entrega.crearEntrega(id_proyecto, id_fase, id_tarea, id_caso)
             .then(() => response.status(200))
             .catch( err => console.log(err));       
     }
     else if(accion === "eliminar") {
-        Entrega.dropEntrega(id_proyecto, id_fase, id_trabajo, id_caso)
+        Entrega.dropEntrega(id_proyecto, id_fase, id_tarea, id_caso)
             .then(() => response.status(200))
             .catch( err => console.log(err));
     }  

@@ -89,7 +89,7 @@ exports.postFasesProyecto = (request, response) => {
         Tarea.fetchOne(nombre_tarea)
             .then(([rows, fieldData]) => {
                 if(rows.length > 0){
-                    const proyecto_fase_tarea = new Proyecto_Fase_Tarea(id_proyecto, id_fase, rows[0].id_trabajo);
+                    const proyecto_fase_tarea = new Proyecto_Fase_Tarea(id_proyecto, id_fase, rows[0].id_tarea);
                     proyecto_fase_tarea.saveProyecto_Fase_Tarea()
                         .then(() => {
                             response.redirect('fases-proyecto');
@@ -106,7 +106,7 @@ exports.postFasesProyecto = (request, response) => {
                         .then(() => {
                             Tarea.fetchOne(nombre_tarea)
                                 .then(([rows2, fieldData]) => {
-                                    const id_tarea = rows2[0].id_trabajo;
+                                    const id_tarea = rows2[0].id_tarea;
                                     const proyecto_fase_tarea = new Proyecto_Fase_Tarea(id_proyecto, id_fase, id_tarea);
                                     proyecto_fase_tarea.saveProyecto_Fase_Tarea()
                                         .then(() => {
@@ -195,7 +195,7 @@ exports.postFasesProyecto = (request, response) => {
         Tarea.fetchOne(nuevo_nombre_tarea)
             .then(([rows, fieldData]) => {
                 if(rows.length > 0){
-                    const id_tarea_nueva = rows[0].id_trabajo;
+                    const id_tarea_nueva = rows[0].id_tarea;
                     Proyecto_Fase_Tarea.fetchTareaInFase(id_proyecto, id_fase, id_tarea_nueva)
                         .then(([rows2, fieldData]) => {
                             if(rows2.length > 0){
@@ -222,7 +222,7 @@ exports.postFasesProyecto = (request, response) => {
                         .then(() => {
                             Tarea.fetchOne(nuevo_nombre_tarea)
                                 .then(([rows2, fieldData]) => {
-                                    const id_tarea_nueva = rows2[0].id_trabajo;
+                                    const id_tarea_nueva = rows2[0].id_tarea;
                                     Proyecto_Fase_Tarea.updateTareaInFase(id_proyecto, id_fase, id_tarea_anterior, id_tarea_nueva)
                                         .then(() => {
                                             response.redirect('fases-proyecto');

@@ -13,8 +13,8 @@ DROP TABLE AP_Colaborador
 IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Proyecto_Fase_Practica')
 DROP TABLE Proyecto_Fase_Practica
 
-IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Practica_Trabajo')
-DROP TABLE Practica_Trabajo
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'tarea')
+DROP TABLE tarea
 
 IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Fase')
 DROP TABLE Fase
@@ -228,15 +228,15 @@ BULK INSERT Equip01.Equip01.[Fase]
 	)
 
 
---Practica_Trabajo
+--tarea
 
-CREATE TABLE Practica_Trabajo (
-	id_trabajo CHAR(6) NOT NULL,
-    nombre_practica_trabajo VARCHAR(64),
-    PRIMARY KEY(id_trabajo),
+CREATE TABLE tarea (
+	id_tarea CHAR(6) NOT NULL,
+    nombre_tarea VARCHAR(64),
+    PRIMARY KEY(id_tarea),
 );
-BULK INSERT Equip01.Equip01.[Practica_Trabajo]
-	FROM 'e:\wwwroot\Equip01\practica_trabajo.csv'
+BULK INSERT Equip01.Equip01.[tarea]
+	FROM 'e:\wwwroot\Equip01\tarea.csv'
 	WITH
 	(
 	CODEPAGE = 'ACP', 
@@ -250,11 +250,11 @@ BULK INSERT Equip01.Equip01.[Practica_Trabajo]
 CREATE TABLE Proyecto_Fase_Practica (
 	id_proyecto CHAR(6) NOT NULL,
     id_fase CHAR(6) NOT NULL,
-	id_trabajo CHAR(6)NOT NULL,
-    PRIMARY KEY(id_proyecto, id_fase, id_trabajo),
+	id_tarea CHAR(6)NOT NULL,
+    PRIMARY KEY(id_proyecto, id_fase, id_tarea),
     FOREIGN KEY(id_proyecto) REFERENCES Proyecto(id_proyecto),
     FOREIGN KEY(id_fase) REFERENCES Fase(id_fase),
-	FOREIGN KEY(id_trabajo) REFERENCES Practica_Trabajo(id_trabajo)
+	FOREIGN KEY(id_tarea) REFERENCES tarea(id_tarea)
 );
 BULK INSERT Equip01.Equip01.[Proyecto_Fase_Practica]
 	FROM 'e:\wwwroot\Equip01\proyecto_fase_practica.csv'
@@ -269,13 +269,13 @@ BULK INSERT Equip01.Equip01.[Proyecto_Fase_Practica]
 --AP_Colaborador
 
 CREATE TABLE AP_Colaborador (
-    id_trabajo CHAR(6) NOT NULL,
+    id_tarea CHAR(6) NOT NULL,
     id_empleado CHAR(6) NOT NULL,
     id_ap CHAR(4) NOT NULL, 
     min_minutos DECIMAL(5, 1),
     max_minutos DECIMAL(5, 1),
-    PRIMARY KEY(id_trabajo, id_empleado, id_ap),
-    FOREIGN KEY(id_trabajo) REFERENCES Practica_Trabajo(id_trabajo),
+    PRIMARY KEY(id_tarea, id_empleado, id_ap),
+    FOREIGN KEY(id_tarea) REFERENCES tarea(id_tarea),
     FOREIGN KEY(id_empleado) REFERENCES Empleado(id_empleado),
     FOREIGN KEY(id_ap) REFERENCES Puntos_Agiles(id_ap)
 );
@@ -293,12 +293,12 @@ BULK INSERT Equip01.Equip01.[AP_Colaborador]
 
 CREATE TABLE AP_Promedios(
     id_ap CHAR(4) NOT NULL, 
-    id_trabajo CHAR(6) NOT NULL,
+    id_tarea CHAR(6) NOT NULL,
     promedio_min_minutos DECIMAL(5, 1),
     promedio_max_minutos DECIMAL(5, 1), 
-    PRIMARY KEY(id_ap, id_trabajo), 
+    PRIMARY KEY(id_ap, id_tarea), 
     FOREIGN KEY(id_ap) REFERENCES Puntos_Agiles(id_ap), 
-    FOREIGN KEY(id_trabajo) REFERENCES Practica_Trabajo(id_trabajo)
+    FOREIGN KEY(id_tarea) REFERENCES tarea(id_tarea)
 );
 
 BULK INSERT Equip01.Equip01.[AP_Promedios]
@@ -341,7 +341,7 @@ BULK INSERT Equip01.Equip01.[Casos_Uso]
 --Entrega
 
 CREATE TABLE Entrega (
-    id_trabajo CHAR(6) NOT NULL, 
+    id_tarea CHAR(6) NOT NULL, 
     id_casos CHAR(6) NOT NULL, 
     entrega_estimada DATE, 
     entrega_real DATE, 
@@ -349,8 +349,8 @@ CREATE TABLE Entrega (
     valor_ganado DECIMAL(5, 2), 
     costo_real DECIMAL(5, 2), 
     estado_entrega BIT, 
-    PRIMARY KEY(id_trabajo, id_casos),
-    FOREIGN KEY(id_trabajo) REFERENCES Practica_Trabajo(id_trabajo),
+    PRIMARY KEY(id_tarea, id_casos),
+    FOREIGN KEY(id_tarea) REFERENCES tarea(id_tarea),
     FOREIGN KEY(id_casos) REFERENCES Casos_Uso(id_casos)
 );
 BULK INSERT Equip01.Equip01.[Entrega]

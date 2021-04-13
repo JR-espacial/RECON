@@ -61,8 +61,8 @@
                             <!-- Despliegue de tareas de la fase -->
                             <div id="tarea-en-fase">
                                 <label>
-                                    <input type="checkbox" id="botonCheck_<%= tarea %>" class="filled-in" disabled="disabled" onclick="modificarAsociacion('<%= lista_tareas[tarea].id_fase %>','<%= lista_tareas[tarea].id_trabajo %>', '<%= tarea %>')"/> 
-                                    <span> <%= lista_tareas[tarea].nombre_practica_trabajo %> </span>
+                                    <input type="checkbox" id="botonCheck_<%= tarea %>" class="filled-in" disabled="disabled" onclick="modificarAsociacion('<%= lista_tareas[tarea].id_fase %>','<%= lista_tareas[tarea].id_tarea %>', '<%= tarea %>')"/> 
+                                    <span> <%= lista_tareas[tarea].nombre_tarea %> </span>
                                 </label>
                             </div>
                             <!-- Si es la última tarea de todas o de una fase, cierra la división para la fase -->
@@ -72,7 +72,7 @@
                                 <!-- Cierra bloque de fase -->
                                 </div>
                             <% } %>
-                            <% idspractica.push(lista_tareas[tarea].id_trabajo); %>
+                            <% idspractica.push(lista_tareas[tarea].id_tarea); %>
                         <% } %>          
                     </div>
                 </div>
@@ -105,7 +105,7 @@
                 const listatareas = [];
                 const listafases = [];
                 "<% for (let tarea of lista_tareas){ %>"
-                    listatareas.push("<%= tarea.id_trabajo %>");
+                    listatareas.push("<%= tarea.id_tarea %>");
                     listafases.push("<%= tarea.id_fase %>");
                 "<% } %>"
                 let i = 0;
@@ -114,7 +114,7 @@
                     document.getElementById(id).disabled = false;
                     document.getElementById(id).checked = false;
                     for (let dato of data) {
-                        if(dato.id_trabajo == tarea && dato.id_fase == listafases[i]){
+                        if(dato.id_tarea == tarea && dato.id_fase == listafases[i]){
                             document.getElementById(id).checked = true;
                             break;
                         }
@@ -144,7 +144,7 @@
                 M.toast({html: 'Asociación eliminada'});
             } 
             
-            let data = {id_fase: idFase, id_casos: casoactual, id_trabajo: idTrabajo, accion: accion};
+            let data = {id_fase: idFase, id_casos: casoactual, id_tarea: idTrabajo, accion: accion};
 
             fetch('/proyectos/tarea-caso-uso/modificarAsociacion', {
                 method: 'POST',
