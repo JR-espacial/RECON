@@ -4,12 +4,9 @@
 <main>
     <div class="container">
         <div class="row">
-            <div class="col 12 offset-s2">
+            <div class="col s12 ">
                 <div class="center-align">
-                    <h1 class="flow-text"></h1>
-                    <img class="responsive-img" width="100%"
-                        src="https://www.merkleinc.com/es/sites/es/files/inline-images/colum4.png"
-                        alt="Gráfica Avance">
+                    <canvas id="myChart"></canvas>
                 </div>
             </div>
         </div>
@@ -19,7 +16,7 @@
                 <div class="card">
                     <h2 class="card-title flow-text">Inicio:</h2>
                     <div class="card-content">
-                        <p><strong>10/15/2020</strong></p>
+                        <p><strong><%= iteracion.fecha_inicio_YMD %></strong></p>
                     </div>
                 </div>
             </div>
@@ -27,7 +24,7 @@
                 <div class="card">
                     <h2 class="card-title flow-text">Fin:</h2>
                     <div class="card-content">
-                        <p><strong>10/30/2020<strong></p>
+                        <p><strong><%= iteracion.fecha_fin_YMD %><strong></p>
                     </div>
                 </div>
             </div>
@@ -35,7 +32,7 @@
                 <div class="card">
                     <h2 class="card-title flow-text">Horas Planeadas:</h2>
                     <div class="card-content">
-                        <strong><p>186.32</p><strong>
+                        <strong><p><%=horas_planeadas%></p><strong>
                     </div>
                 </div>
             </div>
@@ -45,12 +42,11 @@
         <div class="row">
             <div class="col s6 m6 l6">
                 <div class="card">
-                    <h2 class="card-title flow-text">Información
-                        del proyecto:</h2>
+                    <h2 class="card-title flow-text">Información del proyecto:</h2>
                     <div class="card-content">
-                        <p>Días Totales: <span>12</span></p>
-                        <p>Velocidad Deseada: <span>15.5</span></p><br>
-                        <p>Valor Planeado: <span>15.5</span></p>
+                        <p>Días Totales: <span><%=dias_totales%></span></p>
+                        <p>Velocidad Deseada: <span><%=velocidad_deseada%></span></p><br>
+                        <p>Valor Planeado: <span><%=velocidad_deseada%></span></p>
                         <p>Valor Ganado: <span>11.12</span></p>
                     </div>
                 </div>
@@ -175,4 +171,44 @@
     </div>
 </main>
 
-                <%- include('includes/closeHTML.ejs'); %>
+<script>
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'line',
+
+    // The data for our dataset
+    data: {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        datasets: [{
+            fill: false,
+            //borderDash: [5, 5],
+            label: 'My First dataset',
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: [0, 10, 5, 2, 20, 30, 45]
+        },
+        {
+            fill: false,
+            //borderDash: [5, 5],
+            label: 'My Second dataset',
+            backgroundColor: 'rgb(0, 300, 132)',
+            borderColor: 'rgb(0, 300, 132)',
+            data: [45, 33, 10, 8, 22, 2, 5]
+        }]
+    },
+
+    // Configuration options go here
+    options: {
+        elements:{
+            line:{
+                tension:0
+            }
+        },
+        responsive:true
+    }
+
+});
+    </script>
+
+<%- include('includes/closeHTML.ejs'); %>

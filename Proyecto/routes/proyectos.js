@@ -10,6 +10,7 @@ const casos_usoController = require('../controller/casos_usoController');
 const fasesController = require('../controller/fasesController');
 const tareaCasosUsoController = require('../controller/tareaCasoUsoController');
 const testController = require('../controller/test_Controller');
+const avanceIteracionController = require('../controller/avanceIteracionController');
 
 router.get('/test', isAuth,testController.getTest)
 
@@ -23,7 +24,7 @@ router.get('/fases-proyecto', isAuth, fasesController.getFasesProyecto);
 
 router.post('/fases-proyecto', isAuth, fasesController.postFasesProyecto);
 
-router.get('/avance-proyecto', isAuth, proyectosController.getAvanceProyecto);
+router.get('/avance-proyecto', isAuth, avanceIteracionController.getAvanceProyecto);
 
 router.get('/promedios-ap', isAuth, proyectosController.getPromediosAP);
 

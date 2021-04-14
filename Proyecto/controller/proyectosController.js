@@ -76,15 +76,7 @@ exports.postNuevoProyecto = async function (request, response) {
     }
 }
 
-exports.getAvanceProyecto = (request, response) => {
-    response.render('avanceProyecto', {
-        navegacion : request.session.navegacion,
-        proyecto_actual : request.session.nombreProyecto,
-        user: request.session.usuario,
-        title: "Avance del Proyecto",
-        csrfToken: request.csrfToken()
-    });
-}
+
 
 exports.getPromediosAP = (request, response) =>{
     response.render('promediosAP', {

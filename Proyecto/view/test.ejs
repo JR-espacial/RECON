@@ -8,7 +8,12 @@
         <% } %>
     <% } %>
     <h3>Chart</h3>
-    <canvas id="myChart"></canvas>
+    <div class="row">
+        <div class="col s6">
+            <canvas id="myChart"></canvas>
+        </div>
+    </div>
+    
 
 
     <script>
@@ -21,15 +26,33 @@
     data: {
         labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
         datasets: [{
+            fill: false,
+            //borderDash: [5, 5],
             label: 'My First dataset',
             backgroundColor: 'rgb(255, 99, 132)',
             borderColor: 'rgb(255, 99, 132)',
             data: [0, 10, 5, 2, 20, 30, 45]
+        },
+        {
+            fill: false,
+            //borderDash: [5, 5],
+            label: 'My Second dataset',
+            backgroundColor: 'rgb(0, 300, 132)',
+            borderColor: 'rgb(0, 300, 132)',
+            data: [45, 33, 10, 8, 22, 2, 5]
         }]
     },
 
     // Configuration options go here
-    options: {}
+    options: {
+        elements:{
+            line:{
+                tension:0
+            }
+        },
+        responsive:true
+    }
+
 });
     </script>
 
