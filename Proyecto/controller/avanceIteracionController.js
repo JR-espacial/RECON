@@ -22,7 +22,7 @@ exports.getAvanceProyecto = async function (request, response) {
     else{
         total_horas_real = "Sin registrar";
     }
-    let velocidad_deseada = (total_horas_real/diffDays).toFixed(2);
+    let velocidad_deseada = parseFloat((total_horas_real/diffDays).toFixed(2));
 
     let costos = await Entrega.fetchCostosDiarios(request.session.idIteracion);
 
