@@ -1,0 +1,107 @@
+.h_nominales{
+    align-items: center;
+    background-color: white;
+    border-radius: 8px;
+    padding-top: 10px;
+    padding-bottom: 5px;
+}
+
+.h_nominales th{
+    background-color: #343434;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+}
+
+.h_nominales tr:hover{
+    background-color: #f5f5f5;
+}
+
+.h_nominales tr{
+    text-align: center;
+    color:#343434;
+}
+
+.h_nominales tr td:nth-child(1){
+    padding-left: 30px;
+    font-size: 17px;
+    font-weight: normal;
+}
+
+.h_nominales tr td:nth-child(2){
+    padding: 30px;
+    text-align: center;
+}
+
+.h_nominales tr td:nth-child(3){
+    text-align: center;
+}
+
+.h_nominales tr td:nth-child(3) input{
+    width: 25%;
+    padding: 0;
+    margin: auto;
+    text-align: center;
+}
+
+.h_nominales tr:nth-child(1) td:nth-child(1){
+    font-weight: bold;
+}
+
+
+
+.h_proyecto{
+    align-items: center;
+    background-color: white;
+    border-radius: 8px;
+    padding-top: 10px;
+    padding-bottom: 5px;
+}
+
+.h_proyecto th{
+    background-color: #343434;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+}
+
+.h_proyecto tbody tr:hover{
+    background-color: #f5f5f5;
+}
+
+.h_proyecto tr{
+    color:#343434;
+}
+
+.h_proyecto tbody tr td:nth-child(2){
+    text-align: center;
+}
+
+.h_proyecto tbody tr td:nth-child(2) input{
+    width: 20%;
+    padding: 0;
+    margin: auto;
+    text-align: center;
+}
+
+.h_proyecto tr td:nth-child(1){
+    font-weight: bold;
+    text-align: center;
+    font-size: 17px;
+    padding: 0 50px 0 50px;
+}
+
+.h_proyecto tfoot tr{
+    background-color: #666666;
+    color: white;
+}
+
+.h_proyecto tfoot tr td:nth-child(2){
+    font-weight: bold;
+    text-align: center;
+    font-size: 17px;
+}
+
+.center{
+    text-align: center;
+}
