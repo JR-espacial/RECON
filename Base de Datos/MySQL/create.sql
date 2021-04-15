@@ -120,26 +120,31 @@
 
 
     CREATE TABLE AP_Colaborador (
+        id_proyecto INT NOT NULL, 
+        id_fase INT NOT NULL, 
         id_tarea INT  NOT NULL,
-        id_empleado INT NOT NULL,
         id_ap INT NOT NULL, 
-        min_minutos DECIMAL(5, 1),
-        max_minutos DECIMAL(5, 1),
-        PRIMARY KEY(id_tarea, id_empleado, id_ap),
-        FOREIGN KEY(id_tarea) REFERENCES tarea(id_tarea),
-        FOREIGN KEY(id_empleado) REFERENCES Empleado(id_empleado),
-        FOREIGN KEY(id_ap) REFERENCES Puntos_Agiles(id_ap)
+        id_empleado INT NOT NULL,
+        minutos DECIMAL(5, 1),
+        PRIMARY KEY(id_proyecto, id_fase, id_tarea, id_ap, id_empleado),
+        FOREIGN KEY(id_proyecto) REFERENCES Proyecto_Fase_Practica(id_proyecto),
+        FOREIGN KEY(id_fase) REFERENCES Proyecto_Fase_Practica(id_fase),
+        FOREIGN KEY(id_tarea) REFERENCES Proyecto_Fase_Practica(id_tarea),
+        FOREIGN KEY(id_ap) REFERENCES Puntos_Agiles(id_ap),
+        FOREIGN KEY(id_empleado) REFERENCES Empleado(id_empleado)
     );
 
 
     CREATE TABLE AP_Promedios(
-        id_ap INT NOT NULL, 
-        id_tarea INT NOT NULL,
-        promedio_min_minutos DECIMAL(5, 1),
-        promedio_max_minutos DECIMAL(5, 1), 
-        PRIMARY KEY(id_ap, id_tarea), 
-        FOREIGN KEY(id_ap) REFERENCES Puntos_Agiles(id_ap), 
-        FOREIGN KEY(id_tarea) REFERENCES tarea(id_tarea)
+        id_proyecto INT NOT NULL, 
+        id_fase INT NOT NULL, 
+        id_tarea INT  NOT NULL,
+        id_ap INT NOT NULL,
+        promedio_minutos DECIMAL(5, 1), 
+        FOREIGN KEY(id_proyecto) REFERENCES Proyecto_Fase_Practica(id_proyecto),
+        FOREIGN KEY(id_fase) REFERENCES Proyecto_Fase_Practica(id_fase),
+        FOREIGN KEY(id_tarea) REFERENCES Proyecto_Fase_Practica(id_tarea),
+        FOREIGN KEY(id_ap) REFERENCES Puntos_Agiles(id_ap)
     );
 
 
