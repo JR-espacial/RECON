@@ -17,7 +17,7 @@ module.exports =  class Iteracion{
     }
 
     static saveCapacidad(){
-        return db.execute('INSERT INTO Capacidad_equipo (horas_nominales_totales, horas_nominales_sin_ovh, horas_nominales_restantes, horas_productivas, tiempo_perdido_pc, errores_registro_pc, overhead_pc, productivas_pc, operativos_pc, humano_pc, cmmi_pc) VALUES (NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)')
+        return db.execute('INSERT INTO Capacidad_equipo (horas_productivas, tiempo_perdido_pc, errores_registro_pc, overhead_pc, productivas_pc, operativos_pc, humano_pc, cmmi_pc) VALUES (NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)')
     }
 
     static fetchLastNumIter(id_proyecto){

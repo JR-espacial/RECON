@@ -2,6 +2,7 @@
 
 <%- include('includes/navbarIteracion.ejs'); %>
 <main>
+<% let horas_nominales = horas_nominales_totales.horas_total %>
 <div class="row">
         <div class="col s5 offset-s1">
             <h4 class="center">Horas Equipo</h4>
@@ -17,59 +18,63 @@
                 <tbody class = "h_nominales">
                     <tr>
                         <td>Horas nominales totales</td>
-                        <td>150</td>
+                        <td><%= horas_nominales %></td>
                         <td>100 %</td>
                     </tr>
                     <tr>
                         <td>Tiempo perdido</td>
-                        <td>22.5</td>
-                        <td><input value="15" type="text" class="validate"><span>%</span></td>
+                        <td><%= (horas_nominales * porcentajes.tiempo_perdido_pc).toFixed(1) %></td>
+                        <td><input value="<%= (porcentajes.tiempo_perdido_pc * 100).toFixed(0) %>" type="text" class="validate"><span>%</span></td>
                     </tr>
                     <tr>
                         <td>Errores de registro</td>
-                        <td>12</td>
-                        <td><input value="8" type="text" class="validate"><span>%</span></td>
+                        <td><%= (horas_nominales * porcentajes.errores_registro_pc).toFixed(1) %></td>
+                        <td><input value="<%= (porcentajes.errores_registro_pc * 100).toFixed(0) %>" type="text" class="validate"><span>%</span></td>
                     </tr>
                 </tbody>
                 <tr><td></td><td></td><td></td></tr>
+                <% let pc_horas_nominales = (1 - porcentajes.tiempo_perdido_pc - porcentajes.errores_registro_pc) %>
+                <% horas_nominales *= pc_horas_nominales %>
                 <tbody class = "h_nominales">
                     <tr>
                         <td>Horas nominales restantes</td>
-                        <td>115.5</td>
-                        <td>77%</td>
+                        <td><%= horas_nominales.toFixed(1) %></td>
+                        <td><%= (pc_horas_nominales * 100).toFixed(0) %> %</td>
                     </tr>
                     <tr>
                         <td>Overhead</td>
-                        <td>23.1</td>
-                        <td><input value="20" type="text" class="validate"><span>%</span></td>
+                        <td><%= (horas_nominales * porcentajes.overhead_pc).toFixed(1) %></td>
+                        <td><input value="<%= (porcentajes.overhead_pc * 100).toFixed(0) %>" type="text" class="validate"><span>%</span></td>
                     </tr>
                 </tbody>
                 <tr><td></td><td></td><td></td></tr>
+                <% pc_horas_nominales = (1 - porcentajes.overhead_pc) %>
+                <% horas_nominales *= pc_horas_nominales %>
                 <tbody class = "h_nominales">
                     <tr>
                         <td>Horas nominales restantes</td>
-                        <td>92.4</td>
-                        <td>80%</td>
+                        <td><%= horas_nominales.toFixed(1) %></td>
+                        <td><%= (pc_horas_nominales * 100).toFixed(0) %> %</td>
                     </tr>
                     <tr>
                         <td>Productivas</td>
-                        <td>50.8</td>
-                        <td><input value="55" type="text" class="validate"><span>%</span></td>
+                        <td><%= (porcentajes.horas_productivas * 1).toFixed(1) %></td>
+                        <td><input value="<%= (porcentajes.productivas_pc * 100).toFixed(0) %>" type="text" class="validate"><span>%</span></td>
                     </tr>
                     <tr>
                         <td>Operativos</td>
-                        <td>23.1</td>
-                        <td><input value="25" type="text" class="validate"><span>%</span></td>
+                        <td><%= (horas_nominales * porcentajes.operativos_pc).toFixed(1) %></td>
+                        <td><input value="<%= (porcentajes.operativos_pc * 100).toFixed(0) %>" type="text" class="validate"><span>%</span></td>
                     </tr>
                     <tr>
                         <td>Humano</td>
-                        <td>4.6</td>
-                        <td> <input value="5" type="text" class="validate"><span>%</span></td>
+                        <td><%= (horas_nominales * porcentajes.humano_pc).toFixed(1) %></td>
+                        <td> <input value="<%= (porcentajes.humano_pc * 100).toFixed(0) %>" type="text" class="validate"><span>%</span></td>
                     </tr>
                     <tr>
                         <td>CMMI</td>
-                        <td>13.9</td>
-                        <td><input value="15" type="text" class="validate"><span>%</span></td>
+                        <td><%= (horas_nominales * porcentajes.cmmi_pc).toFixed(1) %></td>
+                        <td><input value="<%= (porcentajes.cmmi_pc * 100).toFixed(0) %>" type="text" class="validate"><span>%</span></td>
                     </tr>
                 </tbody>
                 
@@ -92,23 +97,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Laing</td>
-                        <td><input value="5" type="text" class="validate"><span>h</span></td>
-                    </tr>
-                    <tr>
-                        <td>Santi</td>
-                        <td><input value="15" type="text" class="validate"><span>h</span></td>
-                    </tr>
-                    <tr>
-                        <td>Tony</td>
-                        <td><input value="20" type="text" class="validate"><span>h</span></td>
-                    </tr>
+                    <% for (let colaborador of colaboradores) { %>
+                        <tr>
+                            <td><%= colaborador.usuario %></td>
+                            <td><input value="<%= (colaborador.horas_semanales).toFixed(0) %>" type="text" class="validate"><span>h</span></td>
+                        </tr>
+                    <% } %>
                 </tbody>
                 <tfoot>
                     <tr>
                         <td>Total</td>
-                        <td>150 <span>h</span></td>
+                        <td><%= (horas_nominales_totales.horas_total * 1).toFixed(0) %><span> h</span></td>
                     </tr>
                 </tfoot>
             </table>

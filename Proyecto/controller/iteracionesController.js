@@ -246,13 +246,3 @@ exports.postTerminarIteracion = async function(request, response){
     request.session.alerta = "Iteración terminada exitosamente";
     response.redirect('/proyectos/iteraciones-desarrollo-proyecto');
 }
-
-exports.getCapacidadEquipo = (request, response) =>{
-    response.render('capacidadEquipo', {
-        navegacion : request.session.navegacion,
-        proyecto_actual : request.session.nombreProyecto,
-        user: request.session.usuario,
-        title: "Capacidad de Equipo",
-        csrfToken: request.csrfToken()
-    });
-}

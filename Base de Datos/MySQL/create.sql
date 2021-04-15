@@ -16,9 +16,6 @@
 
     CREATE TABLE Capacidad_Equipo (
         id_capacidad INT AUTO_INCREMENT NOT NULL,
-        horas_nominales_totales DECIMAL(5, 2),
-        horas_nominales_sin_ovh DECIMAL(5, 2),
-        horas_nominales_restantes DECIMAL(5, 2),
         horas_productivas DECIMAL(5, 2),
         tiempo_perdido_pc DECIMAL(3, 2),
         errores_registro_pc DECIMAL(3, 2),

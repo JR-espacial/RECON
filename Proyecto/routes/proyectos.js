@@ -11,6 +11,7 @@ const fasesController = require('../controller/fasesController');
 const tareaCasosUsoController = require('../controller/tareaCasoUsoController');
 const testController = require('../controller/test_Controller');
 const avanceIteracionController = require('../controller/avanceIteracionController');
+const capacidadController = require('../controller/capacidadController');
 
 router.get('/test', isAuth,testController.getTest)
 
@@ -50,7 +51,7 @@ router.post('/eliminar-iteracion', isAuth, iteracionesController.postEliminarIte
 
 router.post('/terminar-iteracion', isAuth, iteracionesController.postTerminarIteracion);
 
-router.get('/capacidad-equipo', isAuth, iteracionesController.getCapacidadEquipo);
+router.get('/capacidad-equipo', isAuth, capacidadController.getCapacidadEquipo);
 
 router.get('/casos-uso-iteracion', isAuth, casos_usoController.getCasosUsoIteracion);
 
