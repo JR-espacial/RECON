@@ -75,8 +75,6 @@
                         <th class="center-align">Valor Ganado
                             (VG)</th>
                         <th class="center-align">Costo Real (CR)</th>
-                        <th class="center-align">Valor Planeado
-                            Acumulado (VPA)</th>
                         <th class="center-align">Valor Ganado
                             Acumulado (VGA)</th>
                         <th class="center-align">Costo Real
@@ -84,88 +82,7 @@
                     </tr>
                 </thead>
 
-                <tbody>
-                    <tr>
-                        <td>10/15/2020</td>
-                        <td>11.1</td>
-                        <td>14.6</td>
-                        <td>15.5</td>
-                        <td>11.1</td>
-                        <td>14.6</td>
-                    </tr>
-                    <tr>
-                        <td>10/16/2020</td>
-                        <td>14.3</td>
-                        <td>4.3</td>
-                        <td>31.1</td>
-                        <td>25.4</td>
-                        <td>18.9</td>
-                    </tr>
-                    <tr>
-                        <td>10/17/2020</td>
-                        <td>0.0</td>
-                        <td>0.0</td>
-                        <td>31.1</td>
-                        <td>25.4</td>
-                        <td>18.9</td>
-                    </tr>
-                    <tr>
-                        <td>10/18/2020</td>
-                        <td>0.0</td>
-                        <td>0.0</td>
-                        <td>31.1</td>
-                        <td>25.4</td>
-                        <td>18.9</td>
-                    </tr>
-                    <tr>
-                        <td>10/19/2020</td>
-                        <td>17.7</td>
-                        <td>46.6</td>
-                        <td>43.2</td>
-                        <td>37.2</td>
-                        <td>5.9</td>
-                    </tr>
-                    <tr>
-                        <td>10/20/2020</td>
-                        <td>12.9</td>
-                        <td>27.0</td>
-                        <td>62.1</td>
-                        <td>56.1</td>
-                        <td>64.2</td>
-                    </tr>
-                    <tr>
-                        <td>10/21/2020</td>
-                        <td>7.9</td>
-                        <td>12.9</td>
-                        <td>77.6</td>
-                        <td>64.0</td>
-                        <td>77.1</td>
-                    </tr>
-                    <tr>
-                        <td>10/22/2020</td>
-                        <td>49.0</td>
-                        <td>21.4</td>
-                        <td>93.2</td>
-                        <td>113.0</td>
-                        <td>98.5</td>
-                    </tr>
-                    <tr>
-                        <td>10/22/2020</td>
-                        <td>4.9</td>
-                        <td>9.0</td>
-                        <td>93.2</td>
-                        <td>108.7</td>
-                        <td>117.9</td>
-                    </tr>
-                    <tr>
-                        <td>10/22/2020</td>
-                        <td>0.0</td>
-                        <td>0.0</td>
-                        <td>93.2</td>
-                        <td>108.7</td>
-                        <td>117.9</td>
-                    </tr>
-                </tbody>
+                <tbody id="tabla_costos"></tbody>
             </table>
         </div>
     </div>
@@ -189,8 +106,13 @@
                 valor_ganado_acumulado.push(parseFloat("<%= costos[i].valor_ganado_diario %>"));
                 costo_real_acumulado.push(parseFloat("<%= costos[i].costo_real_diario %>"));
             "<% } %>"
-    
     "<% } %>"
+
+    let tabla_costos = document.getElementById("tabla_costos");
+    tabla_costos.innerHTML = "";
+    for(let i = 0; i < entrega_real.length; i++){
+        tabla_costos.innerHTML += "<tr><td>" + entrega_real[i] + "</td><td>" + valor_ganado_diario[i] + "</td><td>" + costo_real_diario[i] + "</td><td>" + valor_ganado_acumulado[i] + "</td><td>" + costo_real_acumulado[i] + "</td></tr>";
+    }
 
     var ctx = document.getElementById('myChart').getContext('2d');
     var chart = new Chart(ctx, {
