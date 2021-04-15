@@ -75,8 +75,6 @@
                         <th class="center-align">Valor Ganado
                             (VG)</th>
                         <th class="center-align">Costo Real (CR)</th>
-                        <th class="center-align">Valor Planeado
-                            Acumulado (VPA)</th>
                         <th class="center-align">Valor Ganado
                             Acumulado (VGA)</th>
                         <th class="center-align">Costo Real
@@ -84,94 +82,38 @@
                     </tr>
                 </thead>
 
-                <tbody>
-                    <tr>
-                        <td>10/15/2020</td>
-                        <td>11.1</td>
-                        <td>14.6</td>
-                        <td>15.5</td>
-                        <td>11.1</td>
-                        <td>14.6</td>
-                    </tr>
-                    <tr>
-                        <td>10/16/2020</td>
-                        <td>14.3</td>
-                        <td>4.3</td>
-                        <td>31.1</td>
-                        <td>25.4</td>
-                        <td>18.9</td>
-                    </tr>
-                    <tr>
-                        <td>10/17/2020</td>
-                        <td>0.0</td>
-                        <td>0.0</td>
-                        <td>31.1</td>
-                        <td>25.4</td>
-                        <td>18.9</td>
-                    </tr>
-                    <tr>
-                        <td>10/18/2020</td>
-                        <td>0.0</td>
-                        <td>0.0</td>
-                        <td>31.1</td>
-                        <td>25.4</td>
-                        <td>18.9</td>
-                    </tr>
-                    <tr>
-                        <td>10/19/2020</td>
-                        <td>17.7</td>
-                        <td>46.6</td>
-                        <td>43.2</td>
-                        <td>37.2</td>
-                        <td>5.9</td>
-                    </tr>
-                    <tr>
-                        <td>10/20/2020</td>
-                        <td>12.9</td>
-                        <td>27.0</td>
-                        <td>62.1</td>
-                        <td>56.1</td>
-                        <td>64.2</td>
-                    </tr>
-                    <tr>
-                        <td>10/21/2020</td>
-                        <td>7.9</td>
-                        <td>12.9</td>
-                        <td>77.6</td>
-                        <td>64.0</td>
-                        <td>77.1</td>
-                    </tr>
-                    <tr>
-                        <td>10/22/2020</td>
-                        <td>49.0</td>
-                        <td>21.4</td>
-                        <td>93.2</td>
-                        <td>113.0</td>
-                        <td>98.5</td>
-                    </tr>
-                    <tr>
-                        <td>10/22/2020</td>
-                        <td>4.9</td>
-                        <td>9.0</td>
-                        <td>93.2</td>
-                        <td>108.7</td>
-                        <td>117.9</td>
-                    </tr>
-                    <tr>
-                        <td>10/22/2020</td>
-                        <td>0.0</td>
-                        <td>0.0</td>
-                        <td>93.2</td>
-                        <td>108.7</td>
-                        <td>117.9</td>
-                    </tr>
-                </tbody>
+                <tbody id="tabla_costos"></tbody>
             </table>
         </div>
     </div>
 </main>
 
 <script>
+    let entrega_real = [];
+    let valor_ganado_diario = [];
+    let costo_real_diario = [];
+    let valor_ganado_acumulado = [];
+    let costo_real_acumulado = [];
+
+    "<% for(let i = 0; i < costos.length; i++){ %>"
+            entrega_real.push("<%= costos[i].entrega_real %>");
+            valor_ganado_diario.push("<%= costos[i].valor_ganado_diario %>");
+            costo_real_diario.push("<%= costos[i].costo_real_diario %>");
+            "<% if(i > 0){ %>"
+                valor_ganado_acumulado.push((valor_ganado_acumulado["<%= i-1 %>"] + parseFloat("<%= costos[i].valor_ganado_diario %>")).toFixed(2));
+                costo_real_acumulado.push((costo_real_acumulado["<%= i-1 %>"] + parseFloat("<%= costos[i].costo_real_diario %>")).toFixed(2));
+            "<%} else{ %>"
+                valor_ganado_acumulado.push(parseFloat("<%= costos[i].valor_ganado_diario %>"));
+                costo_real_acumulado.push(parseFloat("<%= costos[i].costo_real_diario %>"));
+            "<% } %>"
+    "<% } %>"
+
+    let tabla_costos = document.getElementById("tabla_costos");
+    tabla_costos.innerHTML = "";
+    for(let i = 0; i < entrega_real.length; i++){
+        tabla_costos.innerHTML += "<tr><td>" + entrega_real[i] + "</td><td>" + valor_ganado_diario[i] + "</td><td>" + costo_real_diario[i] + "</td><td>" + valor_ganado_acumulado[i] + "</td><td>" + costo_real_acumulado[i] + "</td></tr>";
+    }
+
     var ctx = document.getElementById('myChart').getContext('2d');
     var chart = new Chart(ctx, {
     // The type of chart we want to create
@@ -179,23 +121,39 @@
 
     // The data for our dataset
     data: {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        labels: entrega_real,
         datasets: [{
             fill: false,
             //borderDash: [5, 5],
-            label: 'My First dataset',
+            label: 'Valor Ganado (VG)',
             backgroundColor: 'rgb(255, 99, 132)',
             borderColor: 'rgb(255, 99, 132)',
-            data: [0, 10, 5, 2, 20, 30, 45]
+            data: valor_ganado_diario
         },
         {
             fill: false,
             //borderDash: [5, 5],
-            label: 'My Second dataset',
+            label: 'Costo Real (CR)',
             backgroundColor: 'rgb(0, 300, 132)',
             borderColor: 'rgb(0, 300, 132)',
-            data: [45, 33, 10, 8, 22, 2, 5]
-        }]
+            data: costo_real_diario
+        },
+        {
+            fill: false,
+            //borderDash: [5, 5],
+            label: 'Valor Ganado Acumulado (VGA)',
+            backgroundColor: 'rgb(54, 162, 235)',
+            borderColor: 'rgb(54, 162, 235)',
+            data: valor_ganado_acumulado
+        },
+        {
+            fill: false,
+            //borderDash: [5, 5],
+            label: 'Costo Real Acumulado (CRA)',
+            backgroundColor: 'rgb(255, 205, 86)',
+            borderColor: 'rgb(255, 205, 86)',
+            data: costo_real_acumulado
+        },]
     },
 
     // Configuration options go here
@@ -209,6 +167,8 @@
     }
 
 });
+
+
     </script>
 
 <%- include('includes/closeHTML.ejs'); %>

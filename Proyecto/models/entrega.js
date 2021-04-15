@@ -32,4 +32,8 @@ module.exports =  class Entrega {
         return db.execute('DELETE FROM entrega WHERE id_proyecto=? AND id_fase=? AND id_tarea=? AND id_casos=?', 
         [idProyecto, idFase, idTarea, idCaso]);
     }
+
+    static fetchCostosDiarios(id_iteracion){
+        return db.execute('SELECT DATE_FORMAT(E.entrega_real, "%M %d %Y")AS entrega_real, SUM(E.valor_ganado) AS valor_ganado_diario, SUM(E.costo_real) AS costo_real_diario FROM Entrega E, Iteracion I, Casos_uso C WHERE I.id_iteracion = C.id_iteracion AND E.id_casos = C.id_casos AND I.id_iteracion =? AND estado_entrega = 1 GROUP BY E.entrega_estimada, E.entrega_real ORDER BY E.entrega_real ASC', [id_iteracion]);
+    }
 }
