@@ -1,352 +1,119 @@
 <%- include('includes/openHTML.ejs'); %>
 
 <%- include('includes/navbarIteracion.ejs'); %>
-
+<main>
 <div class="row">
-    <div class="col s9 offset-s3">
-        <div class="col s6">
-            <h4>Horas nominales</h4>
+        <div class="col s5 offset-s1">
+            <h4 class="center">Horas Equipo</h4>
             <br>
-            <br>
-            <div class="row">
-                <div class="col s5"></div>
-                <div class="col s3">
-                    <p class="thick">Horas</p>
-                </div>
-                <div class="col s3">
-                    <p class="thick">Porcentaje</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s5 disminuir_margen">
-                    <table class="teal lighten-2">
-                        <tbody>
-                            <tr>    
-                                <td>Horas nominales totales</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col s3">
-                    <input disabled placeholder="150" type="text" class="validate">
-                </div>
-                <form class="col s3">
-                    <input disabled placeholder="100%" type="text" class="validate">
-                </form>
-            </div>
-            <div class="row">
-                <div class="col s5 disminuir_margen">
-                    <table class="teal lighten-2">
-                        <tbody>
-                            <tr>    
-                                <td>Tiempo perdido</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col s3">
-                    <input disabled placeholder="22.5" type="text" class="validate">
-                </div>
-                <form class="col s3">
-                    <input placeholder="15%" type="text" class="validate">
-                </form>
-            </div>
-            <div class="row">
-                <div class="col s5 disminuir_margen">
-                    <table class="teal lighten-2">
-                        <tbody>
-                            <tr>    
-                                <td>Errores de registro</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col s3">
-                    <input disabled placeholder="12" type="text" class="validate">
-                </div>
-                <form class="col s3">
-                    <input placeholder="8%" type="text" class="validate">
-                </form>
-            </div>
-            <br><br>
-            <div class="row">
-                <div class="col s5 disminuir_margen">
-                    <table class="teal lighten-2">
-                        <tbody>
-                            <tr>    
-                                <td>Horas nominales restantes</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col s3">
-                    <input disabled placeholder="115.5" type="text" class="validate">
-                </div>
-                <form class="col s3">
-                    <input disabled placeholder="77%" type="text" class="validate">
-                </form>
-            </div>
-            <div class="row">
-                <div class="col s5 disminuir_margen">
-                    <table class="teal lighten-2">
-                        <tbody>
-                            <tr>    
-                                <td>Overhead</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col s3">
-                    <input disabled placeholder="23.1" type="text" class="validate">
-                </div>
-                <form class="col s3">
-                    <input placeholder="20%" type="text" class="validate">
-                </form>
-            </div>
-            <br><br>
-            <div class="row">
-                <div class="col s5 disminuir_margen">
-                    <table class="teal lighten-2">
-                        <tbody>
-                            <tr>    
-                                <td>Horas nominales restantes</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col s3">
-                    <input disabled placeholder="92.4" type="text" class="validate">
-                </div>
-                <form class="col s3">
-                    <input disabled placeholder="80%" type="text" class="validate">
-                </form>
-            </div>
-            <div class="row">
-                <div class="col s5 disminuir_margen">
-                    <table class="teal lighten-2">
-                        <tbody>
-                            <tr>    
-                                <td>Productivas</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col s3">
-                    <input disabled placeholder="50.8" type="text" class="validate">
-                </div>
-                <form class="col s3">
-                    <input placeholder="55%" type="text" class="validate">
-                </form>
-            </div>
-            <div class="row">
-                <div class="col s5 disminuir_margen">
-                    <table class="teal lighten-2">
-                        <tbody>
-                            <tr>    
-                                <td>Operativos</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col s3">
-                    <input disabled placeholder="23.1" type="text" class="validate">
-                </div>
-                <form class="col s3">
-                    <input placeholder="25%" type="text" class="validate">
-                </form>
-            </div>
-            <div class="row">
-                <div class="col s5 disminuir_margen">
-                    <table class="teal lighten-2">
-                        <tbody>
-                            <tr>    
-                                <td>Humano</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col s3">
-                    <input disabled placeholder="4.6" type="text" class="validate">
-                </div>
-                <form class="col s3">
-                    <input placeholder="5%" type="text" class="validate">
-                </form>
-            </div>
-            <div class="row">
-                <div class="col s5 disminuir_margen">
-                    <table class="teal lighten-2">
-                        <tbody>
-                            <tr>    
-                                <td>CMMI</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col s3">
-                    <input disabled placeholder="13.9" type="text" class="validate">
-                </div>
-                <form class="col s3">
-                    <input placeholder="15%" type="text" class="validate">
-                </form>
-            </div>
+            <table>
+                <thead class="h_nominales">
+                    <tr>
+                        <th></th>
+                        <th>Horas</th>
+                        <th>Porcentaje</th>
+                    </tr>
+                </thead>
+                <tbody class = "h_nominales">
+                    <tr>
+                        <td>Horas nominales totales</td>
+                        <td>150</td>
+                        <td>100 %</td>
+                    </tr>
+                    <tr>
+                        <td>Tiempo perdido</td>
+                        <td>22.5</td>
+                        <td><input value="15" type="text" class="validate"><span>%</span></td>
+                    </tr>
+                    <tr>
+                        <td>Errores de registro</td>
+                        <td>12</td>
+                        <td><input value="8" type="text" class="validate"><span>%</span></td>
+                    </tr>
+                </tbody>
+                <tr><td></td><td></td><td></td></tr>
+                <tbody class = "h_nominales">
+                    <tr>
+                        <td>Horas nominales restantes</td>
+                        <td>115.5</td>
+                        <td>77%</td>
+                    </tr>
+                    <tr>
+                        <td>Overhead</td>
+                        <td>23.1</td>
+                        <td><input value="20" type="text" class="validate"><span>%</span></td>
+                    </tr>
+                </tbody>
+                <tr><td></td><td></td><td></td></tr>
+                <tbody class = "h_nominales">
+                    <tr>
+                        <td>Horas nominales restantes</td>
+                        <td>92.4</td>
+                        <td>80%</td>
+                    </tr>
+                    <tr>
+                        <td>Productivas</td>
+                        <td>50.8</td>
+                        <td><input value="55" type="text" class="validate"><span>%</span></td>
+                    </tr>
+                    <tr>
+                        <td>Operativos</td>
+                        <td>23.1</td>
+                        <td><input value="25" type="text" class="validate"><span>%</span></td>
+                    </tr>
+                    <tr>
+                        <td>Humano</td>
+                        <td>4.6</td>
+                        <td> <input value="5" type="text" class="validate"><span>%</span></td>
+                    </tr>
+                    <tr>
+                        <td>CMMI</td>
+                        <td>13.9</td>
+                        <td><input value="15" type="text" class="validate"><span>%</span></td>
+                    </tr>
+                </tbody>
+                
+            </table>
+            
+            
         </div>
         <!-- Inicia horas proyecto por colaborador -->
         <!-- Inicia horas proyecto por colaborador -->
         <!-- Inicia horas proyecto por colaborador -->
         <!-- Inicia horas proyecto por colaborador -->
-        <div class="col s6">
-            <div class="row">
-                <div class="col s6 offset-s5">
-                    <h4>Horas proyecto</h4>
-                </div>
-            </div>
+        <div class="col s4 offset-s1">
+            <h4 class="center">Horas Individual</h4>
             <br>
-            <div class="row">
-                <div class="col s5"></div>
-                <div class="col s3">
-                    <p class="thick">Colaborador</p>
-                </div>
-                <div class="col s3">
-                    <p class="thick">Horas</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s5"></div>
-                <div class="col s3">
-                    <table class="teal lighten-2">
-                        <tbody>
-                            <tr>    
-                                <td>Laing</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col s3">
-                    <input placeholder="5" type="text" class="validate">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s5"></div>
-                <div class="col s3">
-                    <table class="teal lighten-2">
-                        <tbody>
-                            <tr>    
-                                <td>Santi</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col s3">
-                    <input disabled placeholder="20" type="text" class="validate">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s5"></div>
-                <div class="col s3">
-                    <table class="teal lighten-2">
-                        <tbody>
-                            <tr>    
-                                <td>Tony</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col s3">
-                    <input disabled placeholder="20" type="text" class="validate">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s5"></div>
-                <div class="col s3">
-                    <table class="teal lighten-2">
-                        <tbody>
-                            <tr>    
-                                <td>Pablo V.</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col s3">
-                    <input disabled placeholder="20" type="text" class="validate">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s5"></div>
-                <div class="col s3">
-                    <table class="teal lighten-2">
-                        <tbody>
-                            <tr>    
-                                <td>Beto</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col s3">
-                    <input disabled placeholder="20" type="text" class="validate">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s5"></div>
-                <div class="col s3">
-                    <table class="teal lighten-2">
-                        <tbody>
-                            <tr>    
-                                <td>Pablo P.</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col s3">
-                    <input disabled placeholder="20" type="text" class="validate">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s5"></div>
-                <div class="col s3">
-                    <table class="teal lighten-2">
-                        <tbody>
-                            <tr>    
-                                <td>Niño</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col s3">
-                    <input disabled placeholder="30" type="text" class="validate">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s5"></div>
-                <div class="col s3">
-                    <table class="teal lighten-2">
-                        <tbody>
-                            <tr>    
-                                <td>Mani</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col s3">
-                    <input disabled placeholder="15" type="text" class="validate">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s5"></div>
-                <div class="col s3">
-                    <table class="teal lighten-2">
-                        <tbody>
-                            <tr>    
-                                <td>Total</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col s3">
-                    <input disabled placeholder="150" type="text" class="validate">
-                </div>
-            </div>
+            <table class="h_proyecto">
+                <thead>
+                    <tr>
+                        <th>Colaborador</th>
+                        <th>Horas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Laing</td>
+                        <td><input value="5" type="text" class="validate"><span>h</span></td>
+                    </tr>
+                    <tr>
+                        <td>Santi</td>
+                        <td><input value="15" type="text" class="validate"><span>h</span></td>
+                    </tr>
+                    <tr>
+                        <td>Tony</td>
+                        <td><input value="20" type="text" class="validate"><span>h</span></td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td>Total</td>
+                        <td>150 <span>h</span></td>
+                    </tr>
+                </tfoot>
+            </table>
         </div>
-    </div>
 </div>
-
+<br><br><br>
+</main>
 <%- include('includes/closeHTML.ejs'); %>
