@@ -5,6 +5,8 @@ const Departamento = require('../models/departamento');
 const Puntos_Agiles = require('../models/puntos_agiles');
 const Proyecto_Fase_Tarea = require('../models/Proyecto_Fase_Tarea');
 const Fase = require('../models/fase');
+const APC = require('../models/ap_colaborador');
+const APP = require('../models/ap_promedios');
 const { request } = require('express');
 
 exports.getNuevoProyecto = (request, response) => {
@@ -76,33 +78,30 @@ exports.postNuevoProyecto = async function (request, response) {
     }
 }
 
-
-
-exports.getPromediosAP = (request, response) =>{
-    response.render('promediosAP', {
-        navegacion : request.session.navegacion,
-        proyecto_actual : request.session.nombreProyecto,
-        user: request.session.usuario,
-        title: "Promedios AP",
-        csrfToken: request.csrfToken()
-    });
-}
-
-exports.getEstimadosAP = (request, response) =>{
-    const id_proyecto = request.session.idProyecto;
-
-    Proyecto_Fase_Tarea.fetchAllTareasFaseProyecto(id_proyecto)
-        .then(([rows, fieldData]) => {
-            response.render('estimadosAP', {
-                navegacion : request.session.navegacion,
-                proyecto_actual : request.session.nombreProyecto,
-                user: request.session.usuario,
-                title: "Estimados AP",
-                lista_tareas: rows,
-                csrfToken: request.csrfToken()
-            });
+exports.getEstimacionAP = (request, response) =>{
+    APC.fetchValues(request.session.idProyecto, request.session.id_empleado)
+        .then(([ap_colaborador, fieldData]) => {
+            console.log(ap_colaborador);
         })
         .catch(err => {
             console.log(err);
-        });  
+        }); 
+    
+    APP.fetchValues(request.session.idProyecto)
+        .then(([ap_promedios, fieldData]) => {
+            console.log(ap_promedios);
+        })
+        .catch(err => {
+            console.log(err);
+        });
+
+    response.render('estimacionAP', {
+        navegacion : request.session.navegacion,
+        proyecto_actual : request.session.nombreProyecto,
+        user: request.session.usuario,
+        title: "Estimación AP",
+        csrfToken: request.csrfToken()
+
+        // Datos 
+    });
 }

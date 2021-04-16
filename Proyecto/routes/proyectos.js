@@ -26,9 +26,7 @@ router.post('/fases-proyecto', isAuth, fasesController.postFasesProyecto);
 
 router.get('/avance-proyecto', isAuth, avanceIteracionController.getAvanceProyecto);
 
-router.get('/promedios-ap', isAuth, proyectosController.getPromediosAP);
-
-router.get('/estimados-ap', isAuth, proyectosController.getEstimadosAP);
+router.get('/estimacion-ap', isAuth, proyectosController.getEstimacionAP);
 
 router.get('/iteraciones_:nombre_proyecto', isAuth,iteracionesController.getIteracionesNombreProyecto);
 
@@ -57,8 +55,6 @@ router.get('/casos-uso-iteracion', isAuth, casos_usoController.getCasosUsoIterac
 router.post('/casos-uso-iteracion', isAuth, casos_usoController.postCasosUsoIteracion);
 
 router.get('/tarea-caso-uso', isAuth, tareaCasosUsoController.getTareaCasoUso);
-
-// router.post('/tarea-caso-uso', isAuth, tareaCasosUsoController.postTareaCasoUso);
 
 router.post('/tarea-caso-uso/obtener-tareas', isAuth, tareaCasosUsoController.postObtenerTareas);
 
