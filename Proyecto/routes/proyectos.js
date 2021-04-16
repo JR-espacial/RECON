@@ -55,19 +55,19 @@ router.get('/capacidad-equipo', isAuth, capacidadController.getCapacidadEquipo);
 
 router.post('/modificar-horas-colaborador', isAuth, capacidadController.postModificarHorasColaborador);
 
-// router.post('/modificar_porcentaje_tiempo_perdido', isAuth, capacidadController.postModificarPorcentajeTiempoPerdido);
+router.post('/modificar-porcentaje-tiempo-perdido', isAuth, capacidadController.postModificarPorcentajeTiempoPerdido);
 
-// router.post('/modificar_porcentaje_errores_registro', isAuth, capacidadController.postModificarPorcentajeErroresRegistro);
+router.post('/modificar-porcentaje-errores-registro', isAuth, capacidadController.postModificarPorcentajeErroresRegistro);
 
-// router.post('/modificar_porcentaje_overhead', isAuth, capacidadController.postModificarPorcentajeOverhead);
+router.post('/modificar-porcentaje-overhead', isAuth, capacidadController.postModificarPorcentajeOverhead);
 
-// router.post('/modificar_porcentaje_productivas', isAuth, capacidadController.postModificarPorcentajeProductivas);
+router.post('/modificar-porcentaje-productivas', isAuth, capacidadController.postModificarPorcentajeProductivas);
 
 router.post('/modificar-porcentaje-operativos', isAuth, capacidadController.postModificarPorcentajeOperativos);
 
-// router.post('/modificar_porcentaje_humano', isAuth, capacidadController.postModificarPorcentajeHumano);
+router.post('/modificar-porcentaje-humano', isAuth, capacidadController.postModificarPorcentajeHumano);
 
-// router.post('/modificar_porcentaje_cmmi', isAuth, capacidadController.postModificarPorcentajeCMMI);
+router.post('/modificar-porcentaje-cmmi', isAuth, capacidadController.postModificarPorcentajeCMMI);
 
 router.get('/casos-uso-iteracion', isAuth, casos_usoController.getCasosUsoIteracion);
 

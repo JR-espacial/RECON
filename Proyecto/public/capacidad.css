@@ -48,6 +48,10 @@
     font-weight: bold;
 }
 
+.h_nominales_foot{
+    background-color: #f5f5f5;
+    cursor:default;
+}
 
 
 .h_proyecto{
