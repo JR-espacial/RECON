@@ -178,3 +178,19 @@
         FOREIGN KEY(id_proyecto, id_fase, id_tarea) REFERENCES Proyecto_Fase_Practica(id_proyecto, id_fase, id_tarea),
         FOREIGN KEY(id_casos) REFERENCES Casos_Uso(id_casos)
     );
+
+        -- Calcular y Almacenar Horas Productivas
+    DROP PROCEDURE IF EXISTS setHorasProductivas;
+    DELIMITER //
+    CREATE PROCEDURE setHorasProductivas(
+        IN SP_id_capacidad INT,
+        IN SP_id_iteracion INT
+    )
+    BEGIN
+        UPDATE capacidad_equipo SET horas_productivas = cast(
+            ((SELECT SUM(horas_semanales) FROM empleado_iteracion WHERE id_iteracion = SP_id_iteracion) *
+            (1 - tiempo_perdido_pc - errores_registro_pc) * (1 - overhead_pc) * productivas_pc)
+            as decimal(5,2)
+        ) 
+        WHERE id_capacidad = SP_id_capacidad;
+    END //
