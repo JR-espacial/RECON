@@ -24,12 +24,24 @@
                     <tr>
                         <td>Tiempo perdido</td>
                         <td><%= (horas_nominales * porcentajes.tiempo_perdido_pc).toFixed(1) %></td>
-                        <td><input value="<%= (porcentajes.tiempo_perdido_pc * 100).toFixed(0) %>" type="text" class="validate"><span>%</span></td>
+                        <td>
+                            <form method = "POST" action = "modificar_porcentaje_tiempo_perdido">
+                                <input type="hidden" name = "_csrf" value = "<%= csrfToken %>">
+                                <input type="hidden" name = "id_capacidad" value = "<%= porcentajes.id_capacidad %>">
+                                <input value="<%= (porcentajes.tiempo_perdido_pc * 100).toFixed(0) %>" type="text" class="validate"><span>%</span>
+                            </form>
+                        </td>
                     </tr>
                     <tr>
                         <td>Errores de registro</td>
                         <td><%= (horas_nominales * porcentajes.errores_registro_pc).toFixed(1) %></td>
-                        <td><input value="<%= (porcentajes.errores_registro_pc * 100).toFixed(0) %>" type="text" class="validate"><span>%</span></td>
+                        <td>
+                            <form method = "POST" action = "modificar_porcentaje_errores_registro">
+                                <input type="hidden" name = "_csrf" value = "<%= csrfToken %>">
+                                <input type="hidden" name = "id_capacidad" value = "<%= porcentajes.id_capacidad %>">
+                                <input value="<%= (porcentajes.errores_registro_pc * 100).toFixed(0) %>" type="text" class="validate"><span>%</span>
+                            </form>
+                        </td>
                     </tr>
                 </tbody>
                 <tr><td></td><td></td><td></td></tr>
@@ -44,7 +56,13 @@
                     <tr>
                         <td>Overhead</td>
                         <td><%= (horas_nominales * porcentajes.overhead_pc).toFixed(1) %></td>
-                        <td><input value="<%= (porcentajes.overhead_pc * 100).toFixed(0) %>" type="text" class="validate"><span>%</span></td>
+                        <td>
+                            <form method = "POST" action = "modificar_porcentaje_overhead">
+                                <input type="hidden" name = "_csrf" value = "<%= csrfToken %>">
+                                <input type="hidden" name = "id_capacidad" value = "<%= porcentajes.id_capacidad %>">
+                                <input value="<%= (porcentajes.overhead_pc * 100).toFixed(0) %>" type="text" class="validate"><span>%</span>
+                            </form>
+                        </td>
                     </tr>
                 </tbody>
                 <tr><td></td><td></td><td></td></tr>
@@ -59,22 +77,46 @@
                     <tr>
                         <td>Productivas</td>
                         <td><%= (porcentajes.horas_productivas * 1).toFixed(1) %></td>
-                        <td><input value="<%= (porcentajes.productivas_pc * 100).toFixed(0) %>" type="text" class="validate"><span>%</span></td>
+                        <td>
+                            <form method = "POST" action = "modificar_porcentaje_productivas">
+                                <input type="hidden" name = "_csrf" value = "<%= csrfToken %>">
+                                <input type="hidden" name = "id_capacidad" value = "<%= porcentajes.id_capacidad %>">
+                                <input value="<%= (porcentajes.productivas_pc * 100).toFixed(0) %>" type="text" class="validate"><span>%</span>
+                            </form>
+                        </td>
                     </tr>
                     <tr>
                         <td>Operativos</td>
                         <td><%= (horas_nominales * porcentajes.operativos_pc).toFixed(1) %></td>
-                        <td><input value="<%= (porcentajes.operativos_pc * 100).toFixed(0) %>" type="text" class="validate"><span>%</span></td>
+                        <td>
+                            <form method = "POST" action = "modificar-porcentaje-operativos">
+                                <input type="hidden" name = "_csrf" value = "<%= csrfToken %>">
+                                <input type="hidden" name = "id_capacidad" value = "<%= porcentajes.id_capacidad %>">
+                                <input value="<%= (porcentajes.operativos_pc * 100).toFixed(0) %>" type="text" class="validate" name = "operativos_pc" required><span>%</span>
+                            </form>
+                        </td>
                     </tr>
                     <tr>
                         <td>Humano</td>
                         <td><%= (horas_nominales * porcentajes.humano_pc).toFixed(1) %></td>
-                        <td> <input value="<%= (porcentajes.humano_pc * 100).toFixed(0) %>" type="text" class="validate"><span>%</span></td>
+                        <td>
+                            <form method = "POST" action = "modificar_porcentaje_humano">
+                                <input type="hidden" name = "_csrf" value = "<%= csrfToken %>">
+                                <input type="hidden" name = "id_capacidad" value = "<%= porcentajes.id_capacidad %>">
+                                <input value="<%= (porcentajes.humano_pc * 100).toFixed(0) %>" type="text" class="validate"><span>%</span>
+                            </form>
+                        </td>
                     </tr>
                     <tr>
                         <td>CMMI</td>
                         <td><%= (horas_nominales * porcentajes.cmmi_pc).toFixed(1) %></td>
-                        <td><input value="<%= (porcentajes.cmmi_pc * 100).toFixed(0) %>" type="text" class="validate"><span>%</span></td>
+                        <td>
+                            <form method = "POST" action = "modificar_porcentaje_cmmi">
+                                <input type="hidden" name = "_csrf" value = "<%= csrfToken %>">
+                                <input type="hidden" name = "id_capacidad" value = "<%= porcentajes.id_capacidad %>">
+                                <input value="<%= (porcentajes.cmmi_pc * 100).toFixed(0) %>" type="text" class="validate"><span>%</span>
+                            </form>
+                        </td>
                     </tr>
                 </tbody>
                 
@@ -100,7 +142,14 @@
                     <% for (let colaborador of colaboradores) { %>
                         <tr>
                             <td><%= colaborador.usuario %></td>
-                            <td><input value="<%= (colaborador.horas_semanales).toFixed(0) %>" type="text" class="validate"><span>h</span></td>
+                            <td>
+                                <form method = "POST" action = "modificar-horas-colaborador">
+                                    <input type="hidden" name = "_csrf" value = "<%= csrfToken %>">
+                                    <input type="hidden" name = "id_empleado" value = "<%= colaborador.id_empleado %>">
+                                    <input value="<%= (colaborador.horas_semanales).toFixed(0) %>" type="text" class="validate" name = "horas" required><span>h</span>
+                                </form>
+                            </td>
+                            
                         </tr>
                     <% } %>
                 </tbody>
@@ -114,5 +163,12 @@
         </div>
 </div>
 <br><br><br>
+
+<script>
+    "<% if (alerta) { %>"
+        alert("<%= alerta %>");
+    "<% } %>"
+</script>
+
 </main>
 <%- include('includes/closeHTML.ejs'); %>
