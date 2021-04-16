@@ -78,30 +78,26 @@ exports.postNuevoProyecto = async function (request, response) {
     }
 }
 
-exports.getEstimacionAP = (request, response) =>{
+exports.getEstimacionAP = (request, response) => {
     APC.fetchValues(request.session.idProyecto, request.session.id_empleado)
-        .then(([ap_colaborador, fieldData]) => {
-            console.log(ap_colaborador);
+        .then(([rowsa, fieldData]) => {
+            APP.fetchValues(request.session.idProyecto)
+                .then(([rowsb, fieldData]) => {
+                    response.render('estimacionAP', {
+                        navegacion : request.session.navegacion,
+                        proyecto_actual : request.session.nombreProyecto,
+                        user: request.session.usuario,
+                        title: "Estimación AP",
+                        csrfToken: request.csrfToken(),
+                        lista_colaborador: rowsa,
+                        lista_promedios: rowsb 
+                    });
+                })
+                .catch(err => {
+                    console.log(err);
+                });
         })
         .catch(err => {
             console.log(err);
         }); 
-    
-    APP.fetchValues(request.session.idProyecto)
-        .then(([ap_promedios, fieldData]) => {
-            console.log(ap_promedios);
-        })
-        .catch(err => {
-            console.log(err);
-        });
-
-    response.render('estimacionAP', {
-        navegacion : request.session.navegacion,
-        proyecto_actual : request.session.nombreProyecto,
-        user: request.session.usuario,
-        title: "Estimación AP",
-        csrfToken: request.csrfToken()
-
-        // Datos 
-    });
 }
