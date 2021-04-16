@@ -54,7 +54,7 @@ module.exports =  class Iteracion{
     }
 
     static fetchOneID(id_iteracion){
-        return db.execute('SELECT *, DATE_FORMAT(fecha_inicio, "%M %d %Y")AS fecha_inicio_YMD, DATE_FORMAT(fecha_fin, "%M %d %Y")AS fecha_fin_YMD FROM Iteracion WHERE id_iteracion =?',[id_iteracion]);
+        return db.execute('SELECT *, DATE_FORMAT(fecha_inicio, "%d/%m/%Y")AS fecha_inicio_YMD, DATE_FORMAT(fecha_fin, "%d/%m/%Y")AS fecha_fin_YMD FROM Iteracion WHERE id_iteracion =?',[id_iteracion]);
     }
 
     static modificarIteracion(descripcion, fecha_inicio, fecha_fin, id_iteracion){

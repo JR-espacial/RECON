@@ -34,6 +34,12 @@ module.exports =  class Entrega {
     }
 
     static fetchCostosDiarios(id_iteracion){
-        return db.execute('SELECT DATE_FORMAT(E.entrega_real, "%M %d %Y")AS entrega_real, SUM(E.valor_ganado) AS valor_ganado_diario, SUM(E.costo_real) AS costo_real_diario FROM Entrega E, Iteracion I, Casos_uso C WHERE I.id_iteracion = C.id_iteracion AND E.id_casos = C.id_casos AND I.id_iteracion =? AND estado_entrega = 1 GROUP BY E.entrega_estimada, E.entrega_real ORDER BY E.entrega_real ASC', [id_iteracion]);
+        return db.execute('SELECT DATE_FORMAT(E.entrega_real, "%d/%m/%Y")AS entrega_real, SUM(E.valor_ganado) AS valor_ganado_diario, SUM(E.costo_real) AS costo_real_diario FROM Entrega E, Iteracion I, Casos_uso C WHERE I.id_iteracion = C.id_iteracion AND E.id_casos = C.id_casos AND I.id_iteracion =? AND estado_entrega = 1 GROUP BY E.entrega_estimada, E.entrega_real ORDER BY E.entrega_real ASC', [id_iteracion]);
+    }
+    static countAllTareas(id_iteracion){
+        return db.execute('SELECT COUNT(id_proyecto) as tareas_totales FROM Entrega E,Casos_Uso CU WHERE E.id_casos = CU.id_casos AND CU.id_iteracion = ?',[id_iteracion]);
+    }
+    static countTareasCompletadas(id_iteracion){
+        return db.execute('SELECT COUNT(id_proyecto) as tareas_completadas FROM Entrega E,Casos_Uso CU WHERE E.id_casos = CU.id_casos AND E.estado_entrega = 1 AND CU.id_iteracion = ?',[id_iteracion]);
     }
 }

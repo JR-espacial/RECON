@@ -167,6 +167,7 @@
         id_fase INT NOT NULL,
         id_tarea INT NOT NULL, 
         id_casos INT NOT NULL, 
+        nombre VARCHAR(150),
         entrega_estimada DATE, 
         entrega_real DATE, 
         estimacion TIME, 

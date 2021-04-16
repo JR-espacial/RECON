@@ -22,9 +22,13 @@ exports.getAvanceProyecto = async function (request, response) {
     else{
         total_horas_real = "Sin registrar";
     }
-    let velocidad_deseada = (total_horas_real/diffDays).toFixed(2);
+    let velocidad_deseada = parseFloat((total_horas_real/diffDays).toFixed(2));
 
     let costos = await Entrega.fetchCostosDiarios(request.session.idIteracion);
+    let tareas_totales = await Entrega.countAllTareas(request.session.idIteracion);
+    let tareas_completadas = await Entrega.countTareasCompletadas(request.session.idIteracion);
+    let tareas_pendientes = tareas_totales[0][0].tareas_totales - tareas_completadas[0][0].tareas_completadas;
+
 
     response.render('avanceProyecto', {
         navegacion : request.session.navegacion,
@@ -36,6 +40,9 @@ exports.getAvanceProyecto = async function (request, response) {
         horas_planeadas: total_horas_real,
         velocidad_deseada: velocidad_deseada,
         costos: costos[0],
+        tareas_totales : tareas_totales[0][0].tareas_totales,
+        tareas_completadas : tareas_completadas[0][0].tareas_completadas,
+        tareas_pendientes: tareas_pendientes,
         title: "Avance del Proyecto",
         csrfToken: request.csrfToken()
     });

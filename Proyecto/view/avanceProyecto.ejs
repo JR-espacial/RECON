@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col s12 ">
                 <div class="center-align">
-                    <canvas id="myChart"></canvas>
+                    <canvas id="AvanceIteracion"></canvas>
                 </div>
             </div>
         </div>
@@ -57,9 +57,9 @@
                         del proyecto:</h2>
                     <div class="card-content">
                         <p>Diferencia Progreso: <span>-4.4</span></p><br>
-                            <p>Total Tareas: <span>108</span></p>
-                            <p>Tareas Completadas: <span>96</span></p>
-                            <p>Tareas Pendientes: <span>0</span></p>
+                            <p>Total Tareas: <span><%=tareas_totales%></span></p>
+                            <p>Tareas Completadas: <span><%=tareas_completadas%></span></p>
+                            <p>Tareas Pendientes: <span><%=tareas_pendientes%></span></p>
                     </div>
                 </div>
             </div>
@@ -67,8 +67,8 @@
     </div>
 
     <div class="row">
-        <div class="col s12 offset-s2" id="tabla_avance">
-            <table class="highlight">
+        <div class="col s12 offset-s2"id="tabla_avance">
+            <table class="highlight"  >
                 <thead>
                     <tr>
                         <th>Fecha</th>
@@ -86,6 +86,8 @@
             </table>
         </div>
     </div>
+    <br>
+    <br>
 </main>
 
 <script>
@@ -93,15 +95,18 @@
     let valor_ganado_diario = [];
     let costo_real_diario = [];
     let valor_ganado_acumulado = [];
+    let valor_planeado_acumulado = [];
     let costo_real_acumulado = [];
 
     "<% for(let i = 0; i < costos.length; i++){ %>"
             entrega_real.push("<%= costos[i].entrega_real %>");
             valor_ganado_diario.push("<%= costos[i].valor_ganado_diario %>");
             costo_real_diario.push("<%= costos[i].costo_real_diario %>");
+            valor_planeado_acumulado.push("<%=velocidad_deseada * (i+1) %>");
+           
             "<% if(i > 0){ %>"
-                valor_ganado_acumulado.push((valor_ganado_acumulado["<%= i-1 %>"] + parseFloat("<%= costos[i].valor_ganado_diario %>")).toFixed(2));
-                costo_real_acumulado.push((costo_real_acumulado["<%= i-1 %>"] + parseFloat("<%= costos[i].costo_real_diario %>")).toFixed(2));
+                valor_ganado_acumulado.push(parseFloat((valor_ganado_acumulado["<%= i-1 %>"] + parseFloat("<%= costos[i].valor_ganado_diario %>")).toFixed(2)));
+                costo_real_acumulado.push(parseFloat((costo_real_acumulado["<%= i-1 %>"] + parseFloat("<%= costos[i].costo_real_diario %>")).toFixed(2)));
             "<%} else{ %>"
                 valor_ganado_acumulado.push(parseFloat("<%= costos[i].valor_ganado_diario %>"));
                 costo_real_acumulado.push(parseFloat("<%= costos[i].costo_real_diario %>"));
@@ -114,7 +119,8 @@
         tabla_costos.innerHTML += "<tr><td>" + entrega_real[i] + "</td><td>" + valor_ganado_diario[i] + "</td><td>" + costo_real_diario[i] + "</td><td>" + valor_ganado_acumulado[i] + "</td><td>" + costo_real_acumulado[i] + "</td></tr>";
     }
 
-    var ctx = document.getElementById('myChart').getContext('2d');
+    var ctx = document.getElementById('AvanceIteracion').getContext('2d');
+
     var chart = new Chart(ctx, {
     // The type of chart we want to create
     type: 'line',
@@ -122,46 +128,45 @@
     // The data for our dataset
     data: {
         labels: entrega_real,
-        datasets: [{
-            fill: false,
-            //borderDash: [5, 5],
-            label: 'Valor Ganado (VG)',
-            backgroundColor: 'rgb(255, 99, 132)',
-            borderColor: 'rgb(255, 99, 132)',
-            data: valor_ganado_diario
-        },
+        datasets: [
         {
             fill: false,
-            //borderDash: [5, 5],
-            label: 'Costo Real (CR)',
-            backgroundColor: 'rgb(0, 300, 132)',
-            borderColor: 'rgb(0, 300, 132)',
-            data: costo_real_diario
-        },
-        {
-            fill: false,
-            //borderDash: [5, 5],
-            label: 'Valor Ganado Acumulado (VGA)',
-            backgroundColor: 'rgb(54, 162, 235)',
-            borderColor: 'rgb(54, 162, 235)',
+            
+            label: 'Valor Ganado Acumulado',
+            borderColor: '#a1d996',
             data: valor_ganado_acumulado
         },
         {
             fill: false,
-            //borderDash: [5, 5],
-            label: 'Costo Real Acumulado (CRA)',
-            backgroundColor: 'rgb(255, 205, 86)',
-            borderColor: 'rgb(255, 205, 86)',
+            
+            label: 'Costo Real Acumulado',
+            borderColor: '#fa9c98',
             data: costo_real_acumulado
+        },
+        {
+            fill: false,
+
+            label: 'Valor Planeado Acumulado (VPA)',
+            borderColor: '#9ab7f5',
+            data: valor_planeado_acumulado
         },]
     },
 
     // Configuration options go here
     options: {
+       
+        title :{ 
+            display : true,
+            text: "Avance iteracion",
+            fontSize:25,
+        },
         elements:{
             line:{
                 tension:0
-            }
+            },  
+        },
+        legend:{
+            position:'right'
         },
         responsive:true
     }
@@ -169,6 +174,6 @@
 });
 
 
-    </script>
+</script>
 
 <%- include('includes/closeHTML.ejs'); %>
