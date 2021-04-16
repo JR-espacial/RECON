@@ -254,6 +254,7 @@ INSERT INTO `empleado_iteracion` (`id_empleado`, `id_iteracion`, `horas_semanale
 INSERT INTO `empleado_iteracion` (`id_empleado`, `id_iteracion`, `horas_semanales`) VALUES(10, 10, 18);
 INSERT INTO `empleado_iteracion` (`id_empleado`, `id_iteracion`, `horas_semanales`) VALUES(10, 30, 16);
 INSERT INTO `empleado_iteracion` (`id_empleado`, `id_iteracion`, `horas_semanales`) VALUES(10, 49, 25);
+INSERT INTO `empleado_iteracion` (`id_empleado`, `id_iteracion`, `horas_semanales`) VALUES(11, 41, 14);
 INSERT INTO `empleado_iteracion` (`id_empleado`, `id_iteracion`, `horas_semanales`) VALUES(11, 11, 7);
 INSERT INTO `empleado_iteracion` (`id_empleado`, `id_iteracion`, `horas_semanales`) VALUES(11, 31, 17);
 INSERT INTO `empleado_iteracion` (`id_empleado`, `id_iteracion`, `horas_semanales`) VALUES(11, 50, 30);
@@ -275,6 +276,7 @@ INSERT INTO `empleado_iteracion` (`id_empleado`, `id_iteracion`, `horas_semanale
 INSERT INTO `empleado_iteracion` (`id_empleado`, `id_iteracion`, `horas_semanales`) VALUES(19, 39, 19);
 INSERT INTO `empleado_iteracion` (`id_empleado`, `id_iteracion`, `horas_semanales`) VALUES(20, 20, 14);
 INSERT INTO `empleado_iteracion` (`id_empleado`, `id_iteracion`, `horas_semanales`) VALUES(20, 40, 25);
+INSERT INTO `empleado_iteracion` (`id_empleado`, `id_iteracion`, `horas_semanales`) VALUES(21, 41, 7);
 
 INSERT INTO `fase` (`id_fase`, `nombre_fase`) VALUES(1, 'Análisis');
 INSERT INTO `fase` (`id_fase`, `nombre_fase`) VALUES(2, 'Diseño');
