@@ -1,6 +1,8 @@
 <%- include('includes/openHTML.ejs'); %>
 <%- include('includes/navbarProyecto.ejs'); %>
 
+<main>
+
 
 <% if (alerta) { %>
     <script>alert("<%= alerta %>");</script>
@@ -9,7 +11,6 @@
 
 <!-- Set de tres tarjetas -->
 <div class="row center">
-    <div class="col offset-s3">
         <% if (!iteraciones[0]) { %>
             <h4>No hay iteraciones que mostrar</h4>
         <% } %>  
@@ -89,14 +90,12 @@
                         <form action="iteraciones-proyecto" method="POST">
                             <input type="hidden" name="_csrf" value="<%= csrfToken %>"> 
                             <input type="hidden" name="idIteracion" value="<%= iteracion.id_iteracion %>">
-                            <button class="btn-flat" type="submit">Ir a la iteracion</botton>
+                            <button class="btn-flat d-content" type="submit">Ir a la iteracion</botton>
                         </form>
                     </div>
                 </div>
             </div>
         <% } %>
-    
-    </div>    
 </div>
 
 <script>
@@ -194,5 +193,5 @@
     });
 </script>
 
-
+</main>
 <%- include('includes/closeHTML.ejs'); %>

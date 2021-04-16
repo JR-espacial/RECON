@@ -2,6 +2,8 @@
 
 <%- include('includes/navbarPrincipal.ejs'); %>
 
+<main>
+
 <% if (alerta) { %>
     <script>alert("<%= alerta %>");</script>
 <% } %> 
@@ -17,16 +19,13 @@
     </div>
   </div>
 
-<!-- Set de tres tarjetas -->
-<div class="row center">
-    <div class="col offset-m3 offset-l3">
+
+<div class="row ">
         <% for (let proyecto of proyectos) { %>
         <div class="col s3">
             <div class="card small">
                 <div class="card-image">
                     <img class="imagen_card" src="<%= proyecto.imagen %>">
-                    <!-- <img class="materialboxed"   src="<%= proyecto.imagen %>"> -->
-                    <!-- <img src="<%= proyecto.imagen %>"  alt="Proyecto"> -->
                     <div id="modal1_<%= proyecto.id_proyecto %>" class="modal large">
                         <form action="/home/modificar-proyecto?_csrf=<%=csrfToken%>" method="POST"  enctype="multipart/form-data">
                         <!-- Modal Content -->
@@ -111,7 +110,7 @@
                         <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
                         <input type="hidden" name="idProyecto" value="<%= proyecto.id_proyecto %>" >
                         <input type="hidden" name="nombreProyecto" value="<%= proyecto.nombre_proyecto %>" >
-                        <button class="btn-flat" type="submit">Ir al proyecto</botton>
+                        <button class="btn-flat d-content" type="submit">Ir al proyecto</botton>
                     </form>
                 </div>
             </div>
@@ -146,5 +145,7 @@
     });
 
 </script>
+
+</main>
 
 <%- include('includes/closeHTML.ejs'); %>
