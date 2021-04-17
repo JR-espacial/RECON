@@ -1,0 +1,70 @@
+<div class="row">
+    <div class="col s8 offset-s3" >
+      <input type="hidden" name="_csrf" id="_csrf" value="<%= csrfToken %>">
+        
+        <table class="ap_promedios">
+            <thead>
+            <tr>
+                <th>Fases</th>
+                <th>Tareas</th>
+                <th>1</th>
+                <th>2</th>
+                <th>3</th>
+                <th>5</th>
+                <th>8</th>
+                <th>13</th>
+            </tr>
+            </thead>
+
+            <tbody>
+                <% let i=0; %>
+                <% while(i < lista_colaborador.length) { %>
+                  <tr>
+                    <% let idFase = lista_colaborador[i].id_fase %>
+                    <% let idTarea = lista_colaborador[i].id_tarea %>
+                    
+                    <td><%= lista_colaborador[i].nombre_fase %></td>
+                    <td><%= lista_colaborador[i].nombre_tarea %></td>
+                    
+                    <% let j = i; %>
+                    <% for(j=i; j < i+6, j < lista_colaborador.length; j++) { %>
+                      <% if(lista_colaborador[j].id_fase === idFase && lista_colaborador[j].id_tarea === idTarea) { %>
+                        <td><input type="text" id="<%= lista_colaborador[j].id_fase %>,<%= lista_colaborador[j].id_tarea %>,<%= lista_colaborador[j].id_ap %>" value="<%= lista_colaborador[j].minutos %>" onchange="modificarAP('<%= lista_colaborador[j].id_fase %>','<%= lista_colaborador[j].id_tarea %>','<%= lista_colaborador[j].id_ap %>')"></td>    
+                      <% } else { %>
+                        <% break; %>
+                      <% } %>
+                    <% } %> 
+                    <% i = j; %>
+                  </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script>
+  function modificarAP(idfase, idtarea, idap){
+    let id = idfase + ',' + idtarea + ',' + idap;
+    let valor = document.getElementById(id).value;
+    let csrf = document.getElementById("_csrf").value;
+    let data = {id_fase: idfase, id_tarea: idtarea, id_ap: idap, minutos: valor};
+    
+    fetch('/proyectos/estimacion-ap', {
+      method : 'POST',
+      body : JSON.stringify(data),
+      headers: {
+        'csrf-token': csrf, 
+        'Content-Type': 'application/json'
+      }
+    }) 
+    .then(result => {
+      return result.json();
+    })
+    .then(data => {            
+    })
+    .catch(err => {
+        console.log(err); 
+    });
+
+    return;
+  }
+</script>

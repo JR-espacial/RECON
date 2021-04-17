@@ -23,6 +23,7 @@ exports.postLogin = (request, response, next) => {
                 bcrypt.compare(request.body.password, rows[0].contrasena)
                     .then(doMatch => {
                         if (doMatch) {
+                            request.session.id_empleado = rows[0].id_empleado;
                             request.session.isLoggedIn = true;
                             request.session.usuario = request.body.usuario;
                             return request.session.save(err => {
