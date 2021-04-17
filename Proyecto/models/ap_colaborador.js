@@ -15,6 +15,11 @@ module.exports = class ap_colaborador{
         [this.id_proyecto, this.id_fase, this.id_tarea, this.id_ap, this.id_empleado, this.minutos]);
     }
 
+    static UpdateTime(idProyecto, idEmpleado, idFase, idTarea, idAP, minutos) {
+        return db.execute('UPDATE ap_colaborador SET minutos=? WHERE id_proyecto=? AND id_empleado=? AND id_fase=? AND id_tarea=? AND id_ap=?',
+        [minutos, idProyecto, idEmpleado, idFase, idTarea, idAP]);
+    }
+
     static fetchALL(id_proyecto){
         return db.execute('SELECT id_fase, id_tarea, id_ap, id_empleado, minutos FROM AP_Colaborador WHERE id_proyecto = ? ORDER BY id_fase DESC',
         [id_proyecto]);

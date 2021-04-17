@@ -4,40 +4,20 @@
   <div class="row">
     <div class="col s8 offset-s3">
       <ul class="tabs">
-        <li class="tab col s4"><a class="active" href="#test1">Promedios AP</a></li>
-        <li class="tab col s4"><a href="#test2">Mis Estimaciones</a></li>
+        <li class="tab col s4"><a class="active grey-text text-darken-4" href="#test1">Promedios AP</a></li>
+        <li class="tab col s4"><a class="grey-text text-darken-4" href="#test2">Mis Estimaciones</a></li>
       </ul>
+      <br><br>
     </div>
     
     <!-- Promedios AP (todo el equipo) -->
     <div id="test1">
-      <div class="row">
-        <div class="col s9 offset-s3" >
-          <table class="highlight">
-            <thead>
-              <tr>
-                <th>Fases</th>
-                <th>Tareas</th>
-                <th>1</th>
-                <th>2</th>
-                <th>3</th>
-                <th>5</th>
-                <th>8</th>
-                <th>13</th>
-              </tr>
-            </thead>
-  
-            <tbody>
-              
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <%- include('includes/APsPromedio.ejs'); %>
     </div>
 
     <!-- Mis Estimaciones -->
     <div id="test2">
-        
+      <%- include('includes/APsPersonales.ejs'); %>
     </div>
   </div>
   
