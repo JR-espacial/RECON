@@ -1,5 +1,7 @@
 <div class="row">
     <div class="col s8 offset-s3" >
+      <input type="hidden" name="_csrf" id="_csrf" value="<%= csrfToken %>">
+        
         <table class="ap_promedios">
             <thead>
             <tr>
@@ -27,7 +29,6 @@
                     <% let j = i; %>
                     <% for(j=i; j < i+6, j < lista_colaborador.length; j++) { %>
                       <% if(lista_colaborador[j].id_fase === idFase && lista_colaborador[j].id_tarea === idTarea) { %>
-                        <input type="hidden" name="_csrf" id="_csrf" value="<%= csrfToken %>">
                         <td><input type="text" id="<%= lista_colaborador[j].id_fase %>,<%= lista_colaborador[j].id_tarea %>,<%= lista_colaborador[j].id_ap %>" value="<%= lista_colaborador[j].minutos %>" onchange="modificarAP('<%= lista_colaborador[j].id_fase %>','<%= lista_colaborador[j].id_tarea %>','<%= lista_colaborador[j].id_ap %>')"></td>    
                       <% } else { %>
                         <% break; %>

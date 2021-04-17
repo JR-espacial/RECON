@@ -772,6 +772,7 @@ INSERT INTO `ap_colaborador` (`id_proyecto`, `id_fase`, `id_tarea`, `id_ap`, `id
 INSERT INTO `ap_colaborador` (`id_proyecto`, `id_fase`, `id_tarea`, `id_ap`, `id_empleado`, `minutos`) VALUES(1, 2, 1, 3, 2, '10.3');
 INSERT INTO `ap_colaborador` (`id_proyecto`, `id_fase`, `id_tarea`, `id_ap`, `id_empleado`, `minutos`) VALUES(1, 2, 1, 4, 2, '14.8');
 INSERT INTO `ap_colaborador` (`id_proyecto`, `id_fase`, `id_tarea`, `id_ap`, `id_empleado`, `minutos`) VALUES(1, 2, 1, 5, 2, '22.2');
+INSERT INTO `ap_colaborador` (`id_proyecto`, `id_fase`, `id_tarea`, `id_ap`, `id_empleado`, `minutos`) VALUES(1, 2, 1, 6, 2, '30.2');
 INSERT INTO `ap_colaborador` (`id_proyecto`, `id_fase`, `id_tarea`, `id_ap`, `id_empleado`, `minutos`) VALUES(1, 2, 2, 1, 2, '5.9');
 INSERT INTO `ap_colaborador` (`id_proyecto`, `id_fase`, `id_tarea`, `id_ap`, `id_empleado`, `minutos`) VALUES(1, 2, 2, 2, 2, '9.1');
 INSERT INTO `ap_colaborador` (`id_proyecto`, `id_fase`, `id_tarea`, `id_ap`, `id_empleado`, `minutos`) VALUES(1, 2, 2, 3, 2, '13.8');
