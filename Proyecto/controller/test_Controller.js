@@ -12,6 +12,7 @@ base('Tasks').select({
         //console.log( record.get('Duration'),",",record.get('Estimation'));
         
         workitemlist[i]={};
+        workitemlist[i].IT = record.get('Iterations');
         workitemlist[i].name = record.get('Name');
         workitemlist[i].assigned = record.get('Assigned');
         workitemlist[i].status = record.get('Status');
