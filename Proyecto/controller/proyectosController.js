@@ -82,14 +82,21 @@ exports.getEstimacionAP = (request, response) => {
         .then(([rowsa, fieldData]) => {
             APP.fetchValues(request.session.idProyecto)
                 .then(([rowsb, fieldData]) => {
-                    response.render('estimacionAP', {
-                        navegacion : request.session.navegacion,
-                        proyecto_actual : request.session.nombreProyecto,
-                        user: request.session.usuario,
-                        title: "Estimación AP",
-                        csrfToken: request.csrfToken(),
-                        lista_colaborador: rowsa,
-                        lista_promedios: rowsb 
+                    Proyecto.fetchAirTableKeys(request.session.idProyecto)
+                    .then(([rowsc, fieldData]) => {
+                        response.render('estimacionAP', {
+                            navegacion : request.session.navegacion,
+                            proyecto_actual : request.session.nombreProyecto,
+                            user: request.session.usuario,
+                            title: "Estimación AP",
+                            csrfToken: request.csrfToken(),
+                            lista_colaborador: rowsa,
+                            lista_promedios: rowsb, 
+                            proyecto_keys : rowsc[0]
+                        });
+                    })
+                    .catch(err => {
+                        console.log(err);
                     });
                 })
                 .catch(err => {

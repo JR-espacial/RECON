@@ -1,6 +1,7 @@
 const Proyecto_Fase_Tarea = require('../models/Proyecto_Fase_Tarea');
 const Fase = require('../models/fase');
 const Tarea = require('../models/tarea');
+const Proyecto = require('../models/proyecto');
 
 exports.getFasesProyecto = (request, response) =>{
     const id_proyecto = request.session.idProyecto;
@@ -11,16 +12,23 @@ exports.getFasesProyecto = (request, response) =>{
             
             Fase.fetchAllNotInProject(id_proyecto)
                 .then(([rows2, fieldData]) => {
-                    response.render('fasesProyecto', {
-                        navegacion : request.session.navegacion,
-                        proyecto_actual : request.session.nombreProyecto,
-                        user: request.session.usuario,
-                        title: "Fases del Proyecto",
-                        lista_tareas: rows,
-                        sugerencia_fases: rows2,
-                        alerta: alerta,
-                        csrfToken: request.csrfToken()
-                    });
+                    Proyecto.fetchAirTableKeys(id_proyecto)
+                        .then(([rows3, fieldData]) => {
+                            response.render('fasesProyecto', {
+                                navegacion : request.session.navegacion,
+                                proyecto_actual : request.session.nombreProyecto,
+                                user: request.session.usuario,
+                                title: "Fases del Proyecto",
+                                lista_tareas: rows,
+                                sugerencia_fases: rows2,
+                                proyecto_keys : rows3[0],
+                                alerta: alerta,
+                                csrfToken: request.csrfToken()
+                            });
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        });     
                 })
                 .catch(err => {
                     console.log(err);
