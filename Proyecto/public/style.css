@@ -268,6 +268,7 @@ div#modal5 {
 .d-content{
     display: contents;
 }
+<<<<<<< HEAD
 =======
 
 /* AP Promedios */
@@ -330,3 +331,9 @@ div#modal5 {
 }
 
 >>>>>>> AP_Promediotabla1542021
+=======
+
+#modalAirTable{
+    width: 30%;
+}
+>>>>>>> Mariana/InterfazKey

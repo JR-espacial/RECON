@@ -48,4 +48,12 @@ module.exports =  class Proyecto{
         return db.execute('UPDATE Proyecto SET estado_proyecto = 0 WHERE id_proyecto = ?', [id_proyecto]);
     }
 
+    static saveAirTableKeys(base, API_key, id_proyecto){
+        return db.execute('UPDATE Proyecto SET base = ?, API_key = ? WHERE id_proyecto = ?', [base, API_key, id_proyecto]);
+    }
+
+    static fetchAirTableKeys(id_proyecto){
+        return db.execute('SELECT base, API_key FROM Proyecto WHERE id_proyecto = ?', [id_proyecto]);
+    }
+
 }
