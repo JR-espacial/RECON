@@ -36,7 +36,7 @@ exports.getAvanceProyecto = async function (request, response) {
 
                 if(record.get('Status') == 'Done'){
                     workitemlist[i].estado_entrega = 1;
-                   workitemlist[i].valor_ganado =  workitemlist[i].estimacion;
+                    workitemlist[i].valor_ganado =  workitemlist[i].estimacion;
                     var hours;
                     if(record.get('Duration')){
                         hours = record.get('Duration')/3600;

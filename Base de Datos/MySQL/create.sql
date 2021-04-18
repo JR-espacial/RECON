@@ -171,7 +171,7 @@
         id_casos INT NOT NULL, 
         nombre VARCHAR(150), 
         entrega_real DATE, 
-        estimacion TIME, 
+        estimacion DECIMAL(5, 2), 
         valor_ganado DECIMAL(5, 2), 
         costo_real DECIMAL(5, 2), 
         estado_entrega BIT, 
