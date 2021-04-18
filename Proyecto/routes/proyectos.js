@@ -51,6 +51,8 @@ router.post('/eliminar-iteracion', isAuth, iteracionesController.postEliminarIte
 
 router.post('/terminar-iteracion', isAuth, iteracionesController.postTerminarIteracion);
 
+router.post('/configuracion-AirTable', isAuth, iteracionesController.postAirTableKeys);
+
 router.get('/capacidad-equipo', isAuth, capacidadController.getCapacidadEquipo);
 
 router.post('/modificar-horas-colaborador', isAuth, capacidadController.postModificarHorasColaborador);

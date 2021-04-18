@@ -268,3 +268,7 @@ div#modal5 {
 .d-content{
     display: contents;
 }
+
+#modalAirTable{
+    width: 30%;
+}

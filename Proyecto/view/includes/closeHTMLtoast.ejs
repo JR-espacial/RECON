@@ -1,0 +1,12 @@
+    
+    <script>
+        function toast(){
+        '<% if (alerta) { %>'
+            M.AutoInit(); 
+            M.toast({html: '<%= alerta %>'});
+        '<% } %>'
+    }
+    </script>
+    <script src="materialize/js/materialize.min.js"></script>
+</body>
+</html>

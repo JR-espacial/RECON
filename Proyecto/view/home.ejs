@@ -1,12 +1,8 @@
-<%- include('includes/openHTML.ejs'); %>
+<%- include('includes/openHTMLtoast.ejs'); %>
 
 <%- include('includes/navbarPrincipal.ejs'); %>
 
 <main>
-
-<% if (alerta) { %>
-    <script>alert("<%= alerta %>");</script>
-<% } %> 
           
 <div class="row">    
     <div class="col s2 offset-s9">
@@ -121,6 +117,7 @@
 
 
 <script>
+
     document.addEventListener('DOMContentLoaded', function() {
     let autocomplete = document.getElementById("autocomplete-input");
     
@@ -148,4 +145,4 @@
 
 </main>
 
-<%- include('includes/closeHTML.ejs'); %>
+<%- include('includes/closeHTMLtoast.ejs'); %>

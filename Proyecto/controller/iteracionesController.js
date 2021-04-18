@@ -23,7 +23,8 @@ exports.getIteracionesDesarrolloProyecto = async function(request,response){
     request.session.navegacion = 1;
     request.session.alerta = "";
     let iteraciones = await Iteracion.fetchIteracionesDesarrollo(idProyecto, request.session.usuario);
-
+    let proyecto_keys = await Proyecto.fetchAirTableKeys(idProyecto);
+    
     if(iteraciones == undefined){
         iteraciones = [[]];
     }
@@ -36,6 +37,7 @@ exports.getIteracionesDesarrolloProyecto = async function(request,response){
         title: "Iteraciones",
         iteraciones : iteraciones[0],
         empleados : empleados[0],
+        proyecto_keys : proyecto_keys[0][0],
         alerta : alerta,
         csrfToken: request.csrfToken()
     });
@@ -49,6 +51,7 @@ exports.getIteracionesTerminadasProyecto = async function(request,response){
     request.session.alerta = "";
 
     let iteraciones = await Iteracion.fetchIteracionesTerminadas(idProyecto, request.session.usuario);
+    let proyecto_keys = await Proyecto.fetchAirTableKeys(idProyecto);
 
     if(iteraciones == undefined){
         iteraciones = [[]];
@@ -62,6 +65,7 @@ exports.getIteracionesTerminadasProyecto = async function(request,response){
         title: "Iteraciones",
         iteraciones : iteraciones[0],
         empleados : empleados[0],
+        proyecto_keys : proyecto_keys[0][0],
         alerta : alerta,
         csrfToken: request.csrfToken()
     });
@@ -178,61 +182,67 @@ exports.postEditarIteracion = async function (request, response){
     const colabsDeleted =[];
     let alerta = "La iteracion fue modificada exitosamente. Sin embargo los usuarios:";
 
-    let colaborador = "";
-    for (let i = 0; i < colaboradores.length; i++) {
-        if(colaboradores[i] != "," ) {
-            colaborador += colaboradores[i];
-        }
-        else{
-            colabs.push(colaborador);
-            colaborador = "";
-        }
-        if(i == colaboradores.length-1){
-            colabs.push(colaborador);
-        }
+    if(fecha_fin < fecha_inicio){
+        request.session.alerta = "La iteración no fue modificada porque la fecha final debe de ser posterior a la de inicio";
+        response.redirect("/proyectos/iteraciones-desarrollo-proyecto");
     }
-    colaborador = "";
-    for (let i = 0; i < colaboradoresBorrados.length; i++) {
-        if(colaboradoresBorrados[i] != ",") {
-            colaborador += colaboradoresBorrados[i];
-        }
-        else{
-            colabsDeleted.push(colaborador);
-            colaborador = "";
-        }
-        if(i == colaboradoresBorrados.length-1){
-            colabsDeleted.push(colaborador);
-        }
-    }
-    
 
-    await Iteracion.modificarIteracion(descripcion, fecha_inicio, fecha_fin, id_iteracion);
-
-    //Añadir colaboradores Empleado_iteracion
-    for (let i = 0; i < colabs.length; i++) {
-        const fetchOneUsuario =  await Usuario.fetchOne(colabs[i]);
-        if(fetchOneUsuario[0][0]){
-            await Iteracion.saveColaborador(fetchOneUsuario[0][0].id_empleado, id_iteracion);
-        }
-        else{
-            alerta += " "+ colabs[i] + " ";
-        }
-    }
-    //Eliminar colaboradores Empleado_iteracion
-    for (let i = 0; i < colabsDeleted.length; i++) {
-        Iteracion.removeUserfromIter(id_iteracion,colabsDeleted[i]);
-    }
-    
-    if(alerta != "La iteracion fue modificada exitosamente. Sin embargo los usuarios:"){
-        alerta += "no existen y no fueron registrados en la iteracion";
-        request.session.alerta = alerta;
-    }
     else{
-        request.session.alerta = "Iteración modificada  exitosamente"
+        let colaborador = "";
+        for (let i = 0; i < colaboradores.length; i++) {
+            if(colaboradores[i] != "," ) {
+                colaborador += colaboradores[i];
+            }
+            else{
+                colabs.push(colaborador);
+                colaborador = "";
+            }
+            if(i == colaboradores.length-1){
+                colabs.push(colaborador);
+            }
+        }
+        colaborador = "";
+        for (let i = 0; i < colaboradoresBorrados.length; i++) {
+            if(colaboradoresBorrados[i] != ",") {
+                colaborador += colaboradoresBorrados[i];
+            }
+            else{
+                colabsDeleted.push(colaborador);
+                colaborador = "";
+            }
+            if(i == colaboradoresBorrados.length-1){
+                colabsDeleted.push(colaborador);
+            }
+        }
+
+
+        await Iteracion.modificarIteracion(descripcion, fecha_inicio, fecha_fin, id_iteracion);
+
+        //Añadir colaboradores Empleado_iteracion
+        for (let i = 0; i < colabs.length; i++) {
+            const fetchOneUsuario =  await Usuario.fetchOne(colabs[i]);
+            if(fetchOneUsuario[0][0]){
+                await Iteracion.saveColaborador(fetchOneUsuario[0][0].id_empleado, id_iteracion);
+            }
+            else{
+                alerta += " "+ colabs[i] + " ";
+            }
+        }
+        //Eliminar colaboradores Empleado_iteracion
+        for (let i = 0; i < colabsDeleted.length; i++) {
+            Iteracion.removeUserfromIter(id_iteracion,colabsDeleted[i]);
+        }
+
+        if(alerta != "La iteracion fue modificada exitosamente. Sin embargo los usuarios:"){
+            alerta += "no existen y no fueron registrados en la iteracion";
+            request.session.alerta = alerta;
+        }
+        else{
+            request.session.alerta = "Iteración modificada  exitosamente"
+        }
+
+        response.redirect("/proyectos/iteraciones-desarrollo-proyecto");
     }
-
-    response.redirect("/proyectos/iteraciones-desarrollo-proyecto");
-
 }
 
 exports.postEliminarIteracion =  async function(request, response){
@@ -244,5 +254,11 @@ exports.postEliminarIteracion =  async function(request, response){
 exports.postTerminarIteracion = async function(request, response){
     await Iteracion.terminarIteracion(request.session.idIteracion);
     request.session.alerta = "Iteración terminada exitosamente";
+    response.redirect('/proyectos/iteraciones-desarrollo-proyecto');
+}
+
+exports.postAirTableKeys = async function (request, response){
+    await Proyecto.saveAirTableKeys(request.body.base, request.body.API_key, request.session.idProyecto);
+    request.session.alerta = "Configuración de AirTable modificada exitosamente";
     response.redirect('/proyectos/iteraciones-desarrollo-proyecto');
 }

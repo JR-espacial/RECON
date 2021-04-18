@@ -37,6 +37,8 @@
         fecha_fin DATE,
         estado_proyecto BIT,
         proyecto_terminado BIT,
+        API_key VARCHAR(50),
+        base VARCHAR(50),
         PRIMARY KEY(id_proyecto)
     );
 
