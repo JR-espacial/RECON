@@ -80,23 +80,16 @@ exports.postNuevoProyecto = async function (request, response) {
 exports.getEstimacionAP = (request, response) => {
     APC.fetchValues(request.session.idProyecto, request.session.id_empleado)
         .then(([rowsa, fieldData]) => {
-            APP.fetchValues(request.session.idProyecto)
-                .then(([rowsb, fieldData]) => {
-                    Proyecto.fetchAirTableKeys(request.session.idProyecto)
-                    .then(([rowsc, fieldData]) => {
-                        response.render('estimacionAP', {
-                            navegacion : request.session.navegacion,
-                            proyecto_actual : request.session.nombreProyecto,
-                            user: request.session.usuario,
-                            title: "Estimación AP",
-                            csrfToken: request.csrfToken(),
-                            lista_colaborador: rowsa,
-                            lista_promedios: rowsb, 
-                            proyecto_keys : rowsc[0]
-                        });
-                    })
-                    .catch(err => {
-                        console.log(err);
+            Proyecto.fetchAirTableKeys(request.session.idProyecto)
+                .then(([rowsc, fieldData]) => {
+                    response.render('estimacionAP', {
+                        navegacion : request.session.navegacion,
+                        proyecto_actual : request.session.nombreProyecto,
+                        user: request.session.usuario,
+                        title: "Estimación AP",
+                        csrfToken: request.csrfToken(),
+                        lista_colaborador: rowsa,
+                        proyecto_keys : rowsc[0]
                     });
                 })
                 .catch(err => {
@@ -112,4 +105,14 @@ exports.postEstimacionAP = (request, response) => {
     APC.UpdateTime(request.session.idProyecto, request.session.id_empleado, request.body.id_fase, request.body.id_tarea, request.body.id_ap, request.body.minutos)
         .then(() => response.status(200))
         .catch( err => console.log(err));      
+}
+
+exports.postPromediosAP = (request, response) => {
+    APP.fetchValues(request.session.idProyecto)
+        .then(([rows, fieldData]) => {
+            response.status(200).json(rows);
+        })
+        .catch(err => {
+            console.log(err);
+        });  
 }

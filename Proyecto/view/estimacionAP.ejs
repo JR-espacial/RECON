@@ -1,25 +1,102 @@
 <%- include('includes/openHTML.ejs'); %>
 <%- include('includes/navbarProyecto.ejs'); %>
-
+  
+  <input type="hidden" name="_csrf" id="_csrf" value="<%= csrfToken %>">
+  
   <div class="row">
     <div class="col s8 offset-s3">
       <ul class="tabs">
-        <li class="tab col s4"><a class="active grey-text text-darken-4" href="#test1">Promedios AP</a></li>
-        <li class="tab col s4"><a class="grey-text text-darken-4" href="#test2">Mis Estimaciones</a></li>
+        <li class="tab col s4"><a class="active grey-text text-darken-4" href="#mis-estimaciones">Mis Estimaciones</a></li>
+        <li class="tab col s4"><a class="grey-text text-darken-4" href="#promedios-ap" onclick="obtenerPromedios()">Promedios AP</a></li>
       </ul>
       <br><br>
     </div>
-    
-    <!-- Promedios AP (todo el equipo) -->
-    <div id="test1">
-      <%- include('includes/APsPromedio.ejs'); %>
-    </div>
 
+    <!-- Promedios AP (todo el equipo) -->
+    <div id="promedios-ap">
+
+    </div>
     <!-- Mis Estimaciones -->
-    <div id="test2">
+    <div id="mis-estimaciones">
       <%- include('includes/APsPersonales.ejs'); %>
     </div>
   </div>
 
-  
+
+  <script>
+    function obtenerPromedios() {
+      let csrf = document.getElementById("_csrf").value;
+
+      fetch('/proyectos/estimacion-ap/promedios-ap', {
+        method: 'POST', 
+        headers: {
+          'csrf-token': csrf, 
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(result => {
+        return result.json();
+      })
+      .then(data => {
+        let promedios = document.getElementById('promedios-ap');
+        let html = '';
+        
+        html += '<div class="row">';
+          html += '<div class="col s8 offset-s3" >';
+        
+            if(data.length > 0) {
+              html += '<table class="ap_promedios">';
+                html += '<thead>';
+                  html += '<tr>';
+                    html += '<th>Fases</th>';
+                    html += '<th>Tareas</th>';
+                    html += '<th>1</th>'; 
+                    html += '<th>2</th>';
+                    html += '<th>3</th>';
+                    html += '<th>4</th>';
+                    html += '<th>5</th>';
+                    html += '<th>6</th>';
+                  html += '</tr>';
+                html += '</thead>';
+                html += '<tbody>';
+                    let i=0;
+                    while(i < data.length) { 
+                      html += '<tr>';
+                        let idFase = data[i].id_fase;
+                        let idTarea = data[i].id_tarea;
+
+                        html += '<td>' + idFase + '</td>';
+                        html += '<td>' + idTarea + '</td>';
+
+                        let j = i;
+                        for(j = i; j < i+6, j < data.length; j++) {
+                          if(data[j].id_fase === idFase && data[j].id_tarea === idTarea) {
+                            html += '<td>' + data[j].promedio_minutos + '</td>';
+                          }
+                          else {
+                            break;
+                          }
+                        }
+                        i = j;
+                      html += '</tr>';  
+                    }
+                html += '</tbody>';
+              html += '</table>';
+            }
+            else { 
+              html += '<h4> No hay tareas registradas </h4>';
+            }
+          html += '</div>';
+        html += '</div>';  
+          
+        promedios.innerHTML = html;
+      })
+      .catch(err => {
+          console.log(err);
+      });  
+
+      return;
+    };
+  </script>
+
 <%- include('includes/closeHTML.ejs'); %>
