@@ -1,6 +1,8 @@
 const Proyecto_Fase_Tarea = require('../models/Proyecto_Fase_Tarea');
 const Fase = require('../models/fase');
 const Tarea = require('../models/tarea');
+const Empleado_iteracion = require('../models/empleado_iteracion');
+
 
 exports.getFasesProyecto = (request, response) =>{
     const id_proyecto = request.session.idProyecto;
@@ -91,7 +93,7 @@ exports.postFasesProyecto = (request, response) => {
                 if(rows.length > 0){
                     const proyecto_fase_tarea = new Proyecto_Fase_Tarea(id_proyecto, id_fase, rows[0].id_tarea);
                     proyecto_fase_tarea.saveProyecto_Fase_Tarea()
-                        .then(() => {
+                        .then(() => {                          
                             response.redirect('fases-proyecto');
                         })
                         .catch(err => {
@@ -110,7 +112,7 @@ exports.postFasesProyecto = (request, response) => {
                                     const proyecto_fase_tarea = new Proyecto_Fase_Tarea(id_proyecto, id_fase, id_tarea);
                                     proyecto_fase_tarea.saveProyecto_Fase_Tarea()
                                         .then(() => {
-                                            response.redirect('fases-proyecto');
+                                            response.redirect('fases-proyecto');  
                                         })
                                         .catch(err => {
                                             console.log(err);

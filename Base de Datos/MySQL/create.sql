@@ -194,3 +194,103 @@
         ) 
         WHERE id_capacidad = SP_id_capacidad;
     END //
+
+    -- Actualizar Promedios cuando Empleado actualiza su estimación 
+    DROP TRIGGER promedio;
+    DELIMITER //
+    CREATE TRIGGER promedio AFTER UPDATE ON ap_colaborador
+    FOR EACH ROW
+    BEGIN
+        UPDATE ap_promedios SET promedio_minutos=(SELECT AVG(minutos) FROM ap_colaborador WHERE id_proyecto=NEW.id_proyecto AND id_fase=NEW.id_fase AND id_tarea=NEW.id_tarea AND id_ap=NEW.id_ap) WHERE id_proyecto=NEW.id_proyecto AND id_fase=NEW.id_fase AND id_tarea=NEW.id_tarea AND id_ap=NEW.id_ap;
+    END //
+
+    -- Crear registros de promedios por AP cuando se relaciona/crea tarea con fase
+    DROP TRIGGER CamposPromedios;
+    DELIMITER //
+    CREATE TRIGGER CamposPromedios AFTER INSERT ON Proyecto_Fase_Practica
+    FOR EACH ROW
+    BEGIN
+        IF NEW.id_tarea > 0 THEN
+            INSERT INTO ap_promedios (id_proyecto, id_fase, id_tarea, id_ap, promedio_minutos) 
+            VALUES
+            (NEW.id_proyecto, NEW.id_fase, NEW.id_tarea, 1, 0),
+            (NEW.id_proyecto, NEW.id_fase, NEW.id_tarea, 2, 0),
+            (NEW.id_proyecto, NEW.id_fase, NEW.id_tarea, 3, 0),
+            (NEW.id_proyecto, NEW.id_fase, NEW.id_tarea, 4, 0),
+            (NEW.id_proyecto, NEW.id_fase, NEW.id_tarea, 5, 0),
+            (NEW.id_proyecto, NEW.id_fase, NEW.id_tarea, 6, 0);
+        END IF;
+    END //
+
+    -- Crear Registros para la tabla ap_colaborador
+    DROP TRIGGER APempleados1;
+    DELIMITER //
+    CREATE TRIGGER APempleados1 AFTER INSERT ON proyecto_fase_practica
+    FOR EACH ROW
+    BEGIN
+        IF NEW.id_tarea > 0 THEN
+            INSERT INTO ap_colaborador(id_proyecto, id_fase, id_tarea, id_ap, id_empleado, minutos)
+            SELECT DISTINCT NEW.id_proyecto, NEW.id_fase, NEW.id_tarea, 1, id_empleado, 0
+            FROM empleado_iteracion as EI, iteracion as I WHERE I.id_proyecto = NEW.id_proyecto AND EI.id_iteracion = I.id_iteracion;
+        END IF;
+    END //
+
+    DROP TRIGGER APempleados2;
+    DELIMITER //
+    CREATE TRIGGER APempleados2 AFTER INSERT ON proyecto_fase_practica
+    FOR EACH ROW
+    BEGIN
+        IF NEW.id_tarea > 0 THEN 
+            INSERT INTO ap_colaborador(id_proyecto, id_fase, id_tarea, id_ap, id_empleado, minutos)
+            SELECT DISTINCT NEW.id_proyecto, NEW.id_fase, NEW.id_tarea, 2, id_empleado, 0
+            FROM empleado_iteracion as EI, iteracion as I WHERE I.id_proyecto = NEW.id_proyecto AND EI.id_iteracion = I.id_iteracion; 
+        END IF;
+    END //
+
+    DROP TRIGGER APempleados3;
+    DELIMITER //
+    CREATE TRIGGER APempleados3 AFTER INSERT ON proyecto_fase_practica
+    FOR EACH ROW
+    BEGIN
+        IF NEW.id_tarea > 0 THEN
+            INSERT INTO ap_colaborador(id_proyecto, id_fase, id_tarea, id_ap, id_empleado, minutos)
+            SELECT DISTINCT NEW.id_proyecto, NEW.id_fase, NEW.id_tarea, 3, id_empleado, 0
+            FROM empleado_iteracion as EI, iteracion as I WHERE I.id_proyecto = NEW.id_proyecto AND EI.id_iteracion = I.id_iteracion;
+        END IF;
+    END //
+
+    DROP TRIGGER APempleados4;
+    DELIMITER //
+    CREATE TRIGGER APempleados4 AFTER INSERT ON proyecto_fase_practica
+    FOR EACH ROW
+    BEGIN
+        IF NEW.id_tarea > 0 THEN
+            INSERT INTO ap_colaborador(id_proyecto, id_fase, id_tarea, id_ap, id_empleado, minutos)
+            SELECT DISTINCT NEW.id_proyecto, NEW.id_fase, NEW.id_tarea, 4, id_empleado, 0
+            FROM empleado_iteracion as EI, iteracion as I WHERE I.id_proyecto = NEW.id_proyecto AND EI.id_iteracion = I.id_iteracion;
+        END IF;
+    END //
+
+    DROP TRIGGER APempleados5;
+    DELIMITER //
+    CREATE TRIGGER APempleados5 AFTER INSERT ON proyecto_fase_practica
+    FOR EACH ROW
+    BEGIN
+        IF NEW.id_tarea > 0 THEN
+            INSERT INTO ap_colaborador(id_proyecto, id_fase, id_tarea, id_ap, id_empleado, minutos)
+            SELECT DISTINCT NEW.id_proyecto, NEW.id_fase, NEW.id_tarea, 5, id_empleado, 0
+            FROM empleado_iteracion as EI, iteracion as I WHERE I.id_proyecto = NEW.id_proyecto AND EI.id_iteracion = I.id_iteracion;
+        END IF;
+    END //
+
+    DROP TRIGGER APempleados6;
+    DELIMITER //
+    CREATE TRIGGER APempleados6 AFTER INSERT ON proyecto_fase_practica
+    FOR EACH ROW
+    BEGIN
+        IF NEW.id_tarea > 0 THEN
+            INSERT INTO ap_colaborador(id_proyecto, id_fase, id_tarea, id_ap, id_empleado, minutos)
+            SELECT DISTINCT NEW.id_proyecto, NEW.id_fase, NEW.id_tarea, 6, id_empleado, 0
+            FROM empleado_iteracion as EI, iteracion as I WHERE I.id_proyecto = NEW.id_proyecto AND EI.id_iteracion = I.id_iteracion;
+        END IF;
+    END //       
