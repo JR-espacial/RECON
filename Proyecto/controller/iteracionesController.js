@@ -3,20 +3,6 @@ const Iteracion = require('../models/iteracion');
 const Usuario = require('../models/user');
 const { fetchLastNumIter } = require('../models/iteracion');
 
-exports.getIteracionesNombreProyecto = (request, response) => {
-    request.session.nombreProyecto =  request.params.nombre_proyecto;
-
-    Proyecto.fetchOne(request.params.nombre_proyecto)
-    .then(([rows, fieldData]) => {
-        console.log(rows[0].id_proyecto);
-        request.session.idProyecto = rows[0].id_proyecto;
-        response.redirect("/proyectos/iteraciones-desarrollo-proyecto");
-    })
-    .catch(err => {
-        console.log(err);
-    });
-}
-
 exports.getIteracionesDesarrolloProyecto = async function(request,response){
     const idProyecto = request.session.idProyecto;
     const alerta = request.session.alerta;

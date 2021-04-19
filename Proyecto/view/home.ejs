@@ -16,9 +16,10 @@
   </div>
 
 
-<div class="row ">
+<div class="row  center">
+    <div class=" col s10  offset-s1 ">
         <% for (let proyecto of proyectos) { %>
-        <div class="col s3">
+        <div class="col s4">
             <div class="card small">
                 <div class="card-image">
                     <img class="imagen_card" src="<%= proyecto.imagen %>">
@@ -133,10 +134,28 @@
      });
 
     function GotoProyect(){
-        // let autocomplete = document.getElementById("autocomplete-input");
-        // let url = "/proyectos/iteraciones-" + autocomplete.value;
-        // console.log(url);
-        // location.replace(url);
+   
+        let id_proyecto;
+        "<%for (let i = 0; i < proyectos.length; i++) { %>"
+            if ("<%=proyectos[i].nombre_proyecto%>" == autocomplete.value) { 
+                id_proyecto = "<%=proyectos[i].id_proyecto%>";
+            }
+        "<% } %>"
+        
+        let data = {idProyecto: id_proyecto, nombreProyecto: autocomplete.value};
+        const csrf = "<%= csrfToken %>";
+       
+        
+        fetch('home',{
+            method : 'POST',
+            body : JSON.stringify(data),
+            headers:{
+                'csrf-token': csrf,
+                'Content-Type': 'application/json'
+            },
+        });
+
+        location.replace("/proyectos/iteraciones-desarrollo-proyecto");
     }
     
     });
