@@ -1,6 +1,5 @@
 const db = require('../util/mySQL');
 
-
 module.exports =  class Tarea{
     constructor(nombre_tarea){
         this.nombre_tarea = nombre_tarea;

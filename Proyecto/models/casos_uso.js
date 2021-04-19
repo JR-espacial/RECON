@@ -15,10 +15,6 @@ module.exports =  class Casos_Uso{
         [this.id_ap, this.id_iteracion, this.yo_como, this.quiero, this.para, this.comentario]);
     }
 
-    // static fetchAllwithAPvalues () {
-    //     return db.execute('SELECT id_casos, yo_como, quiero, para, ap FROM Casos_Uso, Puntos_Agiles WHERE Casos_Uso.id_ap = Puntos_Agiles.id_ap');
-    // }
-
     static fetchAllIteracion(idIteracion) {
         return db.execute('SELECT id_casos, Casos_Uso.id_ap, yo_como, quiero, para, ap, comentario FROM Casos_Uso, Puntos_Agiles WHERE Casos_Uso.id_iteracion=? AND Casos_Uso.id_ap = Puntos_Agiles.id_ap ORDER BY id_casos ASC', 
         [idIteracion]);
@@ -46,10 +42,4 @@ module.exports =  class Casos_Uso{
     static DropCasoUso(idCaso) {
         return db.execute('DELETE FROM casos_uso WHERE id_casos=?', [idCaso]);
     }
-
-    /*
-    static fetchOneIteracion(nombre_fase){ 
-        return db.execute('SELECT id_fase FROM Fase WHERE nombre_fase =?',[nombre_fase]);
-    }
-    */
 }

@@ -10,7 +10,7 @@ exports.getTareaCasoUso = (request, response) =>{
     Casos_Uso.fetchQuiero(id_iteracion)
         .then(([rowsQ, fieldData]) => {
             // Todas las fases y tareas del proyecto
-            Proyecto_Fase_Tarea.fetchAllTareasFaseProyecto(id_proyecto)
+            Proyecto_Fase_Tarea.fetchTareasNoFantasmas(id_proyecto)
                 .then(([rowsPFT, fieldData]) => {
                     response.render('tareaCasoUso', {
                         navegacion : request.session.navegacion,

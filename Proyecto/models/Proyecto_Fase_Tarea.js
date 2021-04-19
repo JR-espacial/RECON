@@ -21,6 +21,10 @@ module.exports = class Proyecto_Fase_Tarea {
         return db.execute('SELECT PFP.id_fase, nombre_fase, PFP.id_tarea, nombre_tarea FROM proyecto_fase_practica PFP INNER JOIN tarea PT ON PFP.id_tarea = PT.id_tarea INNER JOIN Fase F ON F.id_fase = PFP.id_fase WHERE id_proyecto =? ORDER BY PFP.id_fase, PFP.id_tarea', [id_proyecto]);
     }
 
+    static fetchTareasNoFantasmas(id_proyecto) {
+        return db.execute('SELECT PFP.id_fase, nombre_fase, PFP.id_tarea, nombre_tarea FROM proyecto_fase_practica PFP INNER JOIN tarea PT ON PFP.id_tarea = PT.id_tarea INNER JOIN Fase F ON F.id_fase = PFP.id_fase WHERE id_proyecto =? AND PFP.id_tarea > 0 ORDER BY PFP.id_fase, PFP.id_tarea', [id_proyecto]);
+    }
+
     static fetchFaseInProyecto(id_proyecto, id_fase) {
         return db.execute('SELECT id_fase FROM proyecto_fase_practica WHERE id_proyecto =? AND id_fase =?', [id_proyecto, id_fase]);
     }
