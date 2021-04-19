@@ -10,26 +10,28 @@
                     <% if (error) { %>
                         <span style="color:red"><%= error %></span>
                     <% } %>
-                    <input  id="nombre_proyecto" type="text" class="validate" name="nombre" required>
+                    <input  id="nombre_proyecto" type="text"  class="validate" name="nombre"  required>
                     <label for="nombre_proyecto">Nombre del proyecto*</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s4">
-                    <input  id="descripcion_proyecto" type="text" class="validate" name="descripcion">
+                    <textarea  id="descripcion_proyecto" type="text" class="materialize-textarea" name="descripcion"></textarea>
                     <label for="descripcion_proyecto">Descripción del proyecto</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s4">
                     <select name="departamento" class="browser-default" required>
-                        <option value="" disabled selected>Selecciona el departamento del proyecto*</option>
+                        <option value="" disabled selected>Selecciona el departamento del proyecto*</option>        
                         <% for (let departamento of departamentos) { %>
                             <option value="<%= departamento.id_departamento %>"><%= departamento.nombre_departamento %></option>
                         <% } %>
+                        
                     </select>
                 </div>
             </div>
+            
             <div class="row">
                 <div class="input-field col s4">
                     <div class="file-field input-field">
@@ -49,6 +51,7 @@
                     <button class="waves-effect waves-light btn" type="submit" value="Crear">Crear</button>
                 </div>
             </div>
+            
         </form>
     </div>
 </div>
