@@ -4,12 +4,12 @@ const Capacidad_Equipo = require('../models/capacidad_equipo');
 const Entrega = require('../models/entrega');
 const Airtable = require('airtable');
 
-
+//comentario prueba
 
 exports.getAvanceProyecto = async function (request, response) {
   //Jalar datos airtable
     
-    let proyecto_keys = await Proyecto.fetchAirTableKeys( request.session.idProyecto);
+        let proyecto_keys = await Proyecto.fetchAirTableKeys( request.session.idProyecto);
 
         // request.session.alerta = "No hay una base de airtable definida para el proyecto para registrar una haz click en el boton Airtable en la barra de navegacion";
         // response.redirect("/proyectos/iteraciones-desarrollo-proyecto");
