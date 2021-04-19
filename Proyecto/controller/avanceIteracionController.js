@@ -9,6 +9,7 @@ const Airtable = require('airtable');
 exports.getAvanceProyecto = async function (request, response) {
   //Jalar datos airtable
     let proyecto_keys = await Proyecto.fetchAirTableKeys( request.session.idProyecto);
+    let num_iter = await Iteracion.fetchOneID(request.session.idIteracion);
     
     let workitemlist =[];
     let i =0;
@@ -24,7 +25,8 @@ exports.getAvanceProyecto = async function (request, response) {
             
             let IT = Number (record.get('Name').slice(2,record.get('Name').indexOf('-')));
             
-            if(IT == 16){
+            if(IT == num_iter[0][0].num_iteracion){
+                console.log("here");
 
                 workitemlist[i]={};
                 workitemlist[i].nombre = record.get('Name');
@@ -72,7 +74,6 @@ exports.getAvanceProyecto = async function (request, response) {
     
     },  async function done(err) {
         if (err) { console.error(err); return; }
-        console.log(workitemlist);
 
          workitemlist.forEach( async function (element) {
             await Entrega.updateAirtable(element.nombre, element.entrega_real, element.estimacion, element.valor_ganado, element.costo_real, element.estado_entrega);
