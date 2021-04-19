@@ -31,8 +31,6 @@ router.get('/estimacion-ap', isAuth, proyectosController.getEstimacionAP);
 
 router.post('/estimacion-ap', isAuth, proyectosController.postEstimacionAP);
 
-router.get('/iteraciones_:nombre_proyecto', isAuth,iteracionesController.getIteracionesNombreProyecto);
-
 router.get('/iteraciones-desarrollo-proyecto', isAuth,iteracionesController.getIteracionesDesarrolloProyecto);
 
 router.get('/iteraciones-terminadas-proyecto', isAuth,iteracionesController.getIteracionesTerminadasProyecto);
