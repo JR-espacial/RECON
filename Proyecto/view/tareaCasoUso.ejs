@@ -1,12 +1,12 @@
 <%- include('includes/openHTML.ejs'); %>
 <%- include('includes/navbarIteracion.ejs'); %>
 <main>
-    <div>
-        <br>
-        <div class="row container">
-            <% if(lista_quiero.length !== 0) { %>
-                <!-- Quiero -->
-                <div class="col s6 m6 l6">
+    <br><br>
+    <div class="row">
+        <% if(lista_quiero.length !== 0) { %>
+            <!-- Quiero -->
+            <div class="col s10 offset-s1">
+                <div class="col s5">
                     <div class="tabla_cu">
                         <table class="highlight tabla_cu">
                             <thead> 
@@ -16,27 +16,29 @@
                                     <th class="row-quiero">Quiero</th>      
                                 </tr>
                             </thead>
-                            <tbody>
-                                <% for (quiero of lista_quiero) { %>
-                                    <tr>
-                                        <td>
-                                            <label>
-                                                <input type="hidden" name="_csrf" id="_csrf" value="<%= csrfToken %>">
-                                                <input name="group1" type="radio" onchange="obtenerTareas('<%= quiero.id_casos %>')"></input>
-                                                <span></span>
-                                            </label>
-                                        </td>
-                                        <td><%= quiero.id_casos %></td>
-                                        <td><%= quiero.quiero %></td>
-                                    </tr>
-                                <% } %>
-                            </tbody>
+                            <div class="divbody">
+                                <tbody>
+                                    <% for (quiero of lista_quiero) { %>
+                                        <tr>
+                                            <td>
+                                                <label>
+                                                    <input type="hidden" name="_csrf" id="_csrf" value="<%= csrfToken %>">
+                                                    <input name="group1" type="radio" onchange="obtenerTareas('<%= quiero.id_casos %>')"></input>
+                                                    <span></span>
+                                                </label>
+                                            </td>
+                                            <td><%= quiero.id_casos %></td>
+                                            <td><%= quiero.quiero %></td>
+                                        </tr>
+                                    <% } %>
+                                </tbody>
+                            </div>
                         </table>
                     </div>
                 </div>
-                
+            
                 <!-- Tareas del Proyecto -->
-                <div class="col s6 m6 l6">                    
+                <div class="col s5">                    
                     <div id="fasesVert" class="container">                        
                         <% for (let tarea = 0; tarea < lista_tareas.length; tarea++) { 
                             <!-- Si va empezando o cambia de fase  -->
@@ -67,10 +69,10 @@
                         <% } %>          
                     </div>
                 </div>
-            <% } else { %>
-                <h4>No se encontraron casos de uso para esta iteracion</h4>
-            <% } %>
-        </div>
+            </div>
+        <% } else { %>
+            <h4>No se encontraron casos de uso para esta iteracion</h4>
+        <% } %>
     </div>
     
     <script>

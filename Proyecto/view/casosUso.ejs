@@ -63,89 +63,86 @@
                 <td><%= caso.ap %></td>
                 
                 <!-- Botones -->
-                <div class="col s2 offset-s8">
-                
-                  <!-- Modificar -->
-                  <td>
-                    <button data-target="modal1_<%= caso.id_casos %>" class="btn modal-trigger light-blue darken-3" name="action" value="editar"><i class="small material-icons">mode_edit</i></button>
-                    <div id="modal1_<%= caso.id_casos %>" class="modal">
-                      <form action="casos-uso-iteracion" method="POST">
-                        <div class="modal-content">
-                          <!-- Input Data -->
-                          <div class="row">
-                            <h4>Editar</h4>
-                            <div class="input-field col 1">
-                              <input id="yo_como" name="yo_como" type="text" class="validate" maxlength="64" value="<%= caso.yo_como %>">
-                              <label for="yo_como">Yo como</label>
-                            </div>
-                            <div class="input-field col 1">
-                              <input id="quiero" name="quiero" type="text" class="validate" maxlength="255" value="<%= caso.quiero %>">
-                              <label for="quiero">quiero</label>
-                            </div>
-                            <div class="input-field col 1">
-                              <% let placeHolder = "";
-                                let valorPara = caso.para; 
-                                if (caso.para === "") { 
-                                  placeHolder = "No hay para"; 
-                                  valorPara = "";
-                                } %> 
-                              <input placeholder="<%= placeHolder %>" id="para" name="para" type="text" class="validate"  maxlength="255" value="<%= valorPara %>">
-                              <label for="para">para</label>
-                            </div>
-                            <div class="input-field col 1">
-                              <select name="id_ap" class="browser-default">
-                                <option value="" disabled selected>AP</option>
-                                <option value="1">1</option> 
-                                <option value="2">2</option> 
-                                <option value="3">3</option> 
-                                <option value="4">5</option> 
-                                <option value="5">8</option> 
-                                <option value="6">13</option> 
-                              </select>
-                            </div>
+                <!-- Modificar -->
+                <td>
+                  <button data-target="modal1_<%= caso.id_casos %>" class="btn modal-trigger light-blue darken-3" name="action" value="editar"><i class="small material-icons">mode_edit</i></button>
+                  <div id="modal1_<%= caso.id_casos %>" class="modal">
+                    <form action="casos-uso-iteracion" method="POST">
+                      <div class="modal-content">
+                        <!-- Input Data -->
+                        <div class="row">
+                          <h4>Editar</h4>
+                          <div class="input-field col 1">
+                            <input id="yo_como" name="yo_como" type="text" class="validate" maxlength="64" value="<%= caso.yo_como %>">
+                            <label for="yo_como">Yo como</label>
                           </div>
-                          <input id="comentario" name="comentario" type="text" class="validate" maxlength="255" value="<%= caso.comentario %>" >
-                          <label for="comentario">Comentario</label>
+                          <div class="input-field col 1">
+                            <input id="quiero" name="quiero" type="text" class="validate" maxlength="255" value="<%= caso.quiero %>">
+                            <label for="quiero">quiero</label>
+                          </div>
+                          <div class="input-field col 1">
+                            <% let placeHolder = "";
+                              let valorPara = caso.para; 
+                              if (caso.para === "") { 
+                                placeHolder = "No hay para"; 
+                                valorPara = "";
+                              } %> 
+                            <input placeholder="<%= placeHolder %>" id="para" name="para" type="text" class="validate"  maxlength="255" value="<%= valorPara %>">
+                            <label for="para">para</label>
+                          </div>
+                          <div class="input-field col 1">
+                            <select name="id_ap" class="browser-default">
+                              <option value="" disabled selected>AP</option>
+                              <option value="1">1</option> 
+                              <option value="2">2</option> 
+                              <option value="3">3</option> 
+                              <option value="4">5</option> 
+                              <option value="5">8</option> 
+                              <option value="6">13</option> 
+                            </select>
+                          </div>
                         </div>
-                        
-                        <!-- Submit Hidden Data -->
-                        <input type="hidden" name="_csrf" value="<%= csrfToken %>"> 
-                        <input type="hidden" name="idCaso" value="<%= caso.id_casos %>">
-                        <input type="hidden" name="id_ap_pasado" value="<%= caso.id_ap %>">
-
-                        <!-- Botones de aceptar y cancelar -->
-                        <div class="modal-footer">
-                          <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
-                          <button type="submit" class="modal-close waves-effect waves-green btn-flat" name="action" value="editar">Aceptar</button>  
-                        </div>
-                      </form>
-                    </div>
-                  </td>
-                  
-                  <!-- Comentario -->
-                  <td>
-                    <% if(caso.comentario !== ""){ %>
-                        <a class="btn tooltipped light-blue darken-3" data-position="bottom" data-tooltip="<%= caso.comentario %>"><i class="material-icons">forum</i></a>
-                    <% } %>
-                  </td>
-                  
-                  <!-- Eliminar -->
-                  <td>
-                    <form id="forma_eliminar_<%= caso.id_casos %>" action="casos-uso-iteracion" method="POST">
-                      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                        <input id="comentario" name="comentario" type="text" class="validate" maxlength="255" value="<%= caso.comentario %>" >
+                        <label for="comentario">Comentario</label>
+                      </div>
+                      
+                      <!-- Submit Hidden Data -->
+                      <input type="hidden" name="_csrf" value="<%= csrfToken %>"> 
                       <input type="hidden" name="idCaso" value="<%= caso.id_casos %>">
-                      <button name="action" value="eliminar" type="submit"><i class="small material-icons">delete</i></button>
-                      <script> 
-                        document.getElementById("forma_eliminar_<%= caso.id_casos %>").addEventListener('submit', (e) => {
-                          let confirmacion = confirm('¿Estás seguro de eliminar el caso de uso?');
-                          if(!confirmacion){
-                            e.preventDefault();
-                          }  
-                        });
-                      </script>
+                      <input type="hidden" name="id_ap_pasado" value="<%= caso.id_ap %>">
+
+                      <!-- Botones de aceptar y cancelar -->
+                      <div class="modal-footer">
+                        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
+                        <button type="submit" class="modal-close waves-effect waves-green btn-flat" name="action" value="editar">Aceptar</button>  
+                      </div>
                     </form>
-                  </td>
-                </div>
+                  </div>
+                </td>
+                
+                <!-- Comentario -->
+                <td>
+                  <% if(caso.comentario !== ""){ %>
+                      <a class="btn tooltipped light-blue darken-3" data-position="bottom" data-tooltip="<%= caso.comentario %>"><i class="material-icons">forum</i></a>
+                  <% } %>
+                </td>
+                
+                <!-- Eliminar -->
+                <td>
+                  <form id="forma_eliminar_<%= caso.id_casos %>" action="casos-uso-iteracion" method="POST">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <input type="hidden" name="idCaso" value="<%= caso.id_casos %>">
+                    <button name="action" value="eliminar" type="submit"><i class="small material-icons">delete</i></button>
+                    <script> 
+                      document.getElementById("forma_eliminar_<%= caso.id_casos %>").addEventListener('submit', (e) => {
+                        let confirmacion = confirm('¿Estás seguro de eliminar el caso de uso?');
+                        if(!confirmacion){
+                          e.preventDefault();
+                        }  
+                      });
+                    </script>
+                  </form>
+                </td>
               </tr>
             <% } %> 
           </tbody>
