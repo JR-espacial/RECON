@@ -1,5 +1,4 @@
-
-<a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+<%- include('breadcrumbs.ejs'); %>
 <ul class="sidenav sidenav-fixed" id="slide-out">
     <li><div class="user-view">
             <div class="background">
@@ -30,7 +29,7 @@
     <li class="logout"><a href="/users/logout"><i class="material-icons right">input</i>Logout &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a></li>
 </ul>
 
-<%- include('breadcrumbs.ejs'); %>
+<!-- <%- include('breadcrumbs.ejs'); %> -->
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {

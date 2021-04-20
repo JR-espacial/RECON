@@ -19,7 +19,9 @@ exports.getHome = (request, response) => {
                 proyectos : rows,
                 departamentos : rows2,
                 alerta : alerta,
-                csrfToken: request.csrfToken()
+                csrfToken: request.csrfToken(),
+                proyecto_actual: request.session.nombreProyecto,
+                navegacion : request.session.navegacion
             });
         })
         .catch(err => {

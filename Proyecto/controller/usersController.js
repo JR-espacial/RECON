@@ -7,7 +7,9 @@ exports.getLogin = (request, response, next) => {
         title: "Log In",
         error: request.session.error,
         csrfToken: request.csrfToken(),
-        isLoggedIn: request.session.isLoggedIn === true ? true : false
+        isLoggedIn: request.session.isLoggedIn === true ? true : false,
+        proyecto_actual: request.session.nombreProyecto,
+        navegacion : request.session.navegacion
     });
 };
 
