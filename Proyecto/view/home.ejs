@@ -20,9 +20,9 @@
     <div class=" col s10  offset-s1 ">
         <% for (let proyecto of proyectos) { %>
         <div class="col s4">
-            <div class="card small">
+            <div class="card">
                 <div class="card-image">
-                    <img class="imagen_card" src="<%= proyecto.imagen %>">
+                    <img  src="<%= proyecto.imagen %>">
                     <div id="modal1_<%= proyecto.id_proyecto %>" class="modal large">
                         <form action="/home/modificar-proyecto?_csrf=<%=csrfToken%>" method="POST"  enctype="multipart/form-data">
                         <!-- Modal Content -->

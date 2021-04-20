@@ -13,88 +13,89 @@
           </div>
         </div>
     </div> -->
-    <div class="container">
-        <div class="row">
-            <div class="col s12 ">
-                <div class="center-align">
-                    <canvas id="AvanceIteracion"></canvas>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col s4 m4 l4">
-                <div class="card">
-                    <h2 class="card-title flow-text">Inicio:</h2>
-                    <div class="card-content">
-                        <p><strong><%= iteracion.fecha_inicio_YMD %></strong></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col s4 m4 l4">
-                <div class="card">
-                    <h2 class="card-title flow-text">Fin:</h2>
-                    <div class="card-content">
-                        <p><strong><%= iteracion.fecha_fin_YMD %><strong></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col s4 m4 l4">
-                <div class="card">
-                    <h2 class="card-title flow-text">Horas Planeadas:</h2>
-                    <div class="card-content">
-                        <strong><p><%=horas_planeadas%></p><strong>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="row">
-            <div class="col s6 m6 l6">
-                <div class="card">
-                    <h2 class="card-title flow-text">Información del proyecto:</h2>
-                    <div class="card-content">
-                        <p>Días Totales: <span><%=dias_totales%></span></p>
-                        <p>Velocidad Deseada: <span><%=velocidad_deseada%></span></p><br>
-                        <p>Valor Planeado: <span><%=velocidad_deseada%></span></p>
-                        <p>Valor Ganado: <span>11.12</span></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col s6 m6 l6">
-                <div class="card">
-                    <h2 class="card-title flow-text">Información
-                        del proyecto:</h2>
-                    <div class="card-content">
-                        <p>Diferencia Progreso: <span>-4.4</span></p><br>
-                            <p>Total Tareas: <span><%=tareas_totales%></span></p>
-                            <p>Tareas Completadas: <span><%=tareas_completadas%></span></p>
-                            <p>Tareas Pendientes: <span><%=tareas_pendientes%></span></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="row">
-        <div class="col s12 offset-s2"id="tabla_avance">
-            <table class="highlight"  >
-                <thead>
-                    <tr>
-                        <th>Fecha</th>
-                        <th class="center-align">Valor Ganado
-                            (VG)</th>
-                        <th class="center-align">Costo Real (CR)</th>
-                        <th class="center-align">Valor Ganado
-                            Acumulado (VGA)</th>
-                        <th class="center-align">Costo Real
-                            Acumulado (CRA)</th>
-                    </tr>
-                </thead>
+        <div class="col s10 offset-s1">
+            <div class="row">
+                <div class="col s12">
+                    <div class="center-align">
+                        <canvas id="AvanceIteracion"></canvas>
+                    </div>
+                </div>
+            </div>
 
-                <tbody id="tabla_costos"></tbody>
-            </table>
+            <div class="row">
+                <div class="col s4 m4 l4">
+                    <div class="card">
+                        <h2 class="card-title flow-text">Inicio:</h2>
+                        <div class="card-content">
+                            <p><strong><%= iteracion.fecha_inicio_YMD %></strong></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s4 m4 l4">
+                    <div class="card">
+                        <h2 class="card-title flow-text">Fin:</h2>
+                        <div class="card-content">
+                            <p><strong><%= iteracion.fecha_fin_YMD %><strong></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s4 m4 l4">
+                    <div class="card">
+                        <h2 class="card-title flow-text">Horas Planeadas:</h2>
+                        <div class="card-content">
+                            <strong><p><%=horas_planeadas%></p><strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col s6 m6 l6">
+                    <div class="card">
+                        <h2 class="card-title flow-text">Información del proyecto:</h2>
+                        <div class="card-content">
+                            <p>Días Totales: <span><%=dias_totales%></span></p>
+                            <p>Velocidad Deseada: <span><%=velocidad_deseada%></span></p><br>
+                            <p>Valor Planeado: <span><%=velocidad_deseada%></span></p>
+                            <p>Valor Ganado: <span>11.12</span></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s6 m6 l6">
+                    <div class="card">
+                        <h2 class="card-title flow-text">Información
+                            del proyecto:</h2>
+                        <div class="card-content">
+                            <p>Diferencia Progreso: <span>-4.4</span></p><br>
+                                <p>Total Tareas: <span><%=tareas_totales%></span></p>
+                                <p>Tareas Completadas: <span><%=tareas_completadas%></span></p>
+                                <p>Tareas Pendientes: <span><%=tareas_pendientes%></span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12"id="tabla_avance">
+                    <table class="highlight"  >
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th class="center-align">Valor Ganado
+                                    (VG)</th>
+                                <th class="center-align">Costo Real (CR)</th>
+                                <th class="center-align">Valor Ganado
+                                    Acumulado (VGA)</th>
+                                <th class="center-align">Costo Real
+                                    Acumulado (CRA)</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="tabla_costos"></tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
     <br>
