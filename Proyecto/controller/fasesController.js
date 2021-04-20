@@ -3,7 +3,8 @@ const Fase = require('../models/fase');
 const Tarea = require('../models/tarea');
 const Proyecto = require('../models/proyecto');
 const Empleado_iteracion = require('../models/empleado_iteracion');
-
+const APP = require('../models/ap_promedios');
+const APC = require('../models/ap_colaborador');
 
 exports.getFasesProyecto = (request, response) =>{
     const id_proyecto = request.session.idProyecto;
@@ -272,9 +273,23 @@ exports.postFasesProyecto = (request, response) => {
         const id_fase = request.body.id_fase;
         const id_tarea = request.body.id_tarea;
 
-        Proyecto_Fase_Tarea.deleteTareaFromFase(id_proyecto, id_fase, id_tarea)
+        APP.deleteTarea(request.session.idProyecto, id_fase, id_tarea) 
             .then(() => {
-                response.redirect('fases-proyecto');
+                APC.deleteTarea(request.session.idProyecto, id_fase, id_tarea) 
+                    .then(() => {
+                        Proyecto_Fase_Tarea.deleteTareaFromFase(id_proyecto, id_fase, id_tarea)
+                            .then(() => {
+                                response.redirect('fases-proyecto');
+                            })
+                            .catch(err => {
+                                request.session.alerta = "No se puede eliminar esta tarea debido a que fue utilizada en una iteración dentro del proyecto.";
+                                response.redirect('fases-proyecto');
+                            });
+                    })
+                    .catch(err => {
+                        request.session.alerta = "No se puede eliminar esta tarea debido a que fue utilizada en una iteración dentro del proyecto.";
+                        response.redirect('fases-proyecto');
+                    });
             })
             .catch(err => {
                 request.session.alerta = "No se puede eliminar esta tarea debido a que fue utilizada en una iteración dentro del proyecto.";
