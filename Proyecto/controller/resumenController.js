@@ -52,7 +52,7 @@ exports.getResumenProyecto = (request, response) =>{
                 horas_semanales: horas_semanales,
                 total_semanas_maximo: total_semanas_maximo,
                 total_meses_maximo: total_meses_maximo,
-                title: "Resumen del Proyecto",
+                title: "Resumen de la Iteración",
                 csrfToken: request.csrfToken()
             });
         })

@@ -28,7 +28,7 @@ a{
 }
 
 #fases{
-    background-color: white;
+    background-color: #f8f8f8;
     overflow-x: scroll;
     overflow-y: scroll;
     white-space: nowrap;

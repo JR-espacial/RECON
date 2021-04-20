@@ -1,3 +1,6 @@
+.nav-wrapper{
+    background-color: #f8f8f8;
+}
 
 #contenedor_colaboradores{
     border: 100px !important;
@@ -145,16 +148,19 @@ div#modal5 {
 
 .breadcrumb{
     color: #343434;
-    font-size: 22px;
+    font-size: 17px;
+    text-decoration-line: underline;
 }
 
 .breadcrumb:before{
     color: #343434;
+    font-size: 20px;
 }
 
 .breadcrumb:last-child {
     font-weight: bold;
     color: #343434;
+    text-decoration-line: none;
 }
 
 .logout{
