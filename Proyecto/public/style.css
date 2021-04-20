@@ -105,26 +105,6 @@
                 ;
 }
 
-.boton_añadir{
-    margin: 0 5px 5px 10px;
-    background-color: Transparent;
-    background-repeat: no-repeat;
-    border: none;
-    cursor:pointer;
-    overflow: hidden;
-    outline:none;
-}
-
-.boton_dropdown{
-    height: 50px;
-    padding: 0 35px;
-    line-height: 0;
-}
-
-.boton_dropdown i{
-    font-size: 2rem;
-}
-
 header, main, footer {
     padding-left: 300px;
 }
@@ -139,108 +119,8 @@ html, body {
     height: 100%;
 }
 
-.max{
-    height: 100%;
-}
-
-#fases{
-    overflow-x: scroll;
+.no-scroll{
     overflow-y: hidden;
-    white-space: nowrap;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
-    width: 98%;
-    margin: 0 auto;
-    height: calc(100% - 250px);
-}
-
-#fasesVert{
-    overflow-y: scroll;
-    overflow-x: hidden;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
-    height: 600px;
-}
-
-#fase{
-    background-color: #9abecf;
-    margin-left: 5px;
-    margin-right: 5px;
-    border-radius: 8px;
-    width: 25%;
-    display: inline-block;
-    vertical-align: top;
-}
-
-#fase-agregar{
-    background-color: #e1f5fe;
-    margin-left: 5px;
-    margin-right: 5px;
-    border-radius: 8px;
-    width: 25%;
-    display: inline-block;
-    vertical-align: top;
-}
-
-#agregar-tarea {
-    background-color: #9abecf;
-    color: #424242;
-    padding-top: 0px;
-    padding-bottom: 0px;
-    border-radius: 5px;
-    margin-right: 10px;
-    width: 100%;
-}
-
-#agregar-fase {
-    background-color: #e1f5fe;
-    color: #424242;
-    padding-top: 0px;
-    padding-bottom: 0px;
-    border-radius: 5px;
-    margin: 5px 10px 0px 5px;
-    margin-right: 10px;
-    width: 100%;
-}
-
-#faseVert{
-    background-color: #9abecf;
-    margin: 0 0 10px 0;
-    border-radius: 8px;
-    width: 100%;
-    padding-bottom: 5px;
-}
-
-#tarea-en-fase{
-    background-color: #e1f5fe;
-    color: #424242;
-    padding-top:3px;
-    padding-bottom: 3px;
-    border-radius: 5px;
-    margin: 0 10px 5px 10px;
-    white-space: normal;
-    word-break: keep-all;
-    word-wrap: break-word;
-}
-
-#titulo-fase{
-    text-align: center;
-    font-weight: bold;
-    color: #424242;
-    font-size: large;
-    padding-top:5px;
-    padding-bottom: 5px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
-
-/* Hide scrollbar for Chrome, Safari and Opera */
-#fases::-webkit-scrollbar {
-    display: none;
-}
-
-#fasesVert::-webkit-scrollbar {
-    display: none;
 }
 
 .bajar_tabla{
@@ -263,8 +143,18 @@ div#modal5 {
     width: 50%
 }
 
-.breadcrubs-nav{
-    color : #333333
+.breadcrumb{
+    color: #343434;
+    font-size: 22px;
+}
+
+.breadcrumb:before{
+    color: #343434;
+}
+
+.breadcrumb:last-child {
+    font-weight: bold;
+    color: #343434;
 }
 
 .logout{
@@ -375,7 +265,6 @@ div#modal5 {
 .column-estimacionAP {
     width: 10%;
 }
-
 
 #modalAirTable{
     width: 30%;

@@ -1,0 +1,154 @@
+a{
+    color: inherit;
+}
+
+.boton_añadir{
+    margin: 0 5px 5px 10px;
+    background-color: Transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+    color: #ffffff;
+}
+
+.boton_dropdown{
+    height: 50px;
+    padding: 0 35px;
+    line-height: 0;
+}
+
+.boton_dropdown i{
+    font-size: 2rem;
+}
+
+.max{
+    height: 100%;
+}
+
+#fases{
+    background-color: white;
+    overflow-x: scroll;
+    overflow-y: scroll;
+    white-space: nowrap;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+    margin: 0 auto;
+    height: calc(100% - 125px);
+}
+
+#fasesVert{
+    background-color: white;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+    height: calc(100% - 125px);
+}
+
+#titulo-fase{
+    text-align: center;
+    font-weight: bold;
+    color: white;
+    font-size: large;
+    padding-top:5px;
+    padding-bottom: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#fase{
+    min-width: 225px;
+    max-width: 250px;
+    background-color: #343434;
+    margin-left: 5px;
+    margin-right: 5px;
+    border-radius: 8px;
+    width: 25%;
+    display: inline-block;
+    vertical-align: top;
+    height:fit-content;
+}
+
+#faseVert{
+    background-color: #343434;
+    margin: 0 0 10px 0;
+    border-radius: 8px;
+    width: 100%;
+    padding-bottom: 5px;
+}
+
+#fase-agregar{
+    min-width: 225px;
+    max-width: 250px;
+    background-color: #343434;
+    margin-left: 5px;
+    margin-right: 5px;
+    border-radius: 8px;
+    width: 25%;
+    display: inline-block;
+    vertical-align: top;
+}
+
+#agregar-tarea {
+    background-color: #343434;
+    color: #ffffff;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    border-radius: 5px;
+    margin-right: 10px;
+    width: 100%;
+}
+
+#agregar-tarea input{
+    background-color: #343434;
+    color: #ffffff;
+}
+
+#agregar-tarea input[type=text]:focus {
+    border-bottom: 1px solid #0277bd;
+    box-shadow: 0 1px 0 0 #0277bd;
+}
+
+#agregar-fase {
+    background-color: #343434;
+    color: #424242;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    border-radius: 5px;
+    margin: 5px 10px 0px 5px;
+    margin-right: 10px;
+    width: 100%;
+}
+
+#agregar-fase input{
+    background-color: #343434;
+    color: #ffffff;
+}
+
+#agregar-fase input[type=text]:focus {
+    border-bottom: 1px solid #0277bd;
+    box-shadow: 0 1px 0 0 #0277bd;
+}
+
+#tarea-en-fase{
+    background-color: #f5f5f5;
+    color: #424242;
+    padding-top:3px;
+    padding-bottom: 3px;
+    border-radius: 5px;
+    margin: 0 10px 5px 10px;
+    white-space: normal;
+    word-break: keep-all;
+    word-wrap: break-word;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+#fases::-webkit-scrollbar {
+    display: none;
+}
+
+#fasesVert::-webkit-scrollbar {
+    display: none;
+}

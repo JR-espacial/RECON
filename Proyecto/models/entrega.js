@@ -18,6 +18,11 @@ module.exports =  class Entrega {
     static fetchAll() {
         return db.execute('SELECT * FROM Entrega');
     }
+
+    static fetchEntrega(idProyecto, idFase, idTarea) {
+        return db.execute('SELECT * FROM entrega WHERE id_proyecto=? AND id_fase=? AND id_tarea=?', 
+        [idProyecto, idFase, idTarea]);
+    }
     
     static fetchTareaDeCaso(idProyecto, idIteracion, idCaso) {
         return db.execute('SELECT id_fase, id_tarea FROM entrega, casos_uso WHERE id_iteracion=? AND Casos_Uso.id_casos=? AND Casos_Uso.id_casos = Entrega.id_casos AND id_proyecto=? AND id_tarea > 0', 
@@ -38,9 +43,10 @@ module.exports =  class Entrega {
     static countTareasCompletadas(id_iteracion){
         return db.execute('SELECT COUNT(id_proyecto) as tareas_completadas FROM Entrega E,Casos_Uso CU WHERE E.id_casos = CU.id_casos AND E.estado_entrega = 1 AND CU.id_iteracion = ?',[id_iteracion]);
     }
+
     static updateAirtable(nombre, entrega_real, estimacion, valor_ganado, costo_real, estado_entrega){
         return db.execute('UPDATE Entrega SET entrega_real = ?, estimacion = ?, valor_ganado = ?, costo_real = ?, estado_entrega = ? WHERE nombre = ?',
         [entrega_real,estimacion,valor_ganado,costo_real,estado_entrega,nombre]);
-
     }
+
 }

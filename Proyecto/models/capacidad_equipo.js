@@ -12,10 +12,6 @@ module.exports =  class Capacidad_Equipo{
     static fetchOne(id_capacidad){
         return db.execute('SELECT * FROM Capacidad_Equipo WHERE id_capacidad =?', [id_capacidad]);
     }
-    
-    static setHorasProductivas(id_capacidad, id_iteracion){
-        return db.execute('CALL setHorasProductivas(=?, =?)', [id_capacidad, id_iteracion]);
-    }
 
     static fetchSumCapacidad(id_iteracion){
         return db.execute('SELECT SUM(horas_semanales) as horas_total FROM empleado_iteracion WHERE id_iteracion =?', [id_iteracion]);
