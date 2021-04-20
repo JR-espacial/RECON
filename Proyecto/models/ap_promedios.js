@@ -23,4 +23,9 @@ module.exports = class ap_promedios{
         return db.execute('SELECT APP.id_fase, F.nombre_fase, APP.id_tarea, T.nombre_tarea, APP.id_ap, AP.ap, APP.promedio_minutos FROM ap_promedios as APP, fase as F, tarea as T, puntos_agiles as AP where APP.id_proyecto=? AND APP.id_fase = F.id_fase AND APP.id_tarea = T.id_tarea AND APP.id_ap = AP.id_ap ORDER BY APP.id_fase, APP.id_tarea, APP.id_ap', 
         [id_proyecto]);
     }
+
+    static deleteTarea(id_proyecto, id_fase, id_tarea){
+        return db.execute('DELETE FROM ap_promedios WHERE id_proyecto=? AND id_fase=? AND id_tarea=?',
+        [id_proyecto, id_fase, id_tarea]);
+    }
 }
