@@ -9,8 +9,8 @@ const usersController = require('../controller/usersController');
 router.get('/login',isntAuth, usersController.getLogin);
 router.post('/login', usersController.postLogin);
 router.get('/logout', isAuth, usersController.getLogout);
-router.get('/registrar', usersController.getRegister);
-router.post('/registrar', usersController.postRegister);
+router.get('/register', usersController.getRegister);
+router.post('/register', usersController.postRegister);
 
 router.use(express.static(path.join(__dirname, '..', 'public')));
 

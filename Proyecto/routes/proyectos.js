@@ -19,7 +19,6 @@ router.get('/nuevo-proyecto', isAuth, proyectosController.getNuevoProyecto);
 
 router.post('/nuevo-proyecto', isAuth, proyectosController.postNuevoProyecto);
 
-router.get('/resumen-proyecto', isAuth, resumenController.getResumenProyecto);
 
 router.get('/fases-proyecto', isAuth, fasesController.getFasesProyecto);
 

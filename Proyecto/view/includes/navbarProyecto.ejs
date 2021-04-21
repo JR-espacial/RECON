@@ -19,45 +19,52 @@
     </li>
     
     
-    
     <li><a class="waves-effect waves-light btn" href="/proyectos/nueva-iteracion"><i class="material-icons left">add</i>Crear Iteracion</a>
-    <li><a class="waves-effect" href="/proyectos/iteraciones-desarrollo-proyecto">En desarrollo</a></li>
+    <li id="iteraciones"><a class="waves-effect" href="/proyectos/iteraciones-desarrollo-proyecto">En desarrollo</a></li>
     <li><a class="waves-effect" href="/proyectos/iteraciones-terminadas-proyecto">Terminado</a></li>
     <li><div class="divider"></div></li>
+    
+    
+    <li id="fases_proyecto"><a class="waves-effect" href="/proyectos/fases-proyecto">WBS</a></li>
+    <li id="estimacion_ap"><a class="waves-effect" href="/proyectos/estimacion-ap">Estimación AP</a></li>
 
-    <li><a class="waves-effect" href="/proyectos/fases-proyecto">WBS</a></li>
-    <li><a class="waves-effect" href="/proyectos/estimacion-ap">Estimación AP</a></li>
     <li><a data-target="modalAirTable" class="modal-trigger">AirTable<i class="material-icons right teal-text text-lighten-2">cloud_queue</i></a></li>
     
 
-    <li class="logout"><a href="/users/logout"><i class="material-icons right">input</i>Logout &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a></li>
+    <li class="logout"><a href="/users/logout"><i class="material-icons right right-logout">input</i>Logout &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a></li>
     
 </ul>
 
-<div id="modalAirTable" class="modal small">
+<div id="modalAirTable" class="modal">
     <div class="modal-content">
         <div class="row">
-            <div class="col s6 offset-s3">
-                <h6>Configuración AirTable</h6>
+            <div class="col s7 offset-s3">
+                <h6><strong>Configuración AirTable</strong></h6>
             </div>
         </div>
       <form action="/proyectos/configuracion-AirTable" method="POST">
         <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
         <div class="row">
-            <div class="input-field col s6 offset-s3">
+            <div class="input-field col s7 offset-s3">
                 <input id="Base" type="text" class="validate" name="base" value="<%= proyecto_keys.base %>" required>
-                <label for="Base">Base</label>
+                <label for="Base" >Base</label>
             </div>
         </div>
         <div class="row">
-            <div class="input-field col s6 offset-s3">
+            <div class="input-field col s7 offset-s3">
                 <input id="User API Key" type="text" class="validate" name="API_key" value="<%= proyecto_keys.API_key %>" required>
-                <label for="User API Key">User API Key</label>
+                <label for="User API Key" >User API Key</label>
             </div>
         </div>
-        <div class="modal-footer">
-            <button type="submit" class="waves-effect waves-green btn-flat" name="action" value="editar">Aceptar</button>
+
+        <div class="row">
+            <div class="col s11 ">
+                <button type="submit" class="waves-effect waves-green btn right" name="action" value="editar">Aceptar</button>
+            </div>
         </div>
+       
+        
+        
     </form>
     </div>
   </div>
@@ -68,4 +75,18 @@
     document.addEventListener('DOMContentLoaded', function() {
         M.AutoInit();
     });
+
+    if("<%=title%>" == "Fases del Proyecto"){
+        var element = document.getElementById("fases_proyecto");
+        element.classList.add("active");
+    }
+    else if("<%=title%>" == "Estimación AP"){
+        var element = document.getElementById("estimacion_ap");
+        element.classList.add("active");
+    }
+    else if("<%=title%>" == "Iteraciones"){
+        var element = document.getElementById("iteraciones");
+        element.classList.add("active");
+    }
+
 </script>

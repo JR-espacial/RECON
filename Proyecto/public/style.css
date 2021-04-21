@@ -164,6 +164,7 @@ div#modal5 {
 .logout{
     position:fixed; 
     bottom: 10%;
+    
 }
 
 .modal_edit{
@@ -278,4 +279,38 @@ div#modal5 {
     /* top: 15px; */
     margin-top: -50px;
     border-radius: 24px;
+}
+
+.card_avance{
+    padding-top: 10px !important;
+}
+
+.card-title-avance{
+    margin: 0px;
+}
+
+.boton_ingresar{
+    margin-top: 10%;
+}
+
+.imagen_login{
+    margin-top: 35%;
+    width: 100%;
+    height: auto;
+}
+
+.card_login{
+    padding-top: 0.5%;
+    margin-top: 3%
+}
+
+.responsive_title_login{
+    font-size: 5vw;
+}
+
+.responsive_text_login{
+    font-size: 1.7vw;
+}
+.login-btn{
+    border-radius: 25px;
 }

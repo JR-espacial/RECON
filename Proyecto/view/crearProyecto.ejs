@@ -1,8 +1,16 @@
 <%- include('includes/openHTML.ejs'); %>
 
+    <div class="row center-align">
+        <div class="col s6 offset-s3">
+            <h4>Crear Proyecto</h4>
+       
+        </div>
+    </div>
+
 
 <div class="row">
     <div class="col s12 offset-s4">
+       
         <form class="col s12" action="nuevo-proyecto?_csrf=<%=csrfToken%>" method="POST"  enctype="multipart/form-data">
             <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
             <div class="row">
