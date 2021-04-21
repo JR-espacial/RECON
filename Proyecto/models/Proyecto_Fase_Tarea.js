@@ -34,7 +34,7 @@ module.exports = class Proyecto_Fase_Tarea {
     }
 
     static deleteFaseFromProject(id_proyecto, id_fase){
-        return db.execute('DELETE FROM proyecto_fase_practica WHERE id_proyecto =? AND id_fase =?', [id_proyecto, id_fase]);
+        return db.execute('CALL eliminaFase(?, ?)', [id_proyecto, id_fase]);
     }
 
     static fetchTareaInFase(id_proyecto, id_fase, id_tarea) {

@@ -19,7 +19,12 @@ module.exports =  class Entrega {
         return db.execute('SELECT * FROM Entrega');
     }
 
-    static fetchEntrega(idProyecto, idFase, idTarea) {
+    static fetchEntregaFase(idProyecto, idFase) {
+        return db.execute('SELECT * FROM entrega WHERE id_proyecto=? AND id_fase=?', 
+        [idProyecto, idFase]);
+    }
+
+    static fetchEntregaTarea(idProyecto, idFase, idTarea) {
         return db.execute('SELECT * FROM entrega WHERE id_proyecto=? AND id_fase=? AND id_tarea=?', 
         [idProyecto, idFase, idTarea]);
     }
