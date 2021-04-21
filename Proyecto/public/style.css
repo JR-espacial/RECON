@@ -186,6 +186,7 @@ div#modal5 {
 }
 
 .d-content{
+    text-decoration-line: underline;
     display: contents;
 }
 
