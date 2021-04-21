@@ -1,11 +1,11 @@
-<%- include('includes/openHTML.ejs'); %>
+<%- include('includes/openHTMLtoast.ejs'); %>
 
 <%- include('includes/navbarIteracion.ejs'); %>
 <main>
 <% let horas_nominales = horas_nominales_totales.horas_total %>
 <div class="row">
         <div class="col s5 offset-s1">
-            <h4 class="center">Horas Equipo</h4>
+            <h4 class="center">Capacidad Equipo</h4>
             <br>
             <table>
                 <thead class="h_nominales">
@@ -143,7 +143,7 @@
                 <thead>
                     <tr>
                         <th>Colaborador</th>
-                        <th>Horas</th>
+                        <th>Horas / Semana</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -154,7 +154,7 @@
                                 <form method = "POST" action = "modificar-horas-colaborador">
                                     <input type="hidden" name = "_csrf" value = "<%= csrfToken %>">
                                     <input type="hidden" name = "id_empleado" value = "<%= colaborador.id_empleado %>">
-                                    <input value="<%= (colaborador.horas_semanales).toFixed(0) %>" type="text" class="validate" name = "horas" required><span>h</span>
+                                    <input value="<%= (colaborador.horas_semanales * 1).toFixed(0) %>" type="text" class="validate" name = "horas" required><span>h</span>
                                 </form>
                             </td>
                             
@@ -176,7 +176,14 @@
     "<% if (alerta) { %>"
         alert("<%= alerta %>");
     "<% } %>"
-</script>
 
+    function toast(){
+        '<% if (toast) { %>'
+            M.AutoInit(); 
+            M.toast({html: '<%= toast %>', classes: 'blue darken-3'});
+        '<% } %>'
+    }
+    
+</script>
 </main>
 <%- include('includes/closeHTML.ejs'); %>
