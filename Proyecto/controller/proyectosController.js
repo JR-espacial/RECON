@@ -2,7 +2,6 @@ const Proyecto = require('../models/proyecto');
 const Iteracion = require('../models/iteracion');
 const Usuario = require('../models/user');
 const Departamento = require('../models/departamento');
-const Puntos_Agiles = require('../models/puntos_agiles');
 const Proyecto_Fase_Tarea = require('../models/Proyecto_Fase_Tarea');
 const Fase = require('../models/fase');
 const APC = require('../models/ap_colaborador');
@@ -59,10 +58,9 @@ exports.postNuevoProyecto = async function (request, response) {
         }
 
         await Proyecto.saveProyectoDepto(departamento, id_proyecto[0][0].id_proyecto);
-        await Iteracion.saveCapacidad();
-        const fetchLastCapacidad =  await Iteracion.fetchLastCapacidad();
         
-        let iteracion = new Iteracion(id_proyecto[0][0].id_proyecto, fetchLastCapacidad[0][0].id_capacidad, 0, 'NULL', 'NULL', 'NULL', 0);
+        // Se crea iteración fantasma con capacidad fantasma, y se asigna al usuario que creo el proyecto a la iteración fantasma. 
+        let iteracion = new Iteracion(id_proyecto[0][0].id_proyecto, 0, 0, 'NULL', 'NULL', 'NULL', 0);
         await iteracion.saveIteracion();
         const fetchOneIteracion = await Iteracion.fetchOne(id_proyecto[0][0].id_proyecto, 0);
         const fetchOneUsuario =  await Usuario.fetchOne(request.session.usuario);
