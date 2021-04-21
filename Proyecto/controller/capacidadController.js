@@ -4,7 +4,9 @@ const capacidad_equipo = require('../models/capacidad_equipo');
 exports.getCapacidadEquipo = (request, response) =>{
     const id_iteracion = request.session.idIteracion;
     let alerta = request.session.alerta;
+    let toast = request.session.toast;
     request.session.alerta = "";
+    request.session.toast = "";
     capacidad_equipo.fetchCapacidadEmpleados(id_iteracion)
         .then(([rows, fieldData]) => {
             capacidad_equipo.fetchSumCapacidad(id_iteracion)
@@ -20,7 +22,8 @@ exports.getCapacidadEquipo = (request, response) =>{
                                 porcentajes: rows3[0],
                                 alerta: alerta,
                                 title: "Capacidad de Equipo",
-                                csrfToken: request.csrfToken()
+                                csrfToken: request.csrfToken(),
+                                toast: toast
                             });
                         })
                         .catch(err => {
@@ -38,13 +41,20 @@ exports.postModificarHorasColaborador = (request, response) => {
     const id_empleado = request.body.id_empleado;
     const horas = request.body.horas;
 
-    capacidad_equipo.updateCapacidadEmpleado(id_iteracion, id_empleado, horas)
-        .then(() => {
-            response.redirect('capacidad-equipo');
-        })
-        .catch(err => {
-            console.log(err);
-        })
+    if (horas > 40) {
+        request.session.alerta = "El número de horas semanales excede el máximo.";
+        response.redirect('capacidad-equipo');
+    }
+    else {
+        capacidad_equipo.updateCapacidadEmpleado(id_iteracion, id_empleado, horas)
+            .then(() => {
+                request.session.toast = "Capacidad Modificada";
+                response.redirect('capacidad-equipo');
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
 }
 
 
@@ -68,6 +78,7 @@ exports.postModificarPorcentajeTiempoPerdido = (request, response) => {
                 else {
                     capacidad_equipo.callsetHorasProductivas(id_capacidad, id_iteracion)
                     .then((fieldData)=> {
+                        request.session.toast = "Porcentaje Modificado";
                         response.redirect('capacidad-equipo');
                     })
                     .catch(err => {
@@ -102,6 +113,7 @@ exports.postModificarPorcentajeErroresRegistro = (request, response) => {
                 else {
                     capacidad_equipo.callsetHorasProductivas(id_capacidad, id_iteracion)
                     .then((fieldData)=> {
+                        request.session.toast = "Porcentaje Modificado";
                         response.redirect('capacidad-equipo');
                     })
                     .catch(err => {
@@ -132,6 +144,7 @@ exports.postModificarPorcentajeOverhead = (request, response) => {
             .then(() => {
                 capacidad_equipo.callsetHorasProductivas(id_capacidad, id_iteracion)
                     .then(()=> {
+                        request.session.toast = "Porcentaje Modificado";
                         response.redirect('capacidad-equipo');
                     })
                     .catch(err => {
@@ -165,6 +178,7 @@ exports.postModificarPorcentajeProductivas = (request, response) => {
                 else {
                     capacidad_equipo.callsetHorasProductivas(id_capacidad, id_iteracion)
                     .then((fieldData)=> {
+                        request.session.toast = "Porcentaje Modificado";
                         response.redirect('capacidad-equipo');
                     })
                     .catch(err => {
@@ -194,6 +208,9 @@ exports.postModificarPorcentajeOperativos = (request, response) => {
                 if(fieldData[0].changedRows === 0){
                     request.session.alerta = "El porcentaje ingresado sobrepasa el máximo posible o es el mismo.";
                 }
+                else {
+                    request.session.toast = "Porcentaje Modificado";
+                }
                 response.redirect('capacidad-equipo');
             })
             .catch(err => {
@@ -218,6 +235,9 @@ exports.postModificarPorcentajeHumano = (request, response) => {
                 if(fieldData[0].changedRows === 0){
                     request.session.alerta = "El porcentaje ingresado sobrepasa el máximo posible o es el mismo.";
                 }
+                else {
+                    request.session.toast = "Porcentaje Modificado";
+                }
                 response.redirect('capacidad-equipo');
             })
             .catch(err => {
@@ -241,6 +261,9 @@ exports.postModificarPorcentajeCMMI = (request, response) => {
             .then((fieldData) => {
                 if(fieldData[0].changedRows === 0){
                     request.session.alerta = "El porcentaje ingresado sobrepasa el máximo posible o es el mismo.";
+                }
+                else {
+                    request.session.toast = "Porcentaje Modificado";
                 }
                 response.redirect('capacidad-equipo');
             })
