@@ -1,4 +1,4 @@
-<%- include('breadcrumbs.ejs'); %>
+<%- include('breadcrumbsIteracion.ejs'); %>
 <ul class="sidenav sidenav-fixed" id="slide-out">
     <li><div class="user-view">
             <div class="background">
@@ -20,11 +20,10 @@
     <li><a href="/proyectos/iteraciones-desarrollo-proyecto"><i class="material-icons right">apps</i>Proyecto</a></li>
     
     <li><div class="divider"></div></li>
-    <li><a class="waves-effect" href="/proyectos/resumen-proyecto">Resumen</a></li>
-    <li><a class="waves-effect" href="/proyectos/capacidad-equipo">Capacidad de Equipo</a></li>
-    <li><a class="waves-effect" href="/proyectos/casos-uso-iteracion">Casos de Uso</a></li>    
-    <li><a class="waves-effect" href="/proyectos/tarea-caso-uso">Tareas por caso de uso</a></li>
-    <li><a class="waves-effect" href="/proyectos/avance-proyecto"><i class="material-icons right">timeline</i>Avance de la iteración</a></li>
+    <li id="avance_proyecto"><a class="waves-effect" href="/proyectos/avance-proyecto"><i class="material-icons right">timeline</i>Avance de la iteración</a></li>
+    <li id="capacidad"><a class="waves-effect" href="/proyectos/capacidad-equipo">Capacidad de Equipo</a></li>
+    <li id="casos_uso"><a class="waves-effect" href="/proyectos/casos-uso-iteracion">Casos de Uso</a></li>    
+    <li id="tareas_casos_uso"><a class="waves-effect" href="/proyectos/tarea-caso-uso">Tareas por caso de uso</a></li>
     
     <li class="logout"><a href="/users/logout"><i class="material-icons right">input</i>Logout &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a></li>
 </ul>
@@ -35,4 +34,22 @@
     document.addEventListener('DOMContentLoaded', function() {
         M.AutoInit();
     });
+
+    if("<%=title%>" == "Avance del Proyecto"){
+        var element = document.getElementById("avance_proyecto");
+        element.classList.add("active");
+    }
+    else if("<%=title%>" == "Capacidad de Equipo"){
+        var element = document.getElementById("capacidad");
+        element.classList.add("active");
+    }
+    else if("<%=title%>" == "Casos de Uso"){
+        var element = document.getElementById("casos_uso");
+        element.classList.add("active");
+    }
+    else if("<%=title%>" == "Tareas por Caso de Uso"){
+        var element = document.getElementById("tareas_casos_uso");
+        element.classList.add("active");
+    }
+
 </script>

@@ -15,63 +15,114 @@
     </div> -->
     <div class="row">
         <div class="col s10 offset-s1">
+            <% if(iteracion.terminada == 0){ %>
+                <form action="/proyectos/terminar-iteracion" method="POST" id="terminar_iter">
+                    <input type="hidden" id="_csrf" name="_csrf" value="<%= csrfToken %>" >
+                    <div class="row">
+                        <div class="col s4 offset-s8 ">
+                            <button class="waves-effect waves-light btn right" type="submit">Terminar iteración</button>
+                        </div>
+                    </div>
+                    <script>
+                        document.getElementById("terminar_iter").addEventListener('submit', stopTerminar);
+                        
+                        function stopTerminar(event) {
+                            let confirmacion = confirm('¿Estás seguro de que quieres terminar la iteracion número <%=num_iteracion%>?');
+                            if(!confirmacion) {
+                                event.preventDefault();
+                            }
+                        }
+                    </script>
+                </form>
+            <%}%>
+
             <div class="row">
                 <div class="col s12">
                     <div class="center-align">
-                        <canvas id="AvanceIteracion"></canvas>
+                        <canvas id="AvanceIteracion" class="z-depth-1"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                
+            </div>
+
+            <div class="row">
+                <div class="col s4" >
+                    <div class="card">
+                        <div class="card-content card_avance">
+                            <h2 class="card-title flow-text card-title-avance"> <strong>Descripción</strong></h2>
+                            <br>
+                            <p><%= iteracion.descripcion %></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s4 ">
+                    <div class="card ">
+                        <div class="card-content card_avance">
+                            <h2 class="card-title flow-text card-title-avance"> <strong>Inicio</strong></h2></h2>
+                            <br>
+                            <p><%= iteracion.fecha_inicio_YMD %></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s4 ">
+                    <div class="card">
+                        <div class="card-content card_avance">
+                            <h2 class="card-title flow-text card-title-avance"><strong>Fin</strong></h2>
+                            <br>
+                            <p><%= iteracion.fecha_fin_YMD %></p>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col s4 m4 l4">
-                    <div class="card">
-                        <h2 class="card-title flow-text">Inicio:</h2>
-                        <div class="card-content">
-                            <p><strong><%= iteracion.fecha_inicio_YMD %></strong></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col s4 m4 l4">
-                    <div class="card">
-                        <h2 class="card-title flow-text">Fin:</h2>
-                        <div class="card-content">
-                            <p><strong><%= iteracion.fecha_fin_YMD %><strong></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col s4 m4 l4">
-                    <div class="card">
-                        <h2 class="card-title flow-text">Horas Planeadas:</h2>
-                        <div class="card-content">
-                            <strong><p><%=horas_planeadas%></p><strong>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
 
             <div class="row">
-                <div class="col s6 m6 l6">
+                <div class="col s6">
                     <div class="card">
-                        <h2 class="card-title flow-text">Información del proyecto:</h2>
-                        <div class="card-content">
+                        <div class="card-content card_avance">
+                            <h2 class="card-title flow-text card-title-avance"><strong>Información de la iteración</strong></h2>
+                            <br>
                             <p>Días Totales: <span><%=dias_totales%></span></p>
                             <p>Velocidad Deseada: <span><%=velocidad_deseada%></span></p><br>
-                            <p>Valor Planeado: <span><%=velocidad_deseada%></span></p>
-                            <p>Valor Ganado: <span>11.12</span></p>
                         </div>
                     </div>
                 </div>
-                <div class="col s6 m6 l6">
+                <div class="col s6">
                     <div class="card">
-                        <h2 class="card-title flow-text">Información
-                            del proyecto:</h2>
-                        <div class="card-content">
-                            <p>Diferencia Progreso: <span>-4.4</span></p><br>
-                                <p>Total Tareas: <span><%=tareas_totales%></span></p>
-                                <p>Tareas Completadas: <span><%=tareas_completadas%></span></p>
-                                <p>Tareas Pendientes: <span><%=tareas_pendientes%></span></p>
+                        <div class="card-content card_avance">
+                            <h2 class="card-title flow-text card-title-avance"><strong>Información de las tareas</strong></h2>
+                            <br>
+                            <p>Total Tareas: <span><%=tareas_totales%></span></p>
+                            <p>Tareas Completadas: <span><%=tareas_completadas%></span></p>
+                            <p>Tareas Pendientes: <span><%=tareas_pendientes%></span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <div class="card">
+                        <div class="card-content  center card_avance">
+                            <h2 class="card-title flow-text card-title-avance"> <strong>Estimación de tiempo</strong></h2>
+                                <br>
+                                <div class="row">
+                                    <div class="col s4">
+                                        <p> Total  Minutos: <span><%= total_min_real %></span> </p>
+                                        <br>
+                                        <p> Total  Semanas: <span><%= total_semanas_real %></span></p>
+
+                                    </div>
+                                    <div class="col s4">
+                                        <p> Total  Horas: <span><%= total_horas_real %></span></p>
+                                        <br>
+                                        <p> Total  Meses: <span><%= total_meses_real %></span></p>
+                                    </div>
+                                    <div class="col s4">
+                                        <p> Horas equipo: <span><%= horas_semanales %></span></p>
+                                    </div>
+                                </div>
                         </div>
                     </div>
                 </div>

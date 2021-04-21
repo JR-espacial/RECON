@@ -17,6 +17,7 @@ exports.getTareaCasoUso = (request, response) =>{
                         proyecto_actual : request.session.nombreProyecto,
                         user: request.session.usuario,
                         title: "Tareas por Caso de Uso",
+                        num_iteracion : request.session.numIteracion,
                         lista_quiero: rowsQ, 
                         lista_tareas: rowsPFT,
                         csrfToken: request.csrfToken()

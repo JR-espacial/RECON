@@ -2,14 +2,22 @@
 <%- include('includes/navbarProyecto.ejs'); %>
 
 <main>
-
 <!-- Set de tres tarjetas -->
 <div class="row center">
     <div class="col s10 offset-s1">
         <% if (!iteraciones[0]) { %>
             <h4>No hay iteraciones que mostrar</h4>
         <% } %>  
+        <!-- <div class="row">       
+            <div class="col s4 offset-s9">
+                <ul class="tabs z-depth-1">
+                    <li class="tab"><a href="#test16">En desarollo</a></li>
+                    <li class="tab"><a class="active" href="#test17">Terminadas</a></li>
+                </ul>
+            </div>
+        </div> -->
         <% for (let iteracion of iteraciones) { %>
+            
             <div class="col s4">
                 <div class="card">
                     <div class="card-image">
@@ -31,13 +39,13 @@
                                             </div>
                                             <div class="row">
                                                 <div class="input-field col s12">
-                                                    <input  id="inicio_iteracion" name="fecha_inicio"type="text" class="datepicker"  value = "<%=iteracion.fecha_inicio_YMD %>" required>
+                                                    <input  id="inicio_iteracion" name="fecha_inicio"type="text" class="datepicker"  value = "<%=iteracion.fecha_inicio_YMD %>" autocomplete="off" required>
                                                     <label for="inicio_iteracion">Selecciona la fecha de inicio de la iteración</label>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="input-field col s12">
-                                                    <input  id="fin_iteracion" name="fecha_fin"type="text" class="datepicker" value = "<%=iteracion.fecha_fin_YMD%>" required>
+                                                    <input  id="fin_iteracion" name="fecha_fin"type="text" class="datepicker" value = "<%=iteracion.fecha_fin_YMD%>" autocomplete="off" required>
                                                     <label for="fin_iteracion">Selecciona la fecha de fin de la iteración</label>
                                                 </div>
                                             </div>
@@ -48,9 +56,8 @@
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col s12">
-                                                    <a class="modal-close waves-effect waves-green btn-flat" href="">Cancelar</a>
-                                                    <button type="submit" class="waves-effect waves-green btn-flat" name="action" value="editar">Aceptar</button>
+                                                <div class="col s12 offset s2">
+                                                    <button type="submit" class="waves-effect waves-green right btn" name="action" value="editar">Aceptar</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -81,10 +88,10 @@
                         </ul>
                     </div>
                     <div class="card-action">
-                        <!-- <a href="/proyectos/resumen-proyecto">Ir a Iteracion</a> -->
                         <form action="iteraciones-proyecto" method="POST">
                             <input type="hidden" name="_csrf" value="<%= csrfToken %>"> 
                             <input type="hidden" name="idIteracion" value="<%= iteracion.id_iteracion %>">
+                            <input type="hidden" name="numIteracion" value="<%= iteracion.num_iteracion %>">
                             <button class="btn-flat d-content" type="submit">Ir a la iteracion</botton>
                         </form>
                     </div>

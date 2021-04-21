@@ -52,8 +52,11 @@ exports.getLogout = (request, response, next) => {
 }
 
 exports.getRegister = (request, response, next) => {
+    const alerta = request.session.alerta;
+    request.session.alerta = "";
     response.render('registrar', {
         user: request.session.usuario,
+        alerta: alerta,
         title: 'Registra tus datos',
         csrfToken: request.csrfToken(),
         isLoggedIn: request.session.isLoggedIn === true ? true : false
@@ -64,9 +67,8 @@ exports.postRegister = (request, response, next) => {
     const nuevo_usuario = new Usuario(request.body.nombre, request.body.usuario, request.body.password);
     nuevo_usuario.save()
         .then(() => {
-            request.session.isLoggedIn = true;
-            request.session.usuario = request.body.usuario;
-            response.redirect('/home');
+            request.session.alerta = "Usuario registrado exitosamente";
+            response.redirect('/users/register');
         }).catch(err => console.log(err));
 
 }

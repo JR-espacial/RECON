@@ -3,6 +3,7 @@ const capacidad_equipo = require('../models/capacidad_equipo');
 
 exports.getCapacidadEquipo = (request, response) =>{
     const id_iteracion = request.session.idIteracion;
+    
     let alerta = request.session.alerta;
     request.session.alerta = "";
     capacidad_equipo.fetchCapacidadEmpleados(id_iteracion)
@@ -15,6 +16,7 @@ exports.getCapacidadEquipo = (request, response) =>{
                                 navegacion : request.session.navegacion,
                                 proyecto_actual : request.session.nombreProyecto,
                                 user: request.session.usuario,
+                                num_iteracion : request.session.numIteracion,
                                 colaboradores: rows,
                                 horas_nominales_totales: rows2[0],
                                 porcentajes: rows3[0],

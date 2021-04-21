@@ -10,6 +10,7 @@ exports.getCasosUsoIteracion = (request, response) =>{
                 navegacion : request.session.navegacion,
                 proyecto_actual : request.session.nombreProyecto,
                 user: request.session.usuario,
+                num_iteracion: request.session.numIteracion,
                 title: "Casos de Uso",
                 casos_uso: rows,
                 csrfToken: request.csrfToken()

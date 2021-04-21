@@ -60,7 +60,8 @@ exports.getIteracionesTerminadasProyecto = async function(request,response){
 
 exports.postIteracionesProyecto = (request, response) => {
     request.session.idIteracion = request.body.idIteracion;
-    response.redirect('/proyectos/resumen-proyecto');
+    request.session.numIteracion = request.body.numIteracion;
+    response.redirect('/proyectos/avance-proyecto');
 }
 
 exports.postChipsIteracionesProyecto = (request,response) =>{
