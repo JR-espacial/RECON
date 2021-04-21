@@ -275,3 +275,9 @@ div#modal5 {
 #modalAirTable{
     width: 30%;
 }
+
+.toast{
+    /* top: 15px; */
+    margin-top: -50px;
+    border-radius: 24px;
+}
