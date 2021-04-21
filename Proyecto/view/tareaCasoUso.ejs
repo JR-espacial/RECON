@@ -7,34 +7,30 @@
             <!-- Quiero -->
             <div class="col s10 offset-s1">
                 <div class="col s5">
-                    <div class="tabla_cu">
-                        <table class="highlight tabla_cu">
-                            <thead> 
+                    <table class="tabla_cu">
+                        <thead> 
+                            <tr>
+                                <th class="row-botonTareas"></th>
+                                <th class="row-idCaso-Tarea">id</th>
+                                <th class="row-quiero">Quiero</th>      
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% for (quiero of lista_quiero) { %>
                                 <tr>
-                                    <th class="row-botonTareas"></th>
-                                    <th class="row-idCaso-Tarea">id</th>
-                                    <th class="row-quiero">Quiero</th>      
+                                    <td class="row-botonTareas">
+                                        <label>
+                                            <input type="hidden" name="_csrf" id="_csrf" value="<%= csrfToken %>">
+                                            <input name="group1" type="radio" onchange="obtenerTareas('<%= quiero.id_casos %>')"></input>
+                                            <span></span>
+                                        </label>
+                                    </td>
+                                    <td class="row-idCaso-Tarea"><%= quiero.id_casos %></td>
+                                    <td class="row-quiero"><%= quiero.quiero %></td>
                                 </tr>
-                            </thead>
-                            <div class="divbody">
-                                <tbody>
-                                    <% for (quiero of lista_quiero) { %>
-                                        <tr>
-                                            <td>
-                                                <label>
-                                                    <input type="hidden" name="_csrf" id="_csrf" value="<%= csrfToken %>">
-                                                    <input name="group1" type="radio" onchange="obtenerTareas('<%= quiero.id_casos %>')"></input>
-                                                    <span></span>
-                                                </label>
-                                            </td>
-                                            <td><%= quiero.id_casos %></td>
-                                            <td><%= quiero.quiero %></td>
-                                        </tr>
-                                    <% } %>
-                                </tbody>
-                            </div>
-                        </table>
-                    </div>
+                            <% } %>
+                        </tbody>
+                    </table>
                 </div>
             
                 <!-- Tareas del Proyecto -->

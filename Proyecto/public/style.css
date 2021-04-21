@@ -16,16 +16,44 @@
     margin-top: 7%;
 }
 
-/* Tabla de los casos de uso */
+/* Tabla para Casos de Uso y Tareas por Caso de Uso */
+.tabla_cu tbody {
+    display:block;
+    max-height:450px;
+    overflow:auto;
+}
+
+.tabla_cu thead, tbody tr {
+    display:table;
+    width:100%;
+    table-layout:fixed;
+    -webkit-transform: translateZ(0);
+}
+
+.tabla_cu thead {
+    width: calc( 100% - 1em )
+}
+
+.tabla_cu table {
+    width:100%;
+}
+
+
+/* Tabla de los casos de uso
 .tabla_cu {
-    table-layout: fixed;
     width: 100%;
     height: 500px;
     max-height: 500px;
     background-color: white;
 }
 
-.tabla_cu thead th {
+.tabla_cu table {
+    table-layout: inherit;
+    height: 100%;
+    width: 100%;
+}
+
+.tabla_cu table thead th {
     padding-left: 15px;
     position: sticky;
     top: 0;
@@ -34,66 +62,35 @@
     font-weight: bold;
 }
 
-.tabla_cu tbody {
-    position: absolute;
+.tabla_cu table tbody {
+    display: block;
+    position: relative;
     max-height: 450px;
-    overflow-y:scroll;
+    overflow-y: scroll;
 } 
 
-/* http://jsfiddle.net/f2XYF/16/ */
-
-/*
-.tabla_cu thead, tbody tr{
-    display:table;
-    width:100%;
-    table-layout:fixed;
-}
-
-/*
-.tabla_cu tbody {
+.tabla_cu table tbody {
+    display: block;
     position: absolute;
-    display:block;
-    max-height:450px;
-    overflow-y:scroll;
-}
-.tabla_cu thead, tbody tr {
-    display:table;
-    width:100%;
-    table-layout:fixed;
-}
-.tabla_cu thead {
-    width: 250px; 
-}
-.tabla_cu {
-    width:250px;
-} */
+    max-height: 450px;
+    overflow-y: scroll;
+} 
 
-.tabla_cu tr {
+.tabla_cu table thead tr {
     color:#343434;
 }
 
-.tabla_cu tr:hover{
+.tabla_cu table tbody tr:hover{
     background-color: #f5f5f5;
 }
 
-.tabla_cu td {
+.tabla_cu table  td {
     padding-left: 15px;
     overflow-wrap: break-word;
     text-overflow: ellipsis;
-}
+} */
 
-/* Prueba tabla nueva */
-
-.tabla-cu {
-    width: 100%;
-    height: 500px;
-    max-height: 500px;
-    background-color: white;
-}
-
-/* Termina tabla nueva */
-
-
+/* Width de las columnas */
 .row-idCasos-ap {
     width: 6.5%;
 }
@@ -149,8 +146,7 @@
 }
 
 #tabla_avance table td {
-    text-align: center
-                ;
+    text-align: center;
 }
 
 header, main, footer {
