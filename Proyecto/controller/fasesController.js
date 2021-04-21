@@ -257,13 +257,24 @@ exports.postFasesProyecto = (request, response) => {
     else if (accion === "eliminar-fase") {
         const id_fase = request.body.id_fase;
 
-        Proyecto_Fase_Tarea.deleteFaseFromProject(id_proyecto, id_fase)
-            .then(() => {
+        Entrega.fetchEntregaFase(id_proyecto, id_fase)
+            .then(([rows, fieldData]) => {
+                if (rows.length > 0) {
+                    request.session.alerta = "No se puede eliminar esta fase debido a que fue utilizada para estimar un caso de uso del proyecto.";
+                }
+                else {
+                    Proyecto_Fase_Tarea.deleteFaseFromProject(id_proyecto, id_fase)
+                        .then(() => {
+                            request.session.alerta = "Fase Eliminada del Proyecto.";
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        });                         
+                }
                 response.redirect('fases-proyecto');
             })
             .catch(err => {
-                request.session.alerta = "No se puede eliminar esta fase debido a que fue utilizada en una iteración dentro del proyecto.";
-                response.redirect('fases-proyecto');
+                console.log(err);
             });
     }
 
@@ -271,22 +282,21 @@ exports.postFasesProyecto = (request, response) => {
         const id_fase = request.body.id_fase;
         const id_tarea = request.body.id_tarea;
 
-        Entrega.fetchEntrega(id_proyecto, id_fase, id_tarea)
+        Entrega.fetchEntregaTarea(id_proyecto, id_fase, id_tarea)
             .then(([rows, fieldData]) => {
                 if (rows.length > 0) {
-                    request.session.alerta = "No se puede eliminar esta tarea debido a que fue utilizada en una iteración dentro del proyecto.";
-                    response.redirect('fases-proyecto');
+                    request.session.alerta = "No se puede eliminar esta tarea debido a que fue utilizada para estimar un caso de uso del proyecto.";
                 }
                 else {
                     Proyecto_Fase_Tarea.deleteTareaFromFase(id_proyecto, id_fase, id_tarea)
                         .then(() => {
                             request.session.alerta = "Tarea Eliminada del Proyecto.";
-                            response.redirect('fases-proyecto');
                         })
                         .catch(err => {
                             console.log(err);
                         });                            
                 }
+                response.redirect('fases-proyecto');
             })
             .catch(err => {
                 console.log(err);

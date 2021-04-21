@@ -206,6 +206,20 @@
     DELETE FROM proyecto_fase_practica WHERE id_proyecto = SPid_proyecto AND id_fase = SPid_fase AND id_tarea = SPid_tarea;
     END //
 
+    -- Elimina fase con sus dependencias
+    DROP PROCEDURE IF EXISTS eliminaFase;
+    DELIMITER //
+    CREATE PROCEDURE eliminaFase(
+        IN SPid_proyecto INT,
+        IN SPid_fase INT
+    )
+    BEGIN
+    DELETE FROM ap_promedios WHERE id_proyecto = SPid_proyecto AND id_fase = SPid_fase;
+    DELETE FROM ap_colaborador WHERE id_proyecto = SPid_proyecto AND id_fase = SPid_fase;
+    DELETE FROM proyecto_fase_practica WHERE id_proyecto = SPid_proyecto AND id_fase = SPid_fase;
+  	END //
+
+
     -- Actualizar Promedios cuando Empleado actualiza su estimación 
     DROP TRIGGER promedio;
     DELIMITER //

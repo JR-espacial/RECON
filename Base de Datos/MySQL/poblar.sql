@@ -14,6 +14,7 @@ INSERT INTO `puntos_agiles` (`id_ap`, `ap`) VALUES(4, 5);
 INSERT INTO `puntos_agiles` (`id_ap`, `ap`) VALUES(5, 8);
 INSERT INTO `puntos_agiles` (`id_ap`, `ap`) VALUES(6, 13);
 
+INSERT INTO `capacidad_equipo` (`id_capacidad`, `horas_productivas`, `tiempo_perdido_pc`, `errores_registro_pc`, `overhead_pc`, `productivas_pc`, `operativos_pc`, `humano_pc`, `cmmi_pc`) VALUES(0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `capacidad_equipo` (`id_capacidad`, `horas_productivas`, `tiempo_perdido_pc`, `errores_registro_pc`, `overhead_pc`, `productivas_pc`, `operativos_pc`, `humano_pc`, `cmmi_pc`) VALUES(1, '20.00', '0.10', '0.20', '0.30', '0.40', '0.50', '0.60', '0.70');
 INSERT INTO `capacidad_equipo` (`id_capacidad`, `horas_productivas`, `tiempo_perdido_pc`, `errores_registro_pc`, `overhead_pc`, `productivas_pc`, `operativos_pc`, `humano_pc`, `cmmi_pc`) VALUES(2, '30.06', '0.14', '0.22', '0.34', '0.41', '0.56', '0.66', '0.71');
 INSERT INTO `capacidad_equipo` (`id_capacidad`, `horas_productivas`, `tiempo_perdido_pc`, `errores_registro_pc`, `overhead_pc`, `productivas_pc`, `operativos_pc`, `humano_pc`, `cmmi_pc`) VALUES(3, '23.30', '0.14', '0.12', '0.34', '0.14', '0.53', '0.26', '0.74');
