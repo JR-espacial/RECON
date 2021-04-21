@@ -1,6 +1,7 @@
 const Proyecto = require('../models/proyecto');
 const Iteracion = require('../models/iteracion');
 const Usuario = require('../models/user');
+const CapacidadEquipo = require('../models/capacidad_equipo');
 const { fetchLastNumIter } = require('../models/iteracion');
 
 exports.getIteracionesDesarrolloProyecto = async function(request,response){
@@ -124,12 +125,12 @@ exports.postNuevaIteracion = async function (request, response){
             }
         }
         
-
         try {
-            await Iteracion.saveCapacidad();
+            await CapacidadEquipo.saveCapacidadDefault();
         }catch(e){
             console.log(e);
         }
+        
         const fetchLastCapacidad =  await Iteracion.fetchLastCapacidad();
         const fetchLastNumIter =  await Iteracion.fetchLastNumIter(id_proyecto);
         let iteracion = new Iteracion(id_proyecto, fetchLastCapacidad[0][0].id_capacidad, fetchLastNumIter[0][0].num_iteracion, descripcion, fecha_inicio, fecha_fin, 1);

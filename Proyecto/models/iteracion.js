@@ -16,10 +16,6 @@ module.exports =  class Iteracion{
         [this.id_proyecto, this.id_capacidad, this.num_iteracion, this.descripcion, this.fecha_inicio, this.fecha_fin, this.estado_iteracion]);
     }
 
-    static saveCapacidad(){
-        return db.execute('INSERT INTO Capacidad_equipo (horas_productivas, tiempo_perdido_pc, errores_registro_pc, overhead_pc, productivas_pc, operativos_pc, humano_pc, cmmi_pc) VALUES (NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)')
-    }
-
     static fetchLastNumIter(id_proyecto){
         return db.execute('SELECT MAX(I.num_iteracion)+1 AS num_iteracion FROM Iteracion I WHERE id_proyecto = ?',
         [id_proyecto]);

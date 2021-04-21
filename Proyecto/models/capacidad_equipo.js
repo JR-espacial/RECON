@@ -4,6 +4,10 @@ module.exports =  class Capacidad_Equipo{
     constructor(id_capacidad){
         this.id_capacidad = id_capacidad;
     }
+
+    static saveCapacidadDefault(){
+        return db.execute('INSERT INTO Capacidad_equipo (horas_productivas, tiempo_perdido_pc, errores_registro_pc, overhead_pc, productivas_pc, operativos_pc, humano_pc, cmmi_pc) VALUES (NULL, 0.15, NULL, NULL, 0.55, 0.25, 0.05, 0.15)')
+    }
     
     static fetchAll(){
         return db.execute('SELECT * FROM Capacidad_Equipo');
