@@ -1,39 +1,41 @@
 <%- include('includes/openHTML.ejs'); %>
 <%- include('includes/navbarIteracion.ejs'); %>
 
+<link rel="stylesheet" href="tabla_cu.css">
+
 <main>
   <div class="row">
     <!-- Registrar -->
     <form class="col s10 offset-s1" action="casos-uso-iteracion" method="POST">
-        <div class="row">
-            <div class="input-field col 1">
-              <input id="yo_como" name="yo_como" type="text" class="validate" maxlength="64" required>
-              <label for="yo_como">Yo como</label>
-            </div>
-            <div class="input-field col 1">
-                <input id="quiero" name="quiero" type="text" class="validate" maxlength="255" required>
-                <label for="quiero">quiero</label>
-            </div>
-            <div class="input-field col 1">
-                <input id="para" name="para" type="text" class="validate" maxlength="255">
-                <label for="para">para</label>
-            </div>
-            <div class="input-field col 1">
-              <select name="id_ap" class="browser-default" required>
-                <option value="" disabled selected>AP</option>
-                <option value="1">1</option> 
-                <option value="2">2</option> 
-                <option value="3">3</option> 
-                <option value="4">5</option> 
-                <option value="5">8</option> 
-                <option value="6">13</option> 
-              </select>
-            </div>
-            <div class="input-field col 2">
-              <input type="hidden" name="_csrf" value="<%= csrfToken %>"> 
-              <button class="btn waves-effect waves-light light-blue darken-3" type="submit" name="action" value="registrar">Registrar</button>
-            </div>
+      <div class="row">
+        <div class="input-field col 1">
+          <input id="yo_como" name="yo_como" type="text" class="validate" maxlength="64" required>
+          <label for="yo_como">Yo como</label>
         </div>
+        <div class="input-field col 1">
+            <input id="quiero" name="quiero" type="text" class="validate" maxlength="255" required>
+            <label for="quiero">quiero</label>
+        </div>
+        <div class="input-field col 1">
+            <input id="para" name="para" type="text" class="validate" maxlength="255">
+            <label for="para">para</label>
+        </div>
+        <div class="input-field col 1">
+          <select name="id_ap" class="browser-default" required>
+            <option value="" disabled selected>AP</option>
+            <option value="1">1</option> 
+            <option value="2">2</option> 
+            <option value="3">3</option> 
+            <option value="4">5</option> 
+            <option value="5">8</option> 
+            <option value="6">13</option> 
+          </select>
+        </div>
+        <div class="input-field col 2">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>"> 
+          <button class="btn waves-effect waves-light light-blue darken-3" type="submit" name="action" value="registrar">Registrar</button>
+        </div>
+      </div>
     </form>
 
     <!-- Consultar -->
@@ -62,7 +64,7 @@
                 <td><%= caso.para %></td>
                 <td><%= caso.ap %></td>
                 
-                <!-- Botones -->
+                <!-- Botones -->                
                 <!-- Modificar -->
                 <td>
                   <button data-target="modal1_<%= caso.id_casos %>" class="btn modal-trigger light-blue darken-3" name="action" value="editar"><i class="small material-icons">mode_edit</i></button>
@@ -153,4 +155,3 @@
 </main>
 
 <%- include('includes/closeHTML.ejs'); %>
-
