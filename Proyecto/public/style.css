@@ -16,67 +16,6 @@
     margin-top: 7%;
 }
 
-/* Tabla de los casos de uso */
-.tabla_cu {
-    table-layout: fixed;
-    width: 100%;
-    overflow-y: hidden;
-    overflow-x: hidden;
-    max-height: 500px;
-    background-color: white;
-}
-
-.tabla_cu thead th {
-    padding-left: 15px;
-    position: sticky;
-    top: 0;
-    background-color: #343434;
-    color: white;
-    font-weight: bold;
-}
-
-.tabla_cu td {
-    padding-left: 15px;
-    overflow-wrap: break-word;
-    text-overflow: ellipsis;
-}
-
-.tabla_cu tr {
-    color:#343434;
-}
-
-.tabla_cu tr:hover{
-    background-color: #f5f5f5;
-}
-
-.row-idCasos-ap {
-    width: 6.5%;
-}
-
-.row-yo_como {
-    width: 12.5%;
-}
-
-.row-quiero-para {
-    width: 25.25%;
-} 
-
-.row-botones {
-    width: 8%;
-}
-
-.row-idCaso-Tarea {
-    width: 15%;
-}
-
-.row-quiero {
-    width: 75%;
-}
-
-.row-botonTareas {
-    width: 10%;
-}
-
 /* Tareas por caso de uso */
 #tabla_caso_uso_tareas{
     max-height: 500px;
@@ -162,7 +101,8 @@ div#modal5 {
 }
 
 .logout{
-    position:fixed; 
+    position: fixed; 
+    width: 100%;
     bottom: 10%;
     
 }
@@ -188,76 +128,6 @@ div#modal5 {
 .d-content{
     text-decoration-line: underline;
     display: contents;
-}
-
-/* AP Promedios */
-.ap_promedios {
-    table-layout: fixed;
-    width: 100%;
-    /* overflow-y: hidden;
-    overflow-x: hidden; */
-    max-height: 500px;
-
-    align-items: center;
-    background-color: white;
-    padding-bottom: 5px;
-}
-
-.ap_promedios th{
-    position: sticky;
-    top: 0;
-    background-color: #343434;
-    color: white;
-    text-align: center;
-    font-weight: bold;
-}
-
-.ap_promedios tr:hover{
-    background-color: #f5f5f5;
-}
-
-.ap_promedios tr{
-    text-align: center;
-    color:#343434;
-}
-
-.ap_promedios td{
-    overflow-wrap: break-word;
-    text-overflow: ellipsis;
-}
-
-.ap_promedios tr td:nth-child(1){
-    text-align: center;
-    font-size: 15px;
-    font-weight: normal;
-}
-
-.ap_promedios tr td:nth-child(2){
-    padding: 30px;
-    text-align: center;
-}
-
-.ap_promedios tr td:nth-child(3),
-.ap_promedios tr td:nth-child(4),
-.ap_promedios tr td:nth-child(5),
-.ap_promedios tr td:nth-child(6),
-.ap_promedios tr td:nth-child(7),
-.ap_promedios tr td:nth-child(8)
-{
-    text-align: center;
-}
-
-.ap_promedios tr td:nth-child(3) input,
-.ap_promedios tr td:nth-child(4) input,
-.ap_promedios tr td:nth-child(5) input,
-.ap_promedios tr td:nth-child(6) input,
-.ap_promedios tr td:nth-child(7) input,
-.ap_promedios tr td:nth-child(8) input
-{
-    width: 50%;
-    padding: 0;
-    margin: auto;
-    text-align: center;
 }
 
 .column-nombre-fase {
@@ -314,4 +184,25 @@ div#modal5 {
 }
 .login-btn{
     border-radius: 25px;
+/* Scrollbar of tables */
+/* width */
+::-webkit-scrollbar {
+    width: 15px;
+}
+  
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey; 
+    border-radius: 3px;
+}
+   
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #494949; 
+    border-radius: 3px;
+}
+  
+  /* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #353535; 
 }
