@@ -61,7 +61,7 @@
               <td><%= caso.yo_como %></td>
               <td><%= caso.quiero %></td>
               <td><%= caso.para %></td>
-              <td><%= caso.ap %></td>
+              <td> &nbsp;&nbsp;<%= caso.ap %></td>
               
               <!-- Botones -->                
               <!-- Modificar -->
@@ -122,7 +122,7 @@
               </td>
               
               <!-- Comentario -->
-              <td>
+              <td> 
                 <% if(caso.comentario !== ""){ %>
                     <a class="btn tooltipped light-blue darken-3" data-position="bottom" data-tooltip="<%= caso.comentario %>"><i class="material-icons">forum</i></a>
                 <% } %>
