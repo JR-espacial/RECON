@@ -1,6 +1,7 @@
 const Casos_Uso = require('../models/casos_uso');
 const Proyecto_Fase_Tarea = require('../models/Proyecto_Fase_Tarea');
 const Entrega = require('../models/entrega');
+const AP_Promedios = require('../models/ap_promedios');
 
 exports.getTareaCasoUso = (request, response) =>{
     const id_proyecto = request.session.idProyecto;
@@ -48,18 +49,33 @@ exports.postModificarAsocioacion = (request, response) => {
     const id_proyecto = request.session.idProyecto;
     const id_fase = request.body.id_fase;
     const id_tarea = request.body.id_tarea;
-    const id_caso = request.body.id_casos; 
+    const id_casos = request.body.id_casos; 
     const accion = request.body.accion;
 
     if(accion === "registrar") {
-        Entrega.crearEntrega(id_proyecto, id_fase, id_tarea, id_caso)
-            .then(() => response.status(200))
-            .catch( err => console.log(err));       
+        Casos_Uso.fetchOneAP(id_casos)
+            .then(([rows, fieldData]) => {
+                const id_ap = rows[0].id_ap;
+                AP_Promedios.fetchPromedioMinutos(id_proyecto, id_fase, id_tarea, id_ap)
+                    .then(([rows2, fieldData]) => {
+                        let estimacion = rows2[0].promedio_minutos;
+                        estimacion = (estimacion / 60).toFixed(2);
+                        Entrega.crearEntrega(id_proyecto, id_fase, id_tarea, id_casos, estimacion)
+                            .then(() => response.status(200))
+                            .catch( err => console.log(err));
+                    })
+                    .catch(err =>{
+                        console.log(err);
+                    })
+            })
+            .catch(err => {
+                console.log(err);
+            });          
     }
     else if(accion === "eliminar") {
-        Entrega.dropEntrega(id_proyecto, id_fase, id_tarea, id_caso)
+        Entrega.dropEntrega(id_proyecto, id_fase, id_tarea, id_casos)
             .then(() => response.status(200))
             .catch( err => console.log(err));
-    }  
+    }
 }
 
