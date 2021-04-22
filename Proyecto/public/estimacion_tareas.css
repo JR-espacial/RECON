@@ -1,0 +1,112 @@
+/* Tablas de Estimacion de Tareas */
+.estimacion_tareas tbody {
+    display: block;
+    max-height: 450px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    background-color: white;
+}
+
+.estimacion_tareas thead, tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.estimacion_tareas table {
+    width:100%;
+}
+
+/* esto pone la scroll bar afuera o adentro */
+.estimacion_tareas thead {
+    width: calc( 100% - 1em )
+}
+
+.estimacion_tareas thead th {
+    position: sticky;
+    top: 0;
+    text-align: center;
+    background-color: #343434;
+    color: white;
+    font-weight: bold;
+}
+
+.estimacion_tareas tbody tr:hover{
+    background-color: #f5f5f5;
+}
+
+.estimacion_tareas td {
+    text-align: center;
+    overflow-wrap: break-word;
+    text-overflow: ellipsis;
+}
+
+.estimacion_tareas tr td:nth-child(1){
+    font-weight: normal;
+}
+
+.estimacion_tareas tr td:nth-child(2){
+    padding: 30px;
+}
+
+.estimacion_tareas tr td:nth-child(3),
+.estimacion_tareas tr td:nth-child(4),
+.estimacion_tareas tr td:nth-child(5),
+.estimacion_tareas tr td:nth-child(6),
+.estimacion_tareas tr td:nth-child(7),
+.estimacion_tareas tr td:nth-child(8)
+{
+    text-align: center;
+}
+
+.estimacion_tareas tr td:nth-child(3) input,
+.estimacion_tareas tr td:nth-child(4) input,
+.estimacion_tareas tr td:nth-child(5) input,
+.estimacion_tareas tr td:nth-child(6) input,
+.estimacion_tareas tr td:nth-child(7) input,
+.estimacion_tareas tr td:nth-child(8) input
+{
+    width: 50%;
+    padding: 0;
+    margin: auto;
+    text-align: center;
+} 
+
+
+/* Column and td widths */
+/* Theads */
+.estimacion_tareas thead th:nth-child(1){
+    width: 15%;
+}
+
+.estimacion_tareas thead th:nth-child(2){
+    width: 25%;
+}
+
+.estimacion_tareas thead th:nth-child(3),
+.estimacion_tareas thead th:nth-child(4),
+.estimacion_tareas thead th:nth-child(5),
+.estimacion_tareas thead th:nth-child(6),
+.estimacion_tareas thead th:nth-child(7),
+.estimacion_tareas thead th:nth-child(8)
+{
+    width: 10%;
+}
+
+/* Tds */
+.estimacion_tareas td:nth-child(1){
+    width: 15%;
+}
+
+.estimacion_tareas td:nth-child(2){
+    width: 25%;
+}
+
+.estimacion_tareas td:nth-child(3),
+.estimacion_tareas td:nth-child(4),
+.estimacion_tareas td:nth-child(5),
+.estimacion_tareas td:nth-child(6),
+.estimacion_tareas td:nth-child(7),
+.estimacion_tareas td:nth-child(8)
+    width: 10%;
+}

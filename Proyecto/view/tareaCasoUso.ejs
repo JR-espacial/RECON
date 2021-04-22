@@ -13,23 +13,23 @@
                     <table class="tabla_tareas_cu">
                         <thead> 
                             <tr>
-                                <th class="row-botonTareas"></th>
-                                <th class="row-idCaso-Tarea">id</th>
-                                <th class="row-quiero">Quiero</th>      
+                                <th></th>
+                                <th>id</th>
+                                <th>Quiero</th>      
                             </tr>
                         </thead>
                         <tbody>
                             <% for (quiero of lista_quiero) { %>
                                 <tr>
-                                    <td class="row-botonTareas">
+                                    <td>
                                         <label>
                                             <input type="hidden" name="_csrf" id="_csrf" value="<%= csrfToken %>">
-                                            <input name="group1" type="radio" onchange="obtenerTareas('<%= quiero.id_casos %>')"></input>
+                                            <input name="group1" type="radio" class="with-gap" onchange="obtenerTareas('<%= quiero.id_casos %>')"></input>
                                             <span></span>
                                         </label>
                                     </td>
-                                    <td class="row-idCaso-Tarea"><%= quiero.id_casos %></td>
-                                    <td class="row-quiero"><%= quiero.quiero %></td>
+                                    <td><%= quiero.id_casos %></td>
+                                    <td><%= quiero.quiero %></td>
                                 </tr>
                             <% } %>
                         </tbody>
@@ -54,7 +54,7 @@
                             <!-- Despliegue de tareas de la fase -->
                             <div id="tarea-en-fase">
                                 <label>
-                                    <input type="checkbox" id="botonCheck_<%= tarea %>" class="filled-in" disabled="disabled" onclick="modificarAsociacion('<%= lista_tareas[tarea].id_fase %>','<%= lista_tareas[tarea].id_tarea %>', '<%= tarea %>')"/> 
+                                    <input type="checkbox" id="botonCheck_<%= tarea %>" class="filled-in checkbox-blue-grey" disabled="disabled" onclick="modificarAsociacion('<%= lista_tareas[tarea].id_fase %>','<%= lista_tareas[tarea].id_tarea %>', '<%= tarea %>')"/> 
                                     <span> <%= lista_tareas[tarea].nombre_tarea %> </span>
                                 </label>
                             </div>

@@ -2,7 +2,7 @@
 .tabla_tareas_cu tbody {
     display:block;
     max-height:450px;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
     background-color: white;
 }
@@ -14,9 +14,10 @@
     -webkit-transform: translateZ(0);
 }
 
+/* 
 .tabla_tareas_cu thead {
     width: calc( 100% - 1em )
-}
+} */
 
 .tabla_tareas_cu table {
     width:100%;
@@ -38,4 +39,28 @@
 
 .tabla_tareas_cu td {
     padding-left: 15px;
+}
+
+.tabla_tareas_cu thead th:nth-child(1) {
+    width: 10%;
+}
+
+.tabla_tareas_cu thead th:nth-child(2) {
+    width: 15%;
+}
+
+.tabla_tareas_cu thead th:nth-child(3) {
+    width:75%;
+}
+
+.tabla_tareas_cu td:nth-child(1) {
+    width: 10%;
+}
+
+.tabla_tareas_cu td:nth-child(2) {
+    width: 15%;
+}
+
+.tabla_tareas_cu td:nth-child(3) {
+    width:75%;
 }

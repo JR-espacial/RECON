@@ -16,35 +16,6 @@
     margin-top: 7%;
 }
 
-/* Width de las columnas */
-.row-idCasos-ap {
-    width: 6.5%;
-}
-
-.row-yo_como {
-    width: 12.5%;
-}
-
-.row-quiero-para {
-    width: 25.25%;
-} 
-
-.row-botones {
-    width: 8%;
-}
-
-.row-idCaso-Tarea {
-    width: 15%;
-}
-
-.row-quiero {
-    width: 75%;
-}
-
-.row-botonTareas {
-    width: 10%;
-}
-
 /* Tareas por caso de uso */
 #tabla_caso_uso_tareas{
     max-height: 500px;
@@ -175,25 +146,24 @@ div#modal5 {
 }
 
 /* Scrollbar of tables */
-
 /* width */
 ::-webkit-scrollbar {
     width: 15px;
-  }
+}
   
-  /* Track */
-  ::-webkit-scrollbar-track {
+/* Track */
+::-webkit-scrollbar-track {
     box-shadow: inset 0 0 5px grey; 
     border-radius: 3px;
-  }
+}
    
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
+/* Handle */
+::-webkit-scrollbar-thumb {
     background: #494949; 
     border-radius: 3px;
-  }
+}
   
   /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
+::-webkit-scrollbar-thumb:hover {
     background: #353535; 
-  }
+}
