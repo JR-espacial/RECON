@@ -37,13 +37,13 @@
 } /*Black color to the text*/
 
 .tabs .tab a:hover {
-    background-color: rgb(32, 26, 26);
-    color:rgb(238, 238, 238);
+    background-color: rgb(121, 110, 110);
+    color:rgb(255, 255, 255);
 } /*Text color on hover*/
 
 .tabs .tab a.active {
     background-color: #343434;
-    color:rgb(199, 199, 199);
+    color:rgb(255, 253, 253);
 } /*Background and text color when a tab is active*/
 
 .tabs .tab a:focus.active {

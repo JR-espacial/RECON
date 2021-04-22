@@ -107,6 +107,6 @@
 .estimacion_tareas td:nth-child(5),
 .estimacion_tareas td:nth-child(6),
 .estimacion_tareas td:nth-child(7),
-.estimacion_tareas td:nth-child(8)
+.estimacion_tareas td:nth-child(8){
     width: 10%;
 }
