@@ -4,7 +4,7 @@ SET time_zone = "+00:00";
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */; 
 /*!40101 SET NAMES utf8mb4 */;
 
 INSERT INTO `puntos_agiles` (`id_ap`, `ap`) VALUES(1, 1);
@@ -200,13 +200,13 @@ INSERT INTO `proyecto_departamento` (`id_proyecto`, `id_departamento`) VALUES(48
 INSERT INTO `proyecto_departamento` (`id_proyecto`, `id_departamento`) VALUES(49, 16);
 INSERT INTO `proyecto_departamento` (`id_proyecto`, `id_departamento`) VALUES(50, 17);
 
-INSERT INTO `empleado` (`id_empleado`, `usuario`, `contrasena`, `nombre_empleado`) VALUES(1, 'MSO', '$2a$12$4cN1mST1a8.8fNC9.pnvE.mUSNiG.Ne2lrr0go3/bKXDE2Yo0ZA0e', 'Mariana');
-INSERT INTO `empleado` (`id_empleado`, `usuario`, `contrasena`, `nombre_empleado`) VALUES(2, 'juan12', '$2a$12$xmCLv9MvmIoXd8aVNql1Y.gB1zmTREbxzg9byypAFWLHBFiACQuXm', 'Juan');
-INSERT INTO `empleado` (`id_empleado`, `usuario`, `contrasena`, `nombre_empleado`) VALUES(3, 'RafitaMessi', '$2a$12$5LW9iStFUld2aOsRoquON.C2bKl5WbyjgoyZK.J9IvsIE7RkkttIu', 'Rafael');
-INSERT INTO `empleado` (`id_empleado`, `usuario`, `contrasena`, `nombre_empleado`) VALUES(4, 'JARE', '$2a$12$S8iC16/JILZSvMCrp9i4Z.jkZ/oFrvvPnYTsDRZJMwFqdw.BVQGQK', 'Jor ge');
-INSERT INTO `empleado` (`id_empleado`, `usuario`, `contrasena`, `nombre_empleado`) VALUES(5, 'pipe', '$2a$12$08thqIbh8p4E5OzZhvkfJOAPBgc2DYciY7638CrkmxvNnrO/dMQsS', 'Felipe');
-INSERT INTO `empleado` (`id_empleado`, `usuario`, `contrasena`, `nombre_empleado`) VALUES(6, 'Piñis', '$2a$12$Ku2DBINPRfTa1e/4C1w4IO4oZFSsaa9RtUkhUNvW975Bxr9pLkoU.', 'Andrea');
-INSERT INTO `empleado` (`id_empleado`, `usuario`, `contrasena`, `nombre_empleado`) VALUES(7, 'joakozer', '$2a$12$Y1R8DXStIs5TquHzIJmIheuQzOKerqnZaoES/ozzRf.2LenksuF8G', 'Joaquín');
+INSERT INTO `empleado` (`id_empleado`, `usuario`, `contrasena`, `nombre_empleado`, `imagen_empleado`) VALUES(1, 'MSO', '$2a$12$4cN1mST1a8.8fNC9.pnvE.mUSNiG.Ne2lrr0go3/bKXDE2Yo0ZA0e', 'Mariana', 'https://scontent.fqro3-1.fna.fbcdn.net/v/t1.6435-9/48120817_10216422186483885_2580841965515964416_n.jpg?_nc_cat=105&ccb=1-3&_nc_sid=09cbfe&_nc_eui2=AeHJqNuHBusbHLKuVUwpclwEs8KDUIvJxS2zwoNQi8nFLXkfzwmpDHNoqQuWNwah5YE&_nc_ohc=mCbj_X5Vz64AX-Yvoyd&_nc_ht=scontent.fqro3-1.fna&oh=8b5116a6636d8f9703fa6ae044b2e601&oe=60A4A930');
+INSERT INTO `empleado` (`id_empleado`, `usuario`, `contrasena`, `nombre_empleado`, `imagen_empleado`) VALUES(2, 'juan12', '$2a$12$xmCLv9MvmIoXd8aVNql1Y.gB1zmTREbxzg9byypAFWLHBFiACQuXm', 'Juan', 'https://s03.s3c.es/imag/_v0/770x420/7/6/f/GettyImages-522796439.jpg');
+INSERT INTO `empleado` (`id_empleado`, `usuario`, `contrasena`, `nombre_empleado`, `imagen_empleado`) VALUES(3, 'RafitaMessi', '$2a$12$5LW9iStFUld2aOsRoquON.C2bKl5WbyjgoyZK.J9IvsIE7RkkttIu', 'Rafael', 'https://scontent.fqro3-1.fna.fbcdn.net/v/t1.6435-9/79331763_1303385896527232_307607353035849728_n.jpg?_nc_cat=106&ccb=1-3&_nc_sid=09cbfe&_nc_eui2=AeE9Q2206WBfhQkOTTkGmWHIpG76Fsmz8sGkbvoWybPywQasiWPR-k15UUl5p_i4u-Q&_nc_ohc=sYiKB8KVBSMAX_6NK6T&_nc_ht=scontent.fqro3-1.fna&oh=2fda2bcde6d30810807f6808edb98e51&oe=60A7D7E9');
+INSERT INTO `empleado` (`id_empleado`, `usuario`, `contrasena`, `nombre_empleado`, `imagen_empleado`) VALUES(4, 'JARE', '$2a$12$S8iC16/JILZSvMCrp9i4Z.jkZ/oFrvvPnYTsDRZJMwFqdw.BVQGQK', 'Jor ge', 'https://media-exp1.licdn.com/dms/image/C5603AQFDUDku_gxY3A/profile-displayphoto-shrink_800_800/0/1613095871693?e=1624492800&v=beta&t=l1Azo_uYLsqesdoB3kiqhAsMxetAUj14RH6OWCWFmXw');
+INSERT INTO `empleado` (`id_empleado`, `usuario`, `contrasena`, `nombre_empleado`, `imagen_empleado`) VALUES(5, 'pipe', '$2a$12$08thqIbh8p4E5OzZhvkfJOAPBgc2DYciY7638CrkmxvNnrO/dMQsS', 'Felipe', 'https://scontent.fqro3-1.fna.fbcdn.net/v/t1.6435-9/60352581_107113400522439_2730943079577026560_n.jpg?_nc_cat=106&ccb=1-3&_nc_sid=09cbfe&_nc_eui2=AeEqvYErHPYBB4YmHBLrzrfUlmSXD07K6FmWZJcPTsroWfWTRXK4DUIr3oklFvouTQM&_nc_ohc=gTpzA5EVM4IAX-w0V89&_nc_ht=scontent.fqro3-1.fna&oh=bb95404d611d2f3da071c4b69b89b408&oe=60A67E9D');
+INSERT INTO `empleado` (`id_empleado`, `usuario`, `contrasena`, `nombre_empleado`, `imagen_empleado`) VALUES(6, 'Piñis', '$2a$12$Ku2DBINPRfTa1e/4C1w4IO4oZFSsaa9RtUkhUNvW975Bxr9pLkoU.', 'Andrea', 'https://scontent.fqro3-1.fna.fbcdn.net/v/t1.6435-9/118324162_1422523571291038_4976930504143043381_n.jpg?_nc_cat=109&ccb=1-3&_nc_sid=09cbfe&_nc_eui2=AeHfYuVTr5IsYWCZZZqTRhIMgKSbooiV582ApJuiiJXnzTsGVVUM2Bnq0SuqaW71hlk&_nc_ohc=h8q1QebFjoQAX9z3xiw&_nc_ht=scontent.fqro3-1.fna&oh=54757e8877ca4d243a7d00bed2c4e266&oe=60A737C2');
+INSERT INTO `empleado` (`id_empleado`, `usuario`, `contrasena`, `nombre_empleado`, `imagen_empleado`) VALUES(7, 'joakozer', '$2a$12$Y1R8DXStIs5TquHzIJmIheuQzOKerqnZaoES/ozzRf.2LenksuF8G', 'Joaquín', 'https://scontent.fqro3-1.fna.fbcdn.net/v/t1.18169-9/18403197_1897637363815175_7175619043984519368_n.jpg?_nc_cat=110&ccb=1-3&_nc_sid=174925&_nc_eui2=AeHjTXaH5HoZAZHKGraZJtwFMMV8q4-JZekwxXyrj4ll6Rb8Qv0HAAsMfjXaU8D6QtY&_nc_ohc=4iunEWEDYckAX9yWuPP&_nc_ht=scontent.fqro3-1.fna&oh=92c02dd8d22406c3b20b79fd04f2f105&oe=60A6E218');
 INSERT INTO `empleado` (`id_empleado`, `usuario`, `contrasena`, `nombre_empleado`) VALUES(8, 'Casas', '$2a$12$DfIFZZhzWrcFWak5EI3NsueTQJQroLP5M7/Tjo1/tVBHeW7XEVspq', 'Armando');
 INSERT INTO `empleado` (`id_empleado`, `usuario`, `contrasena`, `nombre_empleado`) VALUES(9, 'gero33', '$2a$12$Vwe8vp24iKhpgqcYfoiyKecLW7GwmsanDiZNsyI9Dsc/nKCl9ua7u', 'Gerónimo');
 INSERT INTO `empleado` (`id_empleado`, `usuario`, `contrasena`, `nombre_empleado`) VALUES(10, 'cafe45', '$2a$12$LQofiw.Gv8IhTK/fw2qWkOy0tWVRlWJ0LaC19HyOKeEB20.gYvAEu', 'Benji');

@@ -80,6 +80,7 @@
         usuario VARCHAR(14),
         contrasena VARCHAR(100),
         nombre_empleado VARCHAR(64),
+        imagen_empleado VARCHAR(400),
         PRIMARY KEY(id_empleado)
     );
 

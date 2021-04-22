@@ -72,3 +72,17 @@ exports.postRegister = (request, response, next) => {
         }).catch(err => console.log(err));
 
 }
+
+exports.getSettings = async function (request, response, next) {
+    const alerta = request.session.alerta;
+    request.session.alerta = "";
+    let user = await Usuario.fetchOne(request.session.usuario);
+
+    response.render('modificarUsuario', {
+        user: user[0][0],
+        alerta: alerta,
+        title: 'Modifica tus datos',
+        csrfToken: request.csrfToken(),
+        isLoggedIn: request.session.isLoggedIn === true ? true : false
+    });
+};

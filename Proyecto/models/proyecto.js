@@ -55,5 +55,4 @@ module.exports =  class Proyecto{
     static fetchAirTableKeys(id_proyecto){
         return db.execute('SELECT base, API_key FROM Proyecto WHERE id_proyecto = ?', [id_proyecto]);
     }
-
 }

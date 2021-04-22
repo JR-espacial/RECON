@@ -163,8 +163,7 @@ div#modal5 {
 
 .logout{
     position:fixed; 
-    bottom: 10%;
-    
+    bottom: 10%;  
 }
 
 .modal_edit{
@@ -309,9 +308,25 @@ div#modal5 {
     font-size: 5vw;
 }
 
+.responsive_title_settings{
+    font-size: 3vw;
+}
+
 .responsive_text_login{
     font-size: 1.7vw;
 }
 .login-btn{
     border-radius: 25px;
+}
+
+.tab_iteraciones{
+    width: 49%;
+}
+
+.eliminar_proyecto{
+    width: 0%;
+}
+
+.reveal_content{
+    text-align: left;
 }

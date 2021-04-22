@@ -3,7 +3,9 @@
 <%- include('includes/navbarPrincipal.ejs'); %>
 
 <main>
-          
+
+  
+
 <div class="row">    
     <div class="col s2 offset-s9">
       <div class="row">
@@ -20,9 +22,9 @@
     <div class=" col s10  offset-s1 ">
         <% for (let proyecto of proyectos) { %>
         <div class="col s4">
-            <div class="card">
+            <div class="card hoverable">
                 <div class="card-image">
-                    <img  src="<%= proyecto.imagen %>">
+                    <img class="activator"  src="<%= proyecto.imagen %>">
                     <div id="modal1_<%= proyecto.id_proyecto %>" class="modal large">
                         <form action="/home/modificar-proyecto?_csrf=<%=csrfToken%>" method="POST"  enctype="multipart/form-data">
                         <!-- Modal Content -->
@@ -85,15 +87,15 @@
                     </div>
                 </div>
                 <div class="card-content">
-                    <a class='dropdown-trigger  grey-text text-darken-4' data-target='dropdown1_<%= proyecto.nombre_proyecto %>'><i class="material-icons right">more_vert</i></a>
+                    <a class='dropdown-trigger right  grey-text text-darken-4' data-target='dropdown1_<%= proyecto.nombre_proyecto %>'><i class="material-icons right">more_vert</i></a>
                     <span><%= proyecto.nombre_proyecto %></span>
                     <ul id='dropdown1_<%= proyecto.nombre_proyecto %>' class='dropdown-content'>
-                        <li><a data-target="modal1_<%= proyecto.id_proyecto %>" class="modal-trigger"><i class="material-icons right">mode_edit</i></a></li>
+                        <li><a data-target="modal1_<%= proyecto.id_proyecto %>" class="boton_dropdown modal-trigger"><i class="small material-icons right">mode_edit</i></a></li>
                         <li>
                             <form action="/home/eliminar-proyecto" method="POST" id="eliminar_<%= proyecto.id_proyecto %>">
                                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                                 <input type="hidden" name="id_proyecto" value="<%= proyecto.id_proyecto %>">
-                                <button type="submit" class="waves-effect waves-green btn-flat"><i class="material-icons">delete</i>Eliminar</button>
+                                <button type="submit" class="boton_dropdown waves-effect waves-green btn-flat"><i class="small material-icons">delete</i></button>
                                 <script> 
                                     document.getElementById("eliminar_<%= proyecto.id_proyecto %>").addEventListener('submit', (e) => {
                                       let confirmacion = confirm('¿Estás seguro de eliminar el proyecto?');
@@ -114,6 +116,17 @@
                         <button class=" btn-flat d-content" type="submit">Ir al proyecto</botton>
                     </form>
                 </div>
+                <div class="card-reveal">
+                    <span class="card-title"><strong><%= proyecto.nombre_proyecto %></strong><i class="material-icons right">close</i></span>
+
+                    <% if(proyecto.descripcion_proyecto){ %>
+                        <br>
+                        <p><%= proyecto.descripcion_proyecto %></p>
+                    <% } %>
+                    <br>
+                    <p>Departamento: <%= proyecto.nombre_departamento %></p>
+ 
+                </div>
             </div>
         </div>
         <% } %>
@@ -121,46 +134,52 @@
 </div>
 
 
-<script>
+        
 
-    document.addEventListener('DOMContentLoaded', function() {
-    let autocomplete = document.getElementById("autocomplete-input");
+<script>
     
+    
+    document.addEventListener('DOMContentLoaded', function() {
     let options = {};
 
     "<%for (let i = 0; i < proyectos.length; i++) { %>"
-         options["<%=proyectos[i].nombre_proyecto%>"] = null;
-     "<% } %>"
-      
+        options["<%=proyectos[i].nombre_proyecto%>"] = null;
+    "<% } %>"
+    
+    console.log(options);
+
+    let autocomplete = document.getElementById("autocomplete-input");
+    // M.AutoInit();
     var instances = M.Autocomplete.init(autocomplete, { 
         data : options,
         onAutocomplete: GotoProyect
+    
      });
-
-    function GotoProyect(){
-   
-        let id_proyecto;
-        "<%for (let i = 0; i < proyectos.length; i++) { %>"
-            if ("<%=proyectos[i].nombre_proyecto%>" == autocomplete.value) { 
-                id_proyecto = "<%=proyectos[i].id_proyecto%>";
-            }
-        "<% } %>"
+     
+        function GotoProyect(){
+    
+            let id_proyecto;
+            "<%for (let i = 0; i < proyectos.length; i++) { %>"
+                if ("<%=proyectos[i].nombre_proyecto%>" == autocomplete.value) { 
+                    id_proyecto = "<%=proyectos[i].id_proyecto%>";
+                }
+            "<% } %>"
+            
+            let data = {idProyecto: id_proyecto, nombreProyecto: autocomplete.value};
+            const csrf = "<%= csrfToken %>";
         
-        let data = {idProyecto: id_proyecto, nombreProyecto: autocomplete.value};
-        const csrf = "<%= csrfToken %>";
-       
-        
-        fetch('home',{
-            method : 'POST',
-            body : JSON.stringify(data),
-            headers:{
-                'csrf-token': csrf,
-                'Content-Type': 'application/json'
-            },
-        });
+            
+            fetch('home',{
+                method : 'POST',
+                body : JSON.stringify(data),
+                headers:{
+                    'csrf-token': csrf,
+                    'Content-Type': 'application/json'
+                },
+            });
 
-        location.replace("/proyectos/iteraciones-desarrollo-proyecto");
-    }
+            location.replace("/proyectos/iteraciones-desarrollo-proyecto");
+        }
     
     });
 

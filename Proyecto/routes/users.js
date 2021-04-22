@@ -11,6 +11,7 @@ router.post('/login', usersController.postLogin);
 router.get('/logout', isAuth, usersController.getLogout);
 router.get('/register', usersController.getRegister);
 router.post('/register', usersController.postRegister);
+router.get('/settings',isAuth, usersController.getSettings);
 
 router.use(express.static(path.join(__dirname, '..', 'public')));
 
