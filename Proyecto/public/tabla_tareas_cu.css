@@ -39,6 +39,8 @@
 
 .tabla_tareas_cu td {
     padding-left: 15px;
+    overflow-wrap: break-word;
+    text-overflow: ellipsis;
 }
 
 .tabla_tareas_cu thead th:nth-child(1) {
