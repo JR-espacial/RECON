@@ -6,72 +6,74 @@
 <main>
     <br><br>
     <div class="row">
-        <% if(lista_quiero.length !== 0) { %>
-            <!-- Quiero -->
-            <div class="col s10 offset-s1">
-                <div class="col s5">
-                    <table class="tabla_tareas_cu">
-                        <thead> 
-                            <tr>
-                                <th></th>
-                                <th>id</th>
-                                <th>Quiero</th>      
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% for (quiero of lista_quiero) { %>
+        <div class="col s10 offset-s1">
+            <% if(lista_quiero.length !== 0) { %>
+                <!-- Quiero -->
+                
+                    <div class="col s5">
+                        <table class="tabla_tareas_cu">
+                            <thead> 
                                 <tr>
-                                    <td>
-                                        <label>
-                                            <input type="hidden" name="_csrf" id="_csrf" value="<%= csrfToken %>">
-                                            <input name="group1" type="radio" class="with-gap" onchange="obtenerTareas('<%= quiero.id_casos %>')"></input>
-                                            <span></span>
-                                        </label>
-                                    </td>
-                                    <td><%= quiero.id_casos %></td>
-                                    <td><%= quiero.quiero %></td>
+                                    <th></th>
+                                    <th>id</th>
+                                    <th>Quiero</th>      
                                 </tr>
-                            <% } %>
-                        </tbody>
-                    </table>
-                </div>
-            
-                <!-- Tareas del Proyecto -->
-                <div class="col s5">                    
-                    <div id="fasesVert" class="container">                        
-                        <% for (let tarea = 0; tarea < lista_tareas.length; tarea++) { 
-                            <!-- Si va empezando o cambia de fase  -->
-                            if(tarea === 0 || lista_tareas[tarea].nombre_fase !== lista_tareas[tarea - 1].nombre_fase){ %>
-                                <!-- Empieza bloque de la fase -->
-                                <div id="faseVert" class="center-align">
-                                    <!-- Título de la fase -->
-                                    <div id="titulo-fase">
-                                        <span class=""> <%= lista_tareas[tarea].nombre_fase %>: </span>
-                                    </div>
-                                <!-- Empieza div para desplegar tareas de la fase -->
-                                <div>
-                            <% } %>
-                            <!-- Despliegue de tareas de la fase -->
-                            <div id="tarea-en-fase">
-                                <label>
-                                    <input type="checkbox" id="botonCheck_<%= tarea %>" class="filled-in checkbox-blue-grey" disabled="disabled" onclick="modificarAsociacion('<%= lista_tareas[tarea].id_fase %>','<%= lista_tareas[tarea].id_tarea %>', '<%= tarea %>')"/> 
-                                    <span> <%= lista_tareas[tarea].nombre_tarea %> </span>
-                                </label>
-                            </div>
-                            <!-- Si es la última tarea de todas o de una fase, cierra la división para la fase -->
-                            <% if(tarea === lista_tareas.length - 1 || lista_tareas[tarea].nombre_fase !== lista_tareas[tarea + 1].nombre_fase) { %> 
-                                <!-- Cierra bloque de tareas  -->
-                                </div>
-                                <!-- Cierra bloque de fase -->
-                                </div>
-                            <% } %>
-                        <% } %>          
+                            </thead>
+                            <tbody>
+                                <% for (quiero of lista_quiero) { %>
+                                    <tr>
+                                        <td>
+                                            <label>
+                                                <input type="hidden" name="_csrf" id="_csrf" value="<%= csrfToken %>">
+                                                <input name="group1" type="radio" class="with-gap" onchange="obtenerTareas('<%= quiero.id_casos %>')"></input>
+                                                <span></span>
+                                            </label>
+                                        </td>
+                                        <td><%= quiero.id_casos %></td>
+                                        <td><%= quiero.quiero %></td>
+                                    </tr>
+                                <% } %>
+                            </tbody>
+                        </table>
                     </div>
-                </div>
-            </div>
-        <% } else { %>
-            <h4>No se encontraron casos de uso para esta iteracion</h4>
-        <% } %>
+                
+                    <!-- Tareas del Proyecto -->
+                    <div class="col s5">                    
+                        <div id="fasesVert" class="container">                        
+                            <% for (let tarea = 0; tarea < lista_tareas.length; tarea++) { 
+                                <!-- Si va empezando o cambia de fase  -->
+                                if(tarea === 0 || lista_tareas[tarea].nombre_fase !== lista_tareas[tarea - 1].nombre_fase){ %>
+                                    <!-- Empieza bloque de la fase -->
+                                    <div id="faseVert" class="center-align">
+                                        <!-- Título de la fase -->
+                                        <div id="titulo-fase">
+                                            <span class=""> <%= lista_tareas[tarea].nombre_fase %>: </span>
+                                        </div>
+                                    <!-- Empieza div para desplegar tareas de la fase -->
+                                    <div>
+                                <% } %>
+                                <!-- Despliegue de tareas de la fase -->
+                                <div id="tarea-en-fase">
+                                    <label>
+                                        <input type="checkbox" id="botonCheck_<%= tarea %>" class="filled-in checkbox-blue-grey" disabled="disabled" onclick="modificarAsociacion('<%= lista_tareas[tarea].id_fase %>','<%= lista_tareas[tarea].id_tarea %>', '<%= tarea %>')"/> 
+                                        <span> <%= lista_tareas[tarea].nombre_tarea %> </span>
+                                    </label>
+                                </div>
+                                <!-- Si es la última tarea de todas o de una fase, cierra la división para la fase -->
+                                <% if(tarea === lista_tareas.length - 1 || lista_tareas[tarea].nombre_fase !== lista_tareas[tarea + 1].nombre_fase) { %> 
+                                    <!-- Cierra bloque de tareas  -->
+                                    </div>
+                                    <!-- Cierra bloque de fase -->
+                                    </div>
+                                <% } %>
+                            <% } %>          
+                        </div>
+                    </div>
+                
+            <% } else { %>
+                <h4>No se encontraron casos de uso para esta iteración</h4>
+            <% } %>
+        </div>
     </div>
     
     <script>

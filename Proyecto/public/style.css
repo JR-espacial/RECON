@@ -182,8 +182,11 @@ div#modal5 {
 .responsive_text_login{
     font-size: 1.7vw;
 }
+
 .login-btn{
     border-radius: 25px;
+}
+
 /* Scrollbar of tables */
 /* width */
 ::-webkit-scrollbar {

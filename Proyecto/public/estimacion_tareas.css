@@ -2,7 +2,7 @@
 .estimacion_tareas tbody {
     display: block;
     max-height: 450px;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
     background-color: white;
 }
