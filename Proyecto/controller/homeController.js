@@ -14,6 +14,7 @@ exports.getHome = (request, response) => {
         Departamento.fetchAll()
         .then(([rows2, fieldData]) => {
             response.render('home',{
+                imagen_empleado: request.session.imagen_empleado,
                 user: request.session.usuario,
                 title: "Home", 
                 proyectos : rows,

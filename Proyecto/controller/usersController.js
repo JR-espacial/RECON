@@ -26,6 +26,7 @@ exports.postLogin = (request, response, next) => {
                     .then(doMatch => {
                         if (doMatch) {
                             request.session.id_empleado = rows[0].id_empleado;
+                            request.session.imagen_empleado = rows[0].imagen_empleado;
                             request.session.isLoggedIn = true;
                             request.session.usuario = request.body.usuario;
                             return request.session.save(err => {
@@ -55,6 +56,7 @@ exports.getRegister = (request, response, next) => {
     const alerta = request.session.alerta;
     request.session.alerta = "";
     response.render('registrar', {
+        imagen_empleado: request.session.imagen_empleado,
         user: request.session.usuario,
         alerta: alerta,
         title: 'Registra tus datos',
@@ -64,7 +66,17 @@ exports.getRegister = (request, response, next) => {
 };
 
 exports.postRegister = (request, response, next) => {
-    const nuevo_usuario = new Usuario(request.body.nombre, request.body.usuario, request.body.password);
+    const image = request.file;
+    let image_file_name = '';
+
+    if(!image) {
+        image_file_name = 'https://d3ipks40p8ekbx.cloudfront.net/dam/jcr:3a4e5787-d665-4331-bfa2-76dd0c006c1b/user_icon.png';
+    }
+    else{
+        image_file_name = image.filename;
+    }
+
+    const nuevo_usuario = new Usuario(request.body.nombre, request.body.usuario, request.body.password, image_file_name);
     nuevo_usuario.save()
         .then(() => {
             request.session.alerta = "Usuario registrado exitosamente";
@@ -80,6 +92,7 @@ exports.getSettings = async function (request, response, next) {
 
     response.render('modificarUsuario', {
         user: user[0][0],
+        imagen_empleado: request.session.imagen_empleado,
         alerta: alerta,
         title: 'Modifica tus datos',
         csrfToken: request.csrfToken(),

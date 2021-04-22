@@ -14,6 +14,7 @@ exports.getTareaCasoUso = (request, response) =>{
             Proyecto_Fase_Tarea.fetchTareasNoFantasmas(id_proyecto)
                 .then(([rowsPFT, fieldData]) => {
                     response.render('tareaCasoUso', {
+                        imagen_empleado: request.session.imagen_empleado,
                         navegacion : request.session.navegacion,
                         proyecto_actual : request.session.nombreProyecto,
                         user: request.session.usuario,

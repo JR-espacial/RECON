@@ -9,6 +9,7 @@ exports.getCasosUsoIteracion = (request, response) =>{
             response.render('casosUso', {
                 navegacion : request.session.navegacion,
                 proyecto_actual : request.session.nombreProyecto,
+                imagen_empleado: request.session.imagen_empleado,
                 user: request.session.usuario,
                 num_iteracion: request.session.numIteracion,
                 title: "Casos de Uso",
