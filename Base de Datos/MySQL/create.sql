@@ -331,22 +331,42 @@
     --     UPDATE entrega SET id_fase = NEW.id_fase, id_tarea = NEW.id_tarea WHERE id_proyecto = NEW.id_proyecto AND id_fase = OLD.id_fase AND id_tarea = OLD.id_tarea;
     -- END //
 
-    -- DROP TRIGGER IF EXISTS setNombreEstimacion;
-    -- DELIMITER //
-    -- CREATE TRIGGER setNombreEstimacion AFTER INSERT on entrega
-    -- FOR EACH ROW
-    -- BEGIN
-    --     UPDATE entrega SET nombre = 
-    --     CONCAT("IT",
-    --     	(SELECT num_iteracion FROM iteracion I INNER JOIN casos_uso CU ON I.id_iteracion = CU.id_iteracion),
-    --         " - ",
-    --         (SELECT quiero FROM casos_uso WHERE id_casos = NEW.id_casos),
-    --         " - ",
-    --         (SELECT nombre_fase FROM fase WHERE id_fase = NEW.id_fase),
-    --         " (",
-    --         (SELECT nombre_tarea FROM tarea WHERE id_tarea = NEW.id_tarea),
-    --         (")")
-    --     )
-    --     WHERE id_proyecto = NEW.id_proyecto AND id_fase = NEW.id_fase AND
-    --     id_tarea = NEW.id_tarea AND id_casos = NEW.id_casos;
-    -- END //
+    -- Asigna nombre a Estimacion que va a Air Table
+    DROP PROCEDURE IF EXISTS setNombreEstimacion;
+    DELIMITER //
+    CREATE PROCEDURE setNombreEstimacion(
+        IN SPid_proyecto INT,
+        IN SPid_fase INT,
+        IN SPid_tarea INT,
+        IN SPid_casos INT
+    )
+    BEGIN
+        UPDATE entrega SET nombre = 
+        CONCAT("IT",
+        	(SELECT num_iteracion FROM iteracion I INNER JOIN casos_uso CU ON I.id_iteracion = CU.id_iteracion WHERE id_casos = SPid_casos),
+            "-",
+            " - ",
+            (SELECT quiero FROM casos_uso WHERE id_casos = SPid_casos),
+            " - ",
+            (SELECT nombre_fase FROM fase WHERE id_fase = SPid_fase),
+            " (",
+            (SELECT nombre_tarea FROM tarea WHERE id_tarea = SPid_tarea),
+            (")")
+        )
+        WHERE id_proyecto = SPid_proyecto AND id_fase = SPid_fase AND
+        id_tarea = SPid_tarea AND id_casos = SPid_casos;
+    END //
+
+    -- Actualizar Estimacion cuando Promedio Estimaciones Empleados cambia 
+    DROP TRIGGER IF EXISTS actualizarEstimacion;
+    DELIMITER //
+    CREATE TRIGGER actualizarEstimacion AFTER UPDATE ON ap_promedios
+    FOR EACH ROW
+    BEGIN
+        UPDATE entrega SET estimacion = cast(NEW.promedio_minutos / 60 as decimal(5,2))
+        WHERE id_proyecto = OLD.id_proyecto AND id_fase = OLD.id_fase
+        AND id_tarea = OLD.id_tarea AND id_casos IN 
+            (SELECT CU.id_casos 
+            FROM casos_uso CU INNER JOIN iteracion I ON CU.id_iteracion = I.id_iteracion 
+            WHERE CU.id_ap = OLD.id_ap AND I.id_proyecto = OLD.id_proyecto);
+    END //
