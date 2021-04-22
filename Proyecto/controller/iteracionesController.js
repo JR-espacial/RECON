@@ -20,6 +20,7 @@ exports.getIteracionesDesarrolloProyecto = async function(request,response){
     response.render('iteracionesProyecto', {
         navegacion : request.session.navegacion,
         proyecto_actual : request.session.nombreProyecto,
+        imagen_empleado: request.session.imagen_empleado,
         user: request.session.usuario,
         title: "Iteraciones",
         iteraciones : iteraciones[0],
@@ -48,6 +49,7 @@ exports.getIteracionesTerminadasProyecto = async function(request,response){
     response.render('iteracionesProyecto', {
         navegacion : request.session.navegacion,
         proyecto_actual : request.session.nombreProyecto,
+        imagen_empleado: request.session.imagen_empleado,
         user: request.session.usuario,
         title: "Iteraciones",
         iteraciones : iteraciones[0],
@@ -84,6 +86,7 @@ exports.getNuevaIteracion = (request, response) => {
     Usuario.fetchAll()
     .then(([rows, fieldData]) => {
         response.render('crearIteracion', {
+            imagen_empleado: request.session.imagen_empleado,
             user: request.session.usuario,
             title: "Crear Iteración",
             empleados: rows,

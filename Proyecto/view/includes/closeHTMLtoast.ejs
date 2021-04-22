@@ -2,7 +2,6 @@
     <script>
         function toast(){
         '<% if (alerta) { %>'
-            M.AutoInit(); 
             M.toast({html: '<%= alerta %>'});
         '<% } %>'
     }

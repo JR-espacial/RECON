@@ -146,6 +146,7 @@ async function fetchAvance(request, response, toast){
     response.render('avanceProyecto', {
         navegacion : request.session.navegacion,
         proyecto_actual : request.session.nombreProyecto,
+        imagen_empleado: request.session.imagen_empleado,
         user: request.session.usuario,
         iteracion: iteracion[0][0],
         num_iteracion: request.session.numIteracion,

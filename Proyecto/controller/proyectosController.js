@@ -15,6 +15,7 @@ exports.getNuevoProyecto = (request, response) => {
     Departamento.fetchAll()
     .then(([rows, fieldData]) => {
         response.render('crearProyecto', {
+            imagen_empleado: request.session.imagen_empleado,
             user: request.session.usuario,
             title: "Crear Proyecto", 
             departamentos : rows,
@@ -44,7 +45,7 @@ exports.postNuevoProyecto = async function (request, response) {
     else{
         image_file_name = image.filename;
     }
-  
+    console.log(image_file_name);
     const proyecto_existente = await Proyecto.fetchOne(nombre_proyecto);
     if (proyecto_existente[0].length < 1) {
         let proyecto = new Proyecto(nombre_proyecto, descripcion, departamento, 1, image_file_name, 0);
@@ -83,6 +84,7 @@ exports.getEstimacionAP = (request, response) => {
                     response.render('estimacionAP', {
                         navegacion : request.session.navegacion,
                         proyecto_actual : request.session.nombreProyecto,
+                        imagen_empleado: request.session.imagen_empleado,
                         user: request.session.usuario,
                         title: "Estimación AP",
                         csrfToken: request.csrfToken(),
