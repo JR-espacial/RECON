@@ -107,7 +107,7 @@
     );
 
 
-    CREATE TABLE Proyecto_Fase_Practica (
+    CREATE TABLE Proyecto_Fase_tarea (
         id_proyecto INT NOT NULL,
         id_fase INT NOT NULL,
         id_tarea INT NOT NULL,
@@ -126,7 +126,7 @@
         id_empleado INT NOT NULL,
         minutos DECIMAL(5, 1),
         PRIMARY KEY(id_proyecto, id_fase, id_tarea, id_ap, id_empleado),
-        FOREIGN KEY(id_proyecto, id_fase, id_tarea) REFERENCES Proyecto_Fase_Practica(id_proyecto, id_fase, id_tarea),
+        FOREIGN KEY(id_proyecto, id_fase, id_tarea) REFERENCES Proyecto_Fase_tarea(id_proyecto, id_fase, id_tarea),
         FOREIGN KEY(id_ap) REFERENCES Puntos_Agiles(id_ap),
         FOREIGN KEY(id_empleado) REFERENCES Empleado(id_empleado)
     );
@@ -138,7 +138,7 @@
         id_tarea INT  NOT NULL,
         id_ap INT NOT NULL,
         promedio_minutos DECIMAL(5, 1), 
-        FOREIGN KEY(id_proyecto, id_fase, id_tarea) REFERENCES Proyecto_Fase_Practica(id_proyecto, id_fase, id_tarea),
+        FOREIGN KEY(id_proyecto, id_fase, id_tarea) REFERENCES Proyecto_Fase_tarea(id_proyecto, id_fase, id_tarea),
         FOREIGN KEY(id_ap) REFERENCES Puntos_Agiles(id_ap)
     );
 
@@ -172,7 +172,7 @@
         costo_real DECIMAL(5, 2), 
         estado_entrega BIT, 
         PRIMARY KEY(id_proyecto, id_fase ,id_tarea, id_casos),
-        FOREIGN KEY(id_proyecto, id_fase, id_tarea) REFERENCES Proyecto_Fase_Practica(id_proyecto, id_fase, id_tarea),
+        FOREIGN KEY(id_proyecto, id_fase, id_tarea) REFERENCES Proyecto_Fase_tarea(id_proyecto, id_fase, id_tarea),
         FOREIGN KEY(id_casos) REFERENCES Casos_Uso(id_casos)
     );
 
@@ -203,7 +203,7 @@
     BEGIN
     DELETE FROM ap_promedios WHERE id_proyecto = SPid_proyecto AND id_fase = SPid_fase AND id_tarea = SPid_tarea;
     DELETE FROM ap_colaborador WHERE id_proyecto = SPid_proyecto AND id_fase = SPid_fase AND id_tarea = SPid_tarea;
-    DELETE FROM proyecto_fase_practica WHERE id_proyecto = SPid_proyecto AND id_fase = SPid_fase AND id_tarea = SPid_tarea;
+    DELETE FROM proyecto_fase_tarea WHERE id_proyecto = SPid_proyecto AND id_fase = SPid_fase AND id_tarea = SPid_tarea;
     END //
 
     -- Elimina fase con sus dependencias
@@ -216,7 +216,7 @@
     BEGIN
     DELETE FROM ap_promedios WHERE id_proyecto = SPid_proyecto AND id_fase = SPid_fase;
     DELETE FROM ap_colaborador WHERE id_proyecto = SPid_proyecto AND id_fase = SPid_fase;
-    DELETE FROM proyecto_fase_practica WHERE id_proyecto = SPid_proyecto AND id_fase = SPid_fase;
+    DELETE FROM proyecto_fase_tarea WHERE id_proyecto = SPid_proyecto AND id_fase = SPid_fase;
   	END //
 
 
@@ -232,7 +232,7 @@
     -- Crear registros de promedios por AP cuando se relaciona/crea tarea con fase
     DROP TRIGGER CamposPromedios;
     DELIMITER //
-    CREATE TRIGGER CamposPromedios AFTER INSERT ON Proyecto_Fase_Practica
+    CREATE TRIGGER CamposPromedios AFTER INSERT ON Proyecto_Fase_tarea
     FOR EACH ROW
     BEGIN
         IF NEW.id_tarea > 0 THEN
@@ -250,7 +250,7 @@
     -- Crear Registros para la tabla ap_colaborador
     DROP TRIGGER APempleados1;
     DELIMITER //
-    CREATE TRIGGER APempleados1 AFTER INSERT ON proyecto_fase_practica
+    CREATE TRIGGER APempleados1 AFTER INSERT ON proyecto_fase_tarea
     FOR EACH ROW
     BEGIN
         IF NEW.id_tarea > 0 THEN
@@ -262,7 +262,7 @@
 
     DROP TRIGGER APempleados2;
     DELIMITER //
-    CREATE TRIGGER APempleados2 AFTER INSERT ON proyecto_fase_practica
+    CREATE TRIGGER APempleados2 AFTER INSERT ON proyecto_fase_tarea
     FOR EACH ROW
     BEGIN
         IF NEW.id_tarea > 0 THEN 
@@ -274,7 +274,7 @@
 
     DROP TRIGGER APempleados3;
     DELIMITER //
-    CREATE TRIGGER APempleados3 AFTER INSERT ON proyecto_fase_practica
+    CREATE TRIGGER APempleados3 AFTER INSERT ON proyecto_fase_tarea
     FOR EACH ROW
     BEGIN
         IF NEW.id_tarea > 0 THEN
@@ -286,7 +286,7 @@
 
     DROP TRIGGER APempleados4;
     DELIMITER //
-    CREATE TRIGGER APempleados4 AFTER INSERT ON proyecto_fase_practica
+    CREATE TRIGGER APempleados4 AFTER INSERT ON proyecto_fase_tarea
     FOR EACH ROW
     BEGIN
         IF NEW.id_tarea > 0 THEN
@@ -298,7 +298,7 @@
 
     DROP TRIGGER APempleados5;
     DELIMITER //
-    CREATE TRIGGER APempleados5 AFTER INSERT ON proyecto_fase_practica
+    CREATE TRIGGER APempleados5 AFTER INSERT ON proyecto_fase_tarea
     FOR EACH ROW
     BEGIN
         IF NEW.id_tarea > 0 THEN
@@ -310,7 +310,7 @@
 
     DROP TRIGGER APempleados6;
     DELIMITER //
-    CREATE TRIGGER APempleados6 AFTER INSERT ON proyecto_fase_practica
+    CREATE TRIGGER APempleados6 AFTER INSERT ON proyecto_fase_tarea
     FOR EACH ROW
     BEGIN
         IF NEW.id_tarea > 0 THEN
@@ -318,4 +318,34 @@
             SELECT DISTINCT NEW.id_proyecto, NEW.id_fase, NEW.id_tarea, 6, id_empleado, 0
             FROM empleado_iteracion as EI, iteracion as I WHERE I.id_proyecto = NEW.id_proyecto AND EI.id_iteracion = I.id_iteracion;
         END IF;
-    END //       
+    END //
+
+    -- DROP TRIGGER IF EXISTS updateFaseTarea;
+    -- DELIMITER //
+    -- CREATE TRIGGER updateFaseTarea BEFORE UPDATE on proyecto_fase_tarea
+    -- FOR EACH ROW
+    -- BEGIN
+    --     UPDATE ap_colaborador SET id_fase = NEW.id_fase, id_tarea = NEW.id_tarea WHERE id_proyecto = NEW.id_proyecto AND id_fase = OLD.id_fase AND id_tarea = OLD.id_tarea;
+    --     UPDATE ap_promedios SET id_fase = NEW.id_fase, id_tarea = NEW.id_tarea WHERE id_proyecto = NEW.id_proyecto AND id_fase = OLD.id_fase AND id_tarea = OLD.id_tarea;
+    --     UPDATE entrega SET id_fase = NEW.id_fase, id_tarea = NEW.id_tarea WHERE id_proyecto = NEW.id_proyecto AND id_fase = OLD.id_fase AND id_tarea = OLD.id_tarea;
+    -- END //
+
+    -- DROP TRIGGER IF EXISTS setNombreEstimacion;
+    -- DELIMITER //
+    -- CREATE TRIGGER setNombreEstimacion AFTER INSERT on entrega
+    -- FOR EACH ROW
+    -- BEGIN
+    --     UPDATE entrega SET nombre = 
+    --     CONCAT("IT",
+    --     	(SELECT num_iteracion FROM iteracion I INNER JOIN casos_uso CU ON I.id_iteracion = CU.id_iteracion),
+    --         " - ",
+    --         (SELECT quiero FROM casos_uso WHERE id_casos = NEW.id_casos),
+    --         " - ",
+    --         (SELECT nombre_fase FROM fase WHERE id_fase = NEW.id_fase),
+    --         " (",
+    --         (SELECT nombre_tarea FROM tarea WHERE id_tarea = NEW.id_tarea),
+    --         (")")
+    --     )
+    --     WHERE id_proyecto = NEW.id_proyecto AND id_fase = NEW.id_fase AND
+    --     id_tarea = NEW.id_tarea AND id_casos = NEW.id_casos;
+    -- END //
