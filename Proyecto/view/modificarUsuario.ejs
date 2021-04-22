@@ -1,0 +1,116 @@
+<%- include('includes/openHTMLtoast.ejs'); %>
+
+
+
+<div class="row">
+    <div class="col s11 offset-s1">
+        <br>
+        <br>
+        <br>
+        <div class="col s6">
+            <div class="card">
+                <br>
+                <h6 class="responsive_text_login center"><%= title %></h6>
+                <div class="card-content">   
+                    <div class="row">
+                        <table class="col s8 offset-s2 highlight" >
+                            <!-- Imagen -->
+                            <tr class="modal-trigger center-align" data-target="modal_imagen">
+                                <!-- <td><i class="material-icons prefix">image</i>     &nbsp Foto</td> -->
+                                <td class="center-align" colspan="2"><img class="circle responsive-image hoverable" src="<%= user.imagen_empleado %>" width="70"></td>
+                            </tr>
+                            <div id="modal_imagen" class="modal">
+                                <div class="modal-content">
+                                    <h4>Imagen</h4>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+                                </div>
+                            </div>
+
+                            <!-- Nombre -->
+                            <tr class="modal-trigger" data-target="modal_nombre">
+                                <td><i class="material-icons prefix">person</i> &nbsp Nombre</td>
+                                <td><%= user.nombre_empleado %></td>
+                            </tr>
+                            <div id="modal_nombre" class="modal">
+                                <div class="row">
+                                    <div class="modal-content">
+                                        <div class="col s4 offset-s4">
+                                            <div class="input-field">
+                                                <h4>Nombre</h4>
+                                                <input type="text" class="validate" name="nombre" value="<%= user.nombre_empleado %>" required>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Usuario -->
+                            <tr class="modal-trigger" data-target="modal_usuario">
+                                <td><i class="material-icons prefix ">account_circle</i>&nbsp Usuario</td>
+                                <td><%= user.usuario %></td>
+                            </tr>
+                            <div id="modal_usuario" class="modal">
+                                <div class="modal-content">
+                                    <h4>Usuario</h4>
+                                    <p>A bunch of text</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+                                </div>
+                            </div>
+                            
+                            <!-- Contraseña -->
+                            <tr class="modal-trigger" data-target="modal_contraseña">
+                                <td><i class="material-icons prefix ">lock</i>&nbsp Contraseña</td>
+                                <td><strong>........</strong></td>
+                            </tr>
+                            <div id="modal_contraseña" class="modal">
+                                <div class="modal-content">
+                                <h4>Contraseña</h4>
+                                <p>A bunch of text</p>
+                                </div>
+                                <div class="modal-footer">
+                                <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+                                </div>
+                            </div>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="card col s4 offset-s1">
+            <div class="card-content ">
+
+                <table class=" highlight" >
+                    <tr>
+                        <td colspan="2"> <a href ="/users/register"  name="action" value="editar">Nuevo usuario</a></td>
+                    </tr>
+                    <tr>
+                        <td>Nuevo Departamento</td>
+                        <td><input type="text"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        M.AutoInit();
+        var elems = document.querySelectorAll('.modal');
+        var instances = M.Modal.init(elems, options);
+    });
+    
+</script>
+
+
+<%- include('includes/closeHTMLtoast.ejs'); %>

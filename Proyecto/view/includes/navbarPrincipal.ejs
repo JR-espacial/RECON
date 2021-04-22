@@ -1,4 +1,4 @@
-
+<%- include('breadcrumbsPrincipal.ejs'); %>
 <ul class="sidenav sidenav-fixed" id="slide-out">
     <li><div class="user-view">
         <div class="background">
@@ -11,7 +11,7 @@
                 <a href="#email"><span class="white-text email"><%=user%>@email.com</span></a>
             </div>
             <div class="col s1">
-                <a href="/home"><i class="white-text material-icons">home</i></a>
+                <a href="/users/settings"><i class="white-text material-icons">settings</i></a>
             </div>
         </div>
         </div>
@@ -23,7 +23,6 @@
     <li><a class="waves-effect" href="#!">En desarrollo</a></li>
     <li><a class="waves-effect" href="#!">Terminado</a></li>
 
-    
     <li class="logout"><a href="/users/logout"><i class="material-icons right">input</i>Logout &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a></li>
     
 </ul>

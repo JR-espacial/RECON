@@ -101,10 +101,9 @@ div#modal5 {
 }
 
 .logout{
-    position: fixed; 
-    width: 100%;
+    position:fixed; 
     bottom: 10%;
-    
+    width: 100%;
 }
 
 .modal_edit{
@@ -179,6 +178,10 @@ div#modal5 {
     font-size: 5vw;
 }
 
+.responsive_title_settings{
+    font-size: 3vw;
+}
+
 .responsive_text_login{
     font-size: 1.7vw;
 }
@@ -208,4 +211,15 @@ div#modal5 {
   /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
     background: #353535; 
+}
+.tab_iteraciones{
+    width: 49%;
+}
+
+.eliminar_proyecto{
+    width: 0%;
+}
+
+.reveal_content{
+    text-align: left;
 }

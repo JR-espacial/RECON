@@ -8,14 +8,14 @@
             <h4 class="center">Capacidad Equipo</h4>
             <br>
             <table>
-                <thead class="h_nominales">
+                <thead class="h_nominales z-depth-3">
                     <tr>
                         <th></th>
                         <th>Horas</th>
                         <th>Porcentaje</th>
                     </tr>
                 </thead>
-                <tbody class = "h_nominales">
+                <tbody class = "h_nominales z-depth-3">
                     <tr>
                         <td>Horas nominales totales</td>
                         <td><%= horas_nominales %></td>
@@ -47,7 +47,7 @@
                 <tr><td></td><td></td><td></td></tr>
                 <% let pc_horas_nominales = (1 - porcentajes.tiempo_perdido_pc - porcentajes.errores_registro_pc) %>
                 <% horas_nominales *= pc_horas_nominales %>
-                <tbody class = "h_nominales">
+                <tbody class = "h_nominales z-depth-3">
                     <tr>
                         <td>Horas nominales restantes</td>
                         <td><%= horas_nominales.toFixed(1) %></td>
@@ -68,7 +68,7 @@
                 <tr><td></td><td></td><td></td></tr>
                 <% pc_horas_nominales = (1 - porcentajes.overhead_pc) %>
                 <% horas_nominales *= pc_horas_nominales %>
-                <tbody class = "h_nominales">
+                <tbody class = "h_nominales z-depth-3">
                     <tr>
                         <td>Horas nominales restantes</td>
                         <td><%= horas_nominales.toFixed(1) %></td>
@@ -119,7 +119,7 @@
                         </td>
                     </tr>
                 </tbody>
-                <tfoot class = "h_nominales_foot h_nominales">
+                <tfoot class = "h_nominales_foot h_nominales z-depth-3">
                     <tr>
                         <td></td>
                         <td class = "thick">Total:</td>
@@ -139,8 +139,8 @@
         <div class="col s4 offset-s1">
             <h4 class="center">Horas Individual</h4>
             <br>
-            <table class="h_proyecto">
-                <thead>
+            <table class="h_proyecto z-depth-3">
+                <thead >
                     <tr>
                         <th>Colaborador</th>
                         <th>Horas / Semana</th>
@@ -161,7 +161,7 @@
                         </tr>
                     <% } %>
                 </tbody>
-                <tfoot>
+                <tfoot class="z-depth-3">
                     <tr>
                         <td>Total</td>
                         <td><%= (horas_nominales_totales.horas_total * 1).toFixed(0) %><span> h</span></td>
