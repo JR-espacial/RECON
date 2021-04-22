@@ -10,9 +10,9 @@ module.exports =  class Entrega {
         this.estado_entrega = '0';
     }
 
-    static crearEntrega(idProyecto, idFase, idTarea, idCaso) {
-        return db.execute('INSERT INTO entrega (id_proyecto, id_fase, id_tarea, id_casos) VALUES (?, ?, ?, ?)', 
-        [idProyecto, idFase, idTarea, idCaso]);
+    static crearEntrega(idProyecto, idFase, idTarea, idCaso, estimacion) {
+        return db.execute('INSERT INTO entrega (id_proyecto, id_fase, id_tarea, id_casos, estimacion) VALUES (?, ?, ?, ?, ?)', 
+        [idProyecto, idFase, idTarea, idCaso, estimacion]);
     }
 
     static fetchAll() {
