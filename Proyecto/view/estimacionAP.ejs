@@ -66,13 +66,13 @@
                       let idFase = data[i].id_fase;
                       let idTarea = data[i].id_tarea;
 
-                      html += '<td>' + data[i].nombre_fase + '</td>';
-                      html += '<td>' + data[i].nombre_tarea + '</td>';
+                      html += '<td> &nbsp;&nbsp;' + data[i].nombre_fase + '</td>';
+                      html += '<td> &nbsp;&nbsp;' + data[i].nombre_tarea + '</td>';
 
                       let j = i;
                       for(j = i; j < i+6, j < data.length; j++) {
                         if(data[j].id_fase === idFase && data[j].id_tarea === idTarea) {
-                          html += '<td>' + data[j].promedio_minutos + '</td>';
+                          html += '<td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + data[j].promedio_minutos + '</td>';
                         }
                         else {
                           break;

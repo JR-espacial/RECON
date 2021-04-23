@@ -36,13 +36,30 @@ exports.postCasosUsoIteracion = (request, response) => {
         if (!para) para = "";
         
         let casoU = new Casos_Uso(id_ap, idIteracion, yo_como, quiero, para);
-        casoU.saveCaso()
-            .then(() => {
-                response.redirect('/proyectos/casos-uso-iteracion');
-            })
-            .catch( err => {
-                console.log(err);
-            }); 
+        Casos_Uso.fetchAllIteracion(idIteracion) 
+        .then(([rows, fieldData]) => {
+                if(rows.length > 0){
+                    casoU.saveCaso()
+                    .then(() => {
+                        response.redirect('/proyectos/casos-uso-iteracion');
+                    })
+                    .catch( err => {
+                        console.log(err);
+                    }); 
+                }else{
+                    casoU.savePrimerCaso()
+                    .then(() => {
+                        response.redirect('/proyectos/casos-uso-iteracion');
+                    })
+                    .catch( err => {
+                        console.log(err);
+                    }); 
+                }
+        })
+        .catch(err => {
+            console.log(err);
+            response.redirect('/proyectos/casos-uso-iteracion');
+        });
     }
     else if(accion === "editar") {
         let idCaso = request.body.idCaso;

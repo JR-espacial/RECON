@@ -23,13 +23,13 @@
                   <% let idFase = lista_colaborador[i].id_fase %>
                   <% let idTarea = lista_colaborador[i].id_tarea %>
                   
-                  <td><%= lista_colaborador[i].nombre_fase %></td>
-                  <td><%= lista_colaborador[i].nombre_tarea %></td>
+                  <td> &nbsp;&nbsp;<%= lista_colaborador[i].nombre_fase %></td>
+                  <td> &nbsp;&nbsp;<%= lista_colaborador[i].nombre_tarea %></td>
                   
                   <% let j = i; %>
                   <% for(j=i; j < i+6, j < lista_colaborador.length; j++) { %>
                     <% if(lista_colaborador[j].id_fase === idFase && lista_colaborador[j].id_tarea === idTarea) { %>
-                      <td><input type="text" id="<%= lista_colaborador[j].id_fase %>,<%= lista_colaborador[j].id_tarea %>,<%= lista_colaborador[j].id_ap %>" value="<%= lista_colaborador[j].minutos %>" onchange="modificarAP('<%= lista_colaborador[j].id_fase %>','<%= lista_colaborador[j].id_tarea %>','<%= lista_colaborador[j].id_ap %>')"></td>    
+                      <td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" id="<%= lista_colaborador[j].id_fase %>,<%= lista_colaborador[j].id_tarea %>,<%= lista_colaborador[j].id_ap %>" value="<%= lista_colaborador[j].minutos %>" onchange="modificarAP('<%= lista_colaborador[j].id_fase %>','<%= lista_colaborador[j].id_tarea %>','<%= lista_colaborador[j].id_ap %>')"></td>    
                     <% } else { %>
                       <% break; %>
                     <% } %>

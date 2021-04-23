@@ -10,13 +10,18 @@ module.exports =  class Casos_Uso{
         this.comentario = "";
     }
 
-    saveCaso(){ 
-        return db.execute('INSERT INTO Casos_uso (id_ap, id_iteracion, yo_como, quiero, para, comentario) VALUES (?, ?, ?, ?, ?, ?)',
+    savePrimerCaso(){ 
+        return db.execute('INSERT INTO Casos_uso (id_ap, id_iteracion, numero_cu, yo_como, quiero, para, comentario) VALUES (?, ?, 1, ?, ?, ?, ?)',
         [this.id_ap, this.id_iteracion, this.yo_como, this.quiero, this.para, this.comentario]);
     }
 
+    saveCaso(){ 
+        return db.execute('INSERT INTO Casos_uso (id_ap, id_iteracion, numero_cu, yo_como, quiero, para, comentario) SELECT ?, ?, MAX(numero_cu)+1, ?, ?, ?, ? FROM casos_uso WHERE id_iteracion = ?',
+        [this.id_ap, this.id_iteracion, this.yo_como, this.quiero, this.para, this.comentario, this.id_iteracion]);
+    }
+
     static fetchAllIteracion(idIteracion) {
-        return db.execute('SELECT id_casos, Casos_Uso.id_ap, yo_como, quiero, para, ap, comentario FROM Casos_Uso, Puntos_Agiles WHERE Casos_Uso.id_iteracion=? AND Casos_Uso.id_ap = Puntos_Agiles.id_ap ORDER BY id_casos ASC', 
+        return db.execute('SELECT id_casos, numero_cu, Casos_Uso.id_ap, yo_como, quiero, para, ap, comentario FROM Casos_Uso, Puntos_Agiles WHERE Casos_Uso.id_iteracion=? AND Casos_Uso.id_ap = Puntos_Agiles.id_ap ORDER BY id_casos ASC', 
         [idIteracion]);
     }
 

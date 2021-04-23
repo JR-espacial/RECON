@@ -146,6 +146,7 @@
 
     CREATE TABLE Casos_Uso(
         id_casos INT AUTO_INCREMENT NOT NULL, 
+        numero_cu INT,
         id_ap INT NOT NULL, 
         id_iteracion INT NOT NULL,
         yo_como VARCHAR(64),

@@ -33,7 +33,7 @@
         </div>
         <div class="input-field col 2">
           <input type="hidden" name="_csrf" value="<%= csrfToken %>"> 
-          <button class="btn waves-effect waves-light light-blue darken-3" type="submit" name="action" value="registrar">Registrar</button>
+          <button class="btn waves-effect waves-light light-blue darken-4" type="submit" name="action" value="registrar">Registrar</button>
         </div>
       </div>
     </form>
@@ -57,16 +57,16 @@
         <tbody>
           <% for (caso of casos_uso) { %>
             <tr>
-              <td><%= caso.id_casos %></td>
+              <td><%= caso.numero_cu %></td>
               <td><%= caso.yo_como %></td>
               <td><%= caso.quiero %></td>
               <td><%= caso.para %></td>
-              <td><%= caso.ap %></td>
+              <td> &nbsp;&nbsp;<%= caso.ap %></td>
               
               <!-- Botones -->                
               <!-- Modificar -->
               <td>
-                <button data-target="modal1_<%= caso.id_casos %>" class="btn modal-trigger light-blue darken-3" name="action" value="editar"><i class="small material-icons">mode_edit</i></button>
+                <button data-target="modal1_<%= caso.id_casos %>" class="btn modal-trigger light-blue darken-4" name="action" value="editar"><i class="small material-icons">mode_edit</i></button>
                 <div id="modal1_<%= caso.id_casos %>" class="modal">
                   <form action="casos-uso-iteracion" method="POST">
                     <div class="modal-content">
@@ -122,9 +122,9 @@
               </td>
               
               <!-- Comentario -->
-              <td>
+              <td> 
                 <% if(caso.comentario !== ""){ %>
-                    <a class="btn tooltipped light-blue darken-3" data-position="bottom" data-tooltip="<%= caso.comentario %>"><i class="material-icons">forum</i></a>
+                    <a class="btn tooltipped light-blue darken-4" data-position="bottom" data-tooltip="<%= caso.comentario %>"><i class="material-icons">forum</i></a>
                 <% } %>
               </td>
               
