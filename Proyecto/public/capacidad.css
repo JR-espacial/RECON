@@ -53,6 +53,11 @@
     cursor:default;
 }
 
+.h_nominales_foot tr td{
+    height: 45px;
+    padding: 0px !important;
+}
+
 
 .h_proyecto{
     align-items: center;
@@ -98,6 +103,12 @@
 .h_proyecto tfoot tr{
     background-color: #666666;
     color: white;
+}
+
+.h_proyecto tfoot tr td{
+    height: 40px;
+    padding: 0;
+    cursor: default;
 }
 
 .h_proyecto tfoot tr td:nth-child(2){

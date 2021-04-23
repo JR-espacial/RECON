@@ -14,6 +14,7 @@ exports.getTareaCasoUso = (request, response) =>{
             Proyecto_Fase_Tarea.fetchTareasNoFantasmas(id_proyecto)
                 .then(([rowsPFT, fieldData]) => {
                     response.render('tareaCasoUso', {
+                        imagen_empleado: request.session.imagen_empleado,
                         navegacion : request.session.navegacion,
                         proyecto_actual : request.session.nombreProyecto,
                         user: request.session.usuario,
@@ -61,8 +62,14 @@ exports.postModificarAsocioacion = (request, response) => {
                         let estimacion = rows2[0].promedio_minutos;
                         estimacion = (estimacion / 60).toFixed(2);
                         Entrega.crearEntrega(id_proyecto, id_fase, id_tarea, id_casos, estimacion)
-                            .then(() => response.status(200))
-                            .catch( err => console.log(err));
+                            .then(() => {
+                                Entrega.setNombreEstimacion(id_proyecto, id_fase, id_tarea, id_casos)
+                                    .then(() => response.status(200))
+                                    .catch( err => console.log(err));
+                            })
+                            .catch(err => {
+                                console.log(err);
+                            })
                     })
                     .catch(err =>{
                         console.log(err);

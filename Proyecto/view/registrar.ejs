@@ -1,6 +1,9 @@
 <%- include('includes/openHTMLtoast.ejs'); %>
 
+<a class=" white btn black-text"  href="/users/settings"> <i class="material-icons prefix">chevron_left</i></a>
+
 <div class="row">
+    
     <div class="col s6 offset-s3">
         <div class="card  card_login">
             <div class="card-image">
@@ -16,7 +19,7 @@
             <div class="card-content">
                 <h4 class="responsive_text_login center" ><%= title %></h4>
                 <br>
-                <form action="/users/register" method="POST">
+                <form action="/users/register?_csrf=<%=csrfToken%>" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
                   
                     <div class="row">
@@ -35,6 +38,19 @@
                         <div class="input-field col s8 offset-s2">
                             <i class="material-icons prefix">lock</i>
                             <input id="password" type="password" name="password" placeholder="Contraseña" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s8 offset-s2">
+                            <div class="file-field input-field">
+                                <div class="btn">
+                                  <span>Subir</span>
+                                  <input type="file" name="imagen" accept="image/*">
+                                </div>
+                                <div class="file-path-wrapper">
+                                  <input  class="file-path validate" type="text" placeholder="Sube una imagen para tu usuario">
+                                </div>
+                              </div>
                         </div>
                     </div>
                     <div class="row">

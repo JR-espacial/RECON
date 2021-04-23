@@ -54,4 +54,8 @@ module.exports =  class Entrega {
         [entrega_real,estimacion,valor_ganado,costo_real,estado_entrega,nombre]);
     }
 
+    static setNombreEstimacion (id_proyecto, id_fase, id_tarea, id_casos){
+        return db.execute('CALL setNombreEstimacion(?, ?, ?, ?)', [id_proyecto, id_fase, id_tarea, id_casos])
+    }
+
 }

@@ -1,5 +1,7 @@
 <%- include('includes/openHTMLtoast.ejs'); %>
 
+<a class=" white btn black-text"  href="/home"> <i class="material-icons prefix">chevron_left</i></a>
+
 
 
 <div class="row">
@@ -11,20 +13,21 @@
             <div class="card">
                 <br>
                 <h6 class="responsive_text_login center"><%= title %></h6>
+                
                 <div class="card-content">   
                     <div class="row">
                         <table class="col s8 offset-s2 highlight" >
                             <!-- Imagen -->
                             <tr class="modal-trigger center-align" data-target="modal_imagen">
                                 <!-- <td><i class="material-icons prefix">image</i>     &nbsp Foto</td> -->
-                                <td class="center-align" colspan="2"><img class="circle responsive-image hoverable" src="<%= user.imagen_empleado %>" width="70"></td>
+                                <td class="center-align" colspan="2"><img class="circle responsive-image hoverable" src="../<%= imagen_empleado %>" width="70"></td>
                             </tr>
                             <div id="modal_imagen" class="modal">
                                 <div class="modal-content">
                                     <h4>Imagen</h4>
                                 </div>
                                 <div class="modal-footer">
-                                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+                                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Aceptar</a>
                                 </div>
                             </div>
 
@@ -33,19 +36,20 @@
                                 <td><i class="material-icons prefix">person</i> &nbsp Nombre</td>
                                 <td><%= user.nombre_empleado %></td>
                             </tr>
-                            <div id="modal_nombre" class="modal">
+                            <div id="modal_nombre" class="modal col s4 offset-s3">
                                 <div class="row">
                                     <div class="modal-content">
-                                        <div class="col s4 offset-s4">
+                                        <div class="col s6 offset-s3">
                                             <div class="input-field">
-                                                <h4>Nombre</h4>
+                                                <h5> Modificar nombre</h5>
+                                                <br>
                                                 <input type="text" class="validate" name="nombre" value="<%= user.nombre_empleado %>" required>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                                <div class=" row modal-footer">
+                                    <a href="#!" class="modal-close waves-effect waves-green btn">Modificar</a>
                                 </div>
                             </div>
 
@@ -57,10 +61,10 @@
                             <div id="modal_usuario" class="modal">
                                 <div class="modal-content">
                                     <h4>Usuario</h4>
-                                    <p>A bunch of text</p>
+                                    <p>Texto</p>
                                 </div>
                                 <div class="modal-footer">
-                                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+                                    <a href="#!" class="modal-close waves-effect waves-green">Modificar</a>
                                 </div>
                             </div>
                             
@@ -72,10 +76,10 @@
                             <div id="modal_contraseña" class="modal">
                                 <div class="modal-content">
                                 <h4>Contraseña</h4>
-                                <p>A bunch of text</p>
+                                <p>Texto</p>
                                 </div>
                                 <div class="modal-footer">
-                                <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+                                <a href="#!" class="modal-close waves-effect waves-green btn-flat">Aceptar</a>
                                 </div>
                             </div>
                         </table>
@@ -86,28 +90,42 @@
 
 
         <div class="card col s4 offset-s1">
-            <div class="card-content ">
-
-                <table class=" highlight" >
-                    <tr>
-                        <td colspan="2"> <a href ="/users/register"  name="action" value="editar">Nuevo usuario</a></td>
-                    </tr>
-                    <tr>
-                        <td>Nuevo Departamento</td>
-                        <td><input type="text"></td>
-                    </tr>
-                </table>
+            <div class="card-content">
+                <div class="row">
+                    <table class="col s8 offset-s2 highlight" >
+                        <tr>
+                            <td> <a href ="/users/register"  name="action" value="editar">Nuevo usuario</a></td>
+                        </tr>
+                        <tr class="modal-trigger" data-target="modal_departamento">
+                            <td>Nuevo Departamento</td>
+                        </tr>
+                        <div id="modal_departamento" class="modal">
+                            <div class="row">
+                                <div class="modal-content">
+                                    <div class="col s4 offset-s4">
+                                        <div class="input-field">
+                                            <h4>Nuevo Departamento</h4>
+                                            <input type="text" class="validate" name="nombre" value="<%= user.nombre_empleado %>" required>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Aceptar</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
 <script>
+    console.log("<%= user.imagen_empleado %>");
     
     document.addEventListener('DOMContentLoaded', function() {
         M.AutoInit();
-        var elems = document.querySelectorAll('.modal');
-        var instances = M.Modal.init(elems, options);
     });
     
 </script>

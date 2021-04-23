@@ -5,14 +5,14 @@
         <div class="background">
             <img src="https://wallpapercave.com/wp/wp3194552.png">
         </div>
-        <a href="#user"><img src="https://storage.googleapis.com/natgas/others/logos/natgas-logo-simple.png" width="60" height="60"></a>
-        <div class="row">
-            <div class="col s10">
-                <a href="#name"><span class="white-text name"><%=user%></span></a>
-                <a href="#email"><span class="white-text email"><%=user%>@email.com</span></a>
+        <a ><img class="circle resposive-image materialboxed"   src="../<%=imagen_empleado%>" width="60" height="60"></a>
+        <div class="row valign-wrapper">
+            <div class="col s9">
+                <a href="/users/settings"><span class="white-text name"><%=user%></span></a>
+                <a href="/users/settings"><span class="white-text email"><%=user%>@email.com</span></a>
             </div>
-            <div class="col s1">
-                <a href="/home"><i class="white-text material-icons">home</i></a>
+            <div class="col s2 offset-s1">
+                <a href="/users/settings"><i class="white-text material-icons">settings</i></a>
             </div>
         </div>
         </div>
@@ -30,7 +30,7 @@
     <li><a data-target="modalAirTable" class="modal-trigger">AirTable<i class="material-icons right teal-text text-lighten-2">cloud_queue</i></a></li>
     
 
-    <li class="logout"><a href="/users/logout"><i class="material-icons right right-logout">input</i>Logout &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a></li>
+    <li class="logout"><a href="/users/logout"><i class="material-icons right right-logout">input</i>Salir &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a></li>
     
 </ul>
 
@@ -52,7 +52,7 @@
         <div class="row">
             <div class="input-field col s7 offset-s3 ">
                 <input id="User API Key" type="text" class="validate" name="API_key" value="<%= proyecto_keys.API_key %>" required>
-                <label for="User API Key" >User API Key</label>
+                <label for="User API Key" >Llave API de Usuario</label>
             </div>
         </div>
 

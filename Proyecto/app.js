@@ -34,7 +34,9 @@ const fileStorage = multer.diskStorage({
 app.use(multer(
     { storage: fileStorage }
     //{ dest: 'uploads' }
-    ).single('imagen_proyecto'));
+    ).single('imagen'));
+
+
 
 const session = require('express-session');
 app.use(session({

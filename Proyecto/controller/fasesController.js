@@ -18,6 +18,7 @@ exports.getFasesProyecto = (request, response) =>{
                             response.render('fasesProyecto', {
                                 navegacion : request.session.navegacion,
                                 proyecto_actual : request.session.nombreProyecto,
+                                imagen_empleado: request.session.imagen_empleado,
                                 user: request.session.usuario,
                                 title: "Fases del Proyecto",
                                 lista_tareas: rows,
