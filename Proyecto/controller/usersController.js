@@ -1,4 +1,5 @@
 const Usuario = require('../models/user');
+const Departamento = require('../models/departamento');
 const bcrypt = require('bcryptjs');
 
 exports.getLogin = (request, response, next) => {
@@ -89,8 +90,11 @@ exports.getSettings = async function (request, response, next) {
     const alerta = request.session.alerta;
     request.session.alerta = "";
     let user = await Usuario.fetchOne(request.session.usuario);
+    let users = await Usuario.fetchAll();
+
 
     response.render('modificarUsuario', {
+        users: users[0],
         user: user[0][0],
         imagen_empleado: request.session.imagen_empleado,
         alerta: alerta,
@@ -99,3 +103,86 @@ exports.getSettings = async function (request, response, next) {
         isLoggedIn: request.session.isLoggedIn === true ? true : false
     });
 };
+
+exports.postSettings = (request, response) => {
+    let option_ = request.body.option;
+    let id_empleado = request.body.id_empleado;
+
+    if(option_ == 1){
+        let image = request.file;
+
+        if(!image) {
+            request.session.alerta = "Error al subir imagen";
+            response.redirect('/users/settings');
+        }
+        else{
+            Usuario.updateImagen(image.filename,id_empleado)
+            .then(() => {
+                request.session.alerta = "Imagen modificada exitosamente";
+                request.session.imagen_empleado =image.filename;
+                response.redirect('/users/settings');
+            }).catch(err => console.log(err));
+        }
+    }
+    else if(option_ == 2){
+        let nombre= request.body.nombre;
+        Usuario.updateNombre(nombre,id_empleado)
+            .then(() => {
+                request.session.alerta = "Nombre modificado exitosamente";
+                response.redirect('/users/settings');
+            }).catch(err => console.log(err));
+    }
+    else if(option_ == 3){
+        let usuario= request.body.usuario;
+        Usuario.updateUsuario(usuario,id_empleado)
+            .then(() => {
+                request.session.usuario = usuario;
+                request.session.alerta = "Usuario modificado exitosamente";
+                response.redirect('/users/settings');
+            }).catch(err => console.log(err));
+        
+    }
+    else if(option_ == 4){
+        let antiguo_password= request.body.antiguo_password;
+        let nuevo_password= request.body.nuevo_password;
+
+        let username = request.session.usuario;
+        Usuario.fetchOne(username)
+            .then(([rows, fieldData]) => {
+                bcrypt.compare(antiguo_password, rows[0].contrasena)
+                    .then(doMatch => {
+                        if (doMatch) {
+                            Usuario.updateContrasena(nuevo_password,id_empleado)
+                            .then(() => {
+                                request.session.alerta = "Contraseña modificado exitosamente";
+                                response.redirect('/users/settings');
+                            }).catch(err => console.log(err));
+                        }
+                        else{
+                            request.session.alerta = "La antigua contraseña no es correcta";
+                            response.redirect('/users/settings');
+                        }
+                    }).catch(err => {
+                        request.session.alerta = "La antigua contraseña no es correcta";
+                        response.redirect('/users/settings');
+                    });
+            })
+            .catch(err => {
+                console.log(err);
+            });
+
+        
+    }
+    else{
+        response.redirect('/users/settings');
+    }
+}
+
+exports.postEliminarUsuario = async function(request,response){
+    await Usuario.eliminarEmpleadoIteracion(request.body.usuario);
+    await Usuario.eliminarEmpleado(request.body.usuario);
+
+    request.session.alerta = "Usuario eliminado";
+    response.redirect('/users/settings');
+
+}

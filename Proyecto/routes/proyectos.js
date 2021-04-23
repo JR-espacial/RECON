@@ -11,11 +11,11 @@ const tareaCasosUsoController = require('../controller/tareaCasoUsoController');
 const avanceIteracionController = require('../controller/avanceIteracionController');
 const capacidadController = require('../controller/capacidadController');
 
+router.post('/nuevo-departamento', isAuth, proyectosController.postNuevoDepartamento);
 
 router.get('/nuevo-proyecto', isAuth, proyectosController.getNuevoProyecto);
 
 router.post('/nuevo-proyecto', isAuth, proyectosController.postNuevoProyecto);
-
 
 router.get('/fases-proyecto', isAuth, fasesController.getFasesProyecto);
 

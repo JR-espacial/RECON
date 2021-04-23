@@ -1,9 +1,13 @@
 const db = require('../util/mySQL');
 
 module.exports =  class Departamento{
-    constructor(id_departamento, nombre_departamento){
-        this.id_departamento = id_departamento;
+    constructor(nombre_departamento){
         this.nombre_departamento = nombre_departamento;
+    }
+
+    saveDepartamento(){ 
+        return db.execute('INSERT INTO Departamento (nombre_departamento) VALUES (?)',
+        [this.nombre_departamento]);
     }
     
     static fetchAll(){

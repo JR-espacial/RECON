@@ -12,6 +12,8 @@ router.get('/logout', isAuth, usersController.getLogout);
 router.get('/register', usersController.getRegister);
 router.post('/register', usersController.postRegister);
 router.get('/settings',isAuth, usersController.getSettings);
+router.post('/settings',isAuth, usersController.postSettings);
+router.post('/eliminar-usuario',isAuth, usersController.postEliminarUsuario);
 
 router.use(express.static(path.join(__dirname, '..', 'public')));
 

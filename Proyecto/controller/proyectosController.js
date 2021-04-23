@@ -6,7 +6,26 @@ const Proyecto_Fase_Tarea = require('../models/Proyecto_Fase_Tarea');
 const Fase = require('../models/fase');
 const APC = require('../models/ap_colaborador');
 const APP = require('../models/ap_promedios');
-const { request } = require('express');
+const { request, response } = require('express');
+
+
+exports.postNuevoDepartamento =(request,response)=>{
+    const nuevo_departamento = new Departamento(request.body.nuevo_departamento);
+    nuevo_departamento.saveDepartamento()
+    .then(() => {
+        request.session.alerta = "Nuevo departamento creado exitosamente";
+        response.redirect('/users/settings');
+    }).catch(err => console.log(err));
+
+}
+exports.postEliminarDepartamento =(request,response)=>{
+    (request.body.departamento)
+    .then(() => {
+        request.session.alerta = "Nuevo departamento creado exitosamente";
+        response.redirect('/users/settings');
+    }).catch(err => console.log(err));
+
+}
 
 exports.getNuevoProyecto = (request, response) => {
     const error = request.session.error;
