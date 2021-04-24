@@ -1,6 +1,7 @@
 const Usuario = require('../models/user');
 const Departamento = require('../models/departamento');
 const bcrypt = require('bcryptjs');
+const passwordValidator = require('password-validator');
 
 exports.getLogin = (request, response, next) => {
     response.render("login", {
@@ -54,11 +55,14 @@ exports.getLogout = (request, response, next) => {
 }
 
 exports.getRegister = (request, response, next) => {
-    const alerta = request.session.alerta;
+    let alerta = request.session.alerta;
     request.session.alerta = "";
+    let error = request.session.error;
+    request.session.error = "";
     response.render('registrar', {
         imagen_empleado: request.session.imagen_empleado,
         user: request.session.usuario,
+        error: error,
         alerta: alerta,
         title: 'Registra tus datos',
         csrfToken: request.csrfToken(),
@@ -77,12 +81,60 @@ exports.postRegister = (request, response, next) => {
         image_file_name = image.filename;
     }
 
-    const nuevo_usuario = new Usuario(request.body.nombre, request.body.usuario, request.body.password, image_file_name);
-    nuevo_usuario.save()
-        .then(() => {
-            request.session.alerta = "Usuario registrado exitosamente";
-            response.redirect('/users/register');
-        }).catch(err => console.log(err));
+    let schema = new passwordValidator();
+
+    schema
+    .is().min(8)                                    // Minimum length 8
+    .is().max(100)                                  // Maximum length 100
+    .has().uppercase()                              // Must have uppercase letters
+    .has().lowercase()                              // Must have lowercase letters
+    .has().digits()                                // Must have at least  digits
+    .has().symbols()                               //Must have symbols
+    .has().not().spaces()                           // Should not have spaces
+
+    if(schema.validate(request.body.password)){
+        const nuevo_usuario = new Usuario(request.body.nombre, request.body.usuario,request.body.password , image_file_name);
+        nuevo_usuario.save()
+            .then(() => {
+                request.session.alerta = "Usuario registrado exitosamente";
+                response.redirect('/users/register');
+            }).catch(err => console.log(err));
+    }
+    else{
+        console.log(schema.validate(request.body.password, { list: true }));
+        let error = schema.validate(request.body.password, { list: true });
+        let mensaje;
+        if(error[0] == 'min'){
+            mensaje = "La contraseña debe tener al menos 8 caracteres";
+        }
+        else if(error[0] == 'max'){
+            mensaje = "La contraseña debe tener máximo caracteres";
+            
+        }
+        else if(error[0] == 'uppercase'){
+            mensaje = "La contraseña debe contener al menos una mayúscula";
+            
+        }
+        else if(error[0] == 'lowercase'){
+            mensaje = "La contraseña debe contener al menos una minúscula"; 
+        }
+        else if(error[0] == 'digits'){
+            mensaje = "La contraseña debe contener al menos un número";
+            
+        }
+        else if(error[0] == 'symbols'){
+            mensaje = "La contraseña debe contener al menos una carácter especial";
+            
+        }
+        else if(error[0] == 'spaces'){
+            mensaje = "La contraseña no debe contener espacios";
+            
+        }
+
+        request.session.error = mensaje;
+        response.redirect('/users/register');
+        
+    }  
 
 }
 
@@ -92,10 +144,14 @@ exports.getSettings = async function (request, response, next) {
     let user = await Usuario.fetchOne(request.session.usuario);
     let users = await Usuario.fetchAll();
 
+    let error = request.session.error;
+    request.session.error = "";
+
 
     response.render('modificarUsuario', {
         users: users[0],
         user: user[0][0],
+        error: error,
         imagen_empleado: request.session.imagen_empleado,
         alerta: alerta,
         title: 'Modifica tus datos',
@@ -152,11 +208,57 @@ exports.postSettings = (request, response) => {
                 bcrypt.compare(antiguo_password, rows[0].contrasena)
                     .then(doMatch => {
                         if (doMatch) {
-                            Usuario.updateContrasena(nuevo_password,id_empleado)
-                            .then(() => {
+                            let schema = new passwordValidator();
+                            schema
+                            .is().min(8)                                    // Minimum length 8
+                            .is().max(100)                                  // Maximum length 100
+                            .has().uppercase()                              // Must have uppercase letters
+                            .has().lowercase()                              // Must have lowercase letters
+                            .has().digits()                                // Must have at least  digits
+                            .has().symbols()                               //Must have symbols
+                            .has().not().spaces()                           // Should not have spaces
+
+                            if(schema.validate(nuevo_password)){
+                                Usuario.updateContrasena(nuevo_password,id_empleado)
+                                .then(() => {
                                 request.session.alerta = "Contraseña modificado exitosamente";
                                 response.redirect('/users/settings');
-                            }).catch(err => console.log(err));
+                                }).catch(err => console.log(err));
+                            }
+                            else{
+                                let error = schema.validate(nuevo_password, { list: true });
+                                let mensaje;
+                                if(error[0] == 'min'){
+                                    mensaje = "La nueva contraseña debe tener al menos 8 caracteres";
+                                }
+                                else if(error[0] == 'max'){
+                                    mensaje = "La nueva contraseña debe tener máximo caracteres";
+                                    
+                                }
+                                else if(error[0] == 'uppercase'){
+                                    mensaje = "La nueva contraseña debe contener al menos una mayúscula";
+                                    
+                                }
+                                else if(error[0] == 'lowercase'){
+                                    mensaje = "La nueva contraseña debe contener al menos una minúscula"; 
+                                }
+                                else if(error[0] == 'digits'){
+                                    mensaje = "La nueva contraseña debe contener al menos un número";
+                                    
+                                }
+                                else if(error[0] == 'symbols'){
+                                    mensaje = "La nueva contraseña debe contener al menos una carácter especial";
+                                    
+                                }
+                                else if(error[0] == 'spaces'){
+                                    mensaje = "La nueva contraseña no debe contener espacios";
+                                    
+                                }
+
+                                request.session.error = mensaje;
+                                response.redirect('/users/settings');
+                                
+                            }  
                         }
                         else{
                             request.session.alerta = "La antigua contraseña no es correcta";

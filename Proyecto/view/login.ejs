@@ -16,10 +16,12 @@
             </div>
             <div class="card-content">
                 <h4 class="responsive_text_login center" >Bienvenido. Por favor ingresa tus datos.</h4>
+                <br>
                 <% if (error) { %>
                     <span class="col s6 offset-s3" style="color:red"><%= error %></span>
                 <% } %>
                 <br>
+                
                 <form action="/users/login" method="POST">
                     <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
                   

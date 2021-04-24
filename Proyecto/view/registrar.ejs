@@ -35,6 +35,11 @@
                         </div>
                     </div>
                     <div class="row">
+                        <% if (error) { %>
+                            <span class="col s6 offset-s3" style="color:red"><%= error %></span>
+                        <% } %>
+                        <br>
+                        <br>
                         <div class="input-field col s8 offset-s2">
                             <i class="material-icons prefix">lock</i>
                             <input id="password" type="password" name="password" placeholder="Contraseña" required>
