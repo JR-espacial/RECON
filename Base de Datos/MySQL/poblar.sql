@@ -357,6 +357,7 @@ INSERT INTO `proyecto_fase_tarea` (`id_proyecto`, `id_fase`, `id_tarea`) VALUES(
 INSERT INTO `proyecto_fase_tarea` (`id_proyecto`, `id_fase`, `id_tarea`) VALUES(1, 4, 0);
 INSERT INTO `proyecto_fase_tarea` (`id_proyecto`, `id_fase`, `id_tarea`) VALUES(1, 4, 7);
 INSERT INTO `proyecto_fase_tarea` (`id_proyecto`, `id_fase`, `id_tarea`) VALUES(1, 4, 4);
+
 INSERT INTO `proyecto_fase_tarea` (`id_proyecto`, `id_fase`, `id_tarea`) VALUES(2, 1, 0);
 INSERT INTO `proyecto_fase_tarea` (`id_proyecto`, `id_fase`, `id_tarea`) VALUES(2, 1, 5);
 INSERT INTO `proyecto_fase_tarea` (`id_proyecto`, `id_fase`, `id_tarea`) VALUES(2, 2, 0);
