@@ -120,6 +120,13 @@
                                                 <input type="password" class="validate" id="antiguo_password" name="antiguo_password" required>
                                                 <label for="antiguo_password">Antigua contraseña</label>
                                             </div>
+                                            <% if (error) { %>
+                                                <script>
+                                                    alert("<%=error%>");
+                                                </script>
+                                                <span  style="color:red"><%= error %></span>
+                                            <% } %>
+                                            <br>
                                             <div class="input-field">
                                                 <input type="password" class="validate" id="nuevo_password" name="nuevo_password" required>
                                                 <label for="nuevo_password">Nueva contraseña</label>
@@ -165,7 +172,7 @@
                                 </div>
                             </div>
                         </div>
-                        <tr class="modal-trigger" data-target="modal_usuarioE">
+                        <!-- <tr class="modal-trigger" data-target="modal_usuarioE">
                             <td>Eliminar Usuario<i class="material-icons right ">chevron_right</i></td>
                         </tr>
                         <div id="modal_usuarioE" class="modal col s4 ">
@@ -189,7 +196,7 @@
                                     </form>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </table>
                     
                 </div>
