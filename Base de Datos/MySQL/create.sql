@@ -153,8 +153,8 @@
         quiero VARCHAR(255), 
         para VARCHAR(255), 
         comentario VARCHAR(255), 
-        real_minutos INT,
-        max_minutos_caso_uso INT, 
+        real_minutos DECIMAL(5,1),
+        max_minutos_caso_uso DECIMAL(5,1),
         porcentaje_avance DECIMAL(3, 2), 
         PRIMARY KEY(id_casos), 
         FOREIGN KEY(id_ap) REFERENCES Puntos_Agiles(id_ap), 
@@ -221,17 +221,17 @@
     DELETE FROM proyecto_fase_tarea WHERE id_proyecto = SPid_proyecto AND id_fase = SPid_fase;
   	END //
 
-
     -- Actualizar Promedios cuando Empleado actualiza su estimación 
-    DROP TRIGGER promedio;
-    DELIMITER //
-    CREATE TRIGGER promedio AFTER UPDATE ON ap_colaborador
-    FOR EACH ROW
-    BEGIN
-        UPDATE ap_promedios SET promedio_minutos=(SELECT AVG(minutos) FROM ap_colaborador WHERE id_proyecto=NEW.id_proyecto AND id_fase=NEW.id_fase AND id_tarea=NEW.id_tarea AND id_ap=NEW.id_ap) WHERE id_proyecto=NEW.id_proyecto AND id_fase=NEW.id_fase AND id_tarea=NEW.id_tarea AND id_ap=NEW.id_ap;
-    END //
+    -- DROP TRIGGER promedio;
+    -- DELIMITER //
+    -- CREATE TRIGGER promedio AFTER UPDATE ON ap_colaborador
+    -- FOR EACH ROW
+    -- BEGIN
+    --     UPDATE ap_promedios SET promedio_minutos=(SELECT AVG(minutos) FROM ap_colaborador WHERE id_proyecto=NEW.id_proyecto AND id_fase=NEW.id_fase AND id_tarea=NEW.id_tarea AND id_ap=NEW.id_ap) WHERE id_proyecto=NEW.id_proyecto AND id_fase=NEW.id_fase AND id_tarea=NEW.id_tarea AND id_ap=NEW.id_ap;
+    -- END //
 
     -- Crear registros de promedios por AP cuando se relaciona/crea tarea con fase
+
     DROP TRIGGER CamposPromedios;
     DELIMITER //
     CREATE TRIGGER CamposPromedios AFTER INSERT ON Proyecto_Fase_tarea
@@ -332,42 +332,165 @@
     --     UPDATE entrega SET id_fase = NEW.id_fase, id_tarea = NEW.id_tarea WHERE id_proyecto = NEW.id_proyecto AND id_fase = OLD.id_fase AND id_tarea = OLD.id_tarea;
     -- END //
 
-    -- Asigna nombre a Estimacion que va a Air Table
-    DROP PROCEDURE IF EXISTS setNombreEstimacion;
-    DELIMITER //
-    CREATE PROCEDURE setNombreEstimacion(
-        IN SPid_proyecto INT,
-        IN SPid_fase INT,
-        IN SPid_tarea INT,
-        IN SPid_casos INT
-    )
-    BEGIN
-        UPDATE entrega SET nombre = 
-        CONCAT("IT",
-        	(SELECT num_iteracion FROM iteracion I INNER JOIN casos_uso CU ON I.id_iteracion = CU.id_iteracion WHERE id_casos = SPid_casos),
-            "-",
-            " - ",
-            (SELECT quiero FROM casos_uso WHERE id_casos = SPid_casos),
-            " - ",
-            (SELECT nombre_fase FROM fase WHERE id_fase = SPid_fase),
-            " (",
-            (SELECT nombre_tarea FROM tarea WHERE id_tarea = SPid_tarea),
-            (")")
-        )
-        WHERE id_proyecto = SPid_proyecto AND id_fase = SPid_fase AND
-        id_tarea = SPid_tarea AND id_casos = SPid_casos;
-    END //
-
     -- Actualizar Estimacion cuando Promedio Estimaciones Empleados cambia 
-    DROP TRIGGER IF EXISTS actualizarEstimacion;
+    -- DROP TRIGGER IF EXISTS actualizarEstimacion;
+    -- DELIMITER //
+    -- CREATE TRIGGER actualizarEstimacion AFTER UPDATE ON ap_promedios
+    -- FOR EACH ROW
+    -- BEGIN
+    --     UPDATE entrega SET estimacion = cast(NEW.promedio_minutos / 60 as decimal(5,2))
+    --     WHERE id_proyecto = OLD.id_proyecto AND id_fase = OLD.id_fase
+    --     AND id_tarea = OLD.id_tarea AND id_casos
+    --     IN 
+    --         (SELECT CU.id_casos 
+    --         FROM casos_uso CU INNER JOIN iteracion I ON CU.id_iteracion = I.id_iteracion 
+    --         WHERE CU.id_ap = OLD.id_ap AND I.id_proyecto = OLD.id_proyecto);
+
+        
+        -- SET @id_casos = (SELECT CU.id_casos 
+        --         FROM casos_uso CU INNER JOIN entrega E ON CU.id_casos = E.id_casos 
+        --         WHERE CU.id_ap = OLD.id_ap AND  E.id_proyecto = OLD.id_proyecto AND E.id_fase = OLD.id_fase AND E.id_tarea = OLD.id_tarea)
+        
+        -- UPDATE casos_uso SET real_minutos = cast((
+            -- SELECT SUM(estimacion) FROM entrega E WHERE E.id_casos IN 
+            --     (SELECT CU.id_casos 
+            --     FROM casos_uso CU
+            --     WHERE CU.id_proyecto = NEW.id_proyecto AND CU.id_fase = NEW.id_fase AND CU.id_tarea = NEW.id_tarea AND CU.casos_uso = NEW.casos_uso)
+            -- )*60 as decimal(5,1))
+
+        --     SELECT SUM(estimacion) FROM entrega E WHERE E.id_casos IN 
+        --         (SELECT CU.id_casos 
+        --         FROM casos_uso CU INNER JOIN entrega E ON CU.id_casos = E.id_casos 
+        --         WHERE CU.id_ap = OLD.id_ap AND  E.id_proyecto = OLD.id_proyecto AND E.id_fase = OLD.id_fase AND E.id_tarea = OLD.id_tarea)
+        --         GROUP BY E.id_casos
+        --     )*60 as decimal(5,1))
+
+        -- WHERE id_casos IN
+            -- (SELECT CU.id_casos 
+            -- FROM casos_uso CU INNER JOIN iteracion I ON CU.id_iteracion = I.id_iteracion 
+            -- WHERE CU.id_ap = OLD.id_ap AND I.id_proyecto = OLD.id_proyecto);
+
+    --         (SELECT CU.id_casos 
+    --         FROM casos_uso CU INNER JOIN entrega E ON CU.id_casos = E.id_casos 
+    --         WHERE CU.id_ap = OLD.id_ap AND  E.id_proyecto = OLD.id_proyecto AND E.id_fase = OLD.id_fase AND E.id_tarea = OLD.id_tarea);
+
+    -- END //
+
+    -- Actualizar Real Minutos de la tabla Casos de Uso cuando Estimación cambia.
+    -- DROP TRIGGER IF EXISTS actualizarRealMinutosCasoUso;
+    -- DELIMITER //
+    -- CREATE TRIGGER actualizarRealMinutosCasoUso AFTER UPDATE ON entrega
+    -- FOR EACH ROW
+    -- BEGIN
+    --     UPDATE casos_uso SET real_minutos = cast((
+    --         SELECT SUM(estimacion) FROM entrega E WHERE E.id_casos = NEW.id_casos
+    --     )*60 as decimal(5,1))
+    --     WHERE id_casos = NEW.id_casos;
+    -- END //
+
+    -- DROP TRIGGER IF EXISTS actualizarRealMinutosCasoUso;
+    -- DELIMITER //
+    -- CREATE TRIGGER actualizarRealMinutosCasoUso AFTER UPDATE ON entrega
+    -- FOR EACH ROW
+    -- BEGIN
+    --     UPDATE casos_uso SET real_minutos = real_minutos + cast(NEW.estimacion - IFNULL(OLD.estimacion, 0) as decimal(5,1))
+    --     WHERE id_casos = NEW.id_casos;
+    -- END //
+
+    -- UPDATE ap_colaborador SET minutos = 30 WHERE id_proyecto = 1 AND id_fase = 1 AND id_tarea = 1 AND id_ap = 5
+
+
+    -- Asigna nombre a Estimacion que va a Air Table
+    DROP TRIGGER IF EXISTS setNombreEstimacion;
     DELIMITER //
-    CREATE TRIGGER actualizarEstimacion AFTER UPDATE ON ap_promedios
+    CREATE TRIGGER setNombreEstimacion BEFORE INSERT ON entrega
     FOR EACH ROW
     BEGIN
-        UPDATE entrega SET estimacion = cast(NEW.promedio_minutos / 60 as decimal(5,2))
-        WHERE id_proyecto = OLD.id_proyecto AND id_fase = OLD.id_fase
-        AND id_tarea = OLD.id_tarea AND id_casos IN 
+        SET NEW.nombre = 
+        CONCAT("IT",
+        	(SELECT num_iteracion FROM iteracion I INNER JOIN casos_uso CU ON I.id_iteracion = CU.id_iteracion WHERE id_casos = NEW.id_casos),
+            "-",
+            " - ",
+            (SELECT quiero FROM casos_uso WHERE id_casos = NEW.id_casos),
+            " - ",
+            (SELECT nombre_fase FROM fase WHERE id_fase = NEW.id_fase),
+            " (",
+            (SELECT nombre_tarea FROM tarea WHERE id_tarea = NEW.id_tarea),
+            (")")
+        );
+    END //
+
+
+
+-- -- Modifica calculo de tiempo real para caso de uso cuando se le asigna tarea
+--     DROP PROCEDURE IF EXISTS actualizaRealMinutosCasoUso;
+--     DELIMITER //
+--     CREATE PROCEDURE actualizaRealMinutosCasoUso(
+--         IN SPid_casos INT,
+--         IN SPcambio_estimacion DECIMAL(5, 1)
+--     )
+--     BEGIN
+--     	UPDATE casos_uso SET real_minutos = IFNULL(real_minutos, 0) + SPcambio_estimacion
+--         WHERE id_casos = SPid_casos;
+--   	END //
+
+-- -- Llama a modificar tiempo real para caso de uso cuando se le asigna tarea
+--     DROP TRIGGER IF EXISTS callRealMinutosCasoUso;
+--     DELIMITER //
+--     CREATE TRIGGER callRealMinutosCasoUso AFTER UPDATE ON entrega
+--     FOR EACH ROW
+--     BEGIN
+--     	IF OLD.estimacion <> NEW.estimacion THEN
+--         	CALL actualizaRealMinutosCasoUso(NEW.id_casos, cast((NEW.estimacion - IFNULL(OLD.estimacion, 0)) * 60 as DECIMAL(5, 1)));
+--         END IF;
+--     END //
+
+
+DROP PROCEDURE IF EXISTS actualizaTiempos;
+    DELIMITER //
+    CREATE PROCEDURE actualizaTiempos(
+        IN idProyecto INT,
+        IN idEmpleado INT,
+        IN idFase INT,
+        IN idTarea INT,
+        IN idAp INT,
+        IN Xminutos INT
+    )
+    BEGIN
+        UPDATE ap_colaborador SET minutos = Xminutos 
+        WHERE id_proyecto = idProyecto AND id_empleado = idEmpleado AND id_fase = idFase AND id_tarea = idTarea AND id_ap = idAp;
+        
+        -- No calcula bien
+        UPDATE ap_promedios SET promedio_minutos=
+            (SELECT AVG(minutos) FROM ap_colaborador 
+            WHERE id_proyecto=idProyecto AND id_fase= idFase AND id_tarea=idTarea AND id_ap=idAp)
+        WHERE id_proyecto=idProyecto AND id_fase= idFase AND id_tarea=idTarea AND id_ap=idAp;
+        
+        UPDATE entrega SET estimacion = (SELECT cast(promedio_minutos/60 as decimal(5,2)) FROM ap_promedios WHERE id_proyecto = idProyecto AND id_fase = idFase AND id_tarea = idTarea AND id_ap = idAp)
+        WHERE id_proyecto=idProyecto AND id_fase= idFase AND id_tarea=idTarea AND id_casos IN 
             (SELECT CU.id_casos 
             FROM casos_uso CU INNER JOIN iteracion I ON CU.id_iteracion = I.id_iteracion 
-            WHERE CU.id_ap = OLD.id_ap AND I.id_proyecto = OLD.id_proyecto);
-    END //
+            WHERE CU.id_ap = idAp AND I.id_proyecto = idProyecto);
+
+        DROP TEMPORARY TABLE IF EXISTS my_temp_table;
+        CREATE TEMPORARY TABLE my_temp_table(
+            i INT AUTO_INCREMENT,
+            id_casos INT,
+            PRIMARY KEY(i));
+
+        INSERT INTO my_temp_table(id_casos) SELECT CU.id_casos
+                            FROM casos_uso CU INNER JOIN entrega E ON CU.id_casos = E.id_casos 
+                            WHERE CU.id_ap = idAp AND  E.id_proyecto = idProyecto AND E.id_fase = idFase AND E.id_tarea = idTarea;
+
+        SET @nrows = 1;
+
+        WHILE(@nrows <= (SELECT COUNT(*) FROM my_temp_table)) DO
+            UPDATE casos_uso SET real_minutos = cast((SELECT SUM(estimacion) FROM entrega E WHERE E.id_casos = (SELECT id_casos FROM my_temp_table WHERE i = @nrows))* 60 as decimal (5,1))
+            WHERE id_casos = (SELECT id_casos FROM my_temp_table WHERE i = @nrows);
+            SET @nrows = @nrows+1;
+        END WHILE;
+
+        -- UPDATE iteracion SET total_min_real = (SELECT SUM(CU.real_minutos) FROM casos_uso CU WHERE CU.iteracion = )
+        -- WHERE id_iteracion = 
+
+  	END //

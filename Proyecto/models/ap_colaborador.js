@@ -20,11 +20,6 @@ module.exports = class ap_colaborador{
         [id_proyecto, id_fase, id_tarea, 6, id_empleado, 0]);
     }
 
-    static UpdateTime(idProyecto, idEmpleado, idFase, idTarea, idAP, minutos) {
-        return db.execute('UPDATE ap_colaborador SET minutos=? WHERE id_proyecto=? AND id_empleado=? AND id_fase=? AND id_tarea=? AND id_ap=?',
-        [minutos, idProyecto, idEmpleado, idFase, idTarea, idAP]);
-    }
-
     static fetchALL(id_proyecto){
         return db.execute('SELECT id_fase, id_tarea, id_ap, id_empleado, minutos FROM AP_Colaborador WHERE id_proyecto = ? ORDER BY id_fase DESC',
         [id_proyecto]);
@@ -38,5 +33,9 @@ module.exports = class ap_colaborador{
     static deleteTarea(id_proyecto, id_fase, id_tarea){
         return db.execute('DELETE FROM ap_colaborador WHERE id_proyecto=? AND id_fase=? AND id_tarea=?',
         [id_proyecto, id_fase, id_tarea]);
+    }
+
+    static actualizaTiempos(idProyecto, idEmpleado, idFase, idTarea, idAP, minutos){
+        return db.execute('CALL actualizaTiempos(?, ?, ?, ?, ?, ?)', [idProyecto, idEmpleado, idFase, idTarea, idAP, minutos]);
     }
 }

@@ -121,7 +121,7 @@ exports.getEstimacionAP = (request, response) => {
 }
 
 exports.postEstimacionAP = (request, response) => {
-    APC.UpdateTime(request.session.idProyecto, request.session.id_empleado, request.body.id_fase, request.body.id_tarea, request.body.id_ap, request.body.minutos)
+    APC.actualizaTiempos(request.session.idProyecto, request.session.id_empleado, request.body.id_fase, request.body.id_tarea, request.body.id_ap, request.body.minutos)
         .then(() => response.status(200))
         .catch( err => console.log(err));      
 }
