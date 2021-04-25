@@ -66,8 +66,6 @@
         "<% } %>"
     "<% } %>"
 
-    console.log(options);
-
     var instances = M.Chips.init(elems,{
         autocompleteOptions:{ data : options},
         placeholder: 'Añadir usuario',
@@ -80,7 +78,6 @@
             var instance = M.Chips.getInstance(document.getElementById('chip1')), inpt = document.getElementById('myInputField');
             inpt.value =  null;
             for(var i=0; i<instance.chipsData.length; i++){
-                console.log(instance.chipsData[i]);
                 if(inpt.value == null)
                     inpt.value = instance.chipsData[i].tag;
                 else{

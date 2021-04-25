@@ -64,7 +64,7 @@ exports.postNuevoProyecto = async function (request, response) {
     else{
         image_file_name = image.filename;
     }
-    console.log(image_file_name);
+
     const proyecto_existente = await Proyecto.fetchOne(nombre_proyecto);
     if (proyecto_existente[0].length < 1) {
         let proyecto = new Proyecto(nombre_proyecto, descripcion, departamento, 1, image_file_name, 0);
@@ -80,7 +80,7 @@ exports.postNuevoProyecto = async function (request, response) {
         await Proyecto.saveProyectoDepto(departamento, id_proyecto[0][0].id_proyecto);
         
         // Se crea iteración fantasma con capacidad fantasma, y se asigna al usuario que creo el proyecto a la iteración fantasma. 
-        let iteracion = new Iteracion(id_proyecto[0][0].id_proyecto, 0, 0, 'NULL', 'NULL', 'NULL', 0);
+        let iteracion = new Iteracion(id_proyecto[0][0].id_proyecto, 0, 0, 'NULL', '2000-01-01', '2000-01-02', 0);
         await iteracion.saveIteracion();
         const fetchOneIteracion = await Iteracion.fetchOne(id_proyecto[0][0].id_proyecto, 0);
         const fetchOneUsuario =  await Usuario.fetchOne(request.session.usuario);
