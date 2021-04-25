@@ -6,15 +6,15 @@ module.exports =  class Departamento{
     }
 
     saveDepartamento(){ 
-        return db.execute('INSERT INTO Departamento (nombre_departamento) VALUES (?)',
+        return db.execute('INSERT INTO departamento (nombre_departamento) VALUES (?)',
         [this.nombre_departamento]);
     }
     
     static fetchAll(){
-        return db.execute('SELECT * FROM Departamento');
+        return db.execute('SELECT * FROM departamento');
     }
 
     static fetchAllProyecto(){
-        return db.execute('SELECT * FROM Proyecto_Departamento');
+        return db.execute('SELECT * FROM proyecto_departamento');
     }
 }

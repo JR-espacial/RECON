@@ -18,11 +18,11 @@ module.exports = class Proyecto_Fase_Tarea {
     }
 
     static fetchAllTareasFaseProyecto(id_proyecto) {
-        return db.execute('SELECT PFP.id_fase, nombre_fase, PFP.id_tarea, nombre_tarea FROM proyecto_fase_tarea PFP INNER JOIN tarea PT ON PFP.id_tarea = PT.id_tarea INNER JOIN Fase F ON F.id_fase = PFP.id_fase WHERE id_proyecto =? ORDER BY PFP.id_fase, PFP.id_tarea', [id_proyecto]);
+        return db.execute('SELECT PFP.id_fase, nombre_fase, PFP.id_tarea, nombre_tarea FROM proyecto_fase_tarea PFP INNER JOIN tarea PT ON PFP.id_tarea = PT.id_tarea INNER JOIN fase F ON F.id_fase = PFP.id_fase WHERE id_proyecto =? ORDER BY PFP.id_fase, PFP.id_tarea', [id_proyecto]);
     }
 
     static fetchTareasNoFantasmas(id_proyecto) {
-        return db.execute('SELECT PFP.id_fase, nombre_fase, PFP.id_tarea, nombre_tarea FROM proyecto_fase_tarea PFP INNER JOIN tarea PT ON PFP.id_tarea = PT.id_tarea INNER JOIN Fase F ON F.id_fase = PFP.id_fase WHERE id_proyecto =? AND PFP.id_tarea > 0 ORDER BY PFP.id_fase, PFP.id_tarea', [id_proyecto]);
+        return db.execute('SELECT PFP.id_fase, nombre_fase, PFP.id_tarea, nombre_tarea FROM proyecto_fase_tarea PFP INNER JOIN tarea PT ON PFP.id_tarea = PT.id_tarea INNER JOIN fase F ON F.id_fase = PFP.id_fase WHERE id_proyecto =? AND PFP.id_tarea > 0 ORDER BY PFP.id_fase, PFP.id_tarea', [id_proyecto]);
     }
 
     static fetchFaseInProyecto(id_proyecto, id_fase) {
@@ -34,7 +34,7 @@ module.exports = class Proyecto_Fase_Tarea {
     }
 
     static deleteFaseFromProject(id_proyecto, id_fase){
-        return db.execute('CALL eliminaFase(?, ?)', [id_proyecto, id_fase]);
+        return db.execute('CALL elimina_fase(?, ?)', [id_proyecto, id_fase]);
     }
 
     static fetchTareaInFase(id_proyecto, id_fase, id_tarea) {
@@ -46,6 +46,6 @@ module.exports = class Proyecto_Fase_Tarea {
     }
 
     static deleteTareaFromFase(id_proyecto, id_fase, id_tarea) {
-        return db.execute('CALL eliminaTarea(?, ?, ?)', [id_proyecto, id_fase, id_tarea]);
+        return db.execute('CALL elimina_tarea(?, ?, ?)', [id_proyecto, id_fase, id_tarea]);
     }
 }

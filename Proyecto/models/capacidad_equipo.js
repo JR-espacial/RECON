@@ -10,11 +10,11 @@ module.exports =  class Capacidad_Equipo{
     }
     
     static fetchAll(){
-        return db.execute('SELECT * FROM Capacidad_Equipo');
+        return db.execute('SELECT * FROM capacidad_equipo');
     }
 
     static fetchOne(id_capacidad){
-        return db.execute('SELECT * FROM Capacidad_Equipo WHERE id_capacidad =?', [id_capacidad]);
+        return db.execute('SELECT * FROM capacidad_equipo WHERE id_capacidad =?', [id_capacidad]);
     }
 
     static fetchSumCapacidad(id_iteracion){
@@ -22,7 +22,7 @@ module.exports =  class Capacidad_Equipo{
     }
 
     static fetchCapacidadEmpleados(id_iteracion) {
-        return db.execute('SELECT EI.id_empleado, E.usuario, EI.horas_semanales FROM empleado_iteracion EI INNER JOIN Empleado E ON EI.id_empleado = E.id_empleado WHERE id_iteracion =?', [id_iteracion]);
+        return db.execute('SELECT EI.id_empleado, E.usuario, EI.horas_semanales FROM empleado_iteracion EI INNER JOIN empleado E ON EI.id_empleado = E.id_empleado WHERE id_iteracion =?', [id_iteracion]);
     }
 
     static fetchAllPorcentajes(id_iteracion){
@@ -62,6 +62,6 @@ module.exports =  class Capacidad_Equipo{
     }
 
     static callsetHorasProductivas(id_capacidad, id_iteracion){
-        return db.execute('CALL setHorasProductivas(?, ?)', [id_capacidad, id_iteracion]);
+        return db.execute('CALL set_horas_productivas(?, ?)', [id_capacidad, id_iteracion]);
     }
 }

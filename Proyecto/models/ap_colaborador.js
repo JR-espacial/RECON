@@ -21,7 +21,7 @@ module.exports = class ap_colaborador{
     }
 
     static fetchALL(id_proyecto){
-        return db.execute('SELECT id_fase, id_tarea, id_ap, id_empleado, minutos FROM AP_Colaborador WHERE id_proyecto = ? ORDER BY id_fase DESC',
+        return db.execute('SELECT id_fase, id_tarea, id_ap, id_empleado, minutos FROM ap_colaborador WHERE id_proyecto = ? ORDER BY id_fase DESC',
         [id_proyecto]);
     }
 
@@ -36,6 +36,6 @@ module.exports = class ap_colaborador{
     }
 
     static actualizaTiempos(idProyecto, idEmpleado, idFase, idTarea, idAP, minutos){
-        return db.execute('CALL actualizaTiempos(?, ?, ?, ?, ?, ?)', [idProyecto, idEmpleado, idFase, idTarea, idAP, minutos]);
+        return db.execute('CALL actualiza_tiempos(?, ?, ?, ?, ?, ?)', [idProyecto, idEmpleado, idFase, idTarea, idAP, minutos]);
     }
 }

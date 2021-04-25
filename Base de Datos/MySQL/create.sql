@@ -7,14 +7,14 @@
     SET NAMES utf8 ;
     SET character_set_client = utf8mb4 ;
 
-    CREATE TABLE Puntos_Agiles (
+    CREATE TABLE puntos_agiles (
         id_ap INT AUTO_INCREMENT NOT NULL,
         ap INT,
         PRIMARY KEY(id_ap)
     );
 
 
-    CREATE TABLE Capacidad_Equipo (
+    CREATE TABLE capacidad_equipo (
         id_capacidad INT AUTO_INCREMENT NOT NULL,
         horas_productivas DECIMAL(5, 2),
         tiempo_perdido_pc DECIMAL(3, 2),
@@ -28,7 +28,7 @@
     );
 
 
-    CREATE TABLE Proyecto (
+    CREATE TABLE proyecto (
         id_proyecto INT AUTO_INCREMENT NOT NULL,
         nombre_proyecto VARCHAR(64),
         descripcion VARCHAR(1000),
@@ -43,7 +43,7 @@
     );
 
 
-    CREATE TABLE Iteracion(
+    CREATE TABLE iteracion(
         id_iteracion INT AUTO_INCREMENT NOT NULL,
         id_proyecto INT NOT NULL,
         id_capacidad INT NOT NULL,
@@ -56,26 +56,26 @@
         total_min_real INT,
         total_min_maximo INT,
         PRIMARY KEY(id_iteracion),
-        FOREIGN KEY(id_proyecto) REFERENCES Proyecto(id_proyecto),
-        FOREIGN KEY(id_capacidad) REFERENCES Capacidad_Equipo(id_capacidad)
+        FOREIGN KEY(id_proyecto) REFERENCES proyecto(id_proyecto),
+        FOREIGN KEY(id_capacidad) REFERENCES capacidad_equipo(id_capacidad)
     );
 
 
-    CREATE TABLE Departamento (
+    CREATE TABLE departamento (
         id_departamento INT AUTO_INCREMENT NOT NULL,
         nombre_departamento VARCHAR(64),
         PRIMARY KEY(id_departamento)
     );
 
-    CREATE TABLE Proyecto_Departamento (
+    CREATE TABLE proyecto_departamento (
         id_proyecto INT NOT NULL,
         id_departamento INT NOT NULL,
         PRIMARY KEY(id_proyecto, id_departamento), 
-        FOREIGN KEY(id_proyecto) REFERENCES Proyecto(id_proyecto),
-        FOREIGN KEY(id_departamento) REFERENCES Departamento(id_departamento)
+        FOREIGN KEY(id_proyecto) REFERENCES proyecto(id_proyecto),
+        FOREIGN KEY(id_departamento) REFERENCES departamento(id_departamento)
     );
 
-    CREATE TABLE Empleado (
+    CREATE TABLE empleado (
         id_empleado INT AUTO_INCREMENT NOT NULL,
         usuario VARCHAR(14),
         contrasena VARCHAR(100),
@@ -85,16 +85,16 @@
     );
 
 
-    CREATE TABLE Empleado_Iteracion (
+    CREATE TABLE empleado_iteracion (
         id_empleado INT NOT NULL,
         id_iteracion INT NOT NULL,
         horas_semanales INT,
         PRIMARY KEY(id_empleado, id_iteracion),
-        FOREIGN KEY(id_empleado) REFERENCES Empleado(id_empleado),
-        FOREIGN KEY(id_iteracion) REFERENCES Iteracion(id_iteracion)
+        FOREIGN KEY(id_empleado) REFERENCES empleado(id_empleado),
+        FOREIGN KEY(id_iteracion) REFERENCES iteracion(id_iteracion)
     );
 
-    CREATE TABLE Fase (
+    CREATE TABLE fase (
         id_fase INT AUTO_INCREMENT NOT NULL,
         nombre_fase VARCHAR(64),
         PRIMARY KEY(id_fase)
@@ -108,18 +108,18 @@
     );
 
 
-    CREATE TABLE Proyecto_Fase_tarea (
+    CREATE TABLE proyecto_fase_tarea (
         id_proyecto INT NOT NULL,
         id_fase INT NOT NULL,
         id_tarea INT NOT NULL,
         PRIMARY KEY(id_proyecto, id_fase, id_tarea),
-        FOREIGN KEY(id_proyecto) REFERENCES Proyecto(id_proyecto),
-        FOREIGN KEY(id_fase) REFERENCES Fase(id_fase),
+        FOREIGN KEY(id_proyecto) REFERENCES proyecto(id_proyecto),
+        FOREIGN KEY(id_fase) REFERENCES fase(id_fase),
         FOREIGN KEY(id_tarea) REFERENCES tarea(id_tarea)
     );
 
 
-    CREATE TABLE AP_Colaborador (
+    CREATE TABLE ap_colaborador (
         id_proyecto INT NOT NULL, 
         id_fase INT NOT NULL, 
         id_tarea INT  NOT NULL,
@@ -127,24 +127,24 @@
         id_empleado INT NOT NULL,
         minutos DECIMAL(5, 1),
         PRIMARY KEY(id_proyecto, id_fase, id_tarea, id_ap, id_empleado),
-        FOREIGN KEY(id_proyecto, id_fase, id_tarea) REFERENCES Proyecto_Fase_tarea(id_proyecto, id_fase, id_tarea),
-        FOREIGN KEY(id_ap) REFERENCES Puntos_Agiles(id_ap),
-        FOREIGN KEY(id_empleado) REFERENCES Empleado(id_empleado)
+        FOREIGN KEY(id_proyecto, id_fase, id_tarea) REFERENCES proyecto_fase_tarea(id_proyecto, id_fase, id_tarea),
+        FOREIGN KEY(id_ap) REFERENCES puntos_agiles(id_ap),
+        FOREIGN KEY(id_empleado) REFERENCES empleado(id_empleado)
     );
 
 
-    CREATE TABLE AP_Promedios(
+    CREATE TABLE ap_promedios(
         id_proyecto INT NOT NULL, 
         id_fase INT NOT NULL, 
         id_tarea INT  NOT NULL,
         id_ap INT NOT NULL,
         promedio_minutos DECIMAL(5, 1), 
-        FOREIGN KEY(id_proyecto, id_fase, id_tarea) REFERENCES Proyecto_Fase_tarea(id_proyecto, id_fase, id_tarea),
-        FOREIGN KEY(id_ap) REFERENCES Puntos_Agiles(id_ap)
+        FOREIGN KEY(id_proyecto, id_fase, id_tarea) REFERENCES proyecto_fase_tarea(id_proyecto, id_fase, id_tarea),
+        FOREIGN KEY(id_ap) REFERENCES puntos_agiles(id_ap)
     );
 
 
-    CREATE TABLE Casos_Uso(
+    CREATE TABLE casos_uso(
         id_casos INT AUTO_INCREMENT NOT NULL, 
         numero_cu INT,
         id_ap INT NOT NULL, 
@@ -157,12 +157,12 @@
         max_minutos_caso_uso DECIMAL(5,1),
         porcentaje_avance DECIMAL(3, 2), 
         PRIMARY KEY(id_casos), 
-        FOREIGN KEY(id_ap) REFERENCES Puntos_Agiles(id_ap), 
-        FOREIGN KEY(id_iteracion) REFERENCES Iteracion(id_iteracion)
+        FOREIGN KEY(id_ap) REFERENCES puntos_agiles(id_ap), 
+        FOREIGN KEY(id_iteracion) REFERENCES iteracion(id_iteracion)
     );
 
 
-    CREATE TABLE Entrega (
+    CREATE TABLE entrega (
         id_proyecto INT NOT NULL,
         id_fase INT NOT NULL,
         id_tarea INT NOT NULL, 
@@ -174,14 +174,14 @@
         costo_real DECIMAL(5, 2), 
         estado_entrega BIT, 
         PRIMARY KEY(id_proyecto, id_fase ,id_tarea, id_casos),
-        FOREIGN KEY(id_proyecto, id_fase, id_tarea) REFERENCES Proyecto_Fase_tarea(id_proyecto, id_fase, id_tarea),
-        FOREIGN KEY(id_casos) REFERENCES Casos_Uso(id_casos)
+        FOREIGN KEY(id_proyecto, id_fase, id_tarea) REFERENCES proyecto_fase_tarea(id_proyecto, id_fase, id_tarea),
+        FOREIGN KEY(id_casos) REFERENCES casos_uso(id_casos)
     );
 
         -- Calcular y Almacenar Horas Productivas
-    DROP PROCEDURE IF EXISTS setHorasProductivas;
+    DROP PROCEDURE IF EXISTS set_horas_productivas;
     DELIMITER //
-    CREATE PROCEDURE setHorasProductivas(
+    CREATE PROCEDURE set_horas_productivas(
         IN SP_id_capacidad INT,
         IN SP_id_iteracion INT
     )
@@ -195,9 +195,9 @@
     END //
 
     -- Elimina tarea con sus dependencias
-    DROP PROCEDURE IF EXISTS eliminaTarea;
+    DROP PROCEDURE IF EXISTS elimina_tarea;
     DELIMITER //
-    CREATE PROCEDURE eliminaTarea(
+    CREATE PROCEDURE elimina_tarea(
         IN SPid_proyecto INT,
         IN SPid_fase INT,
         IN SPid_tarea INT
@@ -209,9 +209,9 @@
     END //
 
     -- Elimina fase con sus dependencias
-    DROP PROCEDURE IF EXISTS eliminaFase;
+    DROP PROCEDURE IF EXISTS elimina_fase;
     DELIMITER //
-    CREATE PROCEDURE eliminaFase(
+    CREATE PROCEDURE elimina_fase(
         IN SPid_proyecto INT,
         IN SPid_fase INT
     )
@@ -232,9 +232,9 @@
 
     -- Crear registros de promedios por AP cuando se relaciona/crea tarea con fase
 
-    DROP TRIGGER CamposPromedios;
+    DROP TRIGGER campos_promedios;
     DELIMITER //
-    CREATE TRIGGER CamposPromedios AFTER INSERT ON Proyecto_Fase_tarea
+    CREATE TRIGGER campos_promedios AFTER INSERT ON proyecto_fase_tarea
     FOR EACH ROW
     BEGIN
         IF NEW.id_tarea > 0 THEN
@@ -250,9 +250,9 @@
     END //
 
     -- Crear Registros para la tabla ap_colaborador
-    DROP TRIGGER APempleados1;
+    DROP TRIGGER ap_empleados_1;
     DELIMITER //
-    CREATE TRIGGER APempleados1 AFTER INSERT ON proyecto_fase_tarea
+    CREATE TRIGGER ap_empleados_1 AFTER INSERT ON proyecto_fase_tarea
     FOR EACH ROW
     BEGIN
         IF NEW.id_tarea > 0 THEN
@@ -262,9 +262,9 @@
         END IF;
     END //
 
-    DROP TRIGGER APempleados2;
+    DROP TRIGGER ap_empleados_2;
     DELIMITER //
-    CREATE TRIGGER APempleados2 AFTER INSERT ON proyecto_fase_tarea
+    CREATE TRIGGER ap_empleados_2 AFTER INSERT ON proyecto_fase_tarea
     FOR EACH ROW
     BEGIN
         IF NEW.id_tarea > 0 THEN 
@@ -274,9 +274,9 @@
         END IF;
     END //
 
-    DROP TRIGGER APempleados3;
+    DROP TRIGGER ap_empleados_3;
     DELIMITER //
-    CREATE TRIGGER APempleados3 AFTER INSERT ON proyecto_fase_tarea
+    CREATE TRIGGER ap_empleados_3 AFTER INSERT ON proyecto_fase_tarea
     FOR EACH ROW
     BEGIN
         IF NEW.id_tarea > 0 THEN
@@ -286,9 +286,9 @@
         END IF;
     END //
 
-    DROP TRIGGER APempleados4;
+    DROP TRIGGER ap_empleados_4;
     DELIMITER //
-    CREATE TRIGGER APempleados4 AFTER INSERT ON proyecto_fase_tarea
+    CREATE TRIGGER ap_empleados_4 AFTER INSERT ON proyecto_fase_tarea
     FOR EACH ROW
     BEGIN
         IF NEW.id_tarea > 0 THEN
@@ -298,9 +298,9 @@
         END IF;
     END //
 
-    DROP TRIGGER APempleados5;
+    DROP TRIGGER ap_empleados_5;
     DELIMITER //
-    CREATE TRIGGER APempleados5 AFTER INSERT ON proyecto_fase_tarea
+    CREATE TRIGGER ap_empleados_5 AFTER INSERT ON proyecto_fase_tarea
     FOR EACH ROW
     BEGIN
         IF NEW.id_tarea > 0 THEN
@@ -310,9 +310,9 @@
         END IF;
     END //
 
-    DROP TRIGGER APempleados6;
+    DROP TRIGGER ap_empleados_6;
     DELIMITER //
-    CREATE TRIGGER APempleados6 AFTER INSERT ON proyecto_fase_tarea
+    CREATE TRIGGER ap_empleados_6 AFTER INSERT ON proyecto_fase_tarea
     FOR EACH ROW
     BEGIN
         IF NEW.id_tarea > 0 THEN
@@ -401,9 +401,9 @@
 
 
     -- Asigna nombre a Estimacion que va a Air Table
-    DROP TRIGGER IF EXISTS setNombreEstimacion;
+    DROP TRIGGER IF EXISTS set_nombre_estimacion;
     DELIMITER //
-    CREATE TRIGGER setNombreEstimacion BEFORE INSERT ON entrega
+    CREATE TRIGGER set_nombre_estimacion BEFORE INSERT ON entrega
     FOR EACH ROW
     BEGIN
         SET NEW.nombre = 
@@ -446,9 +446,9 @@
 --     END //
 
 
-DROP PROCEDURE IF EXISTS actualizaTiempos;
+DROP PROCEDURE IF EXISTS actualiza_tiempos;
     DELIMITER //
-    CREATE PROCEDURE actualizaTiempos(
+    CREATE PROCEDURE actualiza_tiempos(
         IN idProyecto INT,
         IN idEmpleado INT,
         IN idFase INT,
