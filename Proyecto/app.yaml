@@ -2,8 +2,8 @@
 runtime: nodejs14
 
 automatic_scaling:
-  min_idle_instances: automatic
-  max_idle_instances: 1
+  min_instances: 5
+  max_instances: 100
   min_pending_latency: 3000ms
   max_pending_latency: automatic
 

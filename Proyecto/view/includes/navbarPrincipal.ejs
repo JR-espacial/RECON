@@ -7,8 +7,8 @@
         <a><img class="circle resposive-image materialboxed"   src="<%=imagen_empleado%>" width="60" height="60"></a>
         <div class="row valign-wrapper">
             <div class="col s9">
-                <a href="/users/settings"><span class="white-text name"><%=user%></span></a>
-                <a href="/users/settings"><span class="white-text email"><%=user%>@email.com</span></a>
+                <a href="/users/settings"><span class="white-text name"><%=user.usuario%></span></a>
+                <a href="/users/settings"><span class="white-text email"><%=user.usuario%>@email.com</span></a>
             </div>
             <div class="col s2 offset-s1">
                 <a href="/users/settings"><i class="white-text material-icons">settings</i></a>
@@ -20,12 +20,59 @@
 
     <li><a class="waves-effect waves-light btn" href="/proyectos/nuevo-proyecto"><i class="material-icons left">add</i>Crear Proyecto</a>
     <li><div class="divider"></div></li>
-    <li><a class="waves-effect" href="#!">En desarrollo</a></li>
-    <li><a class="waves-effect" href="#!">Terminado</a></li>
+    <li><a href ="/users/register"  name="action" value="editar">Nuevo usuario <i class="material-icons right">account_circle</i></a></li>
+    <li><a data-target="modal_departamento" class="modal-trigger">Nuevo Departamento <i class="material-icons right">business</i></a></li>
 
     <li class="logout"><a href="/users/logout"><i class="material-icons right">input</i>Salir &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a></li>
     
 </ul>
+
+<div class="row">
+    <div id="modal_departamento" class="modal col s4 offset-s4">
+        <div class="row">
+            <div class="modal-content col s7 offset-s3">
+                <h5>Crear Departamento</h5>
+                <br>
+                <form action="/proyectos/nuevo-departamento" method="POST">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <div class="input-field">
+                        <input type="text" class="validate" id="nuevo_departamento" name="nuevo_departamento"  required>
+                        <label for="nuevo_departamento">Nombre Departamento</label>
+                    </div>
+                    <br>
+                    <br>
+                    <button type="sumbmit" class="waves-effect waves-green btn right">Crear</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <tr class="modal-trigger" data-target="modal_usuarioE">
+    <td>Eliminar Usuario<i class="material-icons right ">chevron_right</i></td>
+</tr>
+<div id="modal_usuarioE" class="modal col s4 ">
+    <div class="row">
+        <div class="modal-content col s7 offset-s2">
+            <h5>Eliminar Usuario</h5>
+            <br>
+            <form action="/users/eliminar-usuario" method="POST">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <div class="input-field">
+                    <select name="usuario" class="browser-default" required>
+                        <option value="" disabled selected>Selecciona un Usuario*</option>
+                        <% for (let usuario of users) { %>
+                            <option value="<%= usuario.id_empleado %>"><%= usuario.usuario %></option>
+                        <% } %>
+                    </select>
+                </div>
+                <br>
+                <br>
+                <button type="sumbmit" class="red btn right">Eliminar</button>
+            </form>
+        </div>
+    </div>
+</div> -->
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {

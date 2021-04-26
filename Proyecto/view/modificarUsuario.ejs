@@ -1,11 +1,17 @@
 <%- include('includes/openHTMLtoast.ejs'); %>
 
+<% if (alerta) { %>
+    <script>
+        alert("<%=alerta%>");
+    </script>
+<% } %>
+
 <a class=" white btn black-text"  href="/home"> <i class="material-icons prefix">chevron_left</i></a>
 
 
 
 <div class="row">
-    <div class="col s11 offset-s1">
+    <div class="col s8 offset-s4">
         <br>
         <br>
         <br>
@@ -21,7 +27,7 @@
                             <tr class="modal-trigger center-align" data-target="modal_imagen">
                                 <td class="center-align" colspan="2"><img class="circle responsive-image hoverable" src="../<%= imagen_empleado %>" width="60" height="60"></td>
                             </tr>
-                            <div id="modal_imagen" class="modal col s4 offset-s3">
+                            <div id="modal_imagen" class="modal col s4">
                                 <div class="row">
                                     <div class="modal-content col s6 offset-s3">
                                                 <h5> Modificar imagen</h5>
@@ -55,7 +61,7 @@
                                 <td><i class="material-icons prefix">person</i> &nbsp Nombre</td>
                                 <td><%= user.nombre_empleado%><i class="material-icons right">chevron_right</i></td>
                             </tr>
-                            <div id="modal_nombre" class="modal col s4 offset-s3">
+                            <div id="modal_nombre" class="modal col s4">
                                 <div class="row">
                                     <div class="modal-content col s6 offset-s3">
                                         <h5> Modificar nombre</h5>
@@ -81,7 +87,7 @@
                                 <td><i class="material-icons prefix ">account_circle</i>&nbsp Usuario</td>
                                 <td><%= user.usuario %><i class="material-icons right">chevron_right</i></td>
                             </tr>
-                            <div id="modal_usuario" class="modal col s4 offset-s3">
+                            <div id="modal_usuario" class="modal col s4">
                                 <div class="row">
                                     <div class="modal-content col s6 offset-s3">
                                         <h5> Modificar usuario</h5>
@@ -107,7 +113,7 @@
                                 <td><i class="material-icons prefix ">lock</i>&nbsp Contraseña</td>
                                 <td><strong>........</strong><i class="material-icons right">chevron_right</i></td>
                             </tr>
-                            <div id="modal_contraseña" class="modal col s4 offset-s3">
+                            <div id="modal_contraseña" class="modal col s4">
                                 <div class="row">
                                     <div class="modal-content col s6 offset-s3">
                                         <h5> Modificar usuario</h5>
@@ -121,9 +127,6 @@
                                                 <label for="antiguo_password">Antigua contraseña</label>
                                             </div>
                                             <% if (error) { %>
-                                                <script>
-                                                    alert("<%=error%>");
-                                                </script>
                                                 <span  style="color:red"><%= error %></span>
                                             <% } %>
                                             <br>
@@ -142,66 +145,6 @@
                 </div>
             </div>
         </div>
-
-
-        <div class="card col s4 offset-s1">
-            <div class="card-content">
-                <div class="row">
-                    <table class="col s8 offset-s2 highlight" >
-                        <tr>
-                            <td> <a href ="/users/register"  name="action" value="editar">Nuevo usuario <i class="material-icons right">account_circle</i></a></td>
-                        </tr>
-                        <tr class="modal-trigger" data-target="modal_departamento">
-                            <td>Nuevo Departamento <i class="material-icons right ">business</i></td>
-                        </tr>
-                        <div id="modal_departamento" class="modal col s4 ">
-                            <div class="row">
-                                <div class="modal-content col s7 offset-s2">
-                                    <h5>Crear Departamento</h5>
-                                    <br>
-                                    <form action="/proyectos/nuevo-departamento" method="POST">
-                                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                                        <div class="input-field">
-                                            <input type="text" class="validate" id="nuevo_departamento" name="nuevo_departamento"  required>
-                                            <label for="nuevo_departamento">Nombre Departamento</label>
-                                        </div>
-                                        <br>
-                                        <br>
-                                        <button type="sumbmit" class="waves-effect waves-green btn right">Crear</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- <tr class="modal-trigger" data-target="modal_usuarioE">
-                            <td>Eliminar Usuario<i class="material-icons right ">chevron_right</i></td>
-                        </tr>
-                        <div id="modal_usuarioE" class="modal col s4 ">
-                            <div class="row">
-                                <div class="modal-content col s7 offset-s2">
-                                    <h5>Eliminar Usuario</h5>
-                                    <br>
-                                    <form action="/users/eliminar-usuario" method="POST">
-                                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                                        <div class="input-field">
-                                            <select name="usuario" class="browser-default" required>
-                                                <option value="" disabled selected>Selecciona un Usuario*</option>
-                                                <% for (let usuario of users) { %>
-                                                    <option value="<%= usuario.id_empleado %>"><%= usuario.usuario %></option>
-                                                <% } %>
-                                            </select>
-                                        </div>
-                                        <br>
-                                        <br>
-                                        <button type="sumbmit" class="red btn right">Eliminar</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div> -->
-                    </table>
-                    
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 
@@ -210,8 +153,14 @@
     document.addEventListener('DOMContentLoaded', function() {
         M.AutoInit();
     });
+
+    function toast(){
+        '<% if (toast) { %>'
+                M.toast({html: '<%= toast %>'});
+        '<% } %>'
+    }
     
 </script>
 
 
-<%- include('includes/closeHTMLtoast.ejs'); %>
+<%- include('includes/closeHTML.ejs'); %>

@@ -92,61 +92,70 @@ exports.postRegister = (request, response, next) => {
     .has().symbols()                               //Must have symbols
     .has().not().spaces()                           // Should not have spaces
 
-    if(schema.validate(request.body.password)){
-        const nuevo_usuario = new Usuario(request.body.nombre, request.body.usuario,request.body.password , image_file_name);
-        nuevo_usuario.save()
-            .then(() => {
-                request.session.alerta = "Usuario registrado exitosamente";
+    Usuario.fetchOne(request.body.usuario)
+        .then(([rows, fieldData]) => {
+            if(rows[0]){
+                request.session.error = "El nombre de usuario ingresado ya existe";
                 response.redirect('/users/register');
-            }).catch(err => console.log(err));
-    }
-    else{
-        console.log(schema.validate(request.body.password, { list: true }));
-        let error = schema.validate(request.body.password, { list: true });
-        let mensaje;
-        if(error[0] == 'min'){
-            mensaje = "La contraseña debe tener al menos 8 caracteres";
-        }
-        else if(error[0] == 'max'){
-            mensaje = "La contraseña debe tener máximo caracteres";
-            
-        }
-        else if(error[0] == 'uppercase'){
-            mensaje = "La contraseña debe contener al menos una mayúscula";
-            
-        }
-        else if(error[0] == 'lowercase'){
-            mensaje = "La contraseña debe contener al menos una minúscula"; 
-        }
-        else if(error[0] == 'digits'){
-            mensaje = "La contraseña debe contener al menos un número";
-            
-        }
-        else if(error[0] == 'symbols'){
-            mensaje = "La contraseña debe contener al menos una carácter especial";
-            
-        }
-        else if(error[0] == 'spaces'){
-            mensaje = "La contraseña no debe contener espacios";
-            
-        }
-
-        request.session.error = mensaje;
-        response.redirect('/users/register');
+            }
+            else if(schema.validate(request.body.password)){
+                const nuevo_usuario = new Usuario(request.body.nombre, request.body.usuario,request.body.password , image_file_name);
+                nuevo_usuario.save()
+                    .then(() => {
+                        request.session.alerta = "Usuario registrado exitosamente";
+                        response.redirect('/users/register');
+                    }).catch(err => console.log(err));
+            }
+            else{
+                let error = schema.validate(request.body.password, { list: true });
+                let mensaje;
+                if(error[0] == 'min'){
+                    mensaje = "La contraseña debe tener al menos 8 caracteres";
+                }
+                else if(error[0] == 'max'){
+                    mensaje = "La contraseña debe tener máximo caracteres";
+                    
+                }
+                else if(error[0] == 'uppercase'){
+                    mensaje = "La contraseña debe contener al menos una mayúscula";
+                    
+                }
+                else if(error[0] == 'lowercase'){
+                    mensaje = "La contraseña debe contener al menos una minúscula"; 
+                }
+                else if(error[0] == 'digits'){
+                    mensaje = "La contraseña debe contener al menos un número";
+                    
+                }
+                else if(error[0] == 'symbols'){
+                    mensaje = "La contraseña debe contener al menos una carácter especial";
+                    
+                }
+                else if(error[0] == 'spaces'){
+                    mensaje = "La contraseña no debe contener espacios";
+                    
+                }
         
-    }  
-
+                request.session.error = mensaje;
+                response.redirect('/users/register');
+                
+            }  
+        })
+        .catch(err => {
+            console.log(err);
+        });
 }
 
 exports.getSettings = async function (request, response, next) {
     const alerta = request.session.alerta;
+    const toast = request.session.toast;
     request.session.alerta = "";
+    request.session.toast = "";
     let user = await Usuario.fetchOne(request.session.usuario);
     let users = await Usuario.fetchAll();
 
     let error = request.session.error;
     request.session.error = "";
-
 
     response.render('modificarUsuario', {
         users: users[0],
@@ -154,6 +163,7 @@ exports.getSettings = async function (request, response, next) {
         error: error,
         imagen_empleado: request.session.imagen_empleado,
         alerta: alerta,
+        toast: toast,
         title: 'Modifica tus datos',
         csrfToken: request.csrfToken(),
         isLoggedIn: request.session.isLoggedIn === true ? true : false
@@ -168,13 +178,13 @@ exports.postSettings = (request, response) => {
         let image = request.file;
 
         if(!image) {
-            request.session.alerta = "Error al subir imagen";
+            request.session.toast = "Error al subir imagen";
             response.redirect('/users/settings');
         }
         else{
             Usuario.updateImagen(image.filename,id_empleado)
             .then(() => {
-                request.session.alerta = "Imagen modificada exitosamente";
+                request.session.toast = "Imagen modificada exitosamente";
                 request.session.imagen_empleado =image.filename;
                 response.redirect('/users/settings');
             }).catch(err => console.log(err));
@@ -184,19 +194,30 @@ exports.postSettings = (request, response) => {
         let nombre= request.body.nombre;
         Usuario.updateNombre(nombre,id_empleado)
             .then(() => {
-                request.session.alerta = "Nombre modificado exitosamente";
+                request.session.toast = "Nombre modificado exitosamente";
                 response.redirect('/users/settings');
             }).catch(err => console.log(err));
     }
     else if(option_ == 3){
-        let usuario= request.body.usuario;
-        Usuario.updateUsuario(usuario,id_empleado)
-            .then(() => {
-                request.session.usuario = usuario;
-                request.session.alerta = "Usuario modificado exitosamente";
+        let usuario = request.body.usuario;
+        Usuario.fetchOne(usuario)
+        .then(([rows, fieldData]) => {
+            if(rows[0]){ 
+                request.session.alerta = "El nombre de usuario ingresado ya existe";
                 response.redirect('/users/settings');
-            }).catch(err => console.log(err));
-        
+            }
+            else{
+                Usuario.updateUsuario(usuario,id_empleado)
+                .then(() => {
+                    request.session.usuario = usuario;
+                    request.session.toast = "Usuario modificado exitosamente";
+                    response.redirect('/users/settings');
+                }).catch(err => console.log(err));
+            }
+        })
+        .catch(err => {
+            console.log(err);
+        });
     }
     else if(option_ == 4){
         let antiguo_password= request.body.antiguo_password;
@@ -221,7 +242,7 @@ exports.postSettings = (request, response) => {
                             if(schema.validate(nuevo_password)){
                                 Usuario.updateContrasena(nuevo_password,id_empleado)
                                 .then(() => {
-                                request.session.alerta = "Contraseña modificado exitosamente";
+                                request.session.toast = "Contraseña modificado exitosamente";
                                 response.redirect('/users/settings');
                                 }).catch(err => console.log(err));
                             }
@@ -255,6 +276,7 @@ exports.postSettings = (request, response) => {
                                     
                                 }
 
+                                request.session.alerta = mensaje;
                                 request.session.error = mensaje;
                                 response.redirect('/users/settings');
                                 

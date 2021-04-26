@@ -10,18 +10,29 @@ const { request, response } = require('express');
 
 
 exports.postNuevoDepartamento =(request,response)=>{
-    const nuevo_departamento = new Departamento(request.body.nuevo_departamento);
-    nuevo_departamento.saveDepartamento()
-    .then(() => {
-        request.session.alerta = "Nuevo departamento creado exitosamente";
-        response.redirect('/users/settings');
-    }).catch(err => console.log(err));
-
+    Departamento.fetchOne(request.body.nuevo_departamento)
+        .then(([rows, fieldData]) => {
+            if(rows[0]){ 
+                request.session.alerta = "El departamento ingresado ya existe";
+                response.redirect('/home');
+            }
+            else{
+                const nuevo_departamento = new Departamento(request.body.nuevo_departamento);
+                nuevo_departamento.saveDepartamento()
+                .then(() => {
+                    request.session.toast = "Nuevo departamento creado exitosamente";
+                    response.redirect('/home');
+                }).catch(err => console.log(err));
+            }
+        })
+        .catch(err => {
+            console.log(err);
+        });
 }
 exports.postEliminarDepartamento =(request,response)=>{
     (request.body.departamento)
     .then(() => {
-        request.session.alerta = "Nuevo departamento creado exitosamente";
+        request.session.toast = "Nuevo departamento creado exitosamente";
         response.redirect('/users/settings');
     }).catch(err => console.log(err));
 
@@ -86,7 +97,7 @@ exports.postNuevoProyecto = async function (request, response) {
         const fetchOneUsuario =  await Usuario.fetchOne(request.session.usuario);
         await Iteracion.saveColaborador(fetchOneUsuario[0][0].id_empleado, fetchOneIteracion[0][0].id_iteracion);
 
-        request.session.alerta = "Proyecto creado exitosamente";
+        request.session.toast = "Proyecto creado exitosamente";
         response.redirect(last);
     }
     else {
