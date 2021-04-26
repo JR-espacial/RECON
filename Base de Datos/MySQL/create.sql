@@ -56,8 +56,8 @@
         fecha_fin DATE,
         estado_iteracion BIT,
         iteracion_terminada BIT,
-        total_min_real INT,
-        total_min_maximo INT,
+        total_min_real DECIMAL(5,1),
+        total_min_maximo DECIMAL(5,1),
         PRIMARY KEY(id_iteracion),
         FOREIGN KEY(id_proyecto) REFERENCES proyecto(id_proyecto),
         FOREIGN KEY(id_capacidad) REFERENCES capacidad_equipo(id_capacidad)
@@ -374,10 +374,14 @@ DROP PROCEDURE IF EXISTS actualiza_tiempos;
         WHILE(@nrows <= (SELECT COUNT(*) FROM my_temp_table)) DO
             UPDATE casos_uso SET real_minutos = cast((SELECT SUM(estimacion) FROM entrega E WHERE E.id_casos = (SELECT id_casos FROM my_temp_table WHERE i = @nrows))* 60 as decimal (5,1))
             WHERE id_casos = (SELECT id_casos FROM my_temp_table WHERE i = @nrows);
+
+            UPDATE iteracion SET total_min_real = cast((SELECT SUM(real_minutos) FROM cassos_uso CU WHERE CU.id_iteracion = (SELECT id_iteracion FROM casos_uso WHERE id_casos = (SELECT id_casos FROM my_temp_table WHERE i = @nrows)))as decimal(5,1))
+            WHERE id_iteracion = (SELECT id_iteracion FROM casos_uso WHERE id_casos = (SELECT id_casos FROM my_temp_table WHERE i = @nrows));
+
             SET @nrows = @nrows+1;
         END WHILE;
 
-
+        
   	END //
 
     DELIMITER ;
