@@ -91,13 +91,7 @@
                 </div>
                 <div class="col s6">
                     <div class="card">
-                        <div class="card-content card_avance">
-                            <h2 class="card-title flow-text card-title-avance"><strong>Información de las tareas</strong></h2>
-                            <br>
-                            <p>Total Tareas: <span><%=tareas_totales%></span></p>
-                            <p>Tareas Completadas: <span><%=tareas_completadas%></span></p>
-                            <p>Tareas Pendientes: <span><%=tareas_pendientes%></span></p>
-                        </div>
+                        <canvas id="EstadoTareas" class="z-depth-1"></canvas>
                     </div>
                 </div>
             </div>
@@ -182,61 +176,93 @@
         tabla_costos.innerHTML += "<tr><td>" + entrega_real[i] + "</td><td>" + valor_ganado_diario[i] + "</td><td>" + costo_real_diario[i] + "</td><td>" + valor_ganado_acumulado[i] + "</td><td>" + costo_real_acumulado[i] + "</td></tr>";
     }
 
+    // Grafica principal de avance
     var ctx = document.getElementById('AvanceIteracion').getContext('2d');
 
     var chart = new Chart(ctx, {
-    // The type of chart we want to create
-    type: 'line',
+        // The type of chart we want to create
+        type: 'line',
 
-    // The data for our dataset
-    data: {
-        labels: entrega_real,
-        datasets: [
-        {
-            fill: false,
-            
-            label: 'Valor Ganado Acumulado',
-            borderColor: '#a1d996',
-            data: valor_ganado_acumulado
+        // The data for our dataset
+        data: {
+            labels: entrega_real,
+            datasets: [
+            {
+                fill: false,
+                
+                label: 'Valor Ganado Acumulado',
+                borderColor: '#a1d996',
+                data: valor_ganado_acumulado
+            },
+            {
+                fill: false,
+                
+                label: 'Costo Real Acumulado',
+                borderColor: '#fa9c98',
+                data: costo_real_acumulado
+            },
+            {
+                fill: false,
+
+                label: 'Valor Planeado Acumulado (VPA)',
+                borderColor: '#9ab7f5',
+                data: valor_planeado_acumulado
+            },]
         },
-        {
-            fill: false,
-            
-            label: 'Costo Real Acumulado',
-            borderColor: '#fa9c98',
-            data: costo_real_acumulado
+
+        // Configuration options go here
+        options: {
+        
+            title :{ 
+                display : true,
+                text: "Avance iteracion",
+                fontSize:25,
+            },
+            elements:{
+                line:{
+                    tension:0
+                },  
+            },
+            legend:{
+                position:'right'
+            },
+            responsive:true
+        }
+    });
+
+    // Grafica de estado de tareas
+    let labels_tareas = ["To Do", "Doing", "Done", "Rejected", "Waiting for Review", "Sin Estado"];
+    let estado_tareas = [];
+    "<% for(let i = 0; i < tareas_data.length; i++){ %>"
+            estado_tareas.push("<%= tareas_data[i] %>");
+    "<% } %>"
+
+    var contextDona = document.getElementById('EstadoTareas').getContext('2d');
+
+    var chartDona = new Chart(contextDona, {
+        type: 'doughnut',
+        data: {
+                labels: labels_tareas,
+                datasets: [{
+                    label: "Estado Tareas Proyecto",
+                    backgroundColor: [
+                        "#77C9D4", "#57BC90", "#67f089", "#A5A5AF", "#F5F5F5", "#fafafa"
+                    ],
+                    data: estado_tareas,
+                }]
         },
-        {
-            fill: false,
-
-            label: 'Valor Planeado Acumulado (VPA)',
-            borderColor: '#9ab7f5',
-            data: valor_planeado_acumulado
-        },]
-    },
-
-    // Configuration options go here
-    options: {
-       
-        title :{ 
-            display : true,
-            text: "Avance iteracion",
-            fontSize:25,
-        },
-        elements:{
-            line:{
-                tension:0
-            },  
-        },
-        legend:{
-            position:'right'
-        },
-        responsive:true
-    }
-
-});
-
-
+        options: {
+            title :{ 
+                display : true,
+                text: "Estado Tareas",
+                fontSize:20,
+            },
+            legend:{
+                position:'top'
+            },
+            responsive:true
+        }
+    });
 </script>
 
 <%- include('includes/closeHTMLtoast.ejs'); %>
