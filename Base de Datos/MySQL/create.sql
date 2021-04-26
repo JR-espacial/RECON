@@ -323,6 +323,7 @@
         CONCAT("IT",
         	(SELECT num_iteracion FROM iteracion I INNER JOIN casos_uso CU ON I.id_iteracion = CU.id_iteracion WHERE id_casos = NEW.id_casos),
             "-",
+            (SELECT numero_cu FROM casos_uso WHERE id_casos = NEW.id_casos),
             " - ",
             (SELECT quiero FROM casos_uso WHERE id_casos = NEW.id_casos),
             " - ",
