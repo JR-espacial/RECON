@@ -4,6 +4,8 @@ const Capacidad_Equipo = require('../models/capacidad_equipo');
 const Entrega = require('../models/entrega');
 const Airtable = require('airtable');
 
+const data = [0, 0, 0, 0, 0, 0];
+
 exports.getAvanceProyecto = async function (request, response) {
     //Jalar datos airtable
     
@@ -14,10 +16,8 @@ exports.getAvanceProyecto = async function (request, response) {
         toast = "Define una base de AirTable para ver más datos";
         fetchAvance(request, response, toast);
     }
-
     else{
         let num_iter = request.session.numIteracion;
-        
         let workitemlist =[];
         let i =0;
         
@@ -29,35 +29,39 @@ exports.getAvanceProyecto = async function (request, response) {
         }).eachPage(function page(records, fetchNextPage) {
             // This function (`page`) will get called for each page of records.
             records.forEach(function(record) {
-                
                 let IT = Number (record.get('Name').slice(2,record.get('Name').indexOf('-')));
                 
                 if(IT == num_iter[0][0].num_iteracion){
-
-                    workitemlist[i]={};
+                    workitemlist[i] = {};
                     workitemlist[i].nombre = record.get('Name');
                     workitemlist[i].asignados = record.get('Assigned');
                     if(record.get('Estimation')){
                         workitemlist[i].estimacion = record.get('Estimation');
                     } 
-                    else workitemlist[i].estimacion  = 0;
-
+                    else {
+                        workitemlist[i].estimacion  = 0;
+                    }
+                    
+                    let status_tarea = record.get('Status');
                     if(record.get('Status') == 'Done'){
-                        workitemlist[i].estado_entrega = 1;
+                        workitemlist[i].estado_entrega = "Done";
                         workitemlist[i].valor_ganado =  workitemlist[i].estimacion;
                         var hours;
                         if(record.get('Duration')){
                             hours = record.get('Duration')/3600;
                         }
-                        else 
-                        hours = 0;
+                        else {
+                            hours = 0;
+                        }
 
                         var num_asign;
                         if(record.get('Assigned')){
-                            num_asign =record.get('Assigned').length;
+                            num_asign = record.get('Assigned').length;
                         }
-                        else  
-                        num_asign = 0;
+                        else {
+                            num_asign = 0;
+                        }
+                        
                         workitemlist[i].costo_real = hours * num_asign;
                     }
                     else{
@@ -68,7 +72,32 @@ exports.getAvanceProyecto = async function (request, response) {
                     if(record.get('Finished Date')) {
                         workitemlist[i].entrega_real = record.get('Finished Date');
                     }
-                    else workitemlist[i].entrega_real  = null;
+                    else {
+                        workitemlist[i].entrega_real  = null;
+                    }
+
+                    // Sumar cantidad de tareas en el estado actual
+                    switch(status_tarea){
+                        case 'To Do': 
+                            data[0] = data[0] + 1;
+                            break;
+                        case 'Working on it': 
+                            data[1] = data[1] + 1;
+                            break;
+                        case 'Done': 
+                            data[2] = data[2] + 1;
+                            break;
+                        case 'Rejected': 
+                            data[3] = data[3] + 1;
+                            break;
+                        case 'Waiting for Review': 
+                            data[4] = data[4] + 1;
+                            break;
+                        default: 
+                            data[5] = data[5] + 1;
+                            break;
+                    }
+                    
                 }
                 i++;   
             });
@@ -141,8 +170,6 @@ async function fetchAvance(request, response, toast){
         total_meses_real = "Sin regresar";
     }
 
-    
-
     response.render('avanceProyecto', {
         navegacion : request.session.navegacion,
         proyecto_actual : request.session.nombreProyecto,
@@ -163,6 +190,7 @@ async function fetchAvance(request, response, toast){
         total_semanas_real: total_semanas_real,
         total_meses_real: total_meses_real,
         alerta: toast,
+        tareas_data: data,
         title: "Avance del Proyecto",
         csrfToken: request.csrfToken()
     });

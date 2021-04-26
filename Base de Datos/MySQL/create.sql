@@ -175,7 +175,7 @@
         estimacion DECIMAL(5, 2), 
         valor_ganado DECIMAL(5, 2), 
         costo_real DECIMAL(5, 2), 
-        estado_entrega BIT, 
+        estado_entrega VARCHAR(20), 
         id_airtable VARCHAR(25),
         PRIMARY KEY(id_proyecto, id_fase ,id_tarea, id_casos),
         FOREIGN KEY(id_proyecto, id_fase, id_tarea) REFERENCES proyecto_fase_tarea(id_proyecto, id_fase, id_tarea),
