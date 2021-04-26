@@ -14,40 +14,56 @@ exports.postEnviarDatosAirtable = (request, response) => {
             else{
                 const id_iteracion = request.session.idIteracion;
                 let num_iter = request.session.numIteracion;
+                console.log(num_iter);
                 Entrega.fetchEntregaAirtable(id_iteracion, id_proyecto)
                     .then(([rows2, fieldData]) => {
                         if(rows2.length > 0){
                             const base = new Airtable({apiKey: rows[0].API_key}).base( rows[0].base);
 
                             for (let i = 0; i < rows2.length; i++) {
-                                base('Tasks').create([
-                                    {
-                                        "fields": {
-                                            "Name": rows2[i].nombre,
-                                            "Status": "To Do",
-                                            // "Assigned": [
-                                            //     {
-                                            //         "id": "usr1rsfailLcYlVsP",
-                                            //         "email": "rmartinez@natgas.com.mx",
-                                            //         "name": "Rodolfo Martinez"
-                                            //     }
-                                            // ],
-                                            "Estimation": rows2[i].estimacion * 1,
-                                            // "Duration": 480,
-                                            // "Finished Date": "2020-12-09",
-                                            // "Iterations": []
+                                if (!rows2[i].id_airtable){
+                                    base('Tasks').create([
+                                        {
+                                            "fields": {
+                                                "Name": rows2[i].nombre,
+                                                "Status": "To Do",
+                                                "Estimation": rows2[i].estimacion * 1,
+                                                "Iterations": "IT" + num_iter,
+                                                "Caso de Uso": rows2[i].quiero
+                                            }
                                         }
-                                    }
-                                ], function(err, records) {
-                                    if (err) {
-                                        console.error(err);
-                                        return;
-                                    }
-                                    records.forEach(function (record) {
-                                        Entrega.saveIdAirTable(record.getId(), id_proyecto, rows2[i].id_fase, rows2[i].id_tarea, rows2[i].id_casos)
-                                            .catch(err => console.log(err));
+                                    ], function(err, records) {
+                                        if (err) {
+                                            console.error(err);
+                                            return;
+                                        }
+                                        records.forEach(function (record) {
+                                            Entrega.saveIdAirTable(record.getId(), id_proyecto, rows2[i].id_fase, rows2[i].id_tarea, rows2[i].id_casos)
+                                                .catch(err => console.log(err));
+                                        });
                                     });
-                                });
+                                }
+                                else {
+                                    base('Tasks').update([
+                                        {
+                                            "id": rows2[i].id_airtable,
+                                            "fields": {
+                                                "Name": rows2[i].nombre,
+                                                "Estimation": rows2[i].estimacion * 1,
+                                                "Caso de Uso": rows2[i].quiero
+                                            }
+                                        }
+                                    ], function(err, records) {
+                                        if (err) {
+                                            console.error(err);
+                                            return;
+                                        }
+                                        records.forEach(function (record) {
+                                            Entrega.saveIdAirTable(record.getId(), id_proyecto, rows2[i].id_fase, rows2[i].id_tarea, rows2[i].id_casos)
+                                                .catch(err => console.log(err));
+                                        });
+                                    });
+                                }
                             }
                         }
                         else{

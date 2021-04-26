@@ -56,7 +56,7 @@ module.exports =  class Entrega {
     }
 
     static fetchEntregaAirtable(id_iteracion, id_proyecto){
-        return db.execute('SELECT id_fase, id_tarea, CU.id_casos, nombre, estimacion FROM entrega E INNER JOIN casos_uso CU ON E.id_casos = CU.id_casos WHERE CU.id_iteracion =? AND E.id_proyecto =?',
+        return db.execute('SELECT id_fase, id_tarea, CU.id_casos, CU.quiero, nombre, estimacion, id_airtable FROM entrega E INNER JOIN casos_uso CU ON E.id_casos = CU.id_casos WHERE CU.id_iteracion =? AND E.id_proyecto =?',
         [id_iteracion, id_proyecto]);
     }
 
