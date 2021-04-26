@@ -3,34 +3,30 @@ const Proyecto = require('../models/proyecto');
 const Departamento = require('../models/departamento');
 const Usuario = require('../models/user');
 
-exports.getHome = (request, response) => {
-    let alerta = request.session.alerta
+exports.getHome = async function (request, response){
+    let alerta = request.session.alerta;
+    let toast = request.session.toast;
     request.session.alerta = "";
+    request.session.toast = "";
     request.session.last = '/home';
     request.session.navegacion = 0;
 
-    Proyecto.fetchAll(request.session.usuario)
-    .then(([rows, fieldData]) => {
-        Departamento.fetchAll()
-        .then(([rows2, fieldData]) => {
-            response.render('home',{
-                imagen_empleado: request.session.imagen_empleado,
-                user: request.session.usuario,
-                title: "Home", 
-                proyectos : rows,
-                departamentos : rows2,
-                alerta : alerta,
-                csrfToken: request.csrfToken(),
-                proyecto_actual: request.session.nombreProyecto,
-                navegacion : request.session.navegacion
-            });
-        })
-        .catch(err => {
-            console.log(err);
-        });
-    })
-    .catch(err => {
-        console.log(err);
+    let proyectos = await Proyecto.fetchAll(request.session.usuario);
+    let departamentos = await Departamento.fetchAll();
+    let user = await Usuario.fetchOne(request.session.usuario);
+    let users = await Usuario.fetchAll();
+    response.render('home',{
+        imagen_empleado: request.session.imagen_empleado,
+        title: "Home", 
+        proyectos : proyectos[0],
+        departamentos : departamentos[0],
+        user : user[0][0],
+        users : users[0],
+        alerta : alerta,
+        toast : toast,
+        csrfToken: request.csrfToken(),
+        proyecto_actual: request.session.nombreProyecto,
+        navegacion : request.session.navegacion
     });
 }
 

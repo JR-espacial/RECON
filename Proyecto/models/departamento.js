@@ -11,7 +11,7 @@ module.exports =  class Departamento{
     }
     
     static fetchAll(){
-        return db.execute('SELECT * FROM departamento;');
+        return db.execute('SELECT * FROM departamento ORDER BY nombre_departamento ASC;');
     }
 
     static fetchAllProyecto(){

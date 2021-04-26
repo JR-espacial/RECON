@@ -4,7 +4,11 @@
 
 <main>
 
-  
+<% if (alerta) { %>
+    <script>
+        alert("<%=alerta%>");
+    </script>
+<% } %>  
 
 <div class="row">    
     <div class="col s2 offset-s9">
@@ -181,8 +185,13 @@
     
     });
 
+    function toast(){
+        '<% if (toast) { %>'
+                M.toast({html: '<%= toast %>'});
+        '<% } %>'
+    }
 </script>
 
 </main>
 
-<%- include('includes/closeHTMLtoast.ejs'); %>
+<%- include('includes/closeHTML.ejs'); %>
