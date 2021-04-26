@@ -10,13 +10,24 @@ const { request, response } = require('express');
 
 
 exports.postNuevoDepartamento =(request,response)=>{
-    const nuevo_departamento = new Departamento(request.body.nuevo_departamento);
-    nuevo_departamento.saveDepartamento()
-    .then(() => {
-        request.session.alerta = "Nuevo departamento creado exitosamente";
-        response.redirect('/users/settings');
-    }).catch(err => console.log(err));
-
+    Departamento.fetchOne(request.body.nuevo_departamento)
+        .then(([rows, fieldData]) => {
+            if(rows[0]){ 
+                request.session.alerta = "El departamento ingresado ya existe";
+                response.redirect('/users/settings');
+            }
+            else{
+                const nuevo_departamento = new Departamento(request.body.nuevo_departamento);
+                nuevo_departamento.saveDepartamento()
+                .then(() => {
+                    request.session.alerta = "Nuevo departamento creado exitosamente";
+                    response.redirect('/users/settings');
+                }).catch(err => console.log(err));
+            }
+        })
+        .catch(err => {
+            console.log(err);
+        });
 }
 exports.postEliminarDepartamento =(request,response)=>{
     (request.body.departamento)

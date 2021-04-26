@@ -148,7 +148,9 @@ exports.postRegister = (request, response, next) => {
 
 exports.getSettings = async function (request, response, next) {
     const alerta = request.session.alerta;
+    const toast = request.session.toast;
     request.session.alerta = "";
+    request.session.toast = "";
     let user = await Usuario.fetchOne(request.session.usuario);
     let users = await Usuario.fetchAll();
 
@@ -161,6 +163,7 @@ exports.getSettings = async function (request, response, next) {
         error: error,
         imagen_empleado: request.session.imagen_empleado,
         alerta: alerta,
+        toast: toast,
         title: 'Modifica tus datos',
         csrfToken: request.csrfToken(),
         isLoggedIn: request.session.isLoggedIn === true ? true : false
@@ -175,13 +178,13 @@ exports.postSettings = (request, response) => {
         let image = request.file;
 
         if(!image) {
-            request.session.alerta = "Error al subir imagen";
+            request.session.toast = "Error al subir imagen";
             response.redirect('/users/settings');
         }
         else{
             Usuario.updateImagen(image.filename,id_empleado)
             .then(() => {
-                request.session.alerta = "Imagen modificada exitosamente";
+                request.session.toast = "Imagen modificada exitosamente";
                 request.session.imagen_empleado =image.filename;
                 response.redirect('/users/settings');
             }).catch(err => console.log(err));
@@ -191,7 +194,7 @@ exports.postSettings = (request, response) => {
         let nombre= request.body.nombre;
         Usuario.updateNombre(nombre,id_empleado)
             .then(() => {
-                request.session.alerta = "Nombre modificado exitosamente";
+                request.session.toast = "Nombre modificado exitosamente";
                 response.redirect('/users/settings');
             }).catch(err => console.log(err));
     }
@@ -199,15 +202,15 @@ exports.postSettings = (request, response) => {
         let usuario = request.body.usuario;
         Usuario.fetchOne(usuario)
         .then(([rows, fieldData]) => {
-            if(usuario != request.session.usuario && rows[0]){
-                request.session.error = "El nombre de usuario ingresado ya existe";
+            if(rows[0]){ 
+                request.session.alerta = "El nombre de usuario ingresado ya existe";
                 response.redirect('/users/settings');
             }
             else{
                 Usuario.updateUsuario(usuario,id_empleado)
                 .then(() => {
                     request.session.usuario = usuario;
-                    request.session.alerta = "Usuario modificado exitosamente";
+                    request.session.toast = "Usuario modificado exitosamente";
                     response.redirect('/users/settings');
                 }).catch(err => console.log(err));
             }
@@ -239,7 +242,7 @@ exports.postSettings = (request, response) => {
                             if(schema.validate(nuevo_password)){
                                 Usuario.updateContrasena(nuevo_password,id_empleado)
                                 .then(() => {
-                                request.session.alerta = "Contraseña modificado exitosamente";
+                                request.session.toast = "Contraseña modificado exitosamente";
                                 response.redirect('/users/settings');
                                 }).catch(err => console.log(err));
                             }
@@ -273,6 +276,7 @@ exports.postSettings = (request, response) => {
                                     
                                 }
 
+                                request.session.alerta = mensaje;
                                 request.session.error = mensaje;
                                 response.redirect('/users/settings');
                                 

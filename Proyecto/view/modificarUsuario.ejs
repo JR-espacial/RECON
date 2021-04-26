@@ -1,5 +1,11 @@
 <%- include('includes/openHTMLtoast.ejs'); %>
 
+<% if (alerta) { %>
+    <script>
+        alert("<%=alerta%>");
+    </script>
+<% } %>
+
 <a class=" white btn black-text"  href="/home"> <i class="material-icons prefix">chevron_left</i></a>
 
 
@@ -121,9 +127,6 @@
                                                 <label for="antiguo_password">Antigua contraseña</label>
                                             </div>
                                             <% if (error) { %>
-                                                <script>
-                                                    alert("<%=error%>");
-                                                </script>
                                                 <span  style="color:red"><%= error %></span>
                                             <% } %>
                                             <br>
@@ -210,8 +213,14 @@
     document.addEventListener('DOMContentLoaded', function() {
         M.AutoInit();
     });
+
+    function toast(){
+        '<% if (toast) { %>'
+                M.toast({html: '<%= toast %>'});
+        '<% } %>'
+    }
     
 </script>
 
 
-<%- include('includes/closeHTMLtoast.ejs'); %>
+<%- include('includes/closeHTML.ejs'); %>
