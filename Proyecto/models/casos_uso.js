@@ -21,12 +21,12 @@ module.exports =  class Casos_Uso{
     }
 
     static fetchAllIteracion(idIteracion) {
-        return db.execute('SELECT id_casos, numero_cu, casos_uso.id_ap, yo_como, quiero, para, ap, comentario FROM casos_uso, puntos_agiles WHERE casos_uso.id_iteracion=? AND casos_uso.id_ap = puntos_agiles.id_ap ORDER BY id_casos ASC;', 
+        return db.execute('SELECT id_casos, numero_cu, casos_uso.id_ap, yo_como, quiero, para, ap, comentario FROM casos_uso, puntos_agiles WHERE casos_uso.id_iteracion=? AND casos_uso.id_ap = puntos_agiles.id_ap ORDER BY id_casos DESC;', 
         [idIteracion]);
     }
 
     static fetchQuiero (idIteracion) {
-        return db.execute('SELECT id_casos, id_iteracion, quiero FROM casos_uso WHERE id_iteracion=? ORDER BY id_casos;', 
+        return db.execute('SELECT id_casos, id_iteracion, numero_cu, quiero FROM casos_uso WHERE id_iteracion=? ORDER BY id_casos DESC;', 
         [idIteracion]);
     }
 

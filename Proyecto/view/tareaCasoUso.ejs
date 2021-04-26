@@ -31,13 +31,12 @@
         <div class="col s10 offset-s1">
             <% if(lista_quiero.length !== 0) { %>
                 <!-- Quiero -->
-                
                     <div class="col s5">
                         <table class="tabla_tareas_cu">
                             <thead> 
                                 <tr>
                                     <th></th>
-                                    <th>id</th>
+                                    <th>num</th>
                                     <th>Quiero</th>      
                                 </tr>
                             </thead>
@@ -51,7 +50,7 @@
                                                 <span></span>
                                             </label>
                                         </td>
-                                        <td><%= quiero.id_casos %></td>
+                                        <td><%= quiero.numero_cu %></td>
                                         <td><%= quiero.quiero %></td>
                                     </tr>
                                 <% } %>
