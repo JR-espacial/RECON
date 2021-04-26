@@ -55,4 +55,14 @@ module.exports =  class Entrega {
         [entrega_real,estimacion,valor_ganado,costo_real,estado_entrega,nombre]);
     }
 
+    static fetchEntregaAirtable(id_iteracion, id_proyecto){
+        return db.execute('SELECT id_fase, id_tarea, CU.id_casos, nombre, estimacion FROM entrega E INNER JOIN casos_uso CU ON E.id_casos = CU.id_casos WHERE CU.id_iteracion =? AND E.id_proyecto =?',
+        [id_iteracion, id_proyecto]);
+    }
+
+    static saveIdAirTable(id_airtable, id_proyecto, id_fase, id_tarea, id_casos){
+        return db.execute('UPDATE entrega SET id_airtable =? WHERE id_proyecto =? AND id_fase =? AND id_tarea =? AND id_casos =?',
+        [id_airtable, id_proyecto, id_fase, id_tarea, id_casos]);
+    }
+
 }

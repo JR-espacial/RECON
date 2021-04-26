@@ -6,6 +6,9 @@ const AP_Promedios = require('../models/ap_promedios');
 exports.getTareaCasoUso = (request, response) =>{
     const id_proyecto = request.session.idProyecto;
     const id_iteracion = request.session.idIteracion;
+
+    let toast = request.session.toast;
+    request.session.toast = "";
     
     // Quiero (Casos de Uso)
     Casos_Uso.fetchQuiero(id_iteracion)
@@ -22,6 +25,7 @@ exports.getTareaCasoUso = (request, response) =>{
                         num_iteracion : request.session.numIteracion,
                         lista_quiero: rowsQ, 
                         lista_tareas: rowsPFT,
+                        toast: toast,
                         csrfToken: request.csrfToken()
                     });
                 })

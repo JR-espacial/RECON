@@ -10,6 +10,7 @@ const fasesController = require('../controller/fasesController');
 const tareaCasosUsoController = require('../controller/tareaCasoUsoController');
 const avanceIteracionController = require('../controller/avanceIteracionController');
 const capacidadController = require('../controller/capacidadController');
+const enviarAirtableController = require('../controller/enviarAirtableController');
 
 router.post('/nuevo-departamento', isAuth, proyectosController.postNuevoDepartamento);
 
@@ -76,6 +77,8 @@ router.get('/tarea-caso-uso', isAuth, tareaCasosUsoController.getTareaCasoUso);
 router.post('/tarea-caso-uso/obtener-tareas', isAuth, tareaCasosUsoController.postObtenerTareas);
 
 router.post('/tarea-caso-uso/modificarAsociacion', isAuth, tareaCasosUsoController.postModificarAsocioacion);
+
+router.post('/tarea-caso-uso/enviarAirtable', isAuth, enviarAirtableController.postEnviarDatosAirtable);
 
 router.use(express.static(path.join(__dirname, '..', 'public')));
 
