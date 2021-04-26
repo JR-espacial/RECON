@@ -25,7 +25,6 @@ module.exports =  class Usuario{
 
     static fetchOne(usuario){
         return db.execute('SELECT * FROM empleado WHERE usuario =?',[usuario]);
-
     }
 
     static fetchEmpleadoIter(id_empleado){
