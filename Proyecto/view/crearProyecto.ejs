@@ -12,12 +12,12 @@
 
 
 <div class="row">
-    <div class="col s12 offset-s4">
+    <div class="col s8 offset-s4">
        
         <form class="col s12" action="nuevo-proyecto?_csrf=<%=csrfToken%>" method="POST"  enctype="multipart/form-data">
             <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
             <div class="row">
-                <div class="input-field col s4">
+                <div class="input-field col s6">
                     <% if (error) { %>
                         <span style="color:red"><%= error %></span>
                     <% } %>
@@ -26,13 +26,13 @@
                 </div>
             </div>
             <div class="row">
-                <div class="input-field col s4">
+                <div class="input-field col s6">
                     <textarea  id="descripcion_proyecto" type="text"  maxlength="1000" class="materialize-textarea" name="descripcion"></textarea>
                     <label for="descripcion_proyecto">Descripción del proyecto</label>
                 </div>
             </div>
             <div class="row">
-                <div class="input-field col s4">
+                <div class="input-field col s6">
                     <select name="departamento" class="browser-default" required>
                         <option value="" disabled selected>Selecciona el departamento del proyecto*</option>        
                         <% for (let departamento of departamentos) { %>
@@ -44,7 +44,7 @@
             </div>
             
             <div class="row">
-                <div class="input-field col s4">
+                <div class="input-field col s6">
                     <div class="file-field input-field">
                         <div class="btn">
                           <span>Subir</span>
@@ -57,7 +57,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col s4 offset-s1">
+                <div class="col s6 offset-s1">
                     <a class="waves-effect waves-light btn" id="cancelbtn" href="<%= last %>">Cancelar</a>
                     <button class="waves-effect waves-light btn" type="submit" value="Crear">Crear</button>
                 </div>
