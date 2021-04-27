@@ -319,9 +319,9 @@
     CREATE TRIGGER set_nombre_estimacion BEFORE INSERT ON entrega
     FOR EACH ROW
     BEGIN
-        SET NEW.nombre = 
+        SET NEW.nombre =
         CONCAT("IT",
-        	(SELECT num_iteracion FROM iteracion I INNER JOIN casos_uso CU ON I.id_iteracion = CU.id_iteracion WHERE id_casos = NEW.id_casos),
+            (SELECT num_iteracion FROM iteracion I INNER JOIN casos_uso CU ON I.id_iteracion = CU.id_iteracion WHERE id_casos = NEW.id_casos),
             "-",
             (SELECT numero_cu FROM casos_uso WHERE id_casos = NEW.id_casos),
             " - ",
@@ -330,12 +330,31 @@
             (SELECT nombre_fase FROM fase WHERE id_fase = NEW.id_fase),
             " (",
             (SELECT nombre_tarea FROM tarea WHERE id_tarea = NEW.id_tarea),
-            (")")
+            ")"
         );
     END //
 
+    DROP TRIGGER IF EXISTS actualizar_nombre_estimacion;
+    CREATE TRIGGER actualizar_nombre_estimacion AFTER UPDATE ON casos_uso
+    FOR EACH ROW
+    BEGIN
+        UPDATE entrega E SET E.nombre =
+        CONCAT("IT",
+            (SELECT num_iteracion FROM iteracion I WHERE I.id_iteracion = NEW.id_iteracion),
+            "-",
+            IFNULL(NEW.numero_cu, ""),
+            " - ",
+            NEW.quiero,
+            " - ",
+            (SELECT nombre_fase FROM fase F WHERE F.id_fase = E.id_fase),
+            " (",
+            (SELECT nombre_tarea FROM tarea T WHERE T.id_tarea = E.id_tarea),
+            ")"
+        ) WHERE E.id_casos = NEW.id_casos AND OLD.quiero <> NEW.quiero;
+    END //
 
-DROP PROCEDURE IF EXISTS actualiza_tiempos;
+
+    DROP PROCEDURE IF EXISTS actualiza_tiempos;
     CREATE PROCEDURE actualiza_tiempos(
         IN idProyecto INT,
         IN idEmpleado INT,
