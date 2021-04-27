@@ -81,6 +81,7 @@
     CREATE TABLE empleado (
         id_empleado INT AUTO_INCREMENT NOT NULL,
         usuario VARCHAR(14),
+        correo VARCHAR(50),
         contrasena VARCHAR(100),
         nombre_empleado VARCHAR(64),
         imagen_empleado VARCHAR(400),
