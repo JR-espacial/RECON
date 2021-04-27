@@ -14,36 +14,36 @@
 </div>
 
 <div class="row">
-    <div class="col s12 offset-s4">
+    <div class="col s8 offset-s4">
         <form class="col s12" action="nueva-iteracion" method="POST">
             <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
             <input type="hidden" name="colaboradores" value="" id="myInputField" required>
             <div class="row">
-                <div class="input-field col s4">
+                <div class="input-field col s6">
                     <input  id="descripcion_proyecto" maxlength="1000" name="descripcion" type="text" class="validate">
                     <label for="descripcion_proyecto">Descripción de la iteración</label>
                 </div>
             </div>
             <div class="row">
-                <div class="input-field col s4">
+                <div class="input-field col s6">
                     <input  id="inicio_iteracion" name="fecha_inicio"type="text" class="datepicker" autocomplete="off" required>
                     <label for="inicio_iteracion">Selecciona la fecha de inicio de la iteración</label>
                 </div>
             </div>
             <div class="row">
-                <div class="input-field col s4">
+                <div class="input-field col s6">
                     <input  id="fin_iteracion" name="fecha_fin"type="text" class="datepicker" autocomplete="off" required>
                     <label for="fin_iteracion">Selecciona la fecha de fin de la iteración</label>
                 </div>
             </div>
             <div class="row">
-                <div class="col s4">
+                <div class="col s6">
                     <div class="chips chips-autocomplete"  id="chip1"></div>
                     <i class="material-icons">search</i> 
                 </div>
             </div>
             <div class="row">
-                <div class="col s4 offset-s1">
+                <div class="col s6 offset-s1">
                     <a class="waves-effect waves-light btn" id="cancelbtn" href="/proyectos/iteraciones-desarrollo-proyecto">Cancelar</a>
                     <button class="waves-effect waves-light btn" type="submit" value="Crear">Crear</button>
                 </div>
