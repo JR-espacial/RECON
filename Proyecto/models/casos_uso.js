@@ -51,4 +51,8 @@ module.exports =  class Casos_Uso{
     static DropCasoUso(idCaso) {
         return db.execute('DELETE FROM casos_uso WHERE id_casos=?;', [idCaso]);
     }
+
+    static fetchCasosCambioApPromedios(id_ap, id_proyecto, id_fase, id_tarea) {
+        return db.execute('SELECT CU.id_casos FROM casos_uso CU INNER JOIN entrega E ON CU.id_casos = E.id_casos WHERE CU.id_ap =? AND  E.id_proyecto =? AND E.id_fase =? AND E.id_tarea =?', [id_ap, id_proyecto, id_fase, id_tarea]);
+    }
 }

@@ -2,6 +2,8 @@ const Casos_Uso = require('../models/casos_uso');
 const Proyecto_Fase_Tarea = require('../models/Proyecto_Fase_Tarea');
 const Entrega = require('../models/entrega');
 const AP_Promedios = require('../models/ap_promedios');
+const Proyecto = require('../models/proyecto');
+const Airtable = require('airtable');
 
 exports.getTareaCasoUso = (request, response) =>{
     const id_proyecto = request.session.idProyecto;
@@ -83,9 +85,49 @@ exports.postModificarAsocioacion = (request, response) => {
             });          
     }
     else if(accion === "eliminar") {
-        Entrega.dropEntrega(id_proyecto, id_fase, id_tarea, id_casos)
-            .then(() => response.status(200))
-            .catch( err => console.log(err));
+        Proyecto.fetchAirTableKeys(id_proyecto)
+        .then(([rows, fielData]) => {
+            if(!rows[0].base || !rows[0].API_key){
+                Entrega.fetchIdAirtableDrop(id_proyecto, id_fase, id_tarea, id_casos)
+                    .then(([rows2, fieldData]) => {
+                        if(!rows2[0].id_airtable) {
+                            Entrega.dropEntrega(id_proyecto, id_fase, id_tarea, id_casos)
+                                .then(() => response.status(200))
+                                .catch( err => console.log(err));
+                        }
+                        else {
+                            request.session.toast = "No se puede eliminar la asociación, registra la base de Airtable correctamente para poder eliminarla.";
+                        }
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
+            }
+            else{
+                const base = new Airtable({apiKey: rows[0].API_key}).base( rows[0].base);
+                Entrega.fetchIdAirtableDrop(id_proyecto, id_fase, id_tarea, id_casos)
+                    .then(([rows2, fieldData]) => {
+                        if(!rows2[0].id_airtable) {
+                            base('Tasks').destroy([rows2[0].id_airtable], function(err, deletedRecords) {
+                                if (err) {
+                                    console.error(err);
+                                    return;
+                                }
+                                console.log('Deleted', deletedRecords.length, 'records');
+                            });
+                        }
+                        else {
+                            Entrega.dropEntrega(id_proyecto, id_fase, id_tarea, id_casos)
+                                .then(() => response.status(200))
+                                .catch( err => console.log(err));
+                        }
+                    })
+                    .catch( err => console.log(err));
+            }
+        })
+        .catch(err => {
+            console.log(err);
+        })
     }
 }
 
