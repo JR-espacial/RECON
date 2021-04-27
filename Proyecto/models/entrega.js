@@ -40,7 +40,7 @@ module.exports =  class Entrega {
     }
 
     static fetchCostosDiarios(id_iteracion){
-        return db.execute('SELECT DATE_FORMAT(E.entrega_real, "%d/%m/%Y")AS entrega_real, SUM(E.valor_ganado) AS valor_ganado_diario, SUM(E.costo_real) AS costo_real_diario FROM entrega E, iteracion I, casos_uso C WHERE I.id_iteracion = C.id_iteracion AND E.id_casos = C.id_casos AND I.id_iteracion =? AND estado_entrega = 1 GROUP BY  E.entrega_real ORDER BY E.entrega_real ASC;', [id_iteracion]);
+        return db.execute('SELECT DATE_FORMAT(E.entrega_real, "%d/%m/%Y")AS entrega_real, SUM(E.valor_ganado) AS valor_ganado_diario, SUM(E.costo_real) AS costo_real_diario FROM entrega E, iteracion I, casos_uso C WHERE I.id_iteracion = C.id_iteracion AND E.id_casos = C.id_casos AND I.id_iteracion =? AND estado_entrega = "Done"  GROUP BY  E.entrega_real ORDER BY E.entrega_real ASC;', [id_iteracion]);
     }
 
     static countAllTareas(id_iteracion){

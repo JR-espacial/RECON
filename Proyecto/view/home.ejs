@@ -27,7 +27,7 @@
         <% for (let proyecto of proyectos) { %>
         <div class="col s4">
             <div class="card hoverable">
-                <div class="card-image">
+                <div class="card-image pointer">
                     <img class="activator"  src="<%= proyecto.imagen %>">
                     <div id="modal1_<%= proyecto.id_proyecto %>" class="modal large">
                         <form action="/home/modificar-proyecto?_csrf=<%=csrfToken%>" method="POST"  enctype="multipart/form-data">
@@ -92,7 +92,14 @@
                 </div>
                 <div class="card-content">
                     <a class='dropdown-trigger right  grey-text text-darken-4' data-target='dropdown1_<%= proyecto.nombre_proyecto %>'><i class="material-icons right">more_vert</i></a>
-                    <span><%= proyecto.nombre_proyecto %></span>
+                    <div>
+                        <form action="home" method="POST">
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
+                            <input type="hidden" name="idProyecto" value="<%= proyecto.id_proyecto %>" >
+                            <input type="hidden" name="nombreProyecto" value="<%= proyecto.nombre_proyecto %>" >
+                            <button class=" btn-flat d-content" type="submit"><%= proyecto.nombre_proyecto %></botton>
+                        </form>
+                    </div>
                     <ul id='dropdown1_<%= proyecto.nombre_proyecto %>' class='dropdown-content'>
                         <li><a data-target="modal1_<%= proyecto.id_proyecto %>" class="boton_dropdown modal-trigger"><i class="small material-icons right">mode_edit</i></a></li>
                         <li>
@@ -111,14 +118,6 @@
                             </form>
                         </li>
                     </ul>
-                </div>
-                <div class="card-action">
-                    <form action="home" method="POST">
-                        <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
-                        <input type="hidden" name="idProyecto" value="<%= proyecto.id_proyecto %>" >
-                        <input type="hidden" name="nombreProyecto" value="<%= proyecto.nombre_proyecto %>" >
-                        <button class=" btn-flat d-content" type="submit">Ir al proyecto</botton>
-                    </form>
                 </div>
                 <div class="card-reveal">
                     <span class="card-title"><strong><%= proyecto.nombre_proyecto %></strong><i class="material-icons right">close</i></span>

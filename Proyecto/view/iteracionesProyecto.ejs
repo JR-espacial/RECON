@@ -77,8 +77,15 @@
                             </div>
                         </div>
                         <div class="card-content">
-                            <span>IT <%= iteracion.num_iteracion %></span>
                             <a class='dropdown-trigger right grey-text text-darken-4' data-target='dropdown1_<%= iteracion.num_iteracion %>'><i class="material-icons right">more_vert</i></a>
+                                <div>
+                                    <form action="iteraciones-proyecto" method="POST">
+                                        <input type="hidden" name="_csrf" value="<%= csrfToken %>"> 
+                                        <input type="hidden" name="idIteracion" value="<%= iteracion.id_iteracion %>">
+                                        <input type="hidden" name="numIteracion" value="<%= iteracion.num_iteracion %>">
+                                        <button class="btn-flat d-content" type="submit">IT <%= iteracion.num_iteracion %></botton>
+                                    </form>
+                                </div>
                             <ul id='dropdown1_<%= iteracion.num_iteracion %>' class='dropdown-content'>
                                 <li><a data-target="modal1_<%= iteracion.id_iteracion %>" class="boton_dropdown modal-trigger" onclick='loadChips("<%= iteracion.id_iteracion %>")'><i class="material-icons right">mode_edit</i></a></li>
                                 <li>
@@ -97,14 +104,6 @@
                                     </form>
                                 </li>
                             </ul>
-                        </div>
-                        <div class="card-action">
-                            <form action="iteraciones-proyecto" method="POST">
-                                <input type="hidden" name="_csrf" value="<%= csrfToken %>"> 
-                                <input type="hidden" name="idIteracion" value="<%= iteracion.id_iteracion %>">
-                                <input type="hidden" name="numIteracion" value="<%= iteracion.num_iteracion %>">
-                                <button class="btn-flat d-content" type="submit">Ir a la iteracion</botton>
-                            </form>
                         </div>
                     </div>
                 </div>

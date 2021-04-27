@@ -249,7 +249,31 @@ exports.postTerminarIteracion = async function(request, response){
 }
 
 exports.postAirTableKeys = async function (request, response){
-    await Proyecto.saveAirTableKeys(request.body.base, request.body.API_key, request.session.idProyecto);
-    request.session.alerta = "Configuración de AirTable modificada exitosamente";
-    response.redirect('/proyectos/iteraciones-desarrollo-proyecto');
+    const Airtable = require('airtable');
+
+    const base = new Airtable({apiKey: request.body.API_key}).base( request.body.base);
+
+    base('Tasks').select({
+        maxRecords: 1,
+        view: "Global view"
+    }).eachPage(function page(records, fetchNextPage) {
+      
+        records.forEach(function(record) {
+        });
+    
+        fetchNextPage();
+    
+    },  async function done(err) {
+        if (err) { 
+            request.session.alerta = "La base o Apikey de AirTable no es correcta por lo tanto no se registró la nueva configuración";
+            response.redirect('/proyectos/iteraciones-desarrollo-proyecto');
+            return; 
+        }
+
+        await Proyecto.saveAirTableKeys(request.body.base, request.body.API_key, request.session.idProyecto);
+        request.session.alerta = "Configuración de AirTable modificada exitosamente";
+        response.redirect('/proyectos/iteraciones-desarrollo-proyecto');
+    });
+
+   
 }

@@ -92,3 +92,18 @@ exports.postEliminarProyecto = (request, response) => {
         console.log(err);
     });
 }
+
+exports.getMidesempeño = async function(request,response){
+    request.session.navegacion = 0;
+
+    let user = await Usuario.fetchOne(request.session.usuario);
+    response.render('miDesempeño',{
+        imagen_empleado: request.session.imagen_empleado,
+        title: "Mi Desempeño", 
+        user : user[0][0],  
+        csrfToken: request.csrfToken(),
+        proyecto_actual: request.session.nombreProyecto,
+        navegacion : request.session.navegacion
+    });
+
+}
