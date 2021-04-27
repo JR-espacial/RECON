@@ -187,7 +187,7 @@
     CREATE TRIGGER set_current_date_proyecto BEFORE INSERT ON proyecto
     FOR EACH ROW
     BEGIN
-        SET NEW.fecha_inicio = SELECT CURRENT_DATE();
+        SET NEW.fecha_inicio = (SELECT CURRENT_DATE());
     END //
 
     DROP PROCEDURE IF EXISTS set_horas_productivas;
