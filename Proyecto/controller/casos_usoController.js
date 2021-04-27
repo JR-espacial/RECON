@@ -1,5 +1,6 @@
 const Casos_Uso = require('../models/casos_uso');
 const Proyecto_Fase_Tarea = require('../models/Proyecto_Fase_Tarea');
+const Entrega = require('../models/entrega');
 
 exports.getCasosUsoIteracion = (request, response) =>{
     let idIteracion = request.session.idIteracion;
@@ -70,8 +71,24 @@ exports.postCasosUsoIteracion = (request, response) => {
         let para = request.body.para;
         let comentario = request.body.comentario;
         let idApPasado = request.body.id_ap_pasado;
-                
-        if (!idAp) idAp = idApPasado;
+
+        if (!idAp){
+            idAp = idApPasado;
+        }
+        else{
+            Entrega.fetchIdCasos(idCaso*1)
+                .then(([rows, fieldData]) => {
+                    for (let entrega of rows) {
+                        Entrega.updateEstimacionNuevoAP(entrega.id_proyecto, entrega.id_fase, entrega.id_tarea, idAp*1, idCaso*1)
+                            .catch(err => console.log(err));
+                    }
+                    Entrega.actualiza_con_check(idCaso*1)
+                        .catch(err => console.log(err));
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        }
         if (!yo_como) yo_como = "";
         if (!quiero) quiero = "";
         if (!para) para = "";

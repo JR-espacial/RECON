@@ -349,19 +349,21 @@
     CREATE TRIGGER actualizar_nombre_estimacion AFTER UPDATE ON casos_uso
     FOR EACH ROW
     BEGIN
-        UPDATE entrega E SET E.nombre =
-        CONCAT("IT",
-            (SELECT num_iteracion FROM iteracion I WHERE I.id_iteracion = NEW.id_iteracion),
-            "-",
-            IFNULL(NEW.numero_cu, ""),
-            " - ",
-            NEW.quiero,
-            " - ",
-            (SELECT nombre_fase FROM fase F WHERE F.id_fase = E.id_fase),
-            " (",
-            (SELECT nombre_tarea FROM tarea T WHERE T.id_tarea = E.id_tarea),
-            ")"
-        ) WHERE E.id_casos = NEW.id_casos AND OLD.quiero <> NEW.quiero;
+        IF OLD.quiero <> NEW.quiero THEN
+            UPDATE entrega E SET E.nombre =
+            CONCAT("IT",
+                (SELECT num_iteracion FROM iteracion I WHERE I.id_iteracion = NEW.id_iteracion),
+                "-",
+                IFNULL(NEW.numero_cu, ""),
+                " - ",
+                NEW.quiero,
+                " - ",
+                (SELECT nombre_fase FROM fase F WHERE F.id_fase = E.id_fase),
+                " (",
+                (SELECT nombre_tarea FROM tarea T WHERE T.id_tarea = E.id_tarea),
+                ")"
+            ) WHERE E.id_casos = NEW.id_casos;
+        END IF;
     END //
 
 
@@ -413,6 +415,19 @@
         END WHILE;
 
         
+  	END //
+
+    DROP PROCEDURE IF EXISTS actualiza_con_check;
+   	DELIMITER //
+    CREATE PROCEDURE actualiza_con_check(
+        IN idCasos INT
+    )
+    BEGIN
+        UPDATE casos_uso SET real_minutos = cast((SELECT SUM(estimacion) FROM entrega E WHERE E.id_casos = idCasos)* 60 as decimal (5,1)) 
+        WHERE id_casos = idCasos;
+        
+        UPDATE iteracion SET total_min_real = cast((SELECT SUM(real_minutos) FROM casos_uso CU WHERE CU.id_iteracion = (SELECT id_iteracion FROM casos_uso WHERE id_casos = idCasos)) as decimal (5,1)) 
+        WHERE id_iteracion = (SELECT id_iteracion FROM casos_uso WHERE id_casos = idCasos);
   	END //
 
     DELIMITER ;
