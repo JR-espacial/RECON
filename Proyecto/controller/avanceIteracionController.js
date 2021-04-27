@@ -22,6 +22,7 @@ exports.getAvanceProyecto = async function (request, response) {
         let i =0;
         
         const base = new Airtable({apiKey: proyecto_keys[0][0].API_key}).base( proyecto_keys[0][0].base);
+        
         base('Tasks').select({
             view: "Global view",
             sort :[{field: "Name", direction: "asc"}]
@@ -31,7 +32,7 @@ exports.getAvanceProyecto = async function (request, response) {
             records.forEach(function(record) {
                 let IT = Number (record.get('Name').slice(2,record.get('Name').indexOf('-')));
                 
-                if(IT == num_iter[0][0].num_iteracion){
+                if(IT == num_iter){
                     workitemlist[i] = {};
                     workitemlist[i].nombre = record.get('Name');
                     workitemlist[i].asignados = record.get('Assigned');
@@ -108,7 +109,14 @@ exports.getAvanceProyecto = async function (request, response) {
             fetchNextPage();
         
         },  async function done(err) {
-            if (err) { console.error(err); return; }
+            if (err) {
+                toast = "La base o Apikey de AirTable no es correcta";
+                 //console.error(err); 
+                 fetchAvance(request, response, toast);
+                 return;
+                }
+
+           
 
             workitemlist.forEach( async function (element) {
                 await Entrega.updateAirtable(element.nombre, element.entrega_real, element.estimacion, element.valor_ganado, element.costo_real, element.estado_entrega);
@@ -144,9 +152,7 @@ async function fetchAvance(request, response, toast){
     let velocidad_deseada = parseFloat((total_horas_real/diffDays).toFixed(2));
 
     let costos = await Entrega.fetchCostosDiarios(request.session.idIteracion);
-    let tareas_totales = await Entrega.countAllTareas(request.session.idIteracion);
-    let tareas_completadas = await Entrega.countTareasCompletadas(request.session.idIteracion);
-    let tareas_pendientes = tareas_totales[0][0].tareas_totales - tareas_completadas[0][0].tareas_completadas;
+
 
     let horas_semanales;
     let total_semanas_real;
@@ -181,9 +187,6 @@ async function fetchAvance(request, response, toast){
         horas_planeadas: total_horas_real,
         velocidad_deseada: velocidad_deseada,
         costos: costos[0],
-        tareas_totales : tareas_totales[0][0].tareas_totales,
-        tareas_completadas : tareas_completadas[0][0].tareas_completadas,
-        tareas_pendientes: tareas_pendientes,
         total_min_real: total_min_real,
         total_horas_real: total_horas_real,
         horas_semanales: horas_semanales,

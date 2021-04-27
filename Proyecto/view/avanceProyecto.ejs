@@ -2,17 +2,25 @@
 <%- include('includes/navbarIteracion.ejs'); %>
 
 <main>
-    <!-- <div class="preloader-wrapper big active">
-        <div class="spinner-layer spinner-blue-only">
-          <div class="circle-clipper left">
-            <div class="circle"></div>
-          </div><div class="gap-patch">
-            <div class="circle"></div>
-          </div><div class="circle-clipper right">
-            <div class="circle"></div>
-          </div>
+    <!-- <div class="row">
+        <div class="col s10 offset-s2"> 
+            <br>
+            <br>
+            <br>
+            <div class="preloader-wrapper big active loader">
+                <div class="spinner-layer  spinner-blue-only">
+                  <div class="circle-clipper left">
+                    <div class="circle"></div>
+                  </div><div class="gap-patch">
+                    <div class="circle"></div>
+                  </div><div class="circle-clipper right">
+                    <div class="circle"></div>
+                  </div>
+                </div>
+            </div>
         </div>
     </div> -->
+    
     <div class="row">
         <div class="col s10 offset-s1">
             <% if(iteracion.terminada == 0){ %>
@@ -148,6 +156,30 @@
 </main>
 
 <script>
+    // fetch('/proyectos/iteraciones-proyecto-editar',{
+    //             method : 'POST',
+    //             body : JSON.stringify(data),
+    //             headers:{
+    //                 'csrf-token': csrf,
+    //                 'Content-Type': 'application/json'
+    //             },
+    //         }).then(result => {
+    //         return result.json(); 
+    //         }).then(data => {
+    //             data.forEach(element => {
+    //                 if (element.usuario!= "<%= user%>"){
+    //                     colaboradores_anteriores.push(element.usuario);
+    //                     chipContainer.addChip({
+    //                         tag: element.usuario,
+    //                     });
+    //                 }
+    //             });
+                
+    //         }).catch(err => {
+    //             console.error(err);
+    //         });
+
+
     let entrega_real = [];
     let valor_ganado_diario = [];
     let costo_real_diario = [];

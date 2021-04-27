@@ -229,3 +229,7 @@ div#modal5 {
 .reveal_content{
     text-align: left;
 }
+
+.pointer{
+    cursor: pointer;
+}

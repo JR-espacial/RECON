@@ -12,6 +12,7 @@ const avanceIteracionController = require('../controller/avanceIteracionControll
 const capacidadController = require('../controller/capacidadController');
 const enviarAirtableController = require('../controller/enviarAirtableController');
 
+
 router.post('/nuevo-departamento', isAuth, proyectosController.postNuevoDepartamento);
 
 router.get('/nuevo-proyecto', isAuth, proyectosController.getNuevoProyecto);
