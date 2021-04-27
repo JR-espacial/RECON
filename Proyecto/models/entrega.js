@@ -73,10 +73,6 @@ module.exports =  class Entrega {
         return db.execute('SELECT id_proyecto, id_fase, id_tarea FROM entrega WHERE id_casos =?', [id_casos]);
     }
 
-    static updateEstimacionNuevoAP(id_proyecto, id_fase, id_tarea, id_ap, id_casos) {
-        return db.execute('UPDATE entrega SET estimacion = (SELECT promedio_minutos FROM ap_promedios WHERE id_proyecto=? AND id_fase=? AND id_tarea=? AND id_ap=?) WHERE id_proyecto =? AND id_fase=? AND id_tarea AND id_casos =?', [id_proyecto, id_fase, id_tarea, id_ap, id_proyecto, id_fase, id_tarea, id_casos])
-    }
-
     static updateEstimacionNuevoAP(id_proyecto, id_fase, id_tarea, id_ap, id_casos){
         return db.execute('UPDATE entrega SET estimacion = cast((SELECT promedio_minutos FROM ap_promedios WHERE id_proyecto=? AND id_fase=? AND id_tarea=? AND id_ap=?)/60 as decimal (5,2)) WHERE id_proyecto =? AND id_fase =? AND id_tarea =? AND id_casos =?;', [id_proyecto, id_fase, id_tarea, id_ap, id_proyecto, id_fase, id_tarea, id_casos]);
     }
