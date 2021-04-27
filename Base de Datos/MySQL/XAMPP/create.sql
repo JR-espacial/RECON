@@ -333,7 +333,7 @@
         CONCAT("IT",
             (SELECT num_iteracion FROM iteracion I INNER JOIN casos_uso CU ON I.id_iteracion = CU.id_iteracion WHERE id_casos = NEW.id_casos),
             "-",
-            (SELECT numero_cu FROM casos_uso WHERE id_casos = NEW.id_casos),
+            IFNULL((SELECT numero_cu FROM casos_uso WHERE id_casos = NEW.id_casos),""),
             " - ",
             (SELECT quiero FROM casos_uso WHERE id_casos = NEW.id_casos),
             " - ",
@@ -392,29 +392,6 @@
             FROM casos_uso CU INNER JOIN iteracion I ON CU.id_iteracion = I.id_iteracion 
             WHERE CU.id_ap = idAp AND I.id_proyecto = idProyecto);
 
-        DROP TEMPORARY TABLE IF EXISTS my_temp_table;
-        CREATE TEMPORARY TABLE my_temp_table(
-            i INT AUTO_INCREMENT,
-            id_casos INT,
-            PRIMARY KEY(i));
-
-        INSERT INTO my_temp_table(id_casos) SELECT CU.id_casos
-                            FROM casos_uso CU INNER JOIN entrega E ON CU.id_casos = E.id_casos 
-                            WHERE CU.id_ap = idAp AND  E.id_proyecto = idProyecto AND E.id_fase = idFase AND E.id_tarea = idTarea;
-
-        SET @nrows = 1;
-
-        WHILE(@nrows <= (SELECT COUNT(*) FROM my_temp_table)) DO
-            UPDATE casos_uso SET real_minutos = cast((SELECT SUM(estimacion) FROM entrega E WHERE E.id_casos = (SELECT id_casos FROM my_temp_table WHERE i = @nrows))* 60 as decimal (5,1))
-            WHERE id_casos = (SELECT id_casos FROM my_temp_table WHERE i = @nrows);
-
-            UPDATE iteracion SET total_min_real = cast((SELECT SUM(real_minutos) FROM casos_uso CU WHERE CU.id_iteracion = (SELECT id_iteracion FROM casos_uso WHERE id_casos = (SELECT id_casos FROM my_temp_table WHERE i = @nrows)))as decimal(5,1))
-            WHERE id_iteracion = (SELECT id_iteracion FROM casos_uso WHERE id_casos = (SELECT id_casos FROM my_temp_table WHERE i = @nrows));
-
-            SET @nrows = @nrows+1;
-        END WHILE;
-
-        
   	END //
 
     DROP PROCEDURE IF EXISTS actualiza_con_check;

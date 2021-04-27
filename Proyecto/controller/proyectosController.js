@@ -6,6 +6,8 @@ const Proyecto_Fase_Tarea = require('../models/Proyecto_Fase_Tarea');
 const Fase = require('../models/fase');
 const APC = require('../models/ap_colaborador');
 const APP = require('../models/ap_promedios');
+const Casos_Uso = require('../models/casos_uso');
+const Entrega = require('../models/entrega');
 const { request, response } = require('express');
 
 
@@ -133,7 +135,16 @@ exports.getEstimacionAP = (request, response) => {
 
 exports.postEstimacionAP = (request, response) => {
     APC.actualizaTiempos(request.session.idProyecto, request.session.id_empleado, request.body.id_fase, request.body.id_tarea, request.body.id_ap, request.body.minutos)
-        .then(() => response.status(200))
+        .then(() => {
+            Casos_Uso.fetchCasosCambioApPromedios(request.body.id_ap, request.session.idProyecto, request.body.id_fase, request.body.id_tarea)
+                .then(([rows, fieldData]) => {
+                    for(caso of rows) {
+                        Entrega.actualiza_con_check(caso.id_casos * 1)
+                        .catch(err => console.log(err));
+                    }
+                    response.status(200)
+                })
+        })
         .catch( err => console.log(err));      
 }
 
