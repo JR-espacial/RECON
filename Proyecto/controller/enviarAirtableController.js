@@ -7,7 +7,6 @@ exports.postEnviarDatosAirtable = (request, response) => {
     let toast = "";
     Proyecto.fetchAirTableKeys(id_proyecto)
         .then(([rows, fielData]) => {
-            console.log("Obtiene keys Airtable");
             if(!rows[0].base || !rows[0].API_key){
                 request.session.toast = "Define una base de AirTable para enviar los datos.";
             }
@@ -74,7 +73,7 @@ exports.postEnviarDatosAirtable = (request, response) => {
                         console.log(err);
                     })
             }
-            response.redirect('/home');
+            response.redirect('/proyectos/tarea-caso-uso');
         })
         .catch(err => {
             console.log(err);
