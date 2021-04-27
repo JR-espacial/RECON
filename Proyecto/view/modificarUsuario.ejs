@@ -11,11 +11,11 @@
 
 
 <div class="row">
-    <div class="col s8 offset-s4">
+    <div class="col s11 ">
         <br>
         <br>
         <br>
-        <div class="col s6">
+        <div class="col s7  offset-s1">
             <div class="card">
                 <br>
                 <h6 class="responsive_text_login center"><%= title %></h6>
@@ -71,7 +71,7 @@
                                             <input type="hidden" name="option" value="2">
                                             <input type="hidden" name="id_empleado" value="<%=user.id_empleado%>">
                                             <div class="input-field">
-                                                <input type="text" class="validate" id="nombre" name="nombre" value="<%= user.nombre_empleado %>" required>
+                                                <input type="text" class="validate" maxlength="64" id="nombre" name="nombre" value="<%= user.nombre_empleado %>" required>
                                                 <label for="nombre">Nombre</label>
                                             </div>
                                             <br>
@@ -97,8 +97,34 @@
                                             <input type="hidden" name="option" value="3">
                                             <input type="hidden" name="id_empleado" value="<%=user.id_empleado%>">
                                             <div class="input-field">
-                                                <input type="text" class="validate" id="usuario" name="usuario" value="<%= user.usuario%>" required>
+                                                <input type="text" class="validate" id="usuario" maxlength="15" name="usuario" value="<%= user.usuario%>" required>
                                                 <label for="usuario">Usuario</label>
+                                            </div>
+                                            <br>
+                                            <br>
+                                            <button type="sumbmit" class="waves-effect waves-green btn right">Modificar</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Correo -->
+                            <tr class="modal-trigger" data-target="modal_correo">
+                                <td><i class="material-icons prefix ">email</i>&nbsp Correo</td>
+                                <td><%= user.usuario %><i class="material-icons right">chevron_right</i></td>
+                            </tr>
+                            <div id="modal_correo" class="modal col s4">
+                                <div class="row">
+                                    <div class="modal-content col s6 offset-s3">
+                                        <h5> Modificar usuario</h5>
+                                        <br>
+                                        <form action="/users/settings" method="POST">
+                                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                            <input type="hidden" name="option" value="4">
+                                            <input type="hidden" name="id_empleado" value="<%=user.id_empleado%>">
+                                            <div class="input-field">
+                                                <input type="text" class="validate" id="correo" maxlength="50" name="correo" value="<%= user.correo%>" required>
+                                                <label for="correo">Correo de la empresa</label>
                                             </div>
                                             <br>
                                             <br>
@@ -120,7 +146,7 @@
                                         <br>
                                         <form action="/users/settings" method="POST">
                                             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                                            <input type="hidden" name="option" value="4">
+                                            <input type="hidden" name="option" value="5">
                                             <input type="hidden" name="id_empleado" value="<%=user.id_empleado%>">
                                             <div class="input-field">
                                                 <input type="password" class="validate" id="antiguo_password" name="antiguo_password" required>
@@ -131,7 +157,7 @@
                                             <% } %>
                                             <br>
                                             <div class="input-field">
-                                                <input type="password" class="validate" id="nuevo_password" name="nuevo_password" required>
+                                                <input type="password" class="validate" maxlength="100" id="nuevo_password" name="nuevo_password" required>
                                                 <label for="nuevo_password">Nueva contraseña</label>
                                             </div>
                                             <br>

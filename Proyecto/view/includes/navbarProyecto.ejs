@@ -45,13 +45,13 @@
         <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
         <div class="row">
             <div class="input-field col s7 offset-s3">
-                <input id="Base" type="text" class="validate" name="base" value="<%= proyecto_keys.base %>" required>
+                <input id="Base" type="text" class="validate" maxlength="50" name="base" value="<%= proyecto_keys.base %>" required>
                 <label for="Base" >Base</label>
             </div>
         </div>
         <div class="row">
             <div class="input-field col s7 offset-s3 ">
-                <input id="User API Key" type="text" class="validate" name="API_key" value="<%= proyecto_keys.API_key %>" required>
+                <input id="User API Key" type="text" class="validate"  maxlength="50" pname="API_key" value="<%= proyecto_keys.API_key %>" required>
                 <label for="User API Key" >Llave API de Usuario</label>
             </div>
         </div>

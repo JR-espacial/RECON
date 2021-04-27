@@ -43,13 +43,13 @@
                                         </div>
                                         <div class="row">
                                             <div class="input-field col s11">
-                                                <input  id="nombre_proyecto<%= proyecto.id_proyecto %>" type="text" class="validate" name="nombre" value="<%= proyecto.nombre_proyecto %>" required>
+                                                <input  id="nombre_proyecto<%= proyecto.id_proyecto %>" type="text" class="validate" maxlength="64" name="nombre" value="<%= proyecto.nombre_proyecto %>" required>
                                                 <label for="nombre_proyecto<%= proyecto.id_proyecto %>">Nombre del proyecto*</label>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="input-field col s11">
-                                                <input  id="descripcion_proyecto<%= proyecto.id_proyecto %>" type="text" class="validate" name="descripcion" value="<%= proyecto.descripcion_proyecto %>">
+                                                <input  id="descripcion_proyecto<%= proyecto.id_proyecto %>" type="text" class="validate" maxlength="1000" name="descripcion" value="<%= proyecto.descripcion_proyecto %>">
                                                 <label for="descripcion_proyecto<%= proyecto.id_proyecto %>">Descripción del proyecto</label>
                                             </div>
                                         </div>

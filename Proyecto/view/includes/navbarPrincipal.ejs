@@ -36,7 +36,7 @@
                 <form action="/proyectos/nuevo-departamento" method="POST">
                     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                     <div class="input-field">
-                        <input type="text" class="validate" id="nuevo_departamento" name="nuevo_departamento"  required>
+                        <input type="text" class="validate" maxlength="64" id="nuevo_departamento" name="nuevo_departamento"  required>
                         <label for="nuevo_departamento">Nombre Departamento</label>
                     </div>
                     <br>

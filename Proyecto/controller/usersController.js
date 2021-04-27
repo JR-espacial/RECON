@@ -99,7 +99,7 @@ exports.postRegister = (request, response, next) => {
                 response.redirect('/users/register');
             }
             else if(schema.validate(request.body.password)){
-                const nuevo_usuario = new Usuario(request.body.nombre, request.body.usuario,request.body.password , image_file_name);
+                const nuevo_usuario = new Usuario(request.body.nombre, request.body.usuario, request.body.correo,request.body.password , image_file_name);
                 nuevo_usuario.save()
                     .then(() => {
                         request.session.alerta = "Usuario registrado exitosamente";
@@ -220,6 +220,16 @@ exports.postSettings = (request, response) => {
         });
     }
     else if(option_ == 4){
+        let correo = request.body.correo;
+        Usuario.updateCorreo(correo,id_empleado)
+        .then(() => {
+            request.session.correo = correo;
+            request.session.toast = "Correo modificado exitosamente";
+            response.redirect('/users/settings');
+        }).catch(err => console.log(err));
+
+    }
+    else if(option_ == 5){
         let antiguo_password= request.body.antiguo_password;
         let nuevo_password= request.body.nuevo_password;
 
