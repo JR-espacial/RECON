@@ -21,13 +21,13 @@
                     <% if (error) { %>
                         <span style="color:red"><%= error %></span>
                     <% } %>
-                    <input  id="nombre_proyecto" type="text"  class="validate" name="nombre"  required>
+                    <input  id="nombre_proyecto" type="text"  maxlength="64"  class="validate" name="nombre"  required>
                     <label for="nombre_proyecto">Nombre del proyecto*</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s4">
-                    <textarea  id="descripcion_proyecto" type="text" class="materialize-textarea" name="descripcion"></textarea>
+                    <textarea  id="descripcion_proyecto" type="text"  maxlength="1000" class="materialize-textarea" name="descripcion"></textarea>
                     <label for="descripcion_proyecto">Descripción del proyecto</label>
                 </div>
             </div>

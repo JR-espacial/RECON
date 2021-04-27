@@ -2,9 +2,10 @@ const db = require('../util/mySQL');
 const bcrypt = require('bcryptjs');
 
 module.exports =  class Usuario{
-    constructor(nombre_empleado, usuario, contrasena, imagen_empleado){
+    constructor(nombre_empleado, usuario,correo, contrasena, imagen_empleado){
         this.nombre_empleado = nombre_empleado;
         this.usuario = usuario;
+        this.correo = correo;
         this.contrasena = contrasena;
         this.imagen_empleado = imagen_empleado;
     }
@@ -13,8 +14,8 @@ module.exports =  class Usuario{
         return bcrypt.hash(this.contrasena, 12)
             .then((password_encriptado) => {
                 return db.execute(
-                    'INSERT INTO empleado (nombre_empleado, usuario, contrasena, imagen_empleado) VALUES (?, ?, ?, ?)',
-                    [this.nombre_empleado, this.usuario, password_encriptado, this.imagen_empleado]
+                    'INSERT INTO empleado (nombre_empleado, usuario, correo, contrasena, imagen_empleado) VALUES (?, ?, ?, ?, ?)',
+                    [this.nombre_empleado, this.usuario, this.correo, password_encriptado, this.imagen_empleado]
                 );
             }).catch(err => console.log(err));  
     }
@@ -38,6 +39,9 @@ module.exports =  class Usuario{
     }
     static updateUsuario(usuario,id_empleado){
         return db.execute('UPDATE empleado SET usuario =? WHERE id_empleado =?',[usuario,id_empleado]);
+    }
+    static updateCorreo(correo,id_empleado){
+        return db.execute('UPDATE empleado SET correo =? WHERE id_empleado =?',[correo,id_empleado]);
     }
     static updateContrasena(contrasena,id_empleado){
         return bcrypt.hash(contrasena, 12)
