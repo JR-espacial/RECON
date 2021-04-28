@@ -78,7 +78,7 @@ exports.postRegister = (request, response, next) => {
     let image_file_name = '';
 
     if(!image) {
-        image_file_name = 'https://d3ipks40p8ekbx.cloudfront.net/dam/jcr:3a4e5787-d665-4331-bfa2-76dd0c006c1b/user_icon.png';
+        image_file_name = '2021-04-28T16-37-47.665Z-user_icon.png';
     }
     else{
         image_file_name = image.filename;
