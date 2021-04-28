@@ -43,6 +43,10 @@ module.exports =  class Casos_Uso{
         return db.execute('UPDATE casos_uso SET id_ap=?, yo_como=?, quiero=?, para=?, comentario=? WHERE id_casos=?;', 
         [idAp, yo_como, quiero, para, comentario, idCaso]);
     }
+
+    static compruebaExistencia (id_casos) {
+        return db.execute('SELECT id_casos FROM entrega WHERE id_casos=?', [id_casos]);
+    }
  
     static DropEntreCaso(idCaso) {
         return db.execute('DELETE FROM entrega WHERE id_casos=?;', [idCaso]);

@@ -5,6 +5,9 @@ const Entrega = require('../models/entrega');
 exports.getCasosUsoIteracion = (request, response) =>{
     let idIteracion = request.session.idIteracion;
 
+    let alerta = request.session.alerta;
+    request.session.alerta = "";
+
     Casos_Uso.fetchAllIteracion(idIteracion) 
         .then(([rows, fieldData]) => {
             response.render('casosUso', {
@@ -15,6 +18,7 @@ exports.getCasosUsoIteracion = (request, response) =>{
                 num_iteracion: request.session.numIteracion,
                 title: "Casos de Uso",
                 casos_uso: rows,
+                alerta: alerta,
                 csrfToken: request.csrfToken()
             });
         })
@@ -103,19 +107,27 @@ exports.postCasosUsoIteracion = (request, response) => {
         });   
     }
     else if(accion === "eliminar") {
-        Casos_Uso.DropEntreCaso(idCaso)
-            .then(() => {
-                Casos_Uso.DropCasoUso(idCaso)
-                    .then(()=> {
-                        response.redirect('/proyectos/casos-uso-iteracion');
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    });
+        // obtener los registros de Entrega donde el id del caso es idCaso....
+        // si obtenemos registros, no eliminamos, sino, eliminamos
+        Casos_Uso.compruebaExistencia(idCaso)
+            .then(([rows, fieldData]) => {
+                if(rows.length > 0) {
+                    request.session.alerta = "No se puede eliminar el caso de uso porque tiene tareas asociadas.";
+                    response.redirect('/proyectos/casos-uso-iteracion');
+                }
+                else {
+                    Casos_Uso.DropCasoUso(idCaso)
+                        .then(()=> {
+                            response.redirect('/proyectos/casos-uso-iteracion');
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        });
+                }
             })
             .catch( err => {
                 console.log(err);
-            });       
+            });    
     }
     else {
         response.redirect('/proyectos/casos-uso-iteracion');
