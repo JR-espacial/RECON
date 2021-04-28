@@ -38,7 +38,7 @@ module.exports =  class Iteracion{
     }
 
     static removeUserfromIter(id_iteracion,usuario){
-        return db.execute('DELETE FROM empleado_iteracion WHERE id_iteracion = ? AND id_empleado= (SELECT id_empleado FROM empleado WHERE usuario =?;)',[id_iteracion,usuario]);
+        return db.execute('DELETE FROM empleado_iteracion WHERE id_iteracion = ? AND id_empleado= (SELECT id_empleado FROM empleado WHERE usuario =?);',[id_iteracion,usuario]);
     }
 
     static fetchUsersfromIter(id_iteracion){

@@ -133,6 +133,7 @@ async function fetchAvance(request, response, alerta, toast){
     let capacidad = await Capacidad_Equipo.fetchOne(iteracion[0][0].id_capacidad)
     let total_min_real;
     let total_horas_real;
+    let velocidad_deseada;
     let date1 = new Date(iteracion[0][0].fecha_inicio);
     let date2 = new Date(iteracion[0][0].fecha_fin);
     let diffTime = Math.abs(date2 - date1);
@@ -143,12 +144,13 @@ async function fetchAvance(request, response, alerta, toast){
     if(iteracion[0][0].total_min_real){
         total_min_real = iteracion[0][0].total_min_real;
         total_horas_real= (iteracion[0][0].total_min_real/60).toFixed(2);
+        velocidad_deseada = parseFloat((total_horas_real/diffDays).toFixed(2));
     }
     else{
         total_min_real = "Sin registrar";
         total_horas_real = "Sin registrar";
+        velocidad_deseada = "Sin registrar";
     }
-    let velocidad_deseada = parseFloat((total_horas_real/diffDays).toFixed(2));
 
     let costos = await Entrega.fetchCostosDiarios(request.session.idIteracion);
 
