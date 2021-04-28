@@ -28,7 +28,7 @@
                             <form method = "POST" action = "modificar-porcentaje-tiempo-perdido">
                                 <input type="hidden" name = "_csrf" value = "<%= csrfToken %>">
                                 <input type="hidden" name = "id_capacidad" value = "<%= porcentajes.id_capacidad %>">
-                                <input value="<%= (porcentajes.tiempo_perdido_pc * 100).toFixed(0) %>" type="text" class="validate" name = "tiempo_perdido_pc" required><span>%</span>
+                                <input value="<%= (porcentajes.tiempo_perdido_pc * 100).toFixed(0) %>" type="text" class="validate" name = "tiempo_perdido_pc" autocomplete="off" required><span>%</span>
                             </form>
                         </td>
                     </tr>
@@ -39,7 +39,7 @@
                             <form method = "POST" action = "modificar-porcentaje-errores-registro">
                                 <input type="hidden" name = "_csrf" value = "<%= csrfToken %>">
                                 <input type="hidden" name = "id_capacidad" value = "<%= porcentajes.id_capacidad %>">
-                                <input value="<%= (porcentajes.errores_registro_pc * 100).toFixed(0) %>" type="text" class="validate" name = "errores_registro_pc" required><span>%</span>
+                                <input value="<%= (porcentajes.errores_registro_pc * 100).toFixed(0) %>" type="text" class="validate" name = "errores_registro_pc" autocomplete="off" required><span>%</span>
                             </form>
                         </td>
                     </tr>
@@ -60,7 +60,7 @@
                             <form method = "POST" action = "modificar-porcentaje-overhead">
                                 <input type="hidden" name = "_csrf" value = "<%= csrfToken %>">
                                 <input type="hidden" name = "id_capacidad" value = "<%= porcentajes.id_capacidad %>">
-                                <input value="<%= (porcentajes.overhead_pc * 100).toFixed(0) %>" type="text" class="validate" name = "overhead_pc" required><span>%</span>
+                                <input value="<%= (porcentajes.overhead_pc * 100).toFixed(0) %>" type="text" class="validate" name = "overhead_pc" autocomplete="off" required><span>%</span>
                             </form>
                         </td>
                     </tr>
@@ -81,7 +81,7 @@
                             <form method = "POST" action = "modificar-porcentaje-productivas">
                                 <input type="hidden" name = "_csrf" value = "<%= csrfToken %>">
                                 <input type="hidden" name = "id_capacidad" value = "<%= porcentajes.id_capacidad %>">
-                                <input value="<%= (porcentajes.productivas_pc * 100).toFixed(0) %>" type="text" class="validate" name = "productivas_pc" required><span>%</span>
+                                <input value="<%= (porcentajes.productivas_pc * 100).toFixed(0) %>" type="text" class="validate" name = "productivas_pc" autocomplete="off" required><span>%</span>
                             </form>
                         </td>
                     </tr>
@@ -92,7 +92,7 @@
                             <form method = "POST" action = "modificar-porcentaje-operativos">
                                 <input type="hidden" name = "_csrf" value = "<%= csrfToken %>">
                                 <input type="hidden" name = "id_capacidad" value = "<%= porcentajes.id_capacidad %>">
-                                <input value="<%= (porcentajes.operativos_pc * 100).toFixed(0) %>" type="text" class="validate" name = "operativos_pc" required><span>%</span>
+                                <input value="<%= (porcentajes.operativos_pc * 100).toFixed(0) %>" type="text" class="validate" name = "operativos_pc" autocomplete="off" required><span>%</span>
                             </form>
                         </td>
                     </tr>
@@ -103,7 +103,7 @@
                             <form method = "POST" action = "modificar-porcentaje-humano">
                                 <input type="hidden" name = "_csrf" value = "<%= csrfToken %>">
                                 <input type="hidden" name = "id_capacidad" value = "<%= porcentajes.id_capacidad %>">
-                                <input value="<%= (porcentajes.humano_pc * 100).toFixed(0) %>" type="text" class="validate" name = "humano_pc" required><span>%</span>
+                                <input value="<%= (porcentajes.humano_pc * 100).toFixed(0) %>" type="text" class="validate" name = "humano_pc" autocomplete="off" required><span>%</span>
                             </form>
                         </td>
                     </tr>
@@ -114,7 +114,7 @@
                             <form method = "POST" action = "modificar-porcentaje-cmmi">
                                 <input type="hidden" name = "_csrf" value = "<%= csrfToken %>">
                                 <input type="hidden" name = "id_capacidad" value = "<%= porcentajes.id_capacidad %>">
-                                <input value="<%= (porcentajes.cmmi_pc * 100).toFixed(0) %>" type="text" class="validate" name = "cmmi_pc" required><span>%</span>
+                                <input value="<%= (porcentajes.cmmi_pc * 100).toFixed(0) %>" type="text" class="validate" name = "cmmi_pc" autocomplete="off" required><span>%</span>
                             </form>
                         </td>
                     </tr>
@@ -154,7 +154,7 @@
                                 <form method = "POST" action = "modificar-horas-colaborador">
                                     <input type="hidden" name = "_csrf" value = "<%= csrfToken %>">
                                     <input type="hidden" name = "id_empleado" value = "<%= colaborador.id_empleado %>">
-                                    <input value="<%= (colaborador.horas_semanales * 1).toFixed(0) %>" type="text" class="validate" name = "horas" required><span>h</span>
+                                    <input value="<%= (colaborador.horas_semanales * 1).toFixed(0) %>" type="text" class="validate" name = "horas" autocomplete="off" required><span>h</span>
                                 </form>
                             </td>
                             
@@ -172,18 +172,5 @@
 </div>
 <br><br><br>
 
-<script>
-    "<% if (alerta) { %>"
-        alert("<%= alerta %>");
-    "<% } %>"
-
-    function toast(){
-        '<% if (toast) { %>'
-            M.AutoInit(); 
-            M.toast({html: '<%= toast %>', classes: 'blue darken-3'});
-        '<% } %>'
-    }
-    
-</script>
 </main>
-<%- include('includes/closeHTML.ejs'); %>
+<%- include('includes/closeHTMLtoast.ejs'); %>

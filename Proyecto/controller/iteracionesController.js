@@ -7,8 +7,10 @@ const { fetchLastNumIter } = require('../models/iteracion');
 exports.getIteracionesDesarrolloProyecto = async function(request,response){
     const idProyecto = request.session.idProyecto;
     const alerta = request.session.alerta;
+    const toast = request.session.toast;
     request.session.navegacion = 1;
     request.session.alerta = "";
+    request.session.toast = "";
     let iteraciones = await Iteracion.fetchIteracionesDesarrollo(idProyecto, request.session.usuario);
     let proyecto_keys = await Proyecto.fetchAirTableKeys(idProyecto);
     
@@ -27,17 +29,18 @@ exports.getIteracionesDesarrolloProyecto = async function(request,response){
         empleados : empleados[0],
         proyecto_keys : proyecto_keys[0][0],
         alerta : alerta,
+        toast: toast,
         csrfToken: request.csrfToken()
     });
-       
 }
 
 exports.getIteracionesTerminadasProyecto = async function(request,response){
     const idProyecto = request.session.idProyecto;
     const alerta = request.session.alerta;
+    const toast = request.session.toast;
     request.session.navegacion = 1;
     request.session.alerta = "";
-
+    request.session.toast = "";
     let iteraciones = await Iteracion.fetchIteracionesTerminadas(idProyecto, request.session.usuario);
     let proyecto_keys = await Proyecto.fetchAirTableKeys(idProyecto);
 
@@ -56,9 +59,9 @@ exports.getIteracionesTerminadasProyecto = async function(request,response){
         empleados : empleados[0],
         proyecto_keys : proyecto_keys[0][0],
         alerta : alerta,
+        toast: toast,
         csrfToken: request.csrfToken()
     });
-       
 }
 
 exports.postIteracionesProyecto = (request, response) => {
@@ -80,7 +83,9 @@ exports.postChipsIteracionesProyecto = (request,response) =>{
 
 exports.getNuevaIteracion = (request, response) => {
     const alerta = request.session.alerta;
+    const toast = request.session.toast;
     request.session.alerta = "";
+    request.session.toast = "";
     request.session.last = '/proyectos/nueva-iteracion';
 
     Usuario.fetchAll()
@@ -91,6 +96,7 @@ exports.getNuevaIteracion = (request, response) => {
             title: "Crear Iteración",
             empleados: rows,
             alerta : alerta,
+            toast: toast,
             csrfToken: request.csrfToken()
         });
     })
@@ -155,7 +161,7 @@ exports.postNuevaIteracion = async function (request, response){
             request.session.alerta = alerta;
         }
         else{
-            request.session.alerta = "Nueva iteracion creada exitosamente"
+            request.session.toast = "Iteracion creada."
         }
 
         response.redirect("/proyectos/iteraciones-desarrollo-proyecto");
@@ -229,7 +235,7 @@ exports.postEditarIteracion = async function (request, response){
             request.session.alerta = alerta;
         }
         else{
-            request.session.alerta = "Iteración modificada  exitosamente"
+            request.session.toast = "Iteración modificada"
         }
 
         response.redirect("/proyectos/iteraciones-desarrollo-proyecto");
@@ -238,13 +244,13 @@ exports.postEditarIteracion = async function (request, response){
 
 exports.postEliminarIteracion =  async function(request, response){
     await Iteracion.eliminarIteracion(request.body.id_iteracion);
-    request.session.alerta = "Iteración eliminada exitosamente";
+    request.session.toast = "Iteración eliminada";
     response.redirect('/proyectos/iteraciones-desarrollo-proyecto');
 }
 
 exports.postTerminarIteracion = async function(request, response){
     await Iteracion.terminarIteracion(request.session.idIteracion);
-    request.session.alerta = "Iteración terminada exitosamente";
+    request.session.toast = "Iteración terminada";
     response.redirect('/proyectos/iteraciones-desarrollo-proyecto');
 }
 
@@ -257,7 +263,6 @@ exports.postAirTableKeys = async function (request, response){
         maxRecords: 1,
         view: "Global view"
     }).eachPage(function page(records, fetchNextPage) {
-      
         records.forEach(function(record) {
         });
     
@@ -265,15 +270,13 @@ exports.postAirTableKeys = async function (request, response){
     
     },  async function done(err) {
         if (err) { 
-            request.session.alerta = "La base o Apikey de AirTable no es correcta por lo tanto no se registró la nueva configuración";
+            request.session.alerta = "La base o Apikey de AirTable no son correctas, por lo tanto no se registró la nueva configuración";
             response.redirect('/proyectos/iteraciones-desarrollo-proyecto');
             return; 
         }
 
         await Proyecto.saveAirTableKeys(request.body.base, request.body.API_key, request.session.idProyecto);
-        request.session.alerta = "Configuración de AirTable modificada exitosamente";
+        request.session.toast = "AirTable modificado";
         response.redirect('/proyectos/iteraciones-desarrollo-proyecto');
     });
-
-   
 }

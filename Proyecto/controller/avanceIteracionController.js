@@ -9,13 +9,11 @@ let data = [0, 0, 0, 0, 0, 0, 0];
 exports.getAvanceProyecto = async function (request, response) {
     //Jalar datos airtable
     let proyecto_keys = await Proyecto.fetchAirTableKeys( request.session.idProyecto);
-    let toast = "";
 
     data = [0, 0, 0, 0, 0, 0, 0];
 
     if(!proyecto_keys[0][0].base || !proyecto_keys[0][0].API_key){
-        toast = "Define una base de AirTable para ver más datos";
-        fetchAvance(request, response, toast);
+        fetchAvance(request, response, "", "Define una base de AirTable para ver más datos");
     }
     else{
         let num_iter = request.session.numIteracion;
@@ -114,25 +112,22 @@ exports.getAvanceProyecto = async function (request, response) {
         
         },  async function done(err) {
             if (err) {
-                toast = "La base o Apikey de AirTable no es correcta";
                  //console.error(err); 
-                 fetchAvance(request, response, toast);
-                 return;
-                }
-
-           
+                fetchAvance(request, response, "La base o Apikey de AirTable no son correctas", "");
+                return;
+            }
 
             workitemlist.forEach( async function (element) {
                 await Entrega.updateAirtable(element.nombre, element.entrega_real, element.estimacion, element.valor_ganado, element.costo_real, element.estado_entrega);
             });
 
-            fetchAvance(request, response, toast);
+            fetchAvance(request, response, "", "");
             
         });
     }
 }
 
-async function fetchAvance(request, response, toast){
+async function fetchAvance(request, response, alerta, toast){
     request.session.navegacion = 2;
     let iteracion = await Iteracion.fetchOneID(request.session.idIteracion)
     let capacidad = await Capacidad_Equipo.fetchOne(iteracion[0][0].id_capacidad)
@@ -196,7 +191,8 @@ async function fetchAvance(request, response, toast){
         horas_semanales: horas_semanales,
         total_semanas_real: total_semanas_real,
         total_meses_real: total_meses_real,
-        alerta: toast,
+        toast: toast,
+        alerta: alerta,
         tareas_data: data,
         title: "Avance del Proyecto",
         csrfToken: request.csrfToken()

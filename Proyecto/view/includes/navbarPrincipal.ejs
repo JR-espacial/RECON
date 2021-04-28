@@ -18,13 +18,13 @@
     </li>
 
 
-    <li><a class="waves-effect waves-light btn" href="/proyectos/nuevo-proyecto"><i class="material-icons left">add</i>Crear Proyecto</a>
+    <li><a class="waves-effect waves-light white-text btn" href="/proyectos/nuevo-proyecto"><i class="material-icons white-text left">add</i>Crear Proyecto</a>
     <li><div class="divider"></div></li>
     
     <li><a href ="/users/register"  name="action" value="editar">Nuevo usuario <i class="material-icons right">account_circle</i></a></li>
     <li><a data-target="modal_departamento" class="modal-trigger">Nuevo Departamento <i class="material-icons right">business</i></a></li>
 
-    <li class="logout"><a href="/users/logout"><i class="material-icons right">input</i>Salir &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a></li>
+    <li class="logout"><a href="/users/logout"><i class="material-icons right">input</i>Salir</a></li>
     
 </ul>
 
@@ -37,12 +37,12 @@
                 <form action="/proyectos/nuevo-departamento" method="POST">
                     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                     <div class="input-field">
-                        <input type="text" class="validate" maxlength="64" id="nuevo_departamento" name="nuevo_departamento"  required>
+                        <input type="text" class="validate" maxlength="64" id="nuevo_departamento" name="nuevo_departamento" autocomplete="off" required>
                         <label for="nuevo_departamento">Nombre Departamento</label>
                     </div>
                     <br>
                     <br>
-                    <button type="sumbmit" class="waves-effect waves-green btn right">Crear</button>
+                    <button type="sumbmit" class="waves-effect waves-light btn right">Crear</button>
                 </form>
             </div>
         </div>

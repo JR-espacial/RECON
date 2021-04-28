@@ -4,11 +4,11 @@ const Entrega = require('../models/entrega');
 
 exports.postEnviarDatosAirtable = (request, response) => {
     const id_proyecto = request.session.idProyecto;
-    let toast = "";
+
     Proyecto.fetchAirTableKeys(id_proyecto)
         .then(([rows, fielData]) => {
             if(!rows[0].base || !rows[0].API_key){
-                request.session.toast = "Define una base de AirTable para enviar los datos.";
+                request.session.alerta = "Define una base de AirTable para enviar los datos.";
             }
             else{
                 const id_iteracion = request.session.idIteracion;
@@ -34,6 +34,7 @@ exports.postEnviarDatosAirtable = (request, response) => {
                                     ], function(err, records) {
                                         if (err) {
                                             console.error(err);
+                                            request.session.alerta = "Hubo un problema en el envío de datos a partir de: " + rows2[i].nombre + " a AirTable.";
                                             return;
                                         }
                                         records.forEach(function (record) {
@@ -55,6 +56,7 @@ exports.postEnviarDatosAirtable = (request, response) => {
                                     ], function(err, records) {
                                         if (err) {
                                             console.error(err);
+                                            request.session.alerta = "Hubo un problema al actualizar los datos a partir de: " + rows2[i].nombre + " en AirTable.";
                                             return;
                                         }
                                         records.forEach(function (record) {

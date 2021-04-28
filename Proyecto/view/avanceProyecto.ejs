@@ -180,7 +180,6 @@
             valor_ganado_diario.push("<%= costos[i].valor_ganado_diario %>");
             costo_real_diario.push("<%= costos[i].costo_real_diario %>");
             valor_planeado_acumulado.push("<%=velocidad_deseada * (i+1) %>");
-           
             "<% if(i > 0){ %>"
                 valor_ganado_acumulado.push(parseFloat((valor_ganado_acumulado["<%= i-1 %>"] + parseFloat("<%= costos[i].valor_ganado_diario %>")).toFixed(2)));
                 costo_real_acumulado.push(parseFloat((costo_real_acumulado["<%= i-1 %>"] + parseFloat("<%= costos[i].costo_real_diario %>")).toFixed(2)));

@@ -24,22 +24,21 @@
                 
                 <form action="/users/login" method="POST">
                     <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
-                  
                     <div class="row">
                         <div class="input-field col s8 offset-s2 ">
                             <i class="material-icons prefix ">account_circle</i>
-                            <input type="text" name="usuario" placeholder="Nombre de usuario" required>
+                            <input type="text" name="usuario" placeholder="Nombre de usuario" autocomplete="off" required>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s8 offset-s2">
                             <i class="material-icons prefix">lock</i>
-                            <input type="password" name="password" placeholder="Contraseña" required>
+                            <input type="password" name="password" placeholder="Contraseña" autocomplete="off" required>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s8 offset-s5">
-                            <button type="submit" class= "waves-effect waves-green btn login-btn " name="action">Ingresar</button>
+                            <button type="submit" class= "waves-effect waves-light btn login-btn " name="action">Ingresar</button>
                         </div>
                     </div>
                 </form>
