@@ -22,7 +22,7 @@
 
     <li><a href ="/users/register"  name="action" value="editar">Nuevo usuario <i class="material-icons right">account_circle</i></a></li>
     <li><a data-target="modal_departamento" class="modal-trigger">Nuevo Departamento <i class="material-icons right">business</i></a></li>
-
+    <li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li>
     <li class="logout"><a href="/users/logout"><i class="material-icons right">input</i>Salir</a></li>
     
 </ul>
@@ -47,32 +47,6 @@
         </div>
     </div>
 </div>
-
-<!-- <tr class="modal-trigger" data-target="modal_usuarioE">
-    <td>Eliminar Usuario<i class="material-icons right ">chevron_right</i></td>
-</tr>
-<div id="modal_usuarioE" class="modal col s4 ">
-    <div class="row">
-        <div class="modal-content col s7 offset-s2">
-            <h5>Eliminar Usuario</h5>
-            <br>
-            <form action="/users/eliminar-usuario" method="POST">
-                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                <div class="input-field">
-                    <select name="usuario" class="browser-default" required>
-                        <option value="" disabled selected>Selecciona un Usuario*</option>
-                        <% for (let usuario of users) { %>
-                            <option value="<%= usuario.id_empleado %>"><%= usuario.usuario %></option>
-                        <% } %>
-                    </select>
-                </div>
-                <br>
-                <br>
-                <button type="sumbmit" class="red btn right">Eliminar</button>
-            </form>
-        </div>
-    </div>
-</div> -->
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
