@@ -4,13 +4,14 @@ const Capacidad_Equipo = require('../models/capacidad_equipo');
 const Entrega = require('../models/entrega');
 const Airtable = require('airtable');
 
-const data = [0, 0, 0, 0, 0, 0];
 
+let data = [0, 0, 0, 0, 0, 0, 0];
 exports.getAvanceProyecto = async function (request, response) {
     //Jalar datos airtable
-    
     let proyecto_keys = await Proyecto.fetchAirTableKeys( request.session.idProyecto);
     let toast = "";
+
+    data = [0, 0, 0, 0, 0, 0, 0];
 
     if(!proyecto_keys[0][0].base || !proyecto_keys[0][0].API_key){
         toast = "Define una base de AirTable para ver más datos";
@@ -94,8 +95,11 @@ exports.getAvanceProyecto = async function (request, response) {
                         case 'Waiting for Review': 
                             data[4] = data[4] + 1;
                             break;
-                        default: 
+                        case 'On Hold': 
                             data[5] = data[5] + 1;
+                            break;
+                        default: 
+                            data[6] = data[6] + 1;
                             break;
                     }
                     
