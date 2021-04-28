@@ -13,7 +13,7 @@ INSERT INTO `puntos_agiles` (`id_ap`, `ap`) VALUES(3, 3);
 INSERT INTO `puntos_agiles` (`id_ap`, `ap`) VALUES(4, 5);
 INSERT INTO `puntos_agiles` (`id_ap`, `ap`) VALUES(5, 8);
 INSERT INTO `puntos_agiles` (`id_ap`, `ap`) VALUES(6, 13);
-INSERT INTO `puntos_agiles` (`id_ap`, `ap`) VALUES(7, -1);
+INSERT INTO `puntos_agiles` (`id_ap`, `ap`) VALUES(7, 0);
 
 INSERT INTO `capacidad_equipo` (`id_capacidad`, `horas_productivas`, `tiempo_perdido_pc`, `errores_registro_pc`, `overhead_pc`, `productivas_pc`, `operativos_pc`, `humano_pc`, `cmmi_pc`) VALUES(0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `capacidad_equipo` (`id_capacidad`, `horas_productivas`, `tiempo_perdido_pc`, `errores_registro_pc`, `overhead_pc`, `productivas_pc`, `operativos_pc`, `humano_pc`, `cmmi_pc`) VALUES(1, '20.00', '0.10', '0.20', '0.30', '0.40', '0.50', '0.60', '0.70');
