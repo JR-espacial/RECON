@@ -2,6 +2,10 @@
     background-color: #f8f8f8;
 }
 
+.background{
+    background-color: rgb(56, 56, 56);;
+}
+
 #contenedor_colaboradores{
     border: 100px !important;
     border-color: rgb(56, 56, 56);
