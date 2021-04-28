@@ -86,3 +86,14 @@
 .tabla_cu td:nth-child(8) {
     width:8%;
 }
+
+.boton_eliminar{
+    padding: 0 0px;
+    line-height: 0;
+    width: 100%;
+    padding-top: 8px;
+}
+
+.boton_eliminar i{
+    font-size: 2rem;
+}

@@ -40,7 +40,7 @@ a{
 
 #fasesVert{
     background-color: white;
-    overflow-y: scroll;
+    overflow-y: hidden;
     overflow-x: hidden;
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
@@ -145,10 +145,10 @@ a{
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
-#fases::-webkit-scrollbar {
+/* #fases::-webkit-scrollbar {
     display: none;
 }
 
 #fasesVert::-webkit-scrollbar {
     display: none;
-}
+} */

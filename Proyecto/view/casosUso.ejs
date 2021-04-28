@@ -9,15 +9,15 @@
     <form class="col s10 offset-s1" action="casos-uso-iteracion" method="POST">
       <div class="row">
         <div class="input-field col 1">
-          <input id="yo_como" name="yo_como" type="text" class="validate" maxlength="64" required>
+          <input id="yo_como" name="yo_como" type="text" class="validate" maxlength="64" autocomplete="off" required>
           <label for="yo_como">Yo como</label>
         </div>
         <div class="input-field col 1">
-            <input id="quiero" name="quiero" type="text" class="validate" maxlength="255" required>
+            <input id="quiero" name="quiero" type="text" class="validate" maxlength="255" autocomplete="off" required>
             <label for="quiero">quiero</label>
         </div>
         <div class="input-field col 1">
-            <input id="para" name="para" type="text" class="validate" maxlength="255">
+            <input id="para" name="para" type="text" class="validate" maxlength="255" autocomplete="off">
             <label for="para">para</label>
         </div>
         <div class="input-field col 1">
@@ -62,7 +62,7 @@
               <td><%= caso.yo_como %></td>
               <td><%= caso.quiero %></td>
               <td><%= caso.para %></td>
-              <td> &nbsp;&nbsp;<%= caso.ap %></td>
+              <td>&nbsp;&nbsp;<%= caso.ap %></td>
               
               <!-- Botones -->                
               <!-- Modificar -->
@@ -75,11 +75,11 @@
                       <div class="row">
                         <h4>Editar</h4>
                         <div class="input-field col 1">
-                          <input id="yo_como" name="yo_como" type="text" class="validate" maxlength="64" value="<%= caso.yo_como %>">
+                          <input id="yo_como" name="yo_como" type="text" class="validate" maxlength="64" value="<%= caso.yo_como %>" autocomplete="off" required>
                           <label for="yo_como">Yo como</label>
                         </div>
                         <div class="input-field col 1">
-                          <input id="quiero" name="quiero" type="text" class="validate" maxlength="255" value="<%= caso.quiero %>">
+                          <input id="quiero" name="quiero" type="text" class="validate" maxlength="255" value="<%= caso.quiero %>" autocomplete="off" required>
                           <label for="quiero">quiero</label>
                         </div>
                         <div class="input-field col 1">
@@ -89,7 +89,7 @@
                               placeHolder = "No hay para"; 
                               valorPara = "";
                             } %> 
-                          <input placeholder="<%= placeHolder %>" id="para" name="para" type="text" class="validate"  maxlength="255" value="<%= valorPara %>">
+                          <input id="para" name="para" type="text" class="validate"  maxlength="255" value="<%= valorPara %>" autocomplete="off">
                           <label for="para">para</label>
                         </div>
                         <div class="input-field col 1">
@@ -105,7 +105,7 @@
                           </select>
                         </div>
                       </div>
-                      <input id="comentario" name="comentario" type="text" class="validate" maxlength="255" value="<%= caso.comentario %>" >
+                      <input id="comentario" name="comentario" type="text" class="validate" maxlength="255" value="<%= caso.comentario %>" autocomplete="off">
                       <label for="comentario">Comentario</label>
                     </div>
                     
@@ -116,8 +116,8 @@
 
                     <!-- Botones de aceptar y cancelar -->
                     <div class="modal-footer">
-                      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
-                      <button type="submit" class="modal-close waves-effect waves-green btn-flat" name="action" value="editar">Aceptar</button>  
+                      <a href="#!" class="modal-close waves-effect waves-light btn-flat">Cancelar</a>
+                      <button type="submit" class="waves-effect waves-light btn-flat" name="action" value="editar">Aceptar</button>  
                     </div>
                   </form>
                 </div>
@@ -135,7 +135,7 @@
                 <form id="forma_eliminar_<%= caso.id_casos %>" action="casos-uso-iteracion" method="POST">
                   <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                   <input type="hidden" name="idCaso" value="<%= caso.id_casos %>">
-                  <button name="action" value="eliminar" type="submit"><i class="small material-icons">delete</i></button>
+                  <button class="boton_eliminar waves-effect waves-red black-text btn-flat" name="action" value="eliminar" type="submit"><i class="small material-icons">delete</i></button>
                   <script> 
                     document.getElementById("forma_eliminar_<%= caso.id_casos %>").addEventListener('submit', (e) => {
                       let confirmacion = confirm('¿Estás seguro de eliminar el caso de uso?');
