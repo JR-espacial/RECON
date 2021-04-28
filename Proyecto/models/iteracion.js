@@ -12,7 +12,7 @@ module.exports =  class Iteracion{
     }
 
     saveIteracion(){ 
-        return db.execute('INSERT INTO iteracion (id_proyecto, id_capacidad, num_iteracion, descripcion, fecha_inicio, fecha_fin, estado_iteracion, iteracion_terminada, total_min_real, total_min_maximo) VALUES (?, ?, ?, ?, ?, ?, ?, 0, NULL, NULL);',
+        return db.execute('INSERT INTO iteracion (id_proyecto, id_capacidad, num_iteracion, descripcion, fecha_inicio, fecha_fin, estado_iteracion, iteracion_terminada, total_min_real) VALUES (?, ?, ?, ?, ?, ?, ?, 0, NULL);',
         [this.id_proyecto, this.id_capacidad, this.num_iteracion, this.descripcion, this.fecha_inicio, this.fecha_fin, this.estado_iteracion]);
     }
 
