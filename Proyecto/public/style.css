@@ -107,6 +107,7 @@ div#modal5 {
 .logout{
     position:fixed;
     width: 100%;
+    bottom: 10%;
 }
 
 .modal_edit{

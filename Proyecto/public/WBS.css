@@ -30,7 +30,7 @@ a{
 #fases{
     background-color: #f8f8f8;
     overflow-x: scroll;
-    overflow-y: scroll;
+    overflow-y: hidden;
     white-space: nowrap;
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
