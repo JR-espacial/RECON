@@ -26,7 +26,7 @@ module.exports =  class Casos_Uso{
     }
 
     static fetchQuiero (idIteracion) {
-        return db.execute('SELECT id_casos, id_iteracion, numero_cu, quiero FROM casos_uso WHERE id_iteracion=? ORDER BY id_casos DESC;', 
+        return db.execute('SELECT id_casos, id_iteracion, numero_cu, quiero, real_minutos FROM casos_uso WHERE id_iteracion=? ORDER BY id_casos DESC;', 
         [idIteracion]);
     }
 
@@ -42,6 +42,10 @@ module.exports =  class Casos_Uso{
     static ModifyCaso(idCaso, idAp, yo_como, quiero, para, comentario) {
         return db.execute('UPDATE casos_uso SET id_ap=?, yo_como=?, quiero=?, para=?, comentario=? WHERE id_casos=?;', 
         [idAp, yo_como, quiero, para, comentario, idCaso]);
+    }
+
+    static compruebaExistencia (id_casos) {
+        return db.execute('SELECT id_casos FROM entrega WHERE id_casos=?', [id_casos]);
     }
  
     static DropEntreCaso(idCaso) {
