@@ -21,7 +21,7 @@ module.exports =  class Casos_Uso{
     }
 
     static fetchAllIteracion(idIteracion) {
-        return db.execute('SELECT id_casos, numero_cu, casos_uso.id_ap, yo_como, quiero, para, ap, comentario FROM casos_uso, puntos_agiles WHERE casos_uso.id_iteracion=? AND casos_uso.id_ap = puntos_agiles.id_ap ORDER BY id_casos DESC;', 
+        return db.execute('SELECT id_casos, numero_cu, casos_uso.id_ap, yo_como, quiero, para, ap, comentario, porcentaje_avance * 100 FROM casos_uso, puntos_agiles WHERE casos_uso.id_iteracion=? AND casos_uso.id_ap = puntos_agiles.id_ap ORDER BY id_casos DESC;', 
         [idIteracion]);
     }
 
