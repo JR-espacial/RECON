@@ -44,7 +44,7 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="input-field col s12">
-                                                        <input  id="descripcion_proyecto" name="descripcion" maxlength="1000" type="text" class="validate" value = "<%=iteracion.descripcion%>">
+                                                        <input  id="descripcion_proyecto" name="descripcion" maxlength="1000" type="text" class="validate" value = "<%=iteracion.descripcion%>" autocomplete="off">
                                                         <label for="descripcion_proyecto">Descripcion de la iteracion</label>
                                                     </div>
                                                 </div>
@@ -68,7 +68,7 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col s12 offset s2">
-                                                        <button type="submit" class="waves-effect waves-green right btn" name="action" value="editar">Modificar</button>
+                                                        <button type="submit" class="waves-effect waves-light right btn" name="action" value="editar">Modificar</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -87,12 +87,12 @@
                                     </form>
                                 </div>
                             <ul id='dropdown1_<%= iteracion.num_iteracion %>' class='dropdown-content'>
-                                <li><a data-target="modal1_<%= iteracion.id_iteracion %>" class="boton_dropdown modal-trigger" onclick='loadChips("<%= iteracion.id_iteracion %>")'><i class="material-icons right">mode_edit</i></a></li>
+                                <li><a data-target="modal1_<%= iteracion.id_iteracion %>" class="modal-trigger waves-effect waves-light" onclick='loadChips("<%= iteracion.id_iteracion %>")'><i class="small material-icons right">mode_edit</i></a></li>
                                 <li>
                                     <form action="/proyectos/eliminar-iteracion" method="POST" id="eliminar_<%= iteracion.id_iteracion %>">
                                         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                                         <input type="hidden" name="id_iteracion" value="<%= iteracion.id_iteracion %>">
-                                        <button type="submit" class="boton_dropdown waves-effect waves-green btn-flat"><i class="material-icons">delete</i></button>
+                                        <button type="submit" class="boton_dropdown waves-effect waves-red black-text btn-flat"><i class="material-icons">delete</i></button>
                                         <script> 
                                             document.getElementById("eliminar_<%= iteracion.id_iteracion %>").addEventListener('submit', (e) => {
                                             let confirmacion = confirm('¿Estás seguro de eliminar la iteración?');

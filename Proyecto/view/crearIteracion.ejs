@@ -1,15 +1,10 @@
-<%- include('includes/openHTML.ejs'); %>
+<%- include('includes/openHTMLtoast.ejs'); %>
 
 <a class=" white btn black-text"  href="/proyectos/iteraciones-desarrollo-proyecto"> <i class="material-icons prefix">chevron_left</i></a>
 
-<% if (alerta) { %>
-    <script>alert("<%= alerta %>");</script>
-<% } %> 
-
 <div class="row center-align">
     <div class="col s6 offset-s3">
-        <h4>Crear Iteración</h4>
-   
+        <h4>Crear Iteracion</h4>
     </div>
 </div>
 
@@ -20,7 +15,7 @@
             <input type="hidden" name="colaboradores" value="" id="myInputField" required>
             <div class="row">
                 <div class="input-field col s6">
-                    <input  id="descripcion_proyecto" maxlength="1000" name="descripcion" type="text" class="validate">
+                    <input  id="descripcion_proyecto" maxlength="1000" name="descripcion" type="text" class="validate" autocomplete="off">
                     <label for="descripcion_proyecto">Descripción de la iteración</label>
                 </div>
             </div>
@@ -54,7 +49,6 @@
 
 
 <script>
-   
     document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('.chips-autocomplete');
 
@@ -93,8 +87,7 @@
         format:'yyyy-mm-dd'
         });
     });
-   
 
 </script>
 
-<%- include('includes/closeHTML.ejs'); %>   
+<%- include('includes/closeHTMLtoast.ejs'); %>   

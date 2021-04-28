@@ -57,7 +57,6 @@
         estado_iteracion BIT,
         iteracion_terminada BIT,
         total_min_real DECIMAL(5,1),
-        total_min_maximo DECIMAL(5,1),
         PRIMARY KEY(id_iteracion),
         FOREIGN KEY(id_proyecto) REFERENCES proyecto(id_proyecto),
         FOREIGN KEY(id_capacidad) REFERENCES capacidad_equipo(id_capacidad)
@@ -80,7 +79,7 @@
 
     CREATE TABLE empleado (
         id_empleado INT AUTO_INCREMENT NOT NULL,
-        usuario VARCHAR(14),
+        usuario VARCHAR(15),
         correo VARCHAR(50),
         contrasena VARCHAR(100),
         nombre_empleado VARCHAR(64),
@@ -158,7 +157,6 @@
         para VARCHAR(255), 
         comentario VARCHAR(255), 
         real_minutos DECIMAL(5,1),
-        max_minutos_caso_uso DECIMAL(5,1),
         porcentaje_avance DECIMAL(3, 2), 
         PRIMARY KEY(id_casos), 
         FOREIGN KEY(id_ap) REFERENCES puntos_agiles(id_ap), 
@@ -183,8 +181,9 @@
         FOREIGN KEY(id_casos) REFERENCES casos_uso(id_casos)
     );
 
-    DROP TRIGGER IF EXISTS set_current_date_proyecto;
     DELIMITER //
+
+    DROP TRIGGER IF EXISTS set_current_date_proyecto;
     CREATE TRIGGER set_current_date_proyecto BEFORE INSERT ON proyecto
     FOR EACH ROW
     BEGIN
@@ -192,7 +191,6 @@
     END //
 
     DROP PROCEDURE IF EXISTS set_horas_productivas;
-    DELIMITER //
     CREATE PROCEDURE set_horas_productivas(
         IN SP_id_capacidad INT,
         IN SP_id_iteracion INT
@@ -209,7 +207,6 @@
 
 
     DROP PROCEDURE IF EXISTS elimina_tarea;
-    DELIMITER //
     CREATE PROCEDURE elimina_tarea(
         IN SPid_proyecto INT,
         IN SPid_fase INT,
@@ -223,7 +220,6 @@
 
 
     DROP PROCEDURE IF EXISTS elimina_fase;
-    DELIMITER //
     CREATE PROCEDURE elimina_fase(
         IN SPid_proyecto INT,
         IN SPid_fase INT
@@ -235,7 +231,6 @@
   	END //
 
     DROP TRIGGER IF EXISTS campos_promedios;
-    DELIMITER //
     CREATE TRIGGER campos_promedios AFTER INSERT ON proyecto_fase_tarea
     FOR EACH ROW
     BEGIN
@@ -253,7 +248,6 @@
 
 
     DROP TRIGGER IF EXISTS ap_empleados_1;
-    DELIMITER //
     CREATE TRIGGER ap_empleados_1 AFTER INSERT ON proyecto_fase_tarea
     FOR EACH ROW
     BEGIN
@@ -265,7 +259,6 @@
     END //
 
     DROP TRIGGER IF EXISTS ap_empleados_2;
-    DELIMITER //
     CREATE TRIGGER ap_empleados_2 AFTER INSERT ON proyecto_fase_tarea
     FOR EACH ROW
     BEGIN
@@ -277,7 +270,6 @@
     END //
 
     DROP TRIGGER IF EXISTS ap_empleados_3;
-    DELIMITER //
     CREATE TRIGGER ap_empleados_3 AFTER INSERT ON proyecto_fase_tarea
     FOR EACH ROW
     BEGIN
@@ -289,7 +281,6 @@
     END //
 
     DROP TRIGGER IF EXISTS ap_empleados_4;
-    DELIMITER //
     CREATE TRIGGER ap_empleados_4 AFTER INSERT ON proyecto_fase_tarea
     FOR EACH ROW
     BEGIN
@@ -301,7 +292,6 @@
     END //
 
     DROP TRIGGER IF EXISTS ap_empleados_5;
-    DELIMITER //
     CREATE TRIGGER ap_empleados_5 AFTER INSERT ON proyecto_fase_tarea
     FOR EACH ROW
     BEGIN
@@ -313,7 +303,6 @@
     END //
 
     DROP TRIGGER IF EXISTS ap_empleados_6;
-    DELIMITER //
     CREATE TRIGGER ap_empleados_6 AFTER INSERT ON proyecto_fase_tarea
     FOR EACH ROW
     BEGIN
@@ -325,7 +314,6 @@
     END //
 
     DROP TRIGGER IF EXISTS set_nombre_estimacion;
-    DELIMITER //
     CREATE TRIGGER set_nombre_estimacion BEFORE INSERT ON entrega
     FOR EACH ROW
     BEGIN
@@ -345,11 +333,10 @@
     END //
 
     DROP TRIGGER IF EXISTS actualizar_nombre_estimacion;
-    DELIMITER //
     CREATE TRIGGER actualizar_nombre_estimacion AFTER UPDATE ON casos_uso
     FOR EACH ROW
     BEGIN
-        IF OLD.quiero <> NEW.quiero THEN
+        IF (OLD.quiero <> NEW.quiero) THEN
             UPDATE entrega E SET E.nombre =
             CONCAT("IT",
                 (SELECT num_iteracion FROM iteracion I WHERE I.id_iteracion = NEW.id_iteracion),
@@ -368,7 +355,6 @@
 
 
     DROP PROCEDURE IF EXISTS actualiza_tiempos;
-    DELIMITER //
     CREATE PROCEDURE actualiza_tiempos(
         IN idProyecto INT,
         IN idEmpleado INT,
@@ -395,7 +381,6 @@
   	END //
 
     DROP PROCEDURE IF EXISTS actualiza_con_check;
-   	DELIMITER //
     CREATE PROCEDURE actualiza_con_check(
         IN idCasos INT
     )

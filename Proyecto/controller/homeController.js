@@ -60,7 +60,7 @@ exports.postEditarProyecto = (request, response) => {
                 .then(() => {
                     Proyecto.modificarProyectoDepto(id_departamento, id_proyecto)
                         .then(() => {
-                            request.session.alerta = "Proyecto modificado exitosamente";
+                            request.session.toast = "Proyecto modificado.";
                             response.redirect('/home');
                         })
                         .catch(err => {
@@ -72,7 +72,7 @@ exports.postEditarProyecto = (request, response) => {
                 });
             }
             else {
-                request.session.alerta = "Error: ya existe un proyecto con este nombre";
+                request.session.alerta = "Ya existe un proyecto con este nombre";
                 response.redirect('/home');
             }
         })
@@ -85,7 +85,7 @@ exports.postEliminarProyecto = (request, response) => {
     const id_proyecto = request.body.id_proyecto;
     Proyecto.eliminarProyecto(id_proyecto)
     .then(() => {
-        request.session.alerta = "Proyecto eliminado exitosamente";
+        request.session.toast = "Proyecto eliminado.";
         response.redirect('/home');
     })
     .catch(err => {

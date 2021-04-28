@@ -10,8 +10,9 @@ exports.getTareaCasoUso = (request, response) =>{
     const id_iteracion = request.session.idIteracion;
 
     let toast = request.session.toast;
+    let alerta = request.session.alerta;
     request.session.toast = "";
-    
+    request.session.alerta = "";
     // Quiero (Casos de Uso)
     Casos_Uso.fetchQuiero(id_iteracion)
         .then(([rowsQ, fieldData]) => {
@@ -28,6 +29,7 @@ exports.getTareaCasoUso = (request, response) =>{
                         lista_quiero: rowsQ, 
                         lista_tareas: rowsPFT,
                         toast: toast,
+                        alerta: alerta,
                         csrfToken: request.csrfToken()
                     });
                 })
@@ -110,7 +112,7 @@ exports.postModificarAsocioacion = (request, response) => {
                                 .catch( err => console.log(err));
                         }
                         else {
-                            request.session.toast = "No se puede eliminar la asociación, registra la base de Airtable correctamente para poder eliminarla.";
+                            request.session.alerta = "No se puede eliminar la asociación, registra la base de Airtable correctamente para poder eliminarla.";
                         }
                     })
                     .catch(err => {

@@ -97,13 +97,7 @@
     </div>
     
     <script>
-        function toast(){
-            '<% if (toast) { %>'
-                M.AutoInit(); 
-                M.toast({html: '<%= toast %>', classes: 'blue darken-3'});
-            '<% } %>'
-        }
-        
+
         let casoactual = ""; 
         function obtenerTareas(idcaso) {
             casoactual = idcaso;
@@ -190,4 +184,4 @@
     </script>
 </main>
 
-<%- include('includes/closeHTML.ejs'); %>
+<%- include('includes/closeHTMLtoast.ejs'); %>

@@ -22,7 +22,7 @@ exports.postNuevoDepartamento =(request,response)=>{
                 const nuevo_departamento = new Departamento(request.body.nuevo_departamento);
                 nuevo_departamento.saveDepartamento()
                 .then(() => {
-                    request.session.toast = "Nuevo departamento creado exitosamente";
+                    request.session.toast = "Departamento registrado";
                     response.redirect('/home');
                 }).catch(err => console.log(err));
             }
@@ -30,14 +30,6 @@ exports.postNuevoDepartamento =(request,response)=>{
         .catch(err => {
             console.log(err);
         });
-}
-exports.postEliminarDepartamento =(request,response)=>{
-    (request.body.departamento)
-    .then(() => {
-        request.session.toast = "Nuevo departamento creado exitosamente";
-        response.redirect('/users/settings');
-    }).catch(err => console.log(err));
-
 }
 
 exports.getNuevoProyecto = (request, response) => {
@@ -99,11 +91,11 @@ exports.postNuevoProyecto = async function (request, response) {
         const fetchOneUsuario =  await Usuario.fetchOne(request.session.usuario);
         await Iteracion.saveColaborador(fetchOneUsuario[0][0].id_empleado, fetchOneIteracion[0][0].id_iteracion);
 
-        request.session.toast = "Proyecto creado exitosamente";
+        request.session.toast = "Proyecto creado";
         response.redirect(last);
     }
     else {
-        request.session.error = "Ya hay un proyecto con ese nombre";
+        request.session.error = "Ya hay un proyecto con dicho nombre";
         response.redirect('/proyectos/nuevo-proyecto');
     }
 }

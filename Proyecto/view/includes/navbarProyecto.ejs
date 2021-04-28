@@ -16,7 +16,7 @@
     </li>
     
     
-    <li><a class="waves-effect waves-light btn" href="/proyectos/nueva-iteracion"><i class="white-text material-icons left">add</i>Crear Iteracion</a>
+    <li><a class="waves-effect waves-light btn" href="/proyectos/nueva-iteracion"><i class="material-icons white-text left">add</i>Crear Iteracion</a>
     <li id="iteraciones"><a class="waves-effect" href="/proyectos/iteraciones-desarrollo-proyecto">Iteraciones<i class="material-icons right">layers</i></a></li>
     <li><div class="divider"></div></li>
     
@@ -27,7 +27,7 @@
     <li><a data-target="modalAirTable" class="modal-trigger">AirTable<i class="material-icons right">cloud_queue</i></a></li>
     
 
-    <li class="logout"><a href="/users/logout"><i class="material-icons right right-logout">input</i>Salir &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a></li>
+    <li class="logout"><a href="/users/logout"><i class="material-icons right right-logout">input</i>Salir</a></li>
     
 </ul>
 
@@ -38,32 +38,29 @@
                 <h6><strong>Configuración AirTable</strong></h6>
             </div>
         </div>
-      <form action="/proyectos/configuracion-AirTable" method="POST">
+        <form action="/proyectos/configuracion-AirTable" method="POST">
         <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
         <div class="row">
             <div class="input-field col s7 offset-s3">
-                <input id="Base" type="text" class="validate" maxlength="50" name="base" value="<%= proyecto_keys.base %>" required>
+                <input id="Base" type="text" class="validate" maxlength="50" name="base" value="<%= proyecto_keys.base %>" autocomplete="off" required>
                 <label for="Base" >Base</label>
             </div>
         </div>
         <div class="row">
             <div class="input-field col s7 offset-s3 ">
-                <input id="User API Key" type="text" class="validate"  maxlength="50" name="API_key" value="<%= proyecto_keys.API_key %>" required>
+                <input id="User API Key" type="text" class="validate"  maxlength="50" name="API_key" value="<%= proyecto_keys.API_key %>" autocomplete="off" required>
                 <label for="User API Key" >Llave API de Usuario</label>
             </div>
         </div>
 
         <div class="row">
             <div class="col s11 ">
-                <button type="submit" class="waves-effect waves-green btn right" name="action" value="editar">Aceptar</button>
+                <button type="submit" class="waves-effect waves-light btn right" name="action" value="editar">Aceptar</button>
             </div>
         </div>
-       
-        
-        
     </form>
     </div>
-  </div>
+</div>
 
 <!-- <%- include('breadcrumbs.ejs'); %> -->
 

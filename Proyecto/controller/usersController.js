@@ -57,6 +57,8 @@ exports.getLogout = (request, response, next) => {
 exports.getRegister = (request, response, next) => {
     let alerta = request.session.alerta;
     request.session.alerta = "";
+    let toast = request.session.toast;
+    request.session.toast = "";
     let error = request.session.error;
     request.session.error = "";
     response.render('registrar', {
@@ -64,6 +66,7 @@ exports.getRegister = (request, response, next) => {
         user: request.session.usuario,
         error: error,
         alerta: alerta,
+        toast: toast,
         title: 'Registra tus datos',
         csrfToken: request.csrfToken(),
         isLoggedIn: request.session.isLoggedIn === true ? true : false
@@ -102,7 +105,7 @@ exports.postRegister = (request, response, next) => {
                 const nuevo_usuario = new Usuario(request.body.nombre, request.body.usuario, request.body.correo,request.body.password , image_file_name);
                 nuevo_usuario.save()
                     .then(() => {
-                        request.session.alerta = "Usuario registrado exitosamente";
+                        request.session.toast = "Usuario registrado";
                         response.redirect('/users/register');
                     }).catch(err => console.log(err));
             }
@@ -113,7 +116,7 @@ exports.postRegister = (request, response, next) => {
                     mensaje = "La contraseña debe tener al menos 8 caracteres";
                 }
                 else if(error[0] == 'max'){
-                    mensaje = "La contraseña debe tener máximo caracteres";
+                    mensaje = "La contraseña debe tener máximo 100 caracteres";
                     
                 }
                 else if(error[0] == 'uppercase'){
@@ -178,14 +181,14 @@ exports.postSettings = (request, response) => {
         let image = request.file;
 
         if(!image) {
-            request.session.toast = "Error al subir imagen";
+            request.session.alert = "Imagen no se subió.";
             response.redirect('/users/settings');
         }
         else{
             Usuario.updateImagen(image.filename,id_empleado)
             .then(() => {
-                request.session.toast = "Imagen modificada exitosamente";
-                request.session.imagen_empleado =image.filename;
+                request.session.toast = "Imagen modificada";
+                request.session.imagen_empleado = image.filename;
                 response.redirect('/users/settings');
             }).catch(err => console.log(err));
         }
@@ -194,7 +197,7 @@ exports.postSettings = (request, response) => {
         let nombre= request.body.nombre;
         Usuario.updateNombre(nombre,id_empleado)
             .then(() => {
-                request.session.toast = "Nombre modificado exitosamente";
+                request.session.toast = "Nombre modificado";
                 response.redirect('/users/settings');
             }).catch(err => console.log(err));
     }
@@ -210,7 +213,7 @@ exports.postSettings = (request, response) => {
                 Usuario.updateUsuario(usuario,id_empleado)
                 .then(() => {
                     request.session.usuario = usuario;
-                    request.session.toast = "Usuario modificado exitosamente";
+                    request.session.toast = "Usuario modificado";
                     response.redirect('/users/settings');
                 }).catch(err => console.log(err));
             }
@@ -224,7 +227,7 @@ exports.postSettings = (request, response) => {
         Usuario.updateCorreo(correo,id_empleado)
         .then(() => {
             request.session.correo = correo;
-            request.session.toast = "Correo modificado exitosamente";
+            request.session.toast = "Correo modificado";
             response.redirect('/users/settings');
         }).catch(err => console.log(err));
 
@@ -252,7 +255,7 @@ exports.postSettings = (request, response) => {
                             if(schema.validate(nuevo_password)){
                                 Usuario.updateContrasena(nuevo_password,id_empleado)
                                 .then(() => {
-                                request.session.toast = "Contraseña modificado exitosamente";
+                                request.session.toast = "Contraseña modificada";
                                 response.redirect('/users/settings');
                                 }).catch(err => console.log(err));
                             }
@@ -263,7 +266,7 @@ exports.postSettings = (request, response) => {
                                     mensaje = "La nueva contraseña debe tener al menos 8 caracteres";
                                 }
                                 else if(error[0] == 'max'){
-                                    mensaje = "La nueva contraseña debe tener máximo caracteres";
+                                    mensaje = "La nueva contraseña debe tener máximo 100 caracteres";
                                     
                                 }
                                 else if(error[0] == 'uppercase'){
@@ -285,19 +288,17 @@ exports.postSettings = (request, response) => {
                                     mensaje = "La nueva contraseña no debe contener espacios";
                                     
                                 }
-
-                                request.session.alerta = mensaje;
                                 request.session.error = mensaje;
                                 response.redirect('/users/settings');
                                 
                             }  
                         }
                         else{
-                            request.session.alerta = "La antigua contraseña no es correcta";
+                            request.session.alerta = "La contraseña no coincide con la ingresada.";
                             response.redirect('/users/settings');
                         }
                     }).catch(err => {
-                        request.session.alerta = "La antigua contraseña no es correcta";
+                        request.session.alerta = "La contraseña no es correcta";
                         response.redirect('/users/settings');
                     });
             })
@@ -316,7 +317,7 @@ exports.postEliminarUsuario = async function(request,response){
     await Usuario.eliminarEmpleadoIteracion(request.body.usuario);
     await Usuario.eliminarEmpleado(request.body.usuario);
 
-    request.session.alerta = "Usuario eliminado";
+    request.session.toast = "Usuario eliminado";
     response.redirect('/users/settings');
 
 }
