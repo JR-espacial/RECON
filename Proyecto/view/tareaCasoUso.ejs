@@ -31,7 +31,7 @@
             <% if(lista_quiero.length !== 0) { %>
                 <!-- Quiero -->
                     <div class="col s5">
-                        <table class="tabla_tareas_cu">
+                        <table class="tabla_tareas_cu z-depth-3">
                             <thead> 
                                 <tr>
                                     <th></th>
@@ -66,7 +66,7 @@
                                 <!-- Si va empezando o cambia de fase  -->
                                 if(tarea === 0 || lista_tareas[tarea].nombre_fase !== lista_tareas[tarea - 1].nombre_fase){ %>
                                     <!-- Empieza bloque de la fase -->
-                                    <div id="faseVert" class="center-align">
+                                    <div id="faseVert" class="center-align hoverable ">
                                         <!-- Título de la fase -->
                                         <div id="titulo-fase">
                                             <span class=""> <%= lista_tareas[tarea].nombre_fase %>: </span>
