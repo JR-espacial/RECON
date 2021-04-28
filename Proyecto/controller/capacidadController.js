@@ -45,7 +45,7 @@ exports.postModificarHorasColaborador = (request, response) => {
     const horas = request.body.horas;
 
     if (horas > 40) {
-        request.session.alerta = "El número de horas semanales excede el máximo.";
+        request.session.alerta = "El número de horas semanales excede el máximo de 40.";
         response.redirect('capacidad-equipo');
     }
     else {
