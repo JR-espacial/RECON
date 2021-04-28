@@ -232,6 +232,8 @@
     DELETE FROM proyecto_fase_tarea WHERE id_proyecto = SPid_proyecto AND id_fase = SPid_fase;
   	END //
 
+    --                  CREACION DE UNA TAREA 
+    -- Trigger para crear campos de promedio de un ap cuando se crea una tarea
     DROP TRIGGER IF EXISTS campos_promedios;
     DELIMITER //
     CREATE TRIGGER campos_promedios AFTER INSERT ON proyecto_fase_tarea
@@ -249,7 +251,7 @@
         END IF;
     END //
 
-
+    -- Triggers para crear registro de ap para un empleado cuando se crea una tarea
     DROP TRIGGER IF EXISTS ap_empleados_1;
     DELIMITER //
     CREATE TRIGGER ap_empleados_1 AFTER INSERT ON proyecto_fase_tarea
@@ -321,7 +323,7 @@
             FROM empleado_iteracion as EI, iteracion as I WHERE I.id_proyecto = NEW.id_proyecto AND EI.id_iteracion = I.id_iteracion;
         END IF;
     END //
-
+    
     DROP TRIGGER IF EXISTS set_nombre_estimacion;
     DELIMITER //
     CREATE TRIGGER set_nombre_estimacion BEFORE INSERT ON entrega
@@ -364,7 +366,7 @@
         END IF;
     END //
 
-
+    --              Se cambia la estimacion personal -> Se actualiza el promedio del proyecto
     DROP PROCEDURE IF EXISTS actualiza_tiempos;
     DELIMITER //
     CREATE PROCEDURE actualiza_tiempos(
@@ -389,9 +391,9 @@
             (SELECT CU.id_casos 
             FROM casos_uso CU INNER JOIN iteracion I ON CU.id_iteracion = I.id_iteracion 
             WHERE CU.id_ap = idAp AND I.id_proyecto = idProyecto);
-
   	END //
 
+    --          Actualizacion de los minutos de un Caso de Uso
     DROP PROCEDURE IF EXISTS actualiza_con_check;
    	DELIMITER //
     CREATE PROCEDURE actualiza_con_check(

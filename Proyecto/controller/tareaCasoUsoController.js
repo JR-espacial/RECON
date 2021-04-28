@@ -75,7 +75,7 @@ exports.postModificarAsocioacion = (request, response) => {
                                     .then(() => {
                                         Entrega.actualiza_con_check(id_casos)
                                             .then(() => {
-                                                response.status(200)
+                                                response.status(200).json('Hola');
                                             })
                                     })
                                     .catch( err => console.log(err));
@@ -90,7 +90,7 @@ exports.postModificarAsocioacion = (request, response) => {
                         .then(() => {
                             Entrega.actualiza_con_check(id_casos)
                                 .then(() => {
-                                    response.status(200)
+                                    response.status(200).json('Hola');
                                 })
                         })
                         .catch( err => console.log(err));
@@ -108,7 +108,7 @@ exports.postModificarAsocioacion = (request, response) => {
                     .then(([rows2, fieldData]) => {
                         if(!rows2[0].id_airtable) {
                             Entrega.dropEntrega(id_proyecto, id_fase, id_tarea, id_casos)
-                                .then(() => response.status(200))
+                                .then(() =>{ response.status(200).json('hola'); })
                                 .catch( err => console.log(err));
                         }
                         else {
@@ -134,7 +134,7 @@ exports.postModificarAsocioacion = (request, response) => {
                         }
                         else {
                             Entrega.dropEntrega(id_proyecto, id_fase, id_tarea, id_casos)
-                                .then(() => response.status(200))
+                                .then(() => { response.status(200).json('hola'); })
                                 .catch( err => console.log(err));
                         }
                     })

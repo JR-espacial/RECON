@@ -1,7 +1,9 @@
 const Proyecto = require('../models/proyecto');
 const Iteracion = require('../models/iteracion');
 const Usuario = require('../models/user');
+const Empleado_Iteracion = require('../models/empleado_iteracion');
 const CapacidadEquipo = require('../models/capacidad_equipo');
+const PFT = require('../models/Proyecto_Fase_Tarea');
 const { fetchLastNumIter } = require('../models/iteracion');
 
 exports.getIteracionesDesarrolloProyecto = async function(request,response){
@@ -107,7 +109,6 @@ exports.getNuevaIteracion = (request, response) => {
 }
 
 exports.postNuevaIteracion = async function (request, response){
-
     const id_proyecto = request.session.idProyecto;
     const descripcion = request.body.descripcion;
     const fecha_inicio = request.body.fecha_inicio;
@@ -146,10 +147,13 @@ exports.postNuevaIteracion = async function (request, response){
         await iteracion.saveIteracion(); 
         const infoIteracion = await Iteracion.fetchOne(id_proyecto,fetchLastNumIter[0][0].num_iteracion);
 
+        // Relacionar usuarios con iteracion (todos incluyendo al que la crea)
         for (let i = 0; i < colabs.length; i++) {
             const infoUsuario =  await Usuario.fetchOne(colabs[i]);
             if(i == 0 || infoUsuario[0][0] && infoUsuario[0][0].usuario != request.session.usuario){
                 await Iteracion.saveColaborador(infoUsuario[0][0].id_empleado, infoIteracion[0][0].id_iteracion);
+                // HACER LLAMADAS PARA ASIGNAR ESPACIOS EN TABLAS AP
+                console.log(infoUsuario[0][0].id_empleado);
             }
             else if(!infoUsuario[0][0] || infoUsuario[0][0].usuario != request.session.usuario){
                 alerta += " "+ colabs[i] + " ";
@@ -177,13 +181,13 @@ exports.postEditarIteracion = async function (request, response){
     const colaboradoresBorrados = request.body.colaboradoresBorrados;
     const colabs =[];
     const colabsDeleted =[];
+    let tareas = [];
     let alerta = "La iteracion fue modificada exitosamente. Sin embargo los usuarios:";
 
     if(fecha_fin < fecha_inicio){
         request.session.alerta = "La iteración no fue modificada porque la fecha final debe de ser posterior a la de inicio";
         response.redirect("/proyectos/iteraciones-desarrollo-proyecto");
     }
-
     else{
         let colaborador = "";
         for (let i = 0; i < colaboradores.length; i++) {
@@ -212,19 +216,34 @@ exports.postEditarIteracion = async function (request, response){
             }
         }
 
-
         await Iteracion.modificarIteracion(descripcion, fecha_inicio, fecha_fin, id_iteracion);
 
-        //Añadir colaboradores Empleado_iteracion
+        // Obtener tareas del proyecto
+        tareas = await PFT.fetchTareasFasesId(request.session.idProyecto);
+
+        //Añadir colaboradores Empleado_iteracion (solo los nuevos)
         for (let i = 0; i < colabs.length; i++) {
             const fetchOneUsuario =  await Usuario.fetchOne(colabs[i]);
             if(fetchOneUsuario[0][0]){
+                const numIteracionesEmpleado = await Empleado_Iteracion.fetchIterPorEmpleado(fetchOneUsuario[0][0].id_empleado, request.session.idProyecto);
                 await Iteracion.saveColaborador(fetchOneUsuario[0][0].id_empleado, id_iteracion);
+                
+                // Primera aparicion en proyecto en (iteraciones ACTIVAS FALTA)
+                if(numIteracionesEmpleado[0][0].numIt < 1) {
+                    // Agregar campos a AP_Colaborador
+                    // Obtener todas las tareas del proyecto
+                        // C/tarea: Insertar campo de AP i con 0 minutos en AP_COLaborador
+                        // Llamo el proceudre actualiza tiempos
+                    for(let j=0; j < tareas[0].length; j++) {
+                        console.log(tareas[0][j].id_fase);
+                    }
+                }
             }
             else{
                 alerta += " "+ colabs[i] + " ";
             }
         }
+
         //Eliminar colaboradores Empleado_iteracion
         for (let i = 0; i < colabsDeleted.length; i++) {
             Iteracion.removeUserfromIter(id_iteracion,colabsDeleted[i]);

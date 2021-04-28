@@ -162,6 +162,21 @@
             } 
             
             let data = {id_fase: idFase, id_casos: casoactual, id_tarea: idTrabajo, accion: accion};
+            
+            const listatareas = [];
+            const listafases = [];
+            "<% for (let tarea of lista_tareas){ %>"
+                listatareas.push("<%= tarea.id_tarea %>");
+                listafases.push("<%= tarea.id_fase %>");
+            "<% } %>"
+            let i = 0;
+            for(let tarea of listatareas) {
+                let id = 'botonCheck_' + i;
+                document.getElementById(id).disabled = true;
+                console.log('disabled');
+                i++;
+            }
+
 
             fetch('/proyectos/tarea-caso-uso/modificarAsociacion', {
                 method: 'POST',
@@ -174,7 +189,17 @@
             .then(result => {
                 return result.json();
             })
-            .then(data => {            
+            .then(data => {     
+                // Solo entra aqui si data no es nulo
+                console.log('Siu');
+                i = 0;
+                for(let tarea of listatareas) {
+                    let id = 'botonCheck_' + i;
+                    document.getElementById(id).disabled = false;
+                    console.log('des-disabled');
+                    i++;
+                }
+
             })
             .catch(err => {
                 console.log(err);
