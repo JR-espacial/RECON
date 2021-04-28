@@ -20,7 +20,7 @@ module.exports =  class Proyecto{
     }
 
     static fetchAll(usuario){
-        return db.execute('SELECT P.id_proyecto, P.nombre_proyecto, P.descripcion as descripcion_proyecto, P.imagen, D.id_departamento, D.nombre_departamento FROM proyecto P, iteracion I, empleado_iteracion EI, empleado E, departamento D, proyecto_departamento PD WHERE estado_proyecto = 1 AND P.id_proyecto = I.id_proyecto AND I.id_iteracion = EI.id_iteracion AND EI.id_empleado = E.id_empleado AND P.id_proyecto = PD.id_proyecto AND PD.id_departamento = D.id_departamento AND E.usuario =? GROUP BY P.id_proyecto, id_departamento ORDER BY P.fecha_inicio DESC;', [usuario]);
+        return db.execute('SELECT P.id_proyecto, P.nombre_proyecto, P.descripcion as descripcion_proyecto, P.imagen, DATE_FORMAT(P.fecha_inicio, "%Y-%m-%d")AS fecha_inicio, D.id_departamento, D.nombre_departamento FROM proyecto P, iteracion I, empleado_iteracion EI, empleado E, departamento D, proyecto_departamento PD WHERE estado_proyecto = 1 AND P.id_proyecto = I.id_proyecto AND I.id_iteracion = EI.id_iteracion AND EI.id_empleado = E.id_empleado AND P.id_proyecto = PD.id_proyecto AND PD.id_departamento = D.id_departamento AND E.usuario =? GROUP BY P.id_proyecto, id_departamento ORDER BY P.fecha_inicio DESC;', [usuario]);
     }
 
     static fetchOne(nombre_proyecto){ 

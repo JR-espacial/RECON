@@ -26,7 +26,7 @@
     <div class=" col s10  offset-s1 ">
         <% for (let proyecto of proyectos) { %>
         <div class="col s4">
-            <div class="card hoverable">
+            <div class="card small hoverable">
                 <div class="card-image pointer">
                     <img class="activator"  src="<%= proyecto.imagen %>">
                     <div id="modal1_<%= proyecto.id_proyecto %>" class="modal large">
@@ -128,7 +128,7 @@
                     <% } %>
                     <br>
                     <p>Departamento: <%= proyecto.nombre_departamento %></p>
- 
+                    <p>Fecha inicio: <%= proyecto.fecha_inicio %></p>
                 </div>
             </div>
         </div>

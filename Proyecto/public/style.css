@@ -168,7 +168,14 @@ div#modal5 {
 }
 
 .imagen_login{
-    margin-top: 35%;
+    margin-top: 20%;
+    margin-left: 10%;
+    width: 100%;
+    height: auto;
+}
+.imagen_registrar{
+    margin-top: 8%;
+    margin-left: 10%;
     width: 100%;
     height: auto;
 }
