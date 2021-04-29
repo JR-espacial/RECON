@@ -19,11 +19,12 @@
     <li><div class="divider"></div></li>
     
 
-
+    <li id="home"><a href ="/home"  name="action" value="editar">Inicio <i class="material-icons right">home</i></a></li>
     <li><a href ="/users/register"  name="action" value="editar">Nuevo usuario <i class="material-icons right">account_circle</i></a></li>
     <li><a data-target="modal_departamento" class="modal-trigger">Nuevo Departamento <i class="material-icons right">business</i></a></li>
-
-    <li><a href="/home/manual-usuario"><i class="material-icons right">help</i>Manual de Usuario</a></li>
+    <li id="manual_usuario"><a href="/home/manual-usuario"><i class="material-icons right">help</i>Manual de Usuario</a></li>
+    <li><a class="modal-trigger" data-target="modal_usuarioE">Eliminar Usuario<i class="material-icons right ">highlight_off</i></a></li>
+    
     <li class="logout"><a href="/users/logout"><i class="material-icons right">input</i>Salir</a></li>
     
 </ul>
@@ -49,8 +50,43 @@
     </div>
 </div>
 
+
+    
+</tr>
+<div id="modal_usuarioE" class="modal col s4 ">
+    <div class="row">
+        <div class="modal-content col s7 offset-s2">
+            <h5>Eliminar Usuario</h5>
+            <br>
+            <form action="/users/eliminar-usuario" method="POST">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <div class="input-field">
+                    <select name="usuario" class="browser-default" required>
+                        <option value="" disabled selected>Selecciona un Usuario*</option>
+                        <% for (let usuario of users) { %>
+                            <option value="<%= usuario.id_empleado %>"><%= usuario.usuario %></option>
+                        <% } %>
+                    </select>
+                </div>
+                <br>
+                <br>
+                <button type="sumbmit" class="red btn right">Eliminar</button>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         M.AutoInit();
     });
+
+    if("<%=title%>" == "Home"){
+        var element = document.getElementById("home");
+        element.classList.add("active");
+    }
+    else if("<%=title%>" == "Manual Usuario"){
+        var element = document.getElementById("manual_usuario");
+        element.classList.add("active");
+    }
 </script>

@@ -315,10 +315,9 @@ exports.postSettings = (request, response) => {
 }
 
 exports.postEliminarUsuario = async function(request,response){
-    await Usuario.eliminarEmpleadoIteracion(request.body.usuario);
     await Usuario.eliminarEmpleado(request.body.usuario);
 
     request.session.toast = "Usuario eliminado";
-    response.redirect('/users/settings');
+    response.redirect('/home');
 
 }

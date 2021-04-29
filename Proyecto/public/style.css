@@ -27,28 +27,6 @@
     overflow: scroll;
 }
 
-#tabla_avance {
-    max-height: 500px;
-    overflow: scroll;
-    overflow-x: hidden;
-}
-
-#tabla_avance thead th{
-    position: sticky;
-    top: 0;
-    background-color: #343434;
-    color: white;
-    font-weight: 500;
-}
-
-#tabla_avance tbody{
-    background-color: white 
-}
-
-#tabla_avance table td {
-    text-align: center;
-}
-
 header, main, footer {
     padding-left: 300px;
 }

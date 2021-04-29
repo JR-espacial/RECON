@@ -98,7 +98,7 @@ exports.getManualUsuario = async function (request, response){
     let user = await Usuario.fetchOne(request.session.usuario);
     let users = await Usuario.fetchAll();
     response.render('ManualUsuario' ,{
-        imagen_empleado: request.session.imagen_empleado,
+        imagen_empleado:"../"+ request.session.imagen_empleado,
         navegacion : request.session.navegacion,
         user : user[0][0],
         users : users[0],
@@ -111,7 +111,7 @@ exports.getAccesDenied = async function (request, response){
     let user = await Usuario.fetchOne(request.session.usuario);
     let users = await Usuario.fetchAll();
     response.render('AccesDenied' ,{
-        imagen_empleado: request.session.imagen_empleado,
+        imagen_empleado:"../"+ request.session.imagen_empleado,
         navegacion : request.session.navegacion,
         user : user[0][0],
         users : users[0],
