@@ -28,6 +28,7 @@ exports.postLogin = (request, response, next) => {
                     .then(doMatch => {
                         if (doMatch) {
                             request.session.id_empleado = rows[0].id_empleado;
+                            request.session.idRol = rows[0].id_rol;
                             request.session.imagen_empleado = rows[0].imagen_empleado;
                             request.session.isLoggedIn = true;
                             request.session.usuario = request.body.usuario;

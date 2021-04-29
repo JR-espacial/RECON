@@ -78,14 +78,22 @@
         FOREIGN KEY(id_departamento) REFERENCES departamento(id_departamento)
     );
 
+    CREATE TABLE roles (
+        id_rol INT AUTO_INCREMENT NOT NULL,
+        rol VARCHAR(14),
+        PRIMARY KEY(id_rol)
+    );
+
     CREATE TABLE empleado (
         id_empleado INT AUTO_INCREMENT NOT NULL,
+        id_rol INT NOT NULL,
         usuario VARCHAR(14),
         correo VARCHAR(50),
         contrasena VARCHAR(100),
         nombre_empleado VARCHAR(64),
         imagen_empleado VARCHAR(400),
-        PRIMARY KEY(id_empleado)
+        PRIMARY KEY(id_empleado),
+        FOREIGN KEY(id_rol) REFERENCES roles(id_rol)
     );
 
 
