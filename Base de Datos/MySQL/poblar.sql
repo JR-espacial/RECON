@@ -101,13 +101,16 @@ INSERT INTO `proyecto_departamento` (`id_proyecto`, `id_departamento`) VALUES(2,
 INSERT INTO `proyecto_departamento` (`id_proyecto`, `id_departamento`) VALUES(3, 3);
 INSERT INTO `proyecto_departamento` (`id_proyecto`, `id_departamento`) VALUES(4, 2);
 
-INSERT INTO `empleado` (`id_empleado`, `usuario`, `correo`, `contrasena`, `nombre_empleado`, `imagen_empleado`) VALUES(1, 'm.soto', 'a01702593@itesm.mx', '$2a$12$VCbRexvLM2yL.bUY641aOerDOFizF4gxyhEVrEil442Kpj3Ivm0du', 'Mariana', 'mariana.jpeg');
-INSERT INTO `empleado` (`id_empleado`, `usuario`, `correo`, `contrasena`, `nombre_empleado`, `imagen_empleado`) VALUES(2, 'juan12', 'a01704592@itesm.mx', '$2a$12$VCbRexvLM2yL.bUY641aOerDOFizF4gxyhEVrEil442Kpj3Ivm0du', 'Juan', 'juan12.png');
-INSERT INTO `empleado` (`id_empleado`, `usuario`, `correo`, `contrasena`, `nombre_empleado`, `imagen_empleado`) VALUES(3, 'r.hinojosa', 'a01705777@itesm.mx', '$2a$12$VCbRexvLM2yL.bUY641aOerDOFizF4gxyhEVrEil442Kpj3Ivm0du', 'Rafael', 'rafael.jpeg');
-INSERT INTO `empleado` (`id_empleado`, `usuario`, `correo`, `contrasena`, `nombre_empleado`, `imagen_empleado`) VALUES(4, 'j.ramirez', 'a01701350@itesm.mx', '$2a$12$VCbRexvLM2yL.bUY641aOerDOFizF4gxyhEVrEil442Kpj3Ivm0du', 'Jorge', 'jorge.jpg');
-INSERT INTO `empleado` (`id_empleado`, `usuario`, `correo`, `contrasena`, `nombre_empleado`, `imagen_empleado`) VALUES(5, 'f.yepez', 'a01658002@itesm.mx', '$2a$12$VCbRexvLM2yL.bUY641aOerDOFizF4gxyhEVrEil442Kpj3Ivm0du', 'Felipe', 'felipe.jpeg');
-INSERT INTO `empleado` (`id_empleado`, `usuario`, `correo`, `contrasena`, `nombre_empleado`, `imagen_empleado`) VALUES(6, 'a.piñeiro', 'a01705681@itesm.mx', '$2a$12$VCbRexvLM2yL.bUY641aOerDOFizF4gxyhEVrEil442Kpj3Ivm0du', 'Andrea', 'andrea.jpeg');
-INSERT INTO `empleado` (`id_empleado`, `usuario`, `correo`, `contrasena`, `nombre_empleado`, `imagen_empleado`) VALUES(7, 'j.zermeño', 'a01610399@itesm.mx', '$2a$12$VCbRexvLM2yL.bUY641aOerDOFizF4gxyhEVrEil442Kpj3Ivm0du', 'Joaquín', 'joaquin.jpeg');
+INSERT INTO `roles` (`id_rol`, `rol`)VALUES(1, 'Usuario');
+INSERT INTO `roles` (`id_rol`, `rol`)VALUES(2, 'Usuario Bloqueado');
+
+INSERT INTO `empleado` (`id_empleado`, `id_rol`, `usuario`, `correo`, `contrasena`, `nombre_empleado`, `imagen_empleado`) VALUES(1, 1, 'm.soto', 'a01702593@itesm.mx', '$2a$12$VCbRexvLM2yL.bUY641aOerDOFizF4gxyhEVrEil442Kpj3Ivm0du', 'Mariana', 'mariana.jpeg');
+INSERT INTO `empleado` (`id_empleado`, `id_rol`, `usuario`, `correo`, `contrasena`, `nombre_empleado`, `imagen_empleado`) VALUES(2, 1, 'juan12', 'a01704592@itesm.mx', '$2a$12$VCbRexvLM2yL.bUY641aOerDOFizF4gxyhEVrEil442Kpj3Ivm0du', 'Juan', 'juan12.png');
+INSERT INTO `empleado` (`id_empleado`, `id_rol`, `usuario`, `correo`, `contrasena`, `nombre_empleado`, `imagen_empleado`) VALUES(3, 1, 'r.hinojosa', 'a01705777@itesm.mx', '$2a$12$VCbRexvLM2yL.bUY641aOerDOFizF4gxyhEVrEil442Kpj3Ivm0du', 'Rafael', 'rafael.jpeg');
+INSERT INTO `empleado` (`id_empleado`, `id_rol`, `usuario`, `correo`, `contrasena`, `nombre_empleado`, `imagen_empleado`) VALUES(4, 1, 'j.ramirez', 'a01701350@itesm.mx', '$2a$12$VCbRexvLM2yL.bUY641aOerDOFizF4gxyhEVrEil442Kpj3Ivm0du', 'Jorge', 'jorge.jpg');
+INSERT INTO `empleado` (`id_empleado`, `id_rol`, `usuario`, `correo`, `contrasena`, `nombre_empleado`, `imagen_empleado`) VALUES(5, 1, 'f.yepez', 'a01658002@itesm.mx', '$2a$12$VCbRexvLM2yL.bUY641aOerDOFizF4gxyhEVrEil442Kpj3Ivm0du', 'Felipe', 'felipe.jpeg');
+INSERT INTO `empleado` (`id_empleado`, `id_rol`, `usuario`, `correo`, `contrasena`, `nombre_empleado`, `imagen_empleado`) VALUES(6, 1, 'a.piñeiro', 'a01705681@itesm.mx', '$2a$12$VCbRexvLM2yL.bUY641aOerDOFizF4gxyhEVrEil442Kpj3Ivm0du', 'Andrea', 'andrea.jpeg');
+INSERT INTO `empleado` (`id_empleado`, `id_rol`, `usuario`, `correo`, `contrasena`, `nombre_empleado`, `imagen_empleado`) VALUES(7, 1, 'j.zermeño', 'a01610399@itesm.mx', '$2a$12$VCbRexvLM2yL.bUY641aOerDOFizF4gxyhEVrEil442Kpj3Ivm0du', 'Joaquín', 'joaquin.jpeg');
 
 INSERT INTO `empleado_iteracion` (`id_empleado`, `id_iteracion`, `horas_semanales`) VALUES(1, 7, NULL);
 INSERT INTO `empleado_iteracion` (`id_empleado`, `id_iteracion`, `horas_semanales`) VALUES(1, 8, NULL);
