@@ -31,6 +31,9 @@
     background-color: #343434;
     color: white;
     font-weight: bold;
+
+    overflow-wrap: break-word;
+    text-overflow: ellipsis;
 }
 
 .tabla_tareas_cu tbody tr:hover{
@@ -49,15 +52,20 @@
 }
 
 .tabla_tareas_cu thead th:nth-child(2) {
-    width: 15%;
+    width: 10%;
 }
 
 .tabla_tareas_cu thead th:nth-child(3) {
-    width: 55%;
+    width: 40%;
 }
 
 .tabla_tareas_cu thead th:nth-child(4) {
-    width: 20%;
+    text-align: center;
+    width: 15%;
+}
+
+.tabla_tareas_cu thead th:nth-child(5) {
+    width: 25%;
 }
 
 /* td */
@@ -66,13 +74,24 @@
 }
 
 .tabla_tareas_cu td:nth-child(2) {
-    width: 15%;
+    width: 10%;
 }
 
 .tabla_tareas_cu td:nth-child(3) {
-    width: 55%;
+    width: 40%;
 }
 
 .tabla_tareas_cu td:nth-child(4) {
-    width: 20%;
+    text-align: center;
+    width: 15%;
+}
+
+.tabla_tareas_cu td:nth-child(5) {
+    text-align: center;
+    width: 25%;
+}
+
+.tabla_tareas_cu td:nth-child(5) div{
+    text-align: center;
+    left: 14%;
 }
