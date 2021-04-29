@@ -40,6 +40,11 @@ module.exports = class ap_colaborador{
         [id_proyecto, id_fase, id_tarea]);
     }
 
+    static deleteEstimacionesUsuario(id_proyecto, id_empleado) {
+        return db.execute('DELETE FROM ap_colaborador WHERE id_proyecto=? AND id_empleado=?;', 
+        [id_proyecto, id_empleado]);
+    }
+
     static actualizaTiempos(idProyecto, idEmpleado, idFase, idTarea, idAP, minutos){
         return db.execute('CALL actualiza_tiempos(?, ?, ?, ?, ?, ?);', [idProyecto, idEmpleado, idFase, idTarea, idAP, minutos]);
     }

@@ -5,7 +5,9 @@ const Empleado_Iteracion = require('../models/empleado_iteracion');
 const CapacidadEquipo = require('../models/capacidad_equipo');
 const PFT = require('../models/Proyecto_Fase_Tarea');
 const APC = require('../models/ap_colaborador');
+const APP = require('../models/ap_promedios');
 const { fetchLastNumIter } = require('../models/iteracion');
+const { fetchOne } = require('../models/proyecto');
 
 exports.getIteracionesDesarrolloProyecto = async function(request,response){
     const idProyecto = request.session.idProyecto;
@@ -259,9 +261,27 @@ exports.postEditarIteracion = async function (request, response){
             }
         }
 
+        let eliminadosProyecto = 0;
         //Eliminar colaboradores Empleado_iteracion
         for (let i = 0; i < colabsDeleted.length; i++) {
-            Iteracion.removeUserfromIter(id_iteracion,colabsDeleted[i]);
+            fetchOneUsuario =  await Usuario.fetchOne(colabsDeleted[i]);
+            await Iteracion.removeUserfromIter(id_iteracion, colabsDeleted[i]);
+            
+            // Si ya no esta presente en el proyecto, borrar sus estimaciones y actualizar promedios            
+            numIteracionesEmpleado = await Empleado_Iteracion.fetchIterPorEmpleado(fetchOneUsuario[0][0].id_empleado, request.session.idProyecto);
+            if(numIteracionesEmpleado[0][0].numIt < 1) {
+                await APC.deleteEstimacionesUsuario(request.session.idProyecto, fetchOneUsuario[0][0].id_empleado);
+                eliminadosProyecto ++;
+            }
+        }
+
+        //Actualizar promedios si se eliminaron empleados del proyecto
+        if(eliminadosProyecto > 0) {
+            for(let i=0; i<tareas[0].length; i++) {
+                for(let j=1; j<=6; j++) {
+                    await APP.updatePromedio(request.session.idProyecto, tareas[0][i].id_fase, tareas[0][i].id_tarea, j);
+                }
+            }
         }
 
         if(alerta != "La iteracion fue modificada exitosamente. Sin embargo los usuarios:"){
