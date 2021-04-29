@@ -14,7 +14,6 @@ exports.postEnviarDatosAirtable = (request, response) => {
             else{
                 const id_iteracion = request.session.idIteracion;
                 let num_iter = request.session.numIteracion;
-                console.log(num_iter);
                 Entrega.fetchEntregaAirtable(id_iteracion, id_proyecto)
                     .then(([rows2, fieldData]) => {
                         if(rows2.length > 0){
