@@ -8,7 +8,6 @@ exports.getIteracionesDesarrolloProyecto = async function(request,response){
     const idProyecto = request.session.idProyecto;
     const alerta = request.session.alerta;
     const toast = request.session.toast;
-    request.session.navegacion = 1;
     request.session.alerta = "";
     request.session.toast = "";
     let iteraciones = await Iteracion.fetchIteracionesDesarrollo(idProyecto, request.session.usuario);
@@ -17,12 +16,12 @@ exports.getIteracionesDesarrolloProyecto = async function(request,response){
     if(iteraciones == undefined){
         iteraciones = [[]];
     }
-
     const empleados = await Usuario.fetchAll();
     response.render('iteracionesProyecto', {
         navegacion : request.session.navegacion,
         proyecto_actual : request.session.nombreProyecto,
         imagen_empleado: request.session.imagen_empleado,
+        imagen_proyecto:request.session.imagenProyecto,
         user: request.session.usuario,
         title: "Iteraciones",
         iteraciones : iteraciones[0],
@@ -53,6 +52,7 @@ exports.getIteracionesTerminadasProyecto = async function(request,response){
         navegacion : request.session.navegacion,
         proyecto_actual : request.session.nombreProyecto,
         imagen_empleado: request.session.imagen_empleado,
+        imagen_proyecto:request.session.imagenProyecto,
         user: request.session.usuario,
         title: "Iteraciones",
         iteraciones : iteraciones[0],
@@ -279,4 +279,118 @@ exports.postAirTableKeys = async function (request, response){
         request.session.toast = "AirTable modificado";
         response.redirect('/proyectos/iteraciones-desarrollo-proyecto');
     });
+}
+
+exports.getMiprogreso = async function(request,response){
+    let alerta = "";
+    let toast = "";
+    let Airtable = require('airtable');
+    let idProyecto = request.session.idProyecto;
+    let proyecto_keys = await Proyecto.fetchAirTableKeys(idProyecto);
+    let user = await Usuario.fetchOne(request.session.usuario);
+
+    let misTareasCompletadas = 0;
+    let tareasTotales=0;
+    let asignados;
+
+    let horasDia=[];
+    let i =0;
+
+
+    if(!proyecto_keys[0][0].base || !proyecto_keys[0][0].API_key){
+       alerta="Define una base de AirTable para ver más datos";
+
+       response.render('miProgreso',{
+        horasDia:horasDia,
+        proyecto_keys : proyecto_keys[0][0],
+        tareasTotales:tareasTotales,
+        misTareasCompletadas: misTareasCompletadas,
+        proyecto_actual : request.session.nombreProyecto,
+        imagen_empleado: request.session.imagen_empleado,
+        user: request.session.usuario,
+        title: "Mi progreso", 
+        alerta : alerta,
+        toast: toast,  
+        csrfToken: request.csrfToken(),
+        proyecto_actual: request.session.nombreProyecto
+    });
+    }
+    else{
+        let base = new Airtable({apiKey: proyecto_keys[0][0].API_key}).base( proyecto_keys[0][0].base);
+        
+        base('Tasks').select({
+            
+            view: "Global view",
+            sort :[{field: "Finished Date", direction: "asc"}],
+            
+            
+        }).eachPage(function page(records, fetchNextPage) {
+            
+            
+            records.forEach(function(record) {
+                console.log(record.get('Finished Date'));
+                if(record.get('Status') == 'Done'){
+                    asignados= record.get('Assigned');
+                    asignados.forEach(element => {
+                        if(element.email == user[0][0].correo){
+                            misTareasCompletadas++;
+                        }   
+                    });
+                }
+                else{
+                    tareasTotales++;
+                } 
+                if(record.get('Duration')) {
+                    asignados= record.get('Assigned');
+                    asignados.forEach(element => {
+                        if(element.email == user[0][0].correo){
+                            if( i>0 && horasDia[i-1].fecha == record.get('Finished Date')){
+                                horasDia[i-1].horas +=parseFloat((record.get('Duration')/3600).toFixed(5));
+                            }
+                            else{
+                                horasDia[i] = {};
+                                horasDia[i].fecha = record.get('Finished Date');
+                                horasDia[i].horas = parseFloat((record.get('Duration')/3600).toFixed(5));
+                                i++
+                            }
+                        }   
+                    });
+                    
+                } 
+                
+            });
+        
+            fetchNextPage();
+        
+        },  async function done(err) {
+            if (err) {
+                console.error(err); 
+            }
+            else{
+                if(horasDia.length>14){
+                    let aux =[];
+                    for (let i = horasDia.length -15; i < horasDia.length; i++) {
+                        aux.push(horasDia[i]);
+                    }
+                    horasDia=aux;
+                }
+                console.log(horasDia);
+                response.render('miProgreso',{
+                    horasDia:horasDia,
+                    proyecto_keys : proyecto_keys[0][0],
+                    tareasTotales:tareasTotales,
+                    misTareasCompletadas: misTareasCompletadas,
+                    proyecto_actual : request.session.nombreProyecto,
+                    imagen_empleado: request.session.imagen_empleado,
+                    user: request.session.usuario,
+                    title: "Mi progreso", 
+                    alerta : alerta,
+                    toast: toast,  
+                    csrfToken: request.csrfToken(),
+                    proyecto_actual: request.session.nombreProyecto
+                });
+
+            }
+        });
+    }
 }

@@ -1,0 +1,100 @@
+<%- include('includes/openHTMLtoast.ejs'); %>
+
+<%- include('includes/navbarProyecto.ejs'); %>
+<main>
+    <div class="row">
+        <div class=" col s10 offset-s2 ">
+            <div class="row">
+                <br>
+                <div class="col s8 offset-s1">
+                    <canvas id="TareasUsuario" class=" col s6 z-depth-1 white"></canvas>
+                </div>
+                <div class="col s8  offset-s1">
+                    <br>    
+                    <canvas id="AvanceUsuario" class=" col s6 z-depth-1 white"></canvas>
+                </div>
+            </div>   
+        </div>
+    </div>
+</main>
+
+
+
+
+
+<script>
+    let labels_tareas = ["Tareas Totales","Mis Tareas Completadas"];
+
+
+    var contextDona = document.getElementById('TareasUsuario').getContext('2d');
+
+    var chartDona = new Chart(contextDona, {
+        type: 'doughnut',
+        data: {
+                labels: labels_tareas,
+                datasets: [{
+                    label: "Mis Tareas",
+                    backgroundColor: [
+                        "#FFCC56","#4AC0C0"
+                    ],
+                    data:  ["<%= tareasTotales %>", "<%= misTareasCompletadas %>"]
+                }]
+        },
+        options: {
+            title :{ 
+                display : true,
+                text: "Estado Tareas",
+                fontSize:20,
+            },
+            legend:{
+                position:'top'
+            },
+            responsive:true
+        }
+    });
+
+    horasDia="<%= horasDia %>";
+    let horas =[], dias = [];
+
+    "<% for(let i = 0; i <  horasDia.length; i++){ %>"
+        horas.push(parseFloat("<%= horasDia[i].horas %>"));
+        dias.push("<%= horasDia[i].fecha %>")
+        
+    "<% } %>"
+    console.log(horas);
+    console.log(dias);
+
+
+        const labels = dias
+        const data = {
+        labels: labels,
+        datasets: [{
+            label: 'horas de trabajo diarias',
+            backgroundColor: '#ffd5ab',
+            borderColor: '#FF9F40',
+            data: horas,
+        }]};
+
+        const config = {
+        type: 'line',
+        data,
+        options: {
+            title :{ 
+                display : true,
+                text: "Mis Horas",
+                fontSize:15,
+            },}
+        };
+
+   
+    
+
+    
+    var myChart = new Chart(document.getElementById('AvanceUsuario'), config);
+    
+
+
+</script>
+
+
+<%- include('includes/closeHTMLtoast.ejs'); %>

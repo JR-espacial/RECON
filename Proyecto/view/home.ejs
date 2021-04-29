@@ -89,6 +89,7 @@
                     <div>
                         <form action="home" method="POST">
                             <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
+                            <input type="hidden" name="imagenProyecto" value="<%= proyecto.imagen %>" >
                             <input type="hidden" name="idProyecto" value="<%= proyecto.id_proyecto %>" >
                             <input type="hidden" name="nombreProyecto" value="<%= proyecto.nombre_proyecto %>" >
                             <button class=" btn-flat d-content" type="submit"><%= proyecto.nombre_proyecto %></botton>

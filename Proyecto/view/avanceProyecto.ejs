@@ -2,25 +2,6 @@
 <%- include('includes/navbarIteracion.ejs'); %>
 
 <main>
-    <!-- <div class="row">
-        <div class="col s10 offset-s2"> 
-            <br>
-            <br>
-            <br>
-            <div class="preloader-wrapper big active loader">
-                <div class="spinner-layer  spinner-blue-only">
-                  <div class="circle-clipper left">
-                    <div class="circle"></div>
-                  </div><div class="gap-patch">
-                    <div class="circle"></div>
-                  </div><div class="circle-clipper right">
-                    <div class="circle"></div>
-                  </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
-    
     <div class="row">
         <div class="col s10 offset-s1">
             <% if(iteracion.terminada == 0){ %>
@@ -144,30 +125,7 @@
 </main>
 
 <script>
-    // fetch('/proyectos/iteraciones-proyecto-editar',{
-    //             method : 'POST',
-    //             body : JSON.stringify(data),
-    //             headers:{
-    //                 'csrf-token': csrf,
-    //                 'Content-Type': 'application/json'
-    //             },
-    //         }).then(result => {
-    //         return result.json(); 
-    //         }).then(data => {
-    //             data.forEach(element => {
-    //                 if (element.usuario!= "<%= user%>"){
-    //                     colaboradores_anteriores.push(element.usuario);
-    //                     chipContainer.addChip({
-    //                         tag: element.usuario,
-    //                     });
-    //                 }
-    //             });
-                
-    //         }).catch(err => {
-    //             console.error(err);
-    //         });
-
-
+   
     let entrega_real = [];
     let valor_ganado_diario = [];
     let costo_real_diario = [];
@@ -211,6 +169,7 @@
                 
                 label: 'Valor Ganado Acumulado',
                 borderColor: '#a1d996',
+                borderWidth: 3,
                 data: valor_ganado_acumulado
             },
             {
@@ -218,6 +177,7 @@
                 
                 label: 'Costo Real Acumulado',
                 borderColor: '#fa9c98',
+                borderWidth: 3,
                 data: costo_real_acumulado
             },
             {
@@ -225,6 +185,7 @@
 
                 label: 'Valor Planeado Acumulado (VPA)',
                 borderColor: '#9ab7f5',
+                borderWidth: 3,
                 data: valor_planeado_acumulado
             },]
         },
@@ -265,7 +226,7 @@
                 datasets: [{
                     label: "Estado Tareas Proyecto",
                     backgroundColor: [
-                        "#D0F0FD", "#FFEAB6", "#D1F7C4", "#EEEEEE", "#C2F5E9","#FEE2D5" , "#A76EF1"
+                        "#D0F0FD", "#FFEAB6", "#D1F7C4", "#EEEEEE", "#C2F5E9","#FEE2D5" , "#d9a1ff"
                     ],
                     data: estado_tareas,
                 }]
