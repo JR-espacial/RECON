@@ -19,19 +19,21 @@ exports.getAvanceProyecto = async function (request, response) {
         let num_iter = request.session.numIteracion;
         let workitemlist =[];
         let i =0;
+        const iteracion = "{Iterations} = "+"\"IT"+num_iter+"\"";
         
         const base = new Airtable({apiKey: proyecto_keys[0][0].API_key}).base( proyecto_keys[0][0].base);
         
         base('Tasks').select({
             view: "Global view",
-            sort :[{field: "Name", direction: "asc"}]
+            sort :[{field: "Name", direction: "asc"}],
+            filterByFormula: iteracion
             
         }).eachPage(function page(records, fetchNextPage) {
             // This function (`page`) will get called for each page of records.
             records.forEach(function(record) {
                 let IT = Number (record.get('Name').slice(2,record.get('Name').indexOf('-')));
                 
-                if(IT == num_iter){
+               
                     workitemlist[i] = {};
                     workitemlist[i].nombre = record.get('Name');
                     workitemlist[i].asignados = record.get('Assigned');
@@ -101,7 +103,7 @@ exports.getAvanceProyecto = async function (request, response) {
                             break;
                     }
                     
-                }
+                
                 i++;   
             });
         

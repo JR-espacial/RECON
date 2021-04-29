@@ -57,8 +57,7 @@ app.use('/proyectos', proyectos);
 app.use('/users', users);
 app.use('/home', home);
 app.use("/",(request, response,next) => {   
-     response.status(404).send('<html><head><meta charset="UTF-8"><title>Page not found</title></head><body><h1>Error 404</h1></body></html>')
-    //response.status(404).redirect('/home');
+    response.status(404).redirect('/home');
 });
 
 app.listen(8080);

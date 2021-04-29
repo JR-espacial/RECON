@@ -13,6 +13,8 @@ const capacidadController = require('../controller/capacidadController');
 const enviarAirtableController = require('../controller/enviarAirtableController');
 
 
+router.get('/mi-progreso', isAuth, iteracionesController.getMiprogreso);
+
 router.post('/nuevo-departamento', isAuth, proyectosController.postNuevoDepartamento);
 
 router.get('/nuevo-proyecto', isAuth, proyectosController.getNuevoProyecto);

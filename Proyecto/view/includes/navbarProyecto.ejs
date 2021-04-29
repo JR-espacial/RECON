@@ -20,12 +20,12 @@
     <li id="iteraciones"><a class="waves-effect" href="/proyectos/iteraciones-desarrollo-proyecto">Iteraciones<i class="material-icons right">layers</i></a></li>
     <li><div class="divider"></div></li>
     
-    <!-- <li><a href ="/home/mi-desempeño">Mi desempeño<i class="material-icons right">trending_up</i></a></li> -->
+    <li id="miProgreso"><a class="waves-effect" href ="/proyectos/mi-progreso">Mi progreso<i class="material-icons right">donut_large</i></a></li>
     <li id="fases_proyecto"><a class="waves-effect" href="/proyectos/fases-proyecto">WBS<i class="material-icons right">view_quilt</i></a></li>
     <li id="estimacion_ap"><a class="waves-effect" href="/proyectos/estimacion-ap">Estimación de Tareas<i class="material-icons right">access_time</i></a></li>
 
-    <li><a data-target="modalAirTable" class="modal-trigger">AirTable<i class="material-icons right">cloud_queue</i></a></li>
-    
+    <li><a href ="https://airtable.com/<%= proyecto_keys.base %>"> AirTable<i class="material-icons right">cloud_queue</i></a></li>
+    <li><a data-target="modalAirTable" class="modal-trigger">AirTable keys<i class="material-icons right">vpn_key</i></a></li>
     
     <li class="logout"><a href="/users/logout"><i class="material-icons right right-logout">input</i>Salir</a></li>
     
@@ -79,6 +79,10 @@
     }
     else if("<%=title%>" == "Iteraciones"){
         var element = document.getElementById("iteraciones");
+        element.classList.add("active");
+    }
+    else if("<%=title%>" == "Mi progreso"){
+        var element = document.getElementById("miProgreso");
         element.classList.add("active");
     }
 
