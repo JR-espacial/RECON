@@ -8,9 +8,8 @@ const Airtable = require('airtable');
 exports.getTareaCasoUso = (request, response) =>{
     const id_proyecto = request.session.idProyecto;
     const id_iteracion = request.session.idIteracion;
-
-    let toast = request.session.toast;
     let alerta = request.session.alerta;
+    let toast = request.session.toast;
     request.session.toast = "";
     request.session.alerta = "";
     // Quiero (Casos de Uso)
@@ -66,7 +65,6 @@ exports.postModificarAsocioacion = (request, response) => {
             .then(([rows, fieldData]) => {
                 const id_ap = rows[0].id_ap;
                 if (id_ap != 7) {
-                    request.session.toast = "Recuerda definir un AP para este caso, actualmente esta en 0.";
                     AP_Promedios.fetchPromedioMinutos(id_proyecto, id_fase, id_tarea, id_ap)
                     .then(([rows2, fieldData]) => {
                         let estimacion = rows2[0].promedio_minutos;
@@ -75,7 +73,7 @@ exports.postModificarAsocioacion = (request, response) => {
                                     .then(() => {
                                         Entrega.actualiza_con_check(id_casos)
                                             .then(() => {
-                                                response.status(200)
+                                                response.status(200).json({toast:"Asociación registrada"});
                                             })
                                     })
                                     .catch( err => console.log(err));
@@ -90,7 +88,7 @@ exports.postModificarAsocioacion = (request, response) => {
                         .then(() => {
                             Entrega.actualiza_con_check(id_casos)
                                 .then(() => {
-                                    response.status(200)
+                                    response.status(200).json({toast:"Recuerda definir un AP para este caso, actualmente esta en 0."});
                                 })
                         })
                         .catch( err => console.log(err));
@@ -108,11 +106,13 @@ exports.postModificarAsocioacion = (request, response) => {
                     .then(([rows2, fieldData]) => {
                         if(!rows2[0].id_airtable) {
                             Entrega.dropEntrega(id_proyecto, id_fase, id_tarea, id_casos)
-                                .then(() => response.status(200))
+                                .then(() => {
+                                    response.status(200).json({toast:"Asociación eliminada"});
+                                })
                                 .catch( err => console.log(err));
                         }
                         else {
-                            request.session.alerta = "No se puede eliminar la asociación, registra la base de Airtable correctamente para poder eliminarla.";
+                            response.status(200).json({toast:"No se puede eliminar la asociación, registra la base de Airtable correctamente para poder eliminarla."});
                         }
                     })
                     .catch(err => {
@@ -123,18 +123,25 @@ exports.postModificarAsocioacion = (request, response) => {
                 const base = new Airtable({apiKey: rows[0].API_key}).base( rows[0].base);
                 Entrega.fetchIdAirtableDrop(id_proyecto, id_fase, id_tarea, id_casos)
                     .then(([rows2, fieldData]) => {
-                        if(!rows2[0].id_airtable) {
+                        if(rows2[0].id_airtable) {
                             base('Tasks').destroy([rows2[0].id_airtable], function(err, deletedRecords) {
                                 if (err) {
                                     console.error(err);
                                     return;
                                 }
-                                console.log('Deleted', deletedRecords.length, 'records');
                             });
+
+                            Entrega.dropEntrega(id_proyecto, id_fase, id_tarea, id_casos)
+                                .then(() => {
+                                    response.status(200).json({toast: "Asociación eliminada de airtable."});
+                                })
+                            .catch( err => console.log(err));
                         }
                         else {
                             Entrega.dropEntrega(id_proyecto, id_fase, id_tarea, id_casos)
-                                .then(() => response.status(200))
+                                .then(() => {
+                                    response.status(200).json({toast:"Asociación eliminada"});
+                                })
                                 .catch( err => console.log(err));
                         }
                     })

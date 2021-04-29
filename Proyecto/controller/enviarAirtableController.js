@@ -4,11 +4,12 @@ const Entrega = require('../models/entrega');
 
 exports.postEnviarDatosAirtable = (request, response) => {
     const id_proyecto = request.session.idProyecto;
-
+    let strtoast = "";
     Proyecto.fetchAirTableKeys(id_proyecto)
         .then(([rows, fielData]) => {
             if(!rows[0].base || !rows[0].API_key){
                 request.session.alerta = "Define una base de AirTable para enviar los datos.";
+                response.redirect('/proyectos/tarea-caso-uso');
             }
             else{
                 const id_iteracion = request.session.idIteracion;
@@ -66,16 +67,17 @@ exports.postEnviarDatosAirtable = (request, response) => {
                                     });
                                 }
                             }
+                            request.session.toast = "Datos enviados a Airtable correctamente.";
                         }
                         else{
                             request.session.toast = "No hay datos que enviar a Airtable.";
                         }
+                        response.redirect('/proyectos/tarea-caso-uso');
                     })
                     .catch(err => {
                         console.log(err);
                     })
             }
-            response.redirect('/proyectos/tarea-caso-uso');
         })
         .catch(err => {
             console.log(err);

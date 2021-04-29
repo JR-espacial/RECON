@@ -28,7 +28,6 @@ module.exports =  class Proyecto{
     }
 
     static fetchAllProyectoIter(id_iteracion) {
-        console.log(id_iteracion);
         return db.execute('SELECT id_proyecto FROM iteracion WHERE id_iteracion IN ? AND estado_iteracion = 1;',[id_iteracion]);
     }
 
@@ -54,5 +53,9 @@ module.exports =  class Proyecto{
 
     static fetchAirTableKeys(id_proyecto){
         return db.execute('SELECT base, API_key FROM proyecto WHERE id_proyecto = ?;', [id_proyecto]);
+    }
+
+    static fetchInDepartment(usuario, id_departamento) {
+        return db.execute('SELECT P.id_proyecto, P.nombre_proyecto, P.descripcion as descripcion_proyecto, P.imagen, DATE_FORMAT(P.fecha_inicio, "%Y-%m-%d")AS fecha_inicio, D.id_departamento, D.nombre_departamento FROM proyecto P, iteracion I, empleado_iteracion EI, empleado E, departamento D, proyecto_departamento PD WHERE estado_proyecto = 1 AND P.id_proyecto = I.id_proyecto AND I.id_iteracion = EI.id_iteracion AND EI.id_empleado = E.id_empleado AND P.id_proyecto = PD.id_proyecto AND PD.id_departamento = D.id_departamento AND E.usuario =? AND D.id_departamento=?  GROUP BY P.id_proyecto, id_departamento ORDER BY P.fecha_inicio DESC;', [usuario, id_departamento])
     }
 }
