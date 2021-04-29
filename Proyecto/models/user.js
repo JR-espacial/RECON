@@ -14,7 +14,7 @@ module.exports =  class Usuario{
         return bcrypt.hash(this.contrasena, 12)
             .then((password_encriptado) => {
                 return db.execute(
-                    'INSERT INTO empleado (nombre_empleado, usuario, correo, contrasena, imagen_empleado) VALUES (?, ?, ?, ?, ?)',
+                    'INSERT INTO empleado (id_rol, nombre_empleado, usuario, correo, contrasena, imagen_empleado) VALUES (1, ?, ?, ?, ?, ?)',
                     [this.nombre_empleado, this.usuario, this.correo, password_encriptado, this.imagen_empleado]
                 );
             }).catch(err => console.log(err));  
@@ -53,6 +53,6 @@ module.exports =  class Usuario{
         return db.execute('DELETE FROM empleado_iteracion  WHERE id_empleado =?',[id_empleado]);
     }
     static eliminarEmpleado(id_empleado){
-        return db.execute('DELETE FROM empleado  WHERE id_empleado =?',[id_empleado]);
+        return db.execute('UPDATE empleado SET id_rol = 2  WHERE id_empleado =?',[id_empleado]);
     }
 }

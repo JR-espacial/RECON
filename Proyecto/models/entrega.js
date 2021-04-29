@@ -50,9 +50,9 @@ module.exports =  class Entrega {
         return db.execute('SELECT COUNT(id_proyecto) as tareas_completadas FROM entrega E,casos_uso CU WHERE E.id_casos = CU.id_casos AND E.estado_entrega = 1 AND CU.id_iteracion = ?;',[id_iteracion]);
     }
 
-    static updateAirtable(nombre, entrega_real, estimacion, valor_ganado, costo_real, estado_entrega){
-        return db.execute('UPDATE entrega SET entrega_real = ?, estimacion = ?, valor_ganado = ?, costo_real = ?, estado_entrega = ? WHERE nombre = ?;',
-        [entrega_real,estimacion,valor_ganado,costo_real,estado_entrega,nombre]);
+    static updateAirtable(nombre, entrega_real, valor_ganado, costo_real, estado_entrega){
+        return db.execute('UPDATE entrega SET entrega_real = ?, valor_ganado = ?, costo_real = ?, estado_entrega = ? WHERE nombre = ?;',
+        [entrega_real, valor_ganado,costo_real, estado_entrega,nombre]);
     }
 
     static fetchEntregaAirtable(id_iteracion, id_proyecto){

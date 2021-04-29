@@ -355,7 +355,7 @@ exports.getMiprogreso = async function(request,response){
 
 
     if(!proyecto_keys[0][0].base || !proyecto_keys[0][0].API_key){
-       alerta="Define una base de AirTable para ver más datos";
+       toast="Define una base de AirTable para ver más datos";
 
        response.render('miProgreso',{
         horasDia:horasDia,
@@ -382,14 +382,11 @@ exports.getMiprogreso = async function(request,response){
             
             
         }).eachPage(function page(records, fetchNextPage) {
-            
-            
             records.forEach(function(record) {
-                console.log(record.get('Finished Date'));
-                if(record.get('Status') == 'Done'){
+                if(record.get('Status') == 'Done' && record.get('Assigned')){
                     asignados= record.get('Assigned');
                     asignados.forEach(element => {
-                        if(element.email == user[0][0].correo){
+                        if(element.email && element.email == user[0][0].correo){
                             misTareasCompletadas++;
                         }   
                     });
@@ -397,14 +394,14 @@ exports.getMiprogreso = async function(request,response){
                 else{
                     tareasTotales++;
                 } 
-                if(record.get('Duration')) {
+                if(record.get('Duration') && record.get('Assigned')) {
                     asignados= record.get('Assigned');
                     asignados.forEach(element => {
-                        if(element.email == user[0][0].correo){
-                            if( i>0 && horasDia[i-1].fecha == record.get('Finished Date')){
+                        if(element.email && element.email == user[0][0].correo){
+                            if( i>0 && record.get('Finished Date') && horasDia[i-1].fecha == record.get('Finished Date')){
                                 horasDia[i-1].horas +=parseFloat((record.get('Duration')/3600).toFixed(5));
                             }
-                            else{
+                            else if(record.get('Finished Date')){
                                 horasDia[i] = {};
                                 horasDia[i].fecha = record.get('Finished Date');
                                 horasDia[i].horas = parseFloat((record.get('Duration')/3600).toFixed(5));
@@ -421,7 +418,21 @@ exports.getMiprogreso = async function(request,response){
         
         },  async function done(err) {
             if (err) {
-                console.error(err); 
+                console.log(err);
+                response.render('miProgreso',{
+                    horasDia:horasDia,
+                    proyecto_keys : proyecto_keys[0][0],
+                    tareasTotales:tareasTotales,
+                    misTareasCompletadas: misTareasCompletadas,
+                    proyecto_actual : request.session.nombreProyecto,
+                    imagen_empleado: request.session.imagen_empleado,
+                    user: request.session.usuario,
+                    title: "Mi progreso", 
+                    alerta : err,
+                    toast: toast,  
+                    csrfToken: request.csrfToken(),
+                    proyecto_actual: request.session.nombreProyecto
+                });
             }
             else{
                 if(horasDia.length>14){
@@ -431,7 +442,6 @@ exports.getMiprogreso = async function(request,response){
                     }
                     horasDia=aux;
                 }
-                console.log(horasDia);
                 response.render('miProgreso',{
                     horasDia:horasDia,
                     proyecto_keys : proyecto_keys[0][0],
