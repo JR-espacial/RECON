@@ -2,6 +2,8 @@
 <%- include('includes/navbarIteracion.ejs'); %>
 
 <link rel="stylesheet" href="tabla_tareas_cu.css">
+<link rel="stylesheet" type="text/css" href="loading_io/css/loading-bar.min.css"/>
+<script type="text/javascript" src="loading_io/js/loading-bar.js"></script>
 
 <main>
     <br>
@@ -30,14 +32,15 @@
         <div class="col s10 offset-s1">
             <% if(lista_quiero.length !== 0) { %>
                 <!-- Quiero -->
-                    <div class="col s5">
+                    <div class="col s7">
                         <table class="tabla_tareas_cu z-depth-3">
                             <thead> 
                                 <tr>
                                     <th></th>
-                                    <th>num</th>
+                                    <th>Num.</th>
                                     <th>Quiero</th>  
-                                    <th>min</th>    
+                                    <th>Minutos</th>  
+                                    <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Avance</th>  
                                 </tr>
                             </thead>
                             <tbody>
@@ -52,7 +55,21 @@
                                         </td>
                                         <td><%= quiero.numero_cu %></td>
                                         <td><%= quiero.quiero %></td>
-                                        <td><%= quiero.real_minutos %></td>
+                                        <td>&nbsp;&nbsp;<%= quiero.real_minutos %></td>
+                                        <td>
+                                            <div data-preset = "fan" id="myBar<%= quiero.id_casos %>" class = "label-center"></div>
+                                        </td>
+                                        <script>
+                                            /* construct manually */
+                                            var bar1 = new ldBar("#myBar<%= quiero.id_casos %>", {
+                                                "stroke": '#01579B',
+                                                "stroke-width": 10,
+                                                "preset": "fan",
+                                                "value": 0
+                                            });
+                                            /* ldBar stored in the element */
+                                            bar1.set('<%= quiero.porcentaje_avance %>' * 100);
+                                        </script>
                                     </tr>
                                 <% } %>
                             </tbody>
@@ -99,8 +116,8 @@
     </div>
     
     <script>
-        
         let casoactual = ""; 
+        
         function obtenerTareas(idcaso) {
             casoactual = idcaso;
             let csrf = document.getElementById("_csrf").value;

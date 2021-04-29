@@ -17,11 +17,6 @@
     width:100%;
 }
 
-/* esto pone la scroll bar afuera o adentro */
-/* .estimacion_tareas thead {
-    width: calc( 100% - 1em )
-} */
-
 .estimacion_tareas thead th {
     position: sticky;
     top: 0;
