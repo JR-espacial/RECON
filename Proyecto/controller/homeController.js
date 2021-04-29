@@ -33,6 +33,7 @@ exports.getHome = async function (request, response){
 exports.postProyectoID = (request, response) => {
     request.session.idProyecto = request.body.idProyecto;
     request.session.nombreProyecto = request.body.nombreProyecto;
+    request.session.imagenProyecto = request.body.imagenProyecto;
     response.redirect("/proyectos/iteraciones-desarrollo-proyecto");
 }
 
