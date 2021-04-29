@@ -4,6 +4,7 @@ const Usuario = require('../models/user');
 const Empleado_Iteracion = require('../models/empleado_iteracion');
 const CapacidadEquipo = require('../models/capacidad_equipo');
 const PFT = require('../models/Proyecto_Fase_Tarea');
+const APC = require('../models/ap_colaborador');
 const { fetchLastNumIter } = require('../models/iteracion');
 
 exports.getIteracionesDesarrolloProyecto = async function(request,response){
@@ -153,7 +154,7 @@ exports.postNuevaIteracion = async function (request, response){
             if(i == 0 || infoUsuario[0][0] && infoUsuario[0][0].usuario != request.session.usuario){
                 await Iteracion.saveColaborador(infoUsuario[0][0].id_empleado, infoIteracion[0][0].id_iteracion);
                 // HACER LLAMADAS PARA ASIGNAR ESPACIOS EN TABLAS AP
-                console.log(infoUsuario[0][0].id_empleado);
+                // console.log(infoUsuario[0][0].id_empleado);
             }
             else if(!infoUsuario[0][0] || infoUsuario[0][0].usuario != request.session.usuario){
                 alerta += " "+ colabs[i] + " ";
@@ -230,12 +231,12 @@ exports.postEditarIteracion = async function (request, response){
                 
                 // Primera aparicion en proyecto en (iteraciones ACTIVAS FALTA)
                 if(numIteracionesEmpleado[0][0].numIt < 1) {
-                    // Agregar campos a AP_Colaborador
-                    // Obtener todas las tareas del proyecto
-                        // C/tarea: Insertar campo de AP i con 0 minutos en AP_COLaborador
-                        // Llamo el proceudre actualiza tiempos
+                    // Agregar 6 campos en Ap_Colaborador (1 por AP) para cada tarea del proyecto y actualizar los promedios
                     for(let j=0; j < tareas[0].length; j++) {
-                        console.log(tareas[0][j].id_fase);
+                        for(let k=1; k<=6; k++) {
+                            await APC.SaveOne(request.session.idProyecto, tareas[0][j].id_fase, tareas[0][j].id_tarea, k, fetchOneUsuario[0][0].id_empleado, 0);
+                            await APC.actualizaTiempos(request.session.idProyecto, fetchOneUsuario[0][0].id_empleado, tareas[0][j].id_fase, tareas[0][j].id_tarea, k, 0);
+                        }
                     }
                 }
             }

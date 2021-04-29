@@ -57,6 +57,7 @@
         estado_iteracion BIT,
         iteracion_terminada BIT,
         total_min_real DECIMAL(5,1),
+        total_min_maximo DECIMAL(5,1),
         PRIMARY KEY(id_iteracion),
         FOREIGN KEY(id_proyecto) REFERENCES proyecto(id_proyecto),
         FOREIGN KEY(id_capacidad) REFERENCES capacidad_equipo(id_capacidad)

@@ -10,7 +10,7 @@ module.exports = class ap_colaborador{
         this.minutos = minutos;
     }
 
-    static Save(id_proyecto, id_fase, id_tarea, id_empleado){
+    static Save(id_proyecto, id_fase, id_tarea, id_empleado) {
         return db.execute('INSERT INTO ap_colaborador (id_proyecto, id_fase, id_tarea, id_ap, id_empleado, minutos) VALUES (?, ?, ?, ?, ?, ?), (?, ?, ?, ?, ?, ?), (?, ?, ?, ?, ?, ?), (?, ?, ?, ?, ?, ?), (?, ?, ?, ?, ?, ?), (?, ?, ?, ?, ?, ?);',
         [id_proyecto, id_fase, id_tarea, 1, id_empleado, 0], 
         [id_proyecto, id_fase, id_tarea, 2, id_empleado, 0],
@@ -18,6 +18,11 @@ module.exports = class ap_colaborador{
         [id_proyecto, id_fase, id_tarea, 4, id_empleado, 0],
         [id_proyecto, id_fase, id_tarea, 5, id_empleado, 0],
         [id_proyecto, id_fase, id_tarea, 6, id_empleado, 0]);
+    }
+
+    static SaveOne(id_proyecto, id_fase, id_tarea, id_ap, id_empleado, minutos) {
+        return db.execute('INSERT INTO ap_colaborador (id_proyecto, id_fase, id_tarea, id_ap, id_empleado, minutos) VALUES (?, ?, ?, ?, ?, ?);',
+        [id_proyecto, id_fase, id_tarea, id_ap, id_empleado, minutos]);
     }
 
     static fetchALL(id_proyecto){
