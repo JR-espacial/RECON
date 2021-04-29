@@ -27,15 +27,16 @@ a{
     height: 100%;
 }
 
+
 #fases{
     background-color: #f8f8f8;
     overflow-x: scroll;
-    overflow-y: hidden;
+    overflow-y: auto;
     white-space: nowrap;
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
     margin: 0 auto;
-    height: calc(100% - 125px);
+    height: 78vh;
 }
 
 #fasesVert{
