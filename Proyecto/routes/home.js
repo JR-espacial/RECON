@@ -11,7 +11,6 @@ router.get('/', isAuth, homeController.getHome);
 router.post('/', isAuth, homeController.postProyectoID);
 
 
-
 router.use(express.static(path.join(__dirname, '..', 'public')));
 
 module.exports = router;
