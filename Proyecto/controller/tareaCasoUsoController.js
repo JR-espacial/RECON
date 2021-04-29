@@ -86,10 +86,7 @@ exports.postModificarAsocioacion = (request, response) => {
                     let estimacion = 0;
                     Entrega.crearEntrega(id_proyecto, id_fase, id_tarea, id_casos, estimacion)
                         .then(() => {
-                            Entrega.actualiza_con_check(id_casos)
-                                .then(() => {
-                                    response.status(200).json({toast:"Recuerda definir un AP para este caso, actualmente esta en 0."});
-                                })
+                            response.status(200).json({toast:"Recuerda definir un AP para este caso, actualmente esta en 0."});
                         })
                         .catch( err => console.log(err));
                 }
