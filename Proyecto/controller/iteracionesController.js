@@ -267,6 +267,9 @@ exports.postEditarIteracion = async function (request, response){
             fetchOneUsuario =  await Usuario.fetchOne(colabsDeleted[i]);
             await Iteracion.removeUserfromIter(id_iteracion, colabsDeleted[i]);
             
+            const id_capacidad = await Iteracion.getCapacidad(id_iteracion);
+            await CapacidadEquipo.callsetHorasProductivas(id_capacidad[0][0].id_capacidad, id_iteracion);
+
             // Si ya no esta presente en el proyecto, borrar sus estimaciones y actualizar promedios            
             numIteracionesEmpleado = await Empleado_Iteracion.fetchIterPorEmpleado(fetchOneUsuario[0][0].id_empleado, request.session.idProyecto);
             if(numIteracionesEmpleado[0][0].numIt < 1) {

@@ -1,5 +1,6 @@
 const { request, response } = require('express');
 const capacidad_equipo = require('../models/capacidad_equipo');
+const Iteracion = require('../models/iteracion');
 
 exports.getCapacidadEquipo = (request, response) =>{
     const id_iteracion = request.session.idIteracion;
@@ -51,8 +52,18 @@ exports.postModificarHorasColaborador = (request, response) => {
     else {
         capacidad_equipo.updateCapacidadEmpleado(id_iteracion, id_empleado, horas)
             .then(() => {
-                request.session.toast = "Capacidad Modificada";
-                response.redirect('capacidad-equipo');
+                Iteracion.getCapacidad(id_iteracion)
+                    .then(([capacidad, fieldData]) => {
+                        const id_capacidad = capacidad[0].id_capacidad;
+                        capacidad_equipo.callsetHorasProductivas(id_capacidad, id_iteracion)
+                            .then((fieldData)=> {
+                                request.session.toast = "Capacidad Modificada";
+                                response.redirect('capacidad-equipo');
+                            })
+                            .catch(err => {
+                                console.log(err);
+                            })
+                    })
             })
             .catch(err => {
                 console.log(err);

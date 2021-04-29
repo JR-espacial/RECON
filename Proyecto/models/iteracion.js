@@ -73,4 +73,8 @@ module.exports =  class Iteracion{
     static updatePorcentajeAvance(id_casos){
         return db.execute('UPDATE casos_uso SET porcentaje_avance = CAST((SELECT SUM(estimacion) FROM entrega WHERE id_casos = ? AND estado_entrega = "Done")/real_minutos AS DECIMAL(3,2)) WHERE id_casos = ?', [id_casos, id_casos]);
     }
+
+    static getCapacidad(id_iteracion){
+        return db.execute('SELECT id_capacidad FROM iteracion WHERE id_iteracion =?', [id_iteracion]);
+    }
 }

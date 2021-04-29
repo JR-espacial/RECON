@@ -198,7 +198,7 @@
     BEGIN
         UPDATE capacidad_equipo SET horas_productivas = cast(
             ((SELECT SUM(horas_semanales) FROM empleado_iteracion WHERE id_iteracion = SP_id_iteracion) *
-            (1 - tiempo_perdido_pc - errores_registro_pc) * (1 - overhead_pc) * productivas_pc)
+            (1 - IFNULL(tiempo_perdido_pc, 0) - IFNULL(errores_registro_pc, 0)) * (1 - IFNULL(overhead_pc, 0)) * IFNULL(productivas_pc, 0))
             as decimal(5,2)
         ) 
         WHERE id_capacidad = SP_id_capacidad;
@@ -388,6 +388,9 @@
         UPDATE casos_uso SET real_minutos = cast((SELECT SUM(estimacion) FROM entrega E WHERE E.id_casos = idCasos)* 60 as decimal (5,1)) 
         WHERE id_casos = idCasos;
         
+        UPDATE casos_uso SET porcentaje_avance = CAST((SELECT SUM(estimacion) FROM entrega WHERE id_casos = idCasos AND estado_entrega = "Done")/real_minutos AS DECIMAL(3,2))
+        WHERE id_casos = idCasos;
+
         UPDATE iteracion SET total_min_real = cast((SELECT SUM(real_minutos) FROM casos_uso CU WHERE CU.id_iteracion = (SELECT id_iteracion FROM casos_uso WHERE id_casos = idCasos)) as decimal (5,1)) 
         WHERE id_iteracion = (SELECT id_iteracion FROM casos_uso WHERE id_casos = idCasos);
   	END //

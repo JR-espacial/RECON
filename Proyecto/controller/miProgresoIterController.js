@@ -27,7 +27,24 @@ exports.getMiProgresoIteracion = (request,response) => {
                     Proyecto.fetchAirTableKeys(id_proyecto)
                         .then(([rows, fielData]) => {
                             if(!rows[0].base || !rows[0].API_key){
-                                alerta = "Define una base de AirTable para enviar los datos.";
+                                toast = "Define una base de AirTable para enviar los datos.";
+                                response.render('miProgresoIteracion',{
+                                    num_iteracion: request.session.numIteracion,
+                                    navegacion : request.session.navegacion,
+                                    proyecto_actual : request.session.nombreProyecto,
+                                    imagen_empleado: request.session.imagen_empleado,
+                                    title: "Mi Progreso",
+                                    csrfToken: request.csrfToken(),
+                                    user: request.session.usuario,
+                                    infouser: user[0],
+                                    toast: toast,
+                                    alerta: alerta,
+                                    estados: estados,
+                                    horas_dedicadas: horas_dedicadas,
+                                    registros: registros,
+                                    horas_reales: horas_reales,
+                                    pendientes: pendientes
+                                });
                             }
                             else{
                                 const iteracion = "{Iterations} = "+"\"IT"+request.session.numIteracion+"\"";
@@ -85,8 +102,29 @@ exports.getMiProgresoIteracion = (request,response) => {
 
                                 }, function done(err) {
                                     if (err) {
-                                        toast = "Error al cargar datos de AirTable.";
-                                        console.error(err); return;
+                                        alerta = "Error al cargar datos de AirTable.";
+                                        estados = [];
+                                        horas_dedicadas = 0;
+                                        registros = [];
+                                        horas_reales = 0;
+                                        pendientes = [];
+                                        response.render('miProgresoIteracion',{
+                                            num_iteracion: request.session.numIteracion,
+                                            navegacion : request.session.navegacion,
+                                            proyecto_actual : request.session.nombreProyecto,
+                                            imagen_empleado: request.session.imagen_empleado,
+                                            title: "Mi Progreso",
+                                            csrfToken: request.csrfToken(),
+                                            user: request.session.usuario,
+                                            infouser: user[0],
+                                            toast: toast,
+                                            alerta: alerta,
+                                            estados: estados,
+                                            horas_dedicadas: horas_dedicadas,
+                                            registros: registros,
+                                            horas_reales: horas_reales,
+                                            pendientes: pendientes
+                                        });
                                     }
                                     else{
                                         horas_dedicadas = (horas_dedicadas / 3600);
