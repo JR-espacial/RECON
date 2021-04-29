@@ -17,11 +17,12 @@
     <li><a href="/proyectos/iteraciones-desarrollo-proyecto"><i class="material-icons right">apps</i>Proyecto</a></li>
     
     <li><div class="divider"></div></li>
-    <li id="avance_proyecto"><a class="waves-effect" href="/proyectos/avance-proyecto"><i class="material-icons right">timeline</i>Avance de la iteración</a></li>
+    <li id="avance_proyecto"><a class="waves-effect" href="/proyectos/avance-proyecto"><i class="material-icons right">timeline</i>Avance de la Iteración</a></li>
+    <li id="mi_progreso"><a class="waves-effect" href ="/proyectos/mi-progreso-iteracion">Mi Progreso Iteración<i class="material-icons right">equalizer</i></a></li>
     <li id="capacidad"><a class="waves-effect" href="/proyectos/capacidad-equipo">Capacidad de Equipo<i class="material-icons right">people</i></a></li>
     <li id="casos_uso"><a class="waves-effect" href="/proyectos/casos-uso-iteracion">Casos de Uso<i class="material-icons right">description</i></a></li>    
     <li id="tareas_casos_uso"><a class="waves-effect" href="/proyectos/tarea-caso-uso">Tareas por caso de uso<i class="material-icons right">check_circle</i></a></li>
-   
+
     <li class="logout"><a href="/users/logout"><i class="material-icons right">input</i>Salir</a></li>
 </ul>
 
@@ -34,6 +35,10 @@
 
     if("<%=title%>" == "Avance del Proyecto"){
         var element = document.getElementById("avance_proyecto");
+        element.classList.add("active");
+    }
+    else if("<%=title%>" == "Mi Progreso"){
+        var element = document.getElementById("mi_progreso");
         element.classList.add("active");
     }
     else if("<%=title%>" == "Capacidad de Equipo"){

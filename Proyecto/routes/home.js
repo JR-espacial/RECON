@@ -5,7 +5,6 @@ const isAuth = require('../util/is_Auth');
 
 const homeController = require('../controller/homeController');
 
-router.get('/mi-desempeño', isAuth, homeController.getMidesempeño);
 router.get('/', isAuth, homeController.getHome);
 router.post('/', isAuth, homeController.postProyectoID);
 router.post('/modificar-proyecto', isAuth, homeController.postEditarProyecto);
