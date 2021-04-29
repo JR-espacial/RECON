@@ -13,6 +13,7 @@ const avanceIteracionController = require('../controller/avanceIteracionControll
 const capacidadController = require('../controller/capacidadController');
 const enviarAirtableController = require('../controller/enviarAirtableController');
 const homeController = require('../controller/homeController');
+const miProgresoIteracionController = require('../controller/miProgresoIterController');
 
 
 router.get('/mi-progreso', isAuth, authRole(1), iteracionesController.getMiprogreso);
@@ -28,6 +29,8 @@ router.get('/fases-proyecto', isAuth, authRole(1), fasesController.getFasesProye
 router.post('/fases-proyecto', isAuth, authRole(1), fasesController.postFasesProyecto);
 
 router.get('/avance-proyecto', isAuth, authRole(1), avanceIteracionController.getAvanceProyecto);
+
+router.get('/mi-progreso-iteracion', isAuth, authRole(1), miProgresoIteracionController.getMiProgresoIteracion);
 
 router.get('/estimacion-ap', isAuth, authRole(1), proyectosController.getEstimacionAP);
 

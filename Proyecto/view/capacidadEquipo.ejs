@@ -149,7 +149,7 @@
                 <tbody>
                     <% for (let colaborador of colaboradores) { %>
                         <tr>
-                            <td><%= colaborador.usuario %></td>
+                            <td><%= colaborador.nombre_empleado %></td>
                             <td>
                                 <form method = "POST" action = "modificar-horas-colaborador">
                                     <input type="hidden" name = "_csrf" value = "<%= csrfToken %>">

@@ -22,7 +22,7 @@ module.exports =  class Capacidad_Equipo{
     }
 
     static fetchCapacidadEmpleados(id_iteracion) {
-        return db.execute('SELECT EI.id_empleado, E.usuario, EI.horas_semanales FROM empleado_iteracion EI INNER JOIN empleado E ON EI.id_empleado = E.id_empleado WHERE id_iteracion =?;', [id_iteracion]);
+        return db.execute('SELECT EI.id_empleado, E.nombre_empleado, EI.horas_semanales FROM empleado_iteracion EI INNER JOIN empleado E ON EI.id_empleado = E.id_empleado WHERE id_iteracion =?;', [id_iteracion]);
     }
 
     static fetchAllPorcentajes(id_iteracion){
@@ -63,5 +63,9 @@ module.exports =  class Capacidad_Equipo{
 
     static callsetHorasProductivas(id_capacidad, id_iteracion){
         return db.execute('CALL set_horas_productivas(?, ?);', [id_capacidad, id_iteracion]);
+    }
+
+    static fetchProductivasEmpleado(id_iteracion, usuario) {
+        return db.execute('SELECT IFNULL(EI.horas_semanales * (1-tiempo_perdido_pc - errores_registro_pc) * (1-overhead_pc) * productivas_pc, 0) as horas FROM empleado_iteracion EI INNER JOIN empleado E ON EI.id_empleado = E.id_empleado INNER JOIN iteracion I ON EI.id_iteracion = I.id_iteracion INNER JOIN capacidad_equipo CE ON I.id_capacidad = CE.id_capacidad WHERE I.id_iteracion =? AND E.usuario =?;', [id_iteracion, usuario]);
     }
 }
