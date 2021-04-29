@@ -2,6 +2,7 @@ const Proyecto = require('../models/proyecto');
 const Iteracion = require('../models/iteracion');
 const Capacidad_Equipo = require('../models/capacidad_equipo');
 const Entrega = require('../models/entrega');
+const Casos_Uso = require('../models/casos_uso');
 const Airtable = require('airtable');
 
 
@@ -121,6 +122,11 @@ exports.getAvanceProyecto = async function (request, response) {
 
             workitemlist.forEach( async function (element) {
                 await Entrega.updateAirtable(element.nombre, element.entrega_real, element.estimacion, element.valor_ganado, element.costo_real, element.estado_entrega);
+            });
+
+            let casos_uso = await Casos_Uso.fetchAllIteracion(request.session.idIteracion);
+            casos_uso[0].forEach(async function (caso_uso){
+                await Iteracion.updatePorcentajeAvance(caso_uso.id_casos);
             });
 
             fetchAvance(request, response, "", "");

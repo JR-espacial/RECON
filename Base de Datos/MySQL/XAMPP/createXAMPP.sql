@@ -373,7 +373,7 @@
         IN idFase INT,
         IN idTarea INT,
         IN idAp INT,
-        IN Xminutos INT
+        IN Xminutos DECIMAL(5,1)
     )
     BEGIN
         UPDATE ap_colaborador SET minutos = Xminutos 

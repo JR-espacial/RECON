@@ -64,7 +64,7 @@ exports.postNuevoProyecto = async function (request, response) {
     let image_file_name = '';
 
     if(!image) {
-        image_file_name = 'https://www.esan.edu.pe/conexion/actualidad/2017/10/26/1500x844_portafolio_proyectos.jpg';
+        image_file_name = 'portafolio_proyectos.jpg';
     }
     else{
         image_file_name = image.filename;
