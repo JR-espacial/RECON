@@ -69,4 +69,8 @@ module.exports =  class Iteracion{
         return db.execute('INSERT INTO empleado_iteracion (id_empleado, id_iteracion, horas_semanales) VALUES (?, ?, NULL);', 
         [id_empleado, id_iteracion]);
     }
+
+    static updatePorcentajeAvance(id_casos){
+        return db.execute('UPDATE casos_uso SET porcentaje_avance = CAST((SELECT SUM(estimacion) FROM entrega WHERE id_casos = ? AND estado_entrega = "Done")/real_minutos AS DECIMAL(3,2)) WHERE id_casos = ?', [id_casos, id_casos]);
+    }
 }
