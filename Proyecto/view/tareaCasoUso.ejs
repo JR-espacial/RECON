@@ -158,18 +158,15 @@
             
             const listatareas = [];
             const listafases = [];
+            let i = 0;
+            let id = 0;
             "<% for (let tarea of lista_tareas){ %>"
                 listatareas.push("<%= tarea.id_tarea %>");
                 listafases.push("<%= tarea.id_fase %>");
-            "<% } %>"
-            let i = 0;
-            for(let tarea of listatareas) {
-                let id = 'botonCheck_' + i;
+                id = 'botonCheck_' + i;
                 document.getElementById(id).disabled = true;
-                console.log('disabled');
                 i++;
-            }
-
+            "<% } %>"
 
             fetch('/proyectos/tarea-caso-uso/modificarAsociacion', {
                 method: 'POST',
@@ -187,12 +184,10 @@
                     M.toast({html: data.toast, classes: 'blue darken-3'});
                 }
                 // Solo entra aqui si data no es nulo
-                console.log('Siu');
                 i = 0;
                 for(let tarea of listatareas) {
-                    let id = 'botonCheck_' + i;
+                    id = 'botonCheck_' + i;
                     document.getElementById(id).disabled = false;
-                    console.log('des-disabled');
                     i++;
                 }
             })
