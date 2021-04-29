@@ -97,7 +97,7 @@
     </div>
     
     <script>
-
+        
         let casoactual = ""; 
         function obtenerTareas(idcaso) {
             casoactual = idcaso;
@@ -151,13 +151,6 @@
             let valorCheck = document.getElementById("botonCheck_" + index).checked;
             
             let accion = (valorCheck === true) ? "registrar" : "eliminar";
-
-            if(accion === "registrar") {
-                M.toast({html: 'Asociación registrada'});
-            }
-            else if(accion === "eliminar") {
-                M.toast({html: 'Asociación eliminada'});
-            } 
             
             let data = {id_fase: idFase, id_casos: casoactual, id_tarea: idTrabajo, accion: accion};
 
@@ -172,7 +165,10 @@
             .then(result => {
                 return result.json();
             })
-            .then(data => {            
+            .then(data => {
+                if (data.toast) {
+                    M.toast({html: data.toast, classes: 'blue darken-3'});
+                }
             })
             .catch(err => {
                 console.log(err);
