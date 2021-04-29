@@ -2,7 +2,7 @@
 
 .tabla_cu tbody {
     display:block;
-    max-height:450px;
+    max-height:400px;
     overflow-y: auto;
     overflow-x: hidden;
     background-color: white;

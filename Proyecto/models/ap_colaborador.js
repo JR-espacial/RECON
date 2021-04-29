@@ -10,7 +10,7 @@ module.exports = class ap_colaborador{
         this.minutos = minutos;
     }
 
-    static Save(id_proyecto, id_fase, id_tarea, id_empleado){
+    static Save(id_proyecto, id_fase, id_tarea, id_empleado) {
         return db.execute('INSERT INTO ap_colaborador (id_proyecto, id_fase, id_tarea, id_ap, id_empleado, minutos) VALUES (?, ?, ?, ?, ?, ?), (?, ?, ?, ?, ?, ?), (?, ?, ?, ?, ?, ?), (?, ?, ?, ?, ?, ?), (?, ?, ?, ?, ?, ?), (?, ?, ?, ?, ?, ?);',
         [id_proyecto, id_fase, id_tarea, 1, id_empleado, 0], 
         [id_proyecto, id_fase, id_tarea, 2, id_empleado, 0],
@@ -18,6 +18,11 @@ module.exports = class ap_colaborador{
         [id_proyecto, id_fase, id_tarea, 4, id_empleado, 0],
         [id_proyecto, id_fase, id_tarea, 5, id_empleado, 0],
         [id_proyecto, id_fase, id_tarea, 6, id_empleado, 0]);
+    }
+
+    static SaveOne(id_proyecto, id_fase, id_tarea, id_ap, id_empleado, minutos) {
+        return db.execute('INSERT INTO ap_colaborador (id_proyecto, id_fase, id_tarea, id_ap, id_empleado, minutos) VALUES (?, ?, ?, ?, ?, ?);',
+        [id_proyecto, id_fase, id_tarea, id_ap, id_empleado, minutos]);
     }
 
     static fetchALL(id_proyecto){
@@ -33,6 +38,11 @@ module.exports = class ap_colaborador{
     static deleteTarea(id_proyecto, id_fase, id_tarea){
         return db.execute('DELETE FROM ap_colaborador WHERE id_proyecto=? AND id_fase=? AND id_tarea=?;',
         [id_proyecto, id_fase, id_tarea]);
+    }
+
+    static deleteEstimacionesUsuario(id_proyecto, id_empleado) {
+        return db.execute('DELETE FROM ap_colaborador WHERE id_proyecto=? AND id_empleado=?;', 
+        [id_proyecto, id_empleado]);
     }
 
     static actualizaTiempos(idProyecto, idEmpleado, idFase, idTarea, idAP, minutos){

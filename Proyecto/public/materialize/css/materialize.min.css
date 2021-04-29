@@ -56,10 +56,12 @@
 } /*Color of underline*/
 
 /* Checkbox Style */
-.checkbox-blue-grey[type="checkbox"].filled-in:checked+span:not(.lever):after {
+.checkbox-blue-grey[type="checkbox"].filled-in:checked+span:not(.lever):after,
+.checkbox-blue-grey[type="checkbox"].filled-in:disabled+span:not(.lever):after {
     border: 2px solid #0d58a9;
     background-color: #0d58a9;
 }
+
 
 /* Radio Buttons Style */
 [type="radio"]:checked + span:after,

@@ -10,4 +10,9 @@ module.exports = class empleado_iteracion{
         return db.execute('SELECT DISTINCT id_empleado FROM empleado_iteracion as EI, iteracion as I WHERE I.id_proyecto = ? AND EI.id_iteracion = I.id_iteracion',
         [id_proyecto]);
     }
+
+    static fetchIterPorEmpleado (id_empleado, id_proyecto) {
+        return db.execute ('SELECT COUNT(empleado_iteracion.id_iteracion) as numIt FROM empleado_iteracion, iteracion WHERE id_empleado=? AND empleado_iteracion.id_iteracion=iteracion.id_iteracion AND id_proyecto = ?', 
+        [id_empleado, id_proyecto]);
+    }
 }

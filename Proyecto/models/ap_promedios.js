@@ -29,6 +29,11 @@ module.exports = class ap_promedios{
         [id_proyecto, id_fase, id_tarea, id_ap]);
     }
 
+    static updatePromedio(id_proyecto, id_fase, id_tarea, id_ap) {
+        return db.execute('UPDATE ap_promedios SET promedio_minutos=(SELECT AVG(minutos) FROM ap_colaborador WHERE id_proyecto=? AND id_fase=? AND id_tarea=? AND id_ap=?) WHERE id_proyecto=? AND id_fase=? AND id_tarea=? AND id_ap=?;',
+        [id_proyecto, id_fase, id_tarea, id_ap, id_proyecto, id_fase, id_tarea, id_ap]);
+    }
+
     static deleteTarea(id_proyecto, id_fase, id_tarea){
         return db.execute('DELETE FROM ap_promedios WHERE id_proyecto=? AND id_fase=? AND id_tarea=?;',
         [id_proyecto, id_fase, id_tarea]);
