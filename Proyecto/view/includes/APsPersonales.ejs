@@ -52,6 +52,13 @@
     let csrf = document.getElementById("_csrf").value;
     let data = {id_fase: idfase, id_tarea: idtarea, id_ap: idap, minutos: valor};
     
+    let lista_colaborador = [];
+    "<% for (let estimacion of lista_colaborador){ %>"
+        id = "<%= estimacion.id_fase %>" + ',' + "<%= estimacion.id_tarea %>" + ',' + "<%= estimacion.id_ap %>";
+        lista_colaborador.push(id);
+        document.getElementById(id).disabled = true;
+    "<% } %>"
+
     fetch('/proyectos/estimacion-ap', {
       method : 'POST',
       body : JSON.stringify(data),
@@ -63,7 +70,10 @@
     .then(result => {
       return result.json();
     })
-    .then(data => {            
+    .then(data => {   
+      for (let estimacion of lista_colaborador){
+        document.getElementById(estimacion).disabled = false;
+      }
     })
     .catch(err => {
         console.log(err); 

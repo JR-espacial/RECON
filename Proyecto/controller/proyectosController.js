@@ -134,7 +134,7 @@ exports.postEstimacionAP = (request, response) => {
                         Entrega.actualiza_con_check(caso.id_casos * 1)
                         .catch(err => console.log(err));
                     }
-                    response.status(200)
+                    response.status(200).json("");
                 })
         })
         .catch( err => console.log(err));      
