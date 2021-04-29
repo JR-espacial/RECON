@@ -116,6 +116,7 @@ exports.postNuevaIteracion = async function (request, response){
     const fecha_fin = request.body.fecha_fin;
     const colaboradores = request.body.colaboradores;
     const colabs =[];
+    let tareas = [];
     let alerta = "La iteracion fue creada exitosamente. Sin embargo los usuarios:";
 
     if(fecha_fin < fecha_inicio){
@@ -148,14 +149,27 @@ exports.postNuevaIteracion = async function (request, response){
         await iteracion.saveIteracion(); 
         const infoIteracion = await Iteracion.fetchOne(id_proyecto,fetchLastNumIter[0][0].num_iteracion);
 
+        // Obtener tareas del proyecto
+        tareas = await PFT.fetchTareasFasesId(request.session.idProyecto);
+
         // Relacionar usuarios con iteracion (todos incluyendo al que la crea)
         for (let i = 0; i < colabs.length; i++) {
             const infoUsuario =  await Usuario.fetchOne(colabs[i]);
             if(i == 0 || infoUsuario[0][0] && infoUsuario[0][0].usuario != request.session.usuario){
+                const numIteracionesEmpleado = await Empleado_Iteracion.fetchIterPorEmpleado(infoUsuario[0][0].id_empleado, request.session.idProyecto);
                 await Iteracion.saveColaborador(infoUsuario[0][0].id_empleado, infoIteracion[0][0].id_iteracion);
-                // HACER LLAMADAS PARA ASIGNAR ESPACIOS EN TABLAS AP
-                // console.log(infoUsuario[0][0].id_empleado);
-            }
+                
+                // Primera aparicion en proyecto
+                if(numIteracionesEmpleado[0][0].numIt < 1) {
+                    // Agregar 6 campos en Ap_Colaborador (1 por AP) para cada tarea del proyecto y actualizar los promedios
+                    for(let j=0; j < tareas[0].length; j++) {
+                        for(let k=1; k<=6; k++) {
+                            await APC.SaveOne(request.session.idProyecto, tareas[0][j].id_fase, tareas[0][j].id_tarea, k, infoUsuario[0][0].id_empleado, 0);
+                            await APC.actualizaTiempos(request.session.idProyecto, infoUsuario[0][0].id_empleado, tareas[0][j].id_fase, tareas[0][j].id_tarea, k, 0);
+                        }
+                    }
+                }
+            }   
             else if(!infoUsuario[0][0] || infoUsuario[0][0].usuario != request.session.usuario){
                 alerta += " "+ colabs[i] + " ";
             }
@@ -229,7 +243,7 @@ exports.postEditarIteracion = async function (request, response){
                 const numIteracionesEmpleado = await Empleado_Iteracion.fetchIterPorEmpleado(fetchOneUsuario[0][0].id_empleado, request.session.idProyecto);
                 await Iteracion.saveColaborador(fetchOneUsuario[0][0].id_empleado, id_iteracion);
                 
-                // Primera aparicion en proyecto en (iteraciones ACTIVAS FALTA)
+                // Primera aparicion en proyecto
                 if(numIteracionesEmpleado[0][0].numIt < 1) {
                     // Agregar 6 campos en Ap_Colaborador (1 por AP) para cada tarea del proyecto y actualizar los promedios
                     for(let j=0; j < tareas[0].length; j++) {
