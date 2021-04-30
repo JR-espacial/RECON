@@ -33,8 +33,6 @@ exports.getAvanceProyecto = async function (request, response) {
             // This function (`page`) will get called for each page of records.
             records.forEach(function(record) {
                 let IT = Number (record.get('Name').slice(2,record.get('Name').indexOf('-')));
-                
-               
                     workitemlist[i] = {};
                     workitemlist[i].nombre = record.get('Name');
                     workitemlist[i].asignados = record.get('Assigned');
@@ -121,7 +119,7 @@ exports.getAvanceProyecto = async function (request, response) {
             }
 
             workitemlist.forEach( async function (element) {
-                await Entrega.updateAirtable(element.nombre, element.entrega_real, element.estimacion, element.valor_ganado, element.costo_real, element.estado_entrega);
+                await Entrega.updateAirtable(element.nombre, element.entrega_real, element.valor_ganado, element.costo_real, element.estado_entrega);
             });
 
             let casos_uso = await Casos_Uso.fetchAllIteracion(request.session.idIteracion);

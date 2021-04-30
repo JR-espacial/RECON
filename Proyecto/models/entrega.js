@@ -78,7 +78,7 @@ module.exports =  class Entrega {
     }
 
     static fetchIdAirtableDrop(id_proyecto, id_fase, id_tarea, id_caso) {
-        return db.execute('SELECT id_airtable FROM Entrega WHERE id_proyecto =? AND id_fase =? AND id_tarea =? AND id_casos =?', [id_proyecto, id_fase, id_tarea, id_caso]);
+        return db.execute('SELECT id_airtable FROM entrega WHERE id_proyecto =? AND id_fase =? AND id_tarea =? AND id_casos =?', [id_proyecto, id_fase, id_tarea, id_caso]);
     }
 
 }
