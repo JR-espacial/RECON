@@ -1,18 +1,14 @@
-
-<a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+<%- include('breadcrumbsIteracion.ejs'); %>
 <ul class="sidenav sidenav-fixed" id="slide-out">
-    <li><div class="user-view">
-            <div class="background">
-                <img src="https://wallpapercave.com/wp/wp3194552.png">
-            </div>
-            <a href="#user"><img class="circle"src="https://storage.googleapis.com/natgas/others/logos/natgas-logo-simple.png"></a>
-            <div class="row">
-                <div class="col s10">
-                    <a href="#name"><span class="white-text name"><%=user%></span></a>
-                    <a href="#email"><span class="white-text email"><%=user%>@email.com</span></a>
+    <li><div class="user-view background">
+            <a ><img class="circle resposive-image materialboxed"   src="../<%=imagen_empleado%>" width="60" height="60"></a>
+            <div class="row valign-wrapper">
+                <div class="col s9">
+                    <a href="/users/settings"><span class="white-text name"><%=user%></span></a>
+                    <a href="/users/settings"><span class="white-text email"><%=user%>@email.com</span></a>
                 </div>
-                <div class="col s1">
-                    <a href="/home"><i class="white-text material-icons">home</i></a>
+                <div class="col s2 offset-s1">
+                    <a href="/users/settings"><i class="white-text material-icons">settings</i></a>
                 </div>
             </div>
         </div>
@@ -21,19 +17,40 @@
     <li><a href="/proyectos/iteraciones-desarrollo-proyecto"><i class="material-icons right">apps</i>Proyecto</a></li>
     
     <li><div class="divider"></div></li>
-    <li><a class="waves-effect" href="/proyectos/resumen-proyecto">Resumen</a></li>
-    <li><a class="waves-effect" href="/proyectos/capacidad-equipo">Capacidad de Equipo</a></li>
-    <li><a class="waves-effect" href="/proyectos/casos-uso-iteracion">Casos de Uso</a></li>    
-    <li><a class="waves-effect" href="/proyectos/tarea-caso-uso">Tareas por caso de uso</a></li>
-    <li><a class="waves-effect" href="/proyectos/avance-proyecto"><i class="material-icons right">timeline</i>Avance de la iteración</a></li>
-    
-    <li class="logout"><a href="/users/logout"><i class="material-icons right">input</i>Logout &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a></li>
+    <li id="avance_proyecto"><a class="waves-effect" href="/proyectos/avance-proyecto"><i class="material-icons right">timeline</i>Avance de la Iteración</a></li>
+    <li id="mi_progreso"><a class="waves-effect" href ="/proyectos/mi-progreso-iteracion">Mi Progreso Iteración<i class="material-icons right">equalizer</i></a></li>
+    <li id="capacidad"><a class="waves-effect" href="/proyectos/capacidad-equipo">Capacidad de Equipo<i class="material-icons right">people</i></a></li>
+    <li id="casos_uso"><a class="waves-effect" href="/proyectos/casos-uso-iteracion">Casos de Uso<i class="material-icons right">description</i></a></li>    
+    <li id="tareas_casos_uso"><a class="waves-effect" href="/proyectos/tarea-caso-uso">Tareas por caso de uso<i class="material-icons right">check_circle</i></a></li>
+
+    <li class="logout"><a href="/users/logout"><i class="material-icons right">input</i>Salir</a></li>
 </ul>
 
-<%- include('breadcrumbs.ejs'); %>
+<!-- <%- include('breadcrumbs.ejs'); %> -->
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         M.AutoInit();
     });
+
+    if("<%=title%>" == "Avance del Proyecto"){
+        var element = document.getElementById("avance_proyecto");
+        element.classList.add("active");
+    }
+    else if("<%=title%>" == "Mi Progreso"){
+        var element = document.getElementById("mi_progreso");
+        element.classList.add("active");
+    }
+    else if("<%=title%>" == "Capacidad de Equipo"){
+        var element = document.getElementById("capacidad");
+        element.classList.add("active");
+    }
+    else if("<%=title%>" == "Casos de Uso"){
+        var element = document.getElementById("casos_uso");
+        element.classList.add("active");
+    }
+    else if("<%=title%>" == "Tareas por Caso de Uso"){
+        var element = document.getElementById("tareas_casos_uso");
+        element.classList.add("active");
+    }
 </script>

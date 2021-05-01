@@ -1,36 +1,92 @@
-
-<a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+<%- include('breadcrumbsPrincipal.ejs'); %>
 <ul class="sidenav sidenav-fixed" id="slide-out">
-    <li><div class="user-view">
-        <div class="background">
-            <img src="https://wallpapercave.com/wp/wp3194552.png">
-        </div>
-        <a href="#user"><img class="circle" src="https://storage.googleapis.com/natgas/others/logos/natgas-logo-simple.png"></a>
-        <div class="row">
-            <div class="col s10">
-                <a href="#name"><span class="white-text name"><%=user%></span></a>
-                <a href="#email"><span class="white-text email"><%=user%>@email.com</span></a>
+    <li><div class="user-view background">
+        <a><img class="circle resposive-image materialboxed"   src="<%=imagen_empleado%>" width="60" height="60"></a>
+        <div class="row valign-wrapper">
+            <div class="col s9">
+                <a href="/users/settings"><span class="white-text name"><%=user.usuario%></span></a>
+                <a href="/users/settings"><span class="white-text email"><%=user.usuario%>@email.com</span></a>
             </div>
-            <div class="col s1">
-                <a href="/home"><i class="white-text material-icons">home</i></a>
+            <div class="col s2 offset-s1">
+                <a href="/users/settings"><i class="white-text material-icons">settings</i></a>
             </div>
         </div>
         </div>
     </li>
 
 
-    <li><a class="waves-effect waves-light btn" href="/proyectos/nuevo-proyecto"><i class="material-icons left">add</i>Crear Proyecto</a>
+    <li><a class="waves-effect waves-light white-text btn" href="/proyectos/nuevo-proyecto"><i class="material-icons white-text left">add</i>Crear Proyecto</a>
     <li><div class="divider"></div></li>
-    <li><a class="waves-effect" href="#!">En desarrollo</a></li>
-    <li><a class="waves-effect" href="#!">Terminado</a></li>
-
     
-    <li class="logout"><a href="/users/logout"><i class="material-icons right">input</i>Logout &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a></li>
+
+    <li id="home"><a href ="/home"  name="action" value="editar">Inicio <i class="material-icons right">home</i></a></li>
+    <li><a href ="/users/register"  name="action" value="editar">Nuevo usuario <i class="material-icons right">account_circle</i></a></li>
+    <li><a data-target="modal_departamento" class="modal-trigger">Nuevo Departamento <i class="material-icons right">business</i></a></li>
+    <li id="manual_usuario"><a href="/home/manual-usuario"><i class="material-icons right">help</i>Manual de Usuario</a></li>
+    <li><a class="modal-trigger" data-target="modal_usuarioE">Eliminar Usuario<i class="material-icons right ">highlight_off</i></a></li>
+    
+    <li class="logout"><a href="/users/logout"><i class="material-icons right">input</i>Salir</a></li>
     
 </ul>
+
+<div class="row">
+    <div id="modal_departamento" class="modal col s4 offset-s4">
+        <div class="row">
+            <div class="modal-content col s7 offset-s3">
+                <h5>Crear Departamento</h5>
+                <br>
+                <form action="/proyectos/nuevo-departamento" method="POST">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <div class="input-field">
+                        <input type="text" class="validate" maxlength="64" id="nuevo_departamento" name="nuevo_departamento" autocomplete="off" required>
+                        <label for="nuevo_departamento">Nombre Departamento</label>
+                    </div>
+                    <br>
+                    <br>
+                    <button type="sumbmit" class="waves-effect waves-light btn right">Crear</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    
+</tr>
+<div id="modal_usuarioE" class="modal col s4">
+    <div class="row">
+        <div class="modal-content col s7 offset-s3">
+            <h5>Eliminar Usuario</h5>
+            <br>
+            <form action="/users/eliminar-usuario" method="POST">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <div class="input-field">
+                    <select name="usuario" class="browser-default" required>
+                        <option value="" disabled selected>Selecciona un Usuario*</option>
+                        <% for (let usuario of users) { %>
+                            <option value="<%= usuario.id_empleado %>"><%= usuario.usuario %></option>
+                        <% } %>
+                    </select>
+                </div>
+                <br>
+                <br>
+                <button type="sumbmit" class="red btn right">Eliminar</button>
+            </form>
+        </div>
+    </div>
+</div>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         M.AutoInit();
     });
+
+    if("<%=title%>" == "Home"){
+        var element = document.getElementById("home");
+        element.classList.add("active");
+    }
+    else if("<%=title%>" == "Manual Usuario"){
+        var element = document.getElementById("manual_usuario");
+        element.classList.add("active");
+    }
 </script>

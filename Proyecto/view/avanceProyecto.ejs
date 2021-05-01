@@ -1,178 +1,250 @@
-<%- include('includes/openHTML.ejs'); %>
+<%- include('includes/openHTMLtoast.ejs'); %>
 <%- include('includes/navbarIteracion.ejs'); %>
 
+<link rel="stylesheet" href="avance_iteracion.css">
+
 <main>
-    <div class="container">
-        <div class="row">
-            <div class="col 12 offset-s2">
-                <div class="center-align">
-                    <h1 class="flow-text"></h1>
-                    <img class="responsive-img" width="100%"
-                        src="https://www.merkleinc.com/es/sites/es/files/inline-images/colum4.png"
-                        alt="Gráfica Avance">
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col s4 m4 l4">
-                <div class="card">
-                    <h2 class="card-title flow-text">Inicio:</h2>
-                    <div class="card-content">
-                        <p><strong>10/15/2020</strong></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col s4 m4 l4">
-                <div class="card">
-                    <h2 class="card-title flow-text">Fin:</h2>
-                    <div class="card-content">
-                        <p><strong>10/30/2020<strong></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col s4 m4 l4">
-                <div class="card">
-                    <h2 class="card-title flow-text">Horas Planeadas:</h2>
-                    <div class="card-content">
-                        <strong><p>186.32</p><strong>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="row">
-            <div class="col s6 m6 l6">
-                <div class="card">
-                    <h2 class="card-title flow-text">Información
-                        del proyecto:</h2>
-                    <div class="card-content">
-                        <p>Días Totales: <span>12</span></p>
-                        <p>Velocidad Deseada: <span>15.5</span></p><br>
-                        <p>Valor Planeado: <span>15.5</span></p>
-                        <p>Valor Ganado: <span>11.12</span></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col s6 m6 l6">
-                <div class="card">
-                    <h2 class="card-title flow-text">Información
-                        del proyecto:</h2>
-                    <div class="card-content">
-                        <p>Diferencia Progreso: <span>-4.4</span></p><br>
-                            <p>Total Tareas: <span>108</span></p>
-                            <p>Tareas Completadas: <span>96</span></p>
-                            <p>Tareas Pendientes: <span>0</span></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="row">
-        <div class="col s12 offset-s2" id="tabla_avance">
-            <table class="highlight">
-                <thead>
-                    <tr>
-                        <th>Fecha</th>
-                        <th class="center-align">Valor Ganado
-                            (VG)</th>
-                        <th class="center-align">Costo Real (CR)</th>
-                        <th class="center-align">Valor Planeado
-                            Acumulado (VPA)</th>
-                        <th class="center-align">Valor Ganado
-                            Acumulado (VGA)</th>
-                        <th class="center-align">Costo Real
-                            Acumulado (CRA)</th>
-                    </tr>
-                </thead>
+        <div class="col s10 offset-s1">
+            <% if(iteracion.terminada == 0){ %>
+                <form action="/proyectos/terminar-iteracion" method="POST" id="terminar_iter">
+                    <input type="hidden" id="_csrf" name="_csrf" value="<%= csrfToken %>" >
+                    <div class="row">
+                        <div class="col s4 offset-s8 ">
+                            <button class="waves-effect waves-light btn right red accent-4" type="submit">Terminar iteración</button>
+                        </div>
+                    </div>
+                    <script>
+                        document.getElementById("terminar_iter").addEventListener('submit', stopTerminar);
+                        
+                        function stopTerminar(event) {
+                            let confirmacion = confirm('¿Estás seguro de que quieres terminar la iteracion número <%=num_iteracion%>?');
+                            if(!confirmacion) {
+                                event.preventDefault();
+                            }
+                        }
+                    </script>
+                </form>
+            <%}%>
 
-                <tbody>
-                    <tr>
-                        <td>10/15/2020</td>
-                        <td>11.1</td>
-                        <td>14.6</td>
-                        <td>15.5</td>
-                        <td>11.1</td>
-                        <td>14.6</td>
-                    </tr>
-                    <tr>
-                        <td>10/16/2020</td>
-                        <td>14.3</td>
-                        <td>4.3</td>
-                        <td>31.1</td>
-                        <td>25.4</td>
-                        <td>18.9</td>
-                    </tr>
-                    <tr>
-                        <td>10/17/2020</td>
-                        <td>0.0</td>
-                        <td>0.0</td>
-                        <td>31.1</td>
-                        <td>25.4</td>
-                        <td>18.9</td>
-                    </tr>
-                    <tr>
-                        <td>10/18/2020</td>
-                        <td>0.0</td>
-                        <td>0.0</td>
-                        <td>31.1</td>
-                        <td>25.4</td>
-                        <td>18.9</td>
-                    </tr>
-                    <tr>
-                        <td>10/19/2020</td>
-                        <td>17.7</td>
-                        <td>46.6</td>
-                        <td>43.2</td>
-                        <td>37.2</td>
-                        <td>5.9</td>
-                    </tr>
-                    <tr>
-                        <td>10/20/2020</td>
-                        <td>12.9</td>
-                        <td>27.0</td>
-                        <td>62.1</td>
-                        <td>56.1</td>
-                        <td>64.2</td>
-                    </tr>
-                    <tr>
-                        <td>10/21/2020</td>
-                        <td>7.9</td>
-                        <td>12.9</td>
-                        <td>77.6</td>
-                        <td>64.0</td>
-                        <td>77.1</td>
-                    </tr>
-                    <tr>
-                        <td>10/22/2020</td>
-                        <td>49.0</td>
-                        <td>21.4</td>
-                        <td>93.2</td>
-                        <td>113.0</td>
-                        <td>98.5</td>
-                    </tr>
-                    <tr>
-                        <td>10/22/2020</td>
-                        <td>4.9</td>
-                        <td>9.0</td>
-                        <td>93.2</td>
-                        <td>108.7</td>
-                        <td>117.9</td>
-                    </tr>
-                    <tr>
-                        <td>10/22/2020</td>
-                        <td>0.0</td>
-                        <td>0.0</td>
-                        <td>93.2</td>
-                        <td>108.7</td>
-                        <td>117.9</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="row">
+                <div class="col s12">
+                    <div class="center-align">
+                        <canvas id="AvanceIteracion" class="z-depth-1"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                
+            </div>
+
+            <div class="row">
+                <div class="col s4" >
+                    <div class="card">
+                        <div class="card-content card_avance">
+                            <h2 class="card-title flow-text card-title-avance"> <strong>Descripción</strong></h2>
+                            <br>
+                            <p><%= iteracion.descripcion %></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s4 ">
+                    <div class="card ">
+                        <div class="card-content card_avance">
+                            <h2 class="card-title flow-text card-title-avance"> <strong>Inicio - Fin</strong></h2></h2>
+                            <br>
+                            <p><%= iteracion.fecha_inicio_YMD %> - <%= iteracion.fecha_fin_YMD %></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s4">
+                    <div class="card">
+                        <div class="card-content card_avance">
+                            <h2 class="card-title flow-text card-title-avance"><strong>Información iteración</strong></h2>
+                            
+                            <p>Días Totales: <span><%=dias_totales%></span></p>
+                            <p>Velocidad Deseada: <span><%=velocidad_deseada%></span></p>
+                        </div>
+                    </div>
+                </div>    
+            </div>
+            
+            <div class="row">
+                <div class="col s12">
+                    <canvas id="EstadoTareas" class="z-depth-1 white"></canvas>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <div class="card">
+                        <div class="card-content  center card_avance">
+                            <h2 class="card-title flow-text card-title-avance"> <strong>Estimación de tiempo</strong></h2>
+                                <br>
+                                <div class="row">
+                                    <div class="col s4">
+                                        <p> Total  Minutos: <span><%= total_min_real %></span> </p>
+                                        <br>
+                                        <p> Total  Semanas: <span><%= total_semanas_real %></span></p>
+
+                                    </div>
+                                    <div class="col s4">
+                                        <p> Total  Horas: <span><%= total_horas_real %></span></p>
+                                        <br>
+                                        <p> Total  Meses: <span><%= total_meses_real %></span></p>
+                                    </div>
+                                    <div class="col s4">
+                                        <p> Horas equipo: <span><%= horas_semanales %></span></p>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <table class="tabla_avance highlight z-depth-2">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th class="center-align">Valor Ganado
+                                    (VG)</th>
+                                <th class="center-align">Costo Real (CR)</th>
+                                <th class="center-align">Valor Ganado
+                                    Acumulado (VGA)</th>
+                                <th class="center-align">Costo Real
+                                    Acumulado (CRA)</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="tabla_costos"></tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
+    <br>
+    <br>
 </main>
 
-                <%- include('includes/closeHTML.ejs'); %>
+<script>
+
+    let entrega_real = [];
+    let valor_ganado_diario = [];
+    let costo_real_diario = [];
+    let valor_ganado_acumulado = [];
+    let valor_planeado_acumulado = [];
+    let costo_real_acumulado = [];
+
+    "<% for(let i = 0; i < costos.length; i++){ %>"
+            entrega_real.push("<%= costos[i].entrega_real %>");
+            valor_ganado_diario.push("<%= costos[i].valor_ganado_diario %>");
+            costo_real_diario.push("<%= costos[i].costo_real_diario %>");
+            valor_planeado_acumulado.push("<%=velocidad_deseada * (i+1) %>");
+            "<% if(i > 0){ %>"
+                valor_ganado_acumulado.push(parseFloat((valor_ganado_acumulado["<%= i-1 %>"] + parseFloat("<%= costos[i].valor_ganado_diario %>")).toFixed(2)));
+                costo_real_acumulado.push(parseFloat((costo_real_acumulado["<%= i-1 %>"] + parseFloat("<%= costos[i].costo_real_diario %>")).toFixed(2)));
+            "<%} else{ %>"
+                valor_ganado_acumulado.push(parseFloat("<%= costos[i].valor_ganado_diario %>"));
+                costo_real_acumulado.push(parseFloat("<%= costos[i].costo_real_diario %>"));
+            "<% } %>"
+    "<% } %>"
+
+    let tabla_costos = document.getElementById("tabla_costos");
+    tabla_costos.innerHTML = "";
+    for(let i = 0; i < entrega_real.length; i++){
+        tabla_costos.innerHTML += "<tr><td>" + entrega_real[i] + "</td><td>" + valor_ganado_diario[i] + "</td><td>" + costo_real_diario[i] + "</td><td>" + valor_ganado_acumulado[i] + "</td><td>" + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + costo_real_acumulado[i] + "</td></tr>";
+    }
+
+    // Grafica principal de avance
+    var ctx = document.getElementById('AvanceIteracion').getContext('2d');
+
+    var chart = new Chart(ctx, {
+        // The type of chart we want to create
+        type: 'line',
+
+        // The data for our dataset
+        data: {
+            labels: entrega_real,
+            datasets: [
+            {
+                fill: false,
+                
+                label: 'Valor Ganado Acumulado',
+                borderColor: '#a1d996',
+                borderWidth: 3,
+                data: valor_ganado_acumulado
+            },
+            {
+                fill: false,
+                
+                label: 'Costo Real Acumulado',
+                borderColor: '#fa9c98',
+                borderWidth: 3,
+                data: costo_real_acumulado
+            },
+            {
+                fill: false,
+
+                label: 'Valor Planeado Acumulado (VPA)',
+                borderColor: '#9ab7f5',
+                borderWidth: 3,
+                data: valor_planeado_acumulado
+            },]
+        },
+
+        // Configuration options go here
+        options: {
+        
+            title :{ 
+                display : true,
+                text: "Avance iteración",
+                fontSize:25,
+            },
+            elements:{
+                line:{
+                    tension:0
+                },  
+            },
+            legend:{
+                position:'right'
+            },
+            responsive:true
+        }
+    });
+
+    // Grafica de estado de tareas
+    let labels_tareas = ["To Do", "Doing", "Done", "Rejected", "Waiting for Review","On Hold", "Other"];
+    let estado_tareas = [];
+    "<% for(let i = 0; i < tareas_data.length; i++){ %>"
+            estado_tareas.push("<%= tareas_data[i] %>");
+    "<% } %>"
+
+    var contextDona = document.getElementById('EstadoTareas').getContext('2d');
+
+    var chartDona = new Chart(contextDona, {
+        type: 'doughnut',
+        data: {
+                labels: labels_tareas,
+                datasets: [{
+                    label: "Estado Tareas Proyecto",
+                    backgroundColor: [
+                        "#D0F0FD", "#FFEAB6", "#D1F7C4", "#EEEEEE", "#C2F5E9","#FEE2D5" , "#d9a1ff"
+                    ],
+                    data: estado_tareas,
+                }]
+        },
+        options: {
+            title :{ 
+                display : true,
+                text: "Estado Tareas",
+                fontSize:20,
+            },
+            legend:{
+                position:'top'
+            },
+            responsive:true
+        }
+    });
+</script>
+
+<%- include('includes/closeHTMLtoast.ejs'); %>

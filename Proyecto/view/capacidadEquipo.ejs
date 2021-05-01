@@ -1,352 +1,176 @@
-<%- include('includes/openHTML.ejs'); %>
+<%- include('includes/openHTMLtoast.ejs'); %>
 
 <%- include('includes/navbarIteracion.ejs'); %>
-
+<main>
+<% let horas_nominales = horas_nominales_totales.horas_total %>
 <div class="row">
-    <div class="col s9 offset-s3">
-        <div class="col s6">
-            <h4>Horas nominales</h4>
+        <div class="col s5 offset-s1">
+            <h4 class="center">Capacidad Equipo</h4>
             <br>
-            <br>
-            <div class="row">
-                <div class="col s5"></div>
-                <div class="col s3">
-                    <p class="thick">Horas</p>
-                </div>
-                <div class="col s3">
-                    <p class="thick">Porcentaje</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s5 disminuir_margen">
-                    <table class="teal lighten-2">
-                        <tbody>
-                            <tr>    
-                                <td>Horas nominales totales</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col s3">
-                    <input disabled placeholder="150" type="text" class="validate">
-                </div>
-                <form class="col s3">
-                    <input disabled placeholder="100%" type="text" class="validate">
-                </form>
-            </div>
-            <div class="row">
-                <div class="col s5 disminuir_margen">
-                    <table class="teal lighten-2">
-                        <tbody>
-                            <tr>    
-                                <td>Tiempo perdido</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col s3">
-                    <input disabled placeholder="22.5" type="text" class="validate">
-                </div>
-                <form class="col s3">
-                    <input placeholder="15%" type="text" class="validate">
-                </form>
-            </div>
-            <div class="row">
-                <div class="col s5 disminuir_margen">
-                    <table class="teal lighten-2">
-                        <tbody>
-                            <tr>    
-                                <td>Errores de registro</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col s3">
-                    <input disabled placeholder="12" type="text" class="validate">
-                </div>
-                <form class="col s3">
-                    <input placeholder="8%" type="text" class="validate">
-                </form>
-            </div>
-            <br><br>
-            <div class="row">
-                <div class="col s5 disminuir_margen">
-                    <table class="teal lighten-2">
-                        <tbody>
-                            <tr>    
-                                <td>Horas nominales restantes</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col s3">
-                    <input disabled placeholder="115.5" type="text" class="validate">
-                </div>
-                <form class="col s3">
-                    <input disabled placeholder="77%" type="text" class="validate">
-                </form>
-            </div>
-            <div class="row">
-                <div class="col s5 disminuir_margen">
-                    <table class="teal lighten-2">
-                        <tbody>
-                            <tr>    
-                                <td>Overhead</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col s3">
-                    <input disabled placeholder="23.1" type="text" class="validate">
-                </div>
-                <form class="col s3">
-                    <input placeholder="20%" type="text" class="validate">
-                </form>
-            </div>
-            <br><br>
-            <div class="row">
-                <div class="col s5 disminuir_margen">
-                    <table class="teal lighten-2">
-                        <tbody>
-                            <tr>    
-                                <td>Horas nominales restantes</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col s3">
-                    <input disabled placeholder="92.4" type="text" class="validate">
-                </div>
-                <form class="col s3">
-                    <input disabled placeholder="80%" type="text" class="validate">
-                </form>
-            </div>
-            <div class="row">
-                <div class="col s5 disminuir_margen">
-                    <table class="teal lighten-2">
-                        <tbody>
-                            <tr>    
-                                <td>Productivas</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col s3">
-                    <input disabled placeholder="50.8" type="text" class="validate">
-                </div>
-                <form class="col s3">
-                    <input placeholder="55%" type="text" class="validate">
-                </form>
-            </div>
-            <div class="row">
-                <div class="col s5 disminuir_margen">
-                    <table class="teal lighten-2">
-                        <tbody>
-                            <tr>    
-                                <td>Operativos</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col s3">
-                    <input disabled placeholder="23.1" type="text" class="validate">
-                </div>
-                <form class="col s3">
-                    <input placeholder="25%" type="text" class="validate">
-                </form>
-            </div>
-            <div class="row">
-                <div class="col s5 disminuir_margen">
-                    <table class="teal lighten-2">
-                        <tbody>
-                            <tr>    
-                                <td>Humano</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col s3">
-                    <input disabled placeholder="4.6" type="text" class="validate">
-                </div>
-                <form class="col s3">
-                    <input placeholder="5%" type="text" class="validate">
-                </form>
-            </div>
-            <div class="row">
-                <div class="col s5 disminuir_margen">
-                    <table class="teal lighten-2">
-                        <tbody>
-                            <tr>    
-                                <td>CMMI</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col s3">
-                    <input disabled placeholder="13.9" type="text" class="validate">
-                </div>
-                <form class="col s3">
-                    <input placeholder="15%" type="text" class="validate">
-                </form>
-            </div>
+            <table>
+                <thead class="h_nominales z-depth-3">
+                    <tr>
+                        <th></th>
+                        <th>Horas</th>
+                        <th>Porcentaje</th>
+                    </tr>
+                </thead>
+                <tbody class = "h_nominales z-depth-3">
+                    <tr>
+                        <td>Horas nominales totales</td>
+                        <td><%= horas_nominales %></td>
+                        <td>100 %</td>
+                    </tr>
+                    <tr>
+                        <td>Tiempo perdido</td>
+                        <td><%= (horas_nominales * porcentajes.tiempo_perdido_pc).toFixed(1) %></td>
+                        <td>
+                            <form method = "POST" action = "modificar-porcentaje-tiempo-perdido">
+                                <input type="hidden" name = "_csrf" value = "<%= csrfToken %>">
+                                <input type="hidden" name = "id_capacidad" value = "<%= porcentajes.id_capacidad %>">
+                                <input value="<%= (porcentajes.tiempo_perdido_pc * 100).toFixed(0) %>" type="text" class="validate" name = "tiempo_perdido_pc" autocomplete="off" required><span>%</span>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Errores de registro</td>
+                        <td><%= (horas_nominales * porcentajes.errores_registro_pc).toFixed(1) %></td>
+                        <td>
+                            <form method = "POST" action = "modificar-porcentaje-errores-registro">
+                                <input type="hidden" name = "_csrf" value = "<%= csrfToken %>">
+                                <input type="hidden" name = "id_capacidad" value = "<%= porcentajes.id_capacidad %>">
+                                <input value="<%= (porcentajes.errores_registro_pc * 100).toFixed(0) %>" type="text" class="validate" name = "errores_registro_pc" autocomplete="off" required><span>%</span>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+                <tr><td></td><td></td><td></td></tr>
+                <% let pc_horas_nominales = (1 - porcentajes.tiempo_perdido_pc - porcentajes.errores_registro_pc) %>
+                <% horas_nominales *= pc_horas_nominales %>
+                <tbody class = "h_nominales z-depth-3">
+                    <tr>
+                        <td>Horas nominales restantes</td>
+                        <td><%= horas_nominales.toFixed(1) %></td>
+                        <td><%= (pc_horas_nominales * 100).toFixed(0) %> %</td>
+                    </tr>
+                    <tr>
+                        <td>Overhead</td>
+                        <td><%= (horas_nominales * porcentajes.overhead_pc).toFixed(1) %></td>
+                        <td>
+                            <form method = "POST" action = "modificar-porcentaje-overhead">
+                                <input type="hidden" name = "_csrf" value = "<%= csrfToken %>">
+                                <input type="hidden" name = "id_capacidad" value = "<%= porcentajes.id_capacidad %>">
+                                <input value="<%= (porcentajes.overhead_pc * 100).toFixed(0) %>" type="text" class="validate" name = "overhead_pc" autocomplete="off" required><span>%</span>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+                <tr><td></td><td></td><td></td></tr>
+                <% pc_horas_nominales = (1 - porcentajes.overhead_pc) %>
+                <% horas_nominales *= pc_horas_nominales %>
+                <tbody class = "h_nominales z-depth-3">
+                    <tr>
+                        <td>Horas nominales restantes</td>
+                        <td><%= horas_nominales.toFixed(1) %></td>
+                        <td><%= (pc_horas_nominales * 100).toFixed(0) %> %</td>
+                    </tr>
+                    <tr>
+                        <td>Productivas</td>
+                        <td><%= (porcentajes.horas_productivas * 1).toFixed(1) %></td>
+                        <td>
+                            <form method = "POST" action = "modificar-porcentaje-productivas">
+                                <input type="hidden" name = "_csrf" value = "<%= csrfToken %>">
+                                <input type="hidden" name = "id_capacidad" value = "<%= porcentajes.id_capacidad %>">
+                                <input value="<%= (porcentajes.productivas_pc * 100).toFixed(0) %>" type="text" class="validate" name = "productivas_pc" autocomplete="off" required><span>%</span>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Operativos</td>
+                        <td><%= (horas_nominales * porcentajes.operativos_pc).toFixed(1) %></td>
+                        <td>
+                            <form method = "POST" action = "modificar-porcentaje-operativos">
+                                <input type="hidden" name = "_csrf" value = "<%= csrfToken %>">
+                                <input type="hidden" name = "id_capacidad" value = "<%= porcentajes.id_capacidad %>">
+                                <input value="<%= (porcentajes.operativos_pc * 100).toFixed(0) %>" type="text" class="validate" name = "operativos_pc" autocomplete="off" required><span>%</span>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Humano</td>
+                        <td><%= (horas_nominales * porcentajes.humano_pc).toFixed(1) %></td>
+                        <td>
+                            <form method = "POST" action = "modificar-porcentaje-humano">
+                                <input type="hidden" name = "_csrf" value = "<%= csrfToken %>">
+                                <input type="hidden" name = "id_capacidad" value = "<%= porcentajes.id_capacidad %>">
+                                <input value="<%= (porcentajes.humano_pc * 100).toFixed(0) %>" type="text" class="validate" name = "humano_pc" autocomplete="off" required><span>%</span>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>CMMI</td>
+                        <td><%= (horas_nominales * porcentajes.cmmi_pc).toFixed(1) %></td>
+                        <td>
+                            <form method = "POST" action = "modificar-porcentaje-cmmi">
+                                <input type="hidden" name = "_csrf" value = "<%= csrfToken %>">
+                                <input type="hidden" name = "id_capacidad" value = "<%= porcentajes.id_capacidad %>">
+                                <input value="<%= (porcentajes.cmmi_pc * 100).toFixed(0) %>" type="text" class="validate" name = "cmmi_pc" autocomplete="off" required><span>%</span>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot class = "h_nominales_foot h_nominales z-depth-3">
+                    <tr>
+                        <td></td>
+                        <td class = "thick">Total</td>
+                        <td>
+                            <%= (porcentajes.sumaRestantes) * 100 %><span> %</span>
+                        </td>
+                    </tr>
+                </tfoot>                
+            </table>
+            
+            
         </div>
         <!-- Inicia horas proyecto por colaborador -->
         <!-- Inicia horas proyecto por colaborador -->
         <!-- Inicia horas proyecto por colaborador -->
         <!-- Inicia horas proyecto por colaborador -->
-        <div class="col s6">
-            <div class="row">
-                <div class="col s6 offset-s5">
-                    <h4>Horas proyecto</h4>
-                </div>
-            </div>
+        <div class="col s4 offset-s1">
+            <h4 class="center">Horas Individual</h4>
             <br>
-            <div class="row">
-                <div class="col s5"></div>
-                <div class="col s3">
-                    <p class="thick">Colaborador</p>
-                </div>
-                <div class="col s3">
-                    <p class="thick">Horas</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s5"></div>
-                <div class="col s3">
-                    <table class="teal lighten-2">
-                        <tbody>
-                            <tr>    
-                                <td>Laing</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col s3">
-                    <input placeholder="5" type="text" class="validate">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s5"></div>
-                <div class="col s3">
-                    <table class="teal lighten-2">
-                        <tbody>
-                            <tr>    
-                                <td>Santi</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col s3">
-                    <input disabled placeholder="20" type="text" class="validate">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s5"></div>
-                <div class="col s3">
-                    <table class="teal lighten-2">
-                        <tbody>
-                            <tr>    
-                                <td>Tony</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col s3">
-                    <input disabled placeholder="20" type="text" class="validate">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s5"></div>
-                <div class="col s3">
-                    <table class="teal lighten-2">
-                        <tbody>
-                            <tr>    
-                                <td>Pablo V.</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col s3">
-                    <input disabled placeholder="20" type="text" class="validate">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s5"></div>
-                <div class="col s3">
-                    <table class="teal lighten-2">
-                        <tbody>
-                            <tr>    
-                                <td>Beto</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col s3">
-                    <input disabled placeholder="20" type="text" class="validate">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s5"></div>
-                <div class="col s3">
-                    <table class="teal lighten-2">
-                        <tbody>
-                            <tr>    
-                                <td>Pablo P.</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col s3">
-                    <input disabled placeholder="20" type="text" class="validate">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s5"></div>
-                <div class="col s3">
-                    <table class="teal lighten-2">
-                        <tbody>
-                            <tr>    
-                                <td>Niño</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col s3">
-                    <input disabled placeholder="30" type="text" class="validate">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s5"></div>
-                <div class="col s3">
-                    <table class="teal lighten-2">
-                        <tbody>
-                            <tr>    
-                                <td>Mani</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col s3">
-                    <input disabled placeholder="15" type="text" class="validate">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s5"></div>
-                <div class="col s3">
-                    <table class="teal lighten-2">
-                        <tbody>
-                            <tr>    
-                                <td>Total</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col s3">
-                    <input disabled placeholder="150" type="text" class="validate">
-                </div>
-            </div>
+            <table class="h_proyecto z-depth-3">
+                <thead >
+                    <tr>
+                        <th>Colaborador</th>
+                        <th>Horas / Semana</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for (let colaborador of colaboradores) { %>
+                        <tr>
+                            <td><%= colaborador.nombre_empleado %></td>
+                            <td>
+                                <form method = "POST" action = "modificar-horas-colaborador">
+                                    <input type="hidden" name = "_csrf" value = "<%= csrfToken %>">
+                                    <input type="hidden" name = "id_empleado" value = "<%= colaborador.id_empleado %>">
+                                    <input value="<%= (colaborador.horas_semanales * 1).toFixed(0) %>" type="text" class="validate" name = "horas" autocomplete="off" required><span>h</span>
+                                </form>
+                            </td>
+                            
+                        </tr>
+                    <% } %>
+                </tbody>
+                <tfoot class="z-depth-3">
+                    <tr>
+                        <td>Total</td>
+                        <td><%= (horas_nominales_totales.horas_total * 1).toFixed(0) %><span> h</span></td>
+                    </tr>
+                </tfoot>
+            </table>
         </div>
-    </div>
 </div>
+<br><br><br>
 
-<%- include('includes/closeHTML.ejs'); %>
+</main>
+<%- include('includes/closeHTMLtoast.ejs'); %>

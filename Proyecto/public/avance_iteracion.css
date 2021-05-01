@@ -1,0 +1,86 @@
+.tabla_avance tbody {
+    display:block;
+    max-height:400px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color: white;
+}
+
+.tabla_avance thead, tbody tr {
+    display: table;
+    width:100%;
+    table-layout:fixed;
+}
+
+.tabla_avance table {
+    width:100%;
+}
+
+.tabla_avance thead th {
+    padding-left: 15px;
+    position: sticky;
+    top: 0;
+    
+    background-color: #343434;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+}
+
+.tabla_avance tbody tr:hover{
+    background-color: #f5f5f5;
+}
+
+.tabla_avance td {
+    padding-left: 15px;
+    overflow-wrap: break-word;
+    text-overflow: ellipsis;
+    text-align: center;
+}
+t
+
+.tabla_cu thead th:nth-child(1),
+.tabla_cu thead th:nth-child(2),
+.tabla_cu thead th:nth-child(3),
+.tabla_cu thead th:nth-child(4),
+.tabla_cu thead th:nth-child(5){
+    text-align: center;
+    width: 20%;
+}
+
+.tabla_cu td:nth-child(1),
+.tabla_cu td:nth-child(2),
+.tabla_cu td:nth-child(3),
+.tabla_cu td:nth-child(4),
+.tabla_cu td:nth-child(5) {
+    text-align: center;
+    width:20%;
+}
+
+/*.tabla_cu thead th:nth-child(5) {
+    width: 20%;
+}
+
+.tabla_cu thead th:nth-child(2) {
+    width: 20%;
+}
+
+.tabla_cu thead th:nth-child(3),
+.tabla_cu thead th:nth-child(4) {
+    width: 20%;
+}*/
+
+/* Tds */
+/*.tabla_cu td:nth-child(1),
+.tabla_cu td:nth-child(5) {
+    width: 6.5%;
+}
+
+.tabla_cu td:nth-child(2) {
+    width: 12.5%;
+}
+
+.tabla_cu td:nth-child(3),
+.tabla_cu td:nth-child(4) {
+    width:25.25%;
+}*/

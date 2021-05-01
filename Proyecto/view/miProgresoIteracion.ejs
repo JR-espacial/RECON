@@ -1,0 +1,163 @@
+<%- include('includes/openHTMLtoast.ejs'); %>
+<%- include('includes/navbarIteracion.ejs'); %>
+
+<link rel="stylesheet" href="miProgresoIteracion.css">
+
+<main>
+<br>
+<br>
+
+<div class="row">
+    <div class=" col s5 offset-s1">
+        <canvas id="TareasUsuario" class="z-depth-1 white"></canvas>
+    </div>
+    <div class="col s5"> 
+        <canvas id="AvanceUsuario" class="z-depth-1 white"></canvas>
+    </div> 
+</div>
+<br>
+
+<div class="row">
+    <div class=" col s5 offset-s1">
+        <table class="miProgresoIteracion z-depth-3">
+            <thead>
+                <tr>
+                    <th>Tareas Pendientes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if(pendientes.length < 1) { %>
+                    <tr>
+                        <td>No tienes tareas pendientes.</td>                
+                    </tr>
+                <% } %>
+                <% for (let pendiente of pendientes) { %>
+                    <tr>
+                        <td><%= pendiente %></td>                
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+    <div class="col s5">
+        <table class="miProgresoIteracion z-depth-3">
+            <thead>
+                <tr>
+                    <th>Tareas Sin Asignación</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if(registros.length < 1) { %>
+                    <tr>
+                        <td>Todas las tareas han sido asignadas a alguien.</td>                
+                    </tr>
+                <% } %>
+                <% for (let registro of registros) { %>
+                    <tr>
+                        <td><%= registro %></td>                
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div> 
+</div>
+
+
+<script>
+    let estado = [];
+    "<% for(let i = 0; i < estados.length; i++){ %>"
+            estado.push("<%= estados[i] %>");
+    "<% } %>"
+
+    var ctx = document.getElementById('TareasUsuario');
+    var myChart = new Chart(ctx, {
+        type: 'horizontalBar',
+        data: {
+            labels: ['To Do', 'Doing', 'Done', 'Rejected', 'Waiting Review', 'On Hold', 'Other'],
+            datasets: [{
+                axis: 'y',
+                data: estado,
+                backgroundColor: ["#D0F0FD", "#FFEAB6", "#D1F7C4", "#EEEEEE", "#C2F5E9","#FEE2D5" , "#A76EF1"
+                ],
+                borderColor: ["#D0F0FD", "#FFEAB6", "#D1F7C4", "#EEEEEE", "#C2F5E9","#FEE2D5" , "#A76EF1"
+                ],
+                borderWidth: 2
+            }]
+        },
+        options: {
+            legend:{
+                display: false
+            },
+            title :{ 
+                display : true,
+                text: "Mis Tareas",
+                fontSize:20,
+            },
+            indexAxis: 'y',
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        min: 0, // Edit the value according to what you need
+                    },
+                    gridLines: {
+                        display: false,
+                        offsetGridLines: false
+                    }
+                }]
+            }
+        }
+    });
+
+    let horas = [];
+    horas.push("<%= horas_reales %>");
+    horas.push("<%=horas_dedicadas%>");
+
+    var ctx2 = document.getElementById('AvanceUsuario');
+    var myChart2 = new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Horas Productivas Estimadas', 'Horas Dedicadas a Tareas terminadas'],
+            datasets: [{
+                data: horas,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            title :{ 
+                display : true,
+                text: "Horas Dedicadas",
+                fontSize:15,
+            },
+            legend:{
+                display: false
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        min: 0, // Edit the value according to what you need
+                    },
+                    gridLines: {
+                        display: false,
+                        offsetGridLines: false
+                    }
+                }]
+            },
+            legend:{
+                display: false
+            }
+        }
+    });
+
+</script>
+</main>
+<%- include('includes/closeHTMLtoast.ejs'); %>

@@ -1,0 +1,15 @@
+    
+    <script>
+        "<% if (alerta) { %>"
+            alert("<%= alerta %>");
+        "<% } %>"
+
+        function toast(){
+            '<% if (toast) { %>'
+                M.toast({html: '<%= toast %>', classes: 'blue darken-3'});
+            '<% } %>'
+        }
+    </script>
+    <script src="materialize/js/materialize.min.js"></script>
+</body>
+</html>

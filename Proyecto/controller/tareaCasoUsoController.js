@@ -1,24 +1,34 @@
 const Casos_Uso = require('../models/casos_uso');
 const Proyecto_Fase_Tarea = require('../models/Proyecto_Fase_Tarea');
 const Entrega = require('../models/entrega');
+const AP_Promedios = require('../models/ap_promedios');
+const Proyecto = require('../models/proyecto');
+const Airtable = require('airtable');
 
 exports.getTareaCasoUso = (request, response) =>{
     const id_proyecto = request.session.idProyecto;
     const id_iteracion = request.session.idIteracion;
-    
+    let alerta = request.session.alerta;
+    let toast = request.session.toast;
+    request.session.toast = "";
+    request.session.alerta = "";
     // Quiero (Casos de Uso)
     Casos_Uso.fetchQuiero(id_iteracion)
         .then(([rowsQ, fieldData]) => {
             // Todas las fases y tareas del proyecto
-            Proyecto_Fase_Tarea.fetchAllTareasFaseProyecto(id_proyecto)
+            Proyecto_Fase_Tarea.fetchTareasNoFantasmas(id_proyecto)
                 .then(([rowsPFT, fieldData]) => {
                     response.render('tareaCasoUso', {
+                        imagen_empleado: request.session.imagen_empleado,
                         navegacion : request.session.navegacion,
                         proyecto_actual : request.session.nombreProyecto,
                         user: request.session.usuario,
                         title: "Tareas por Caso de Uso",
+                        num_iteracion : request.session.numIteracion,
                         lista_quiero: rowsQ, 
                         lista_tareas: rowsPFT,
+                        toast: toast,
+                        alerta: alerta,
                         csrfToken: request.csrfToken()
                     });
                 })
@@ -47,18 +57,109 @@ exports.postModificarAsocioacion = (request, response) => {
     const id_proyecto = request.session.idProyecto;
     const id_fase = request.body.id_fase;
     const id_tarea = request.body.id_tarea;
-    const id_caso = request.body.id_casos; 
+    const id_casos = request.body.id_casos; 
     const accion = request.body.accion;
 
     if(accion === "registrar") {
-        Entrega.crearEntrega(id_proyecto, id_fase, id_tarea, id_caso)
-            .then(() => response.status(200))
-            .catch( err => console.log(err));       
+        Casos_Uso.fetchOneAP(id_casos)
+            .then(([rows, fieldData]) => {
+                const id_ap = rows[0].id_ap;
+                if (id_ap != 7) {
+                    AP_Promedios.fetchPromedioMinutos(id_proyecto, id_fase, id_tarea, id_ap)
+                    .then(([rows2, fieldData]) => {
+                        let estimacion = rows2[0].promedio_minutos;
+                        estimacion = (estimacion / 60).toFixed(2);
+                        Entrega.crearEntrega(id_proyecto, id_fase, id_tarea, id_casos, estimacion)
+                                    .then(() => {
+                                        Entrega.actualiza_con_check(id_casos)
+                                            .then(() => {
+                                                response.status(200).json({toast:"Asociación registrada"});
+                                            })
+                                    })
+                                    .catch( err => console.log(err));
+                    })
+                    .catch(err =>{
+                        console.log(err);
+                    })
+                }
+                else {
+                    let estimacion = 0;
+                    Entrega.crearEntrega(id_proyecto, id_fase, id_tarea, id_casos, estimacion)
+                        .then(() => {
+                            response.status(200).json({toast:"Recuerda definir un AP para este caso, actualmente esta en 0."});
+                        })
+                        .catch( err => console.log(err));
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            });          
     }
     else if(accion === "eliminar") {
-        Entrega.dropEntrega(id_proyecto, id_fase, id_tarea, id_caso)
-            .then(() => response.status(200))
-            .catch( err => console.log(err));
-    }  
+        Proyecto.fetchAirTableKeys(id_proyecto)
+        .then(([rows, fielData]) => {
+            if(!rows[0].base || !rows[0].API_key){
+                Entrega.fetchIdAirtableDrop(id_proyecto, id_fase, id_tarea, id_casos)
+                    .then(([rows2, fieldData]) => {
+                        if(!rows2[0].id_airtable) {
+                            Entrega.dropEntrega(id_proyecto, id_fase, id_tarea, id_casos)
+                                .then(() => {
+                                    Entrega.actualiza_con_check(id_casos)
+                                        .then(() => {
+                                            response.status(200).json({toast:"Asociación eliminada"});
+                                        })
+                                        .catch( err => console.log(err));
+                                })
+                                .catch( err => console.log(err));
+                        }
+                        else {
+                            response.status(200).json({toast:"No se puede eliminar la asociación, registra la base de Airtable correctamente para poder eliminarla."});
+                        }
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
+            }
+            else{
+                const base = new Airtable({apiKey: rows[0].API_key}).base( rows[0].base);
+                Entrega.fetchIdAirtableDrop(id_proyecto, id_fase, id_tarea, id_casos)
+                    .then(([rows2, fieldData]) => {
+                        if(rows2[0].id_airtable) {
+                            base('Tasks').destroy([rows2[0].id_airtable], function(err, deletedRecords) {
+                                if (err) {
+                                    console.error(err);
+                                    return;
+                                }
+                            });
+
+                            Entrega.dropEntrega(id_proyecto, id_fase, id_tarea, id_casos)
+                                .then(() => {
+                                    Entrega.actualiza_con_check(id_casos)
+                                        .then(() => {
+                                            response.status(200).json({toast:"Asociación eliminada de airtable."});
+                                        })
+                                        .catch( err => console.log(err));
+                                })
+                            .catch( err => console.log(err));
+                        }
+                        else {
+                            Entrega.dropEntrega(id_proyecto, id_fase, id_tarea, id_casos)
+                                .then(() => {
+                                    Entrega.actualiza_con_check(id_casos)
+                                        .then(() => {
+                                            response.status(200).json({toast:"Asociación eliminada."});
+                                        })
+                                        .catch( err => console.log(err));
+                                })
+                                .catch( err => console.log(err));
+                        }
+                    })
+                    .catch( err => console.log(err));
+            }
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    }
 }
 

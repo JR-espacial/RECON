@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/f1838efb-8043-4803-96ee-b83f1e151476/resourceGroups/RECON-Natdev/providers/Microsoft.Web/sites/RECON-Natdev",
+    "appService.deploySubpath": "."
+}

@@ -1,198 +1,221 @@
-<%- include('includes/openHTML.ejs'); %>
+<%- include('includes/openHTMLtoast.ejs'); %>
 <%- include('includes/navbarProyecto.ejs'); %>
 
+<main>
+    <div class="row center">
+        <div class="col s10 offset-s1">
+            <br>
 
-<% if (alerta) { %>
-    <script>alert("<%= alerta %>");</script>
-<% } %> 
-
-
-<!-- Set de tres tarjetas -->
-<div class="row center">
-    <div class="col offset-s3">
-        <% if (!iteraciones[0]) { %>
-            <h4>No hay iteraciones que mostrar</h4>
-        <% } %>  
-        <% for (let iteracion of iteraciones) { %>
-            <div class="col s4">
-                <div class="card">
-                    <div class="card-image">
-                        <img src="https://www.esan.edu.pe/conexion/actualidad/2017/10/26/1500x844_portafolio_proyectos.jpg" alt="Proyecto">
-                        <div id="modal1_<%= iteracion.id_iteracion %>" class="modal large">
-                            <form action="/proyectos/modificar-iteracion" method="POST">
-                            <!-- Modal Content -->
-                                <div class="modal-content">
-                                    <input type="hidden" id="_csrf" name="_csrf" value="<%= csrfToken %>" >
-                                    <input type="hidden" name="id_iteracion" value="<%= iteracion.id_iteracion %>">
-                                    <input type="hidden" name="colaboradores" value="" id="colabsAdd_<%= iteracion.id_iteracion %>">
-                                    <input type="hidden" name="colaboradoresBorrados" value="" id="colabsDelete_<%= iteracion.id_iteracion %>">
-                                        <div class="col s6 offset-s3">
-                                            <div class="row">
-                                                <div class="input-field col s12">
-                                                    <input  id="descripcion_proyecto" name="descripcion" type="text" class="validate" value = "<%=iteracion.descripcion%>">
-                                                    <label for="descripcion_proyecto">Descripcion de la iteracion</label>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="input-field col s12">
-                                                    <input  id="inicio_iteracion" name="fecha_inicio"type="text" class="datepicker"  value = "<%=iteracion.fecha_inicio_YMD %>" required>
-                                                    <label for="inicio_iteracion">Selecciona la fecha de inicio de la iteración</label>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="input-field col s12">
-                                                    <input  id="fin_iteracion" name="fecha_fin"type="text" class="datepicker" value = "<%=iteracion.fecha_fin_YMD%>" required>
-                                                    <label for="fin_iteracion">Selecciona la fecha de fin de la iteración</label>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col s12">
-                                                    <div class="chips chips-autocomplete"  id="chip_<%= iteracion.id_iteracion %>"></div>
-                                                    <i class="material-icons left">search</i> 
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col s12">
-                                                    <a class="modal-close waves-effect waves-green btn-flat" href="">Cancelar</a>
-                                                    <button type="submit" class="waves-effect waves-green btn-flat" name="action" value="editar">Aceptar</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                </div>  
-                            </form>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <span><%= iteracion.num_iteracion %></span>
-                        <a class='dropdown-trigger grey-text text-darken-4' data-target='dropdown1_<%= iteracion.num_iteracion %>'><i class="material-icons right">more_vert</i></a>
-                        <ul id='dropdown1_<%= iteracion.num_iteracion %>' class='dropdown-content'>
-                            <li><a data-target="modal1_<%= iteracion.id_iteracion %>" class="modal-trigger" onclick='loadChips("<%= iteracion.id_iteracion %>")''><i class="material-icons right">mode_edit</i></a></li>
-                            <li>
-                                <form action="/proyectos/eliminar-iteracion" method="POST" id="eliminar_<%= iteracion.id_iteracion %>">
-                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                                    <input type="hidden" name="id_iteracion" value="<%= iteracion.id_iteracion %>">
-                                    <button type="submit" class="waves-effect waves-green btn-flat"><i class="material-icons">delete</i>Eliminar</button>
-                                    <script> 
-                                        document.getElementById("eliminar_<%= iteracion.id_iteracion %>").addEventListener('submit', (e) => {
-                                          let confirmacion = confirm('¿Estás seguro de eliminar la iteración?');
-                                          if(!confirmacion){
-                                            e.preventDefault();
-                                          }  
-                                        });
-                                    </script>
-                                </form>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="card-action">
-                        <!-- <a href="/proyectos/resumen-proyecto">Ir a Iteracion</a> -->
-                        <form action="iteraciones-proyecto" method="POST">
-                            <input type="hidden" name="_csrf" value="<%= csrfToken %>"> 
-                            <input type="hidden" name="idIteracion" value="<%= iteracion.id_iteracion %>">
-                            <button class="btn-flat" type="submit">Ir a la iteracion</botton>
-                        </form>
-                    </div>
+            <div class="row">       
+                <div class="col s4  offset-s8 " id="div_tabs_iteraciones">
+                    <ul class="tabs z-depth-3">
+                        <li class="tab col s6 text-flow"><a id="iteraciones_desarrollo" href="/proyectos/iteraciones-desarrollo-proyecto" target="_self">Desarrollo</a></li>
+                        <li class="tab col s6"><a id="iteraciones_terminadas" href="/proyectos/iteraciones-terminadas-proyecto" target="_self">Terminadas</a></li>
+                    </ul>
                 </div>
             </div>
-        <% } %>
-    
-    </div>    
-</div>
 
-<script>
-    let id;
-    const colaboradores_anteriores = [];
-    function loadChips(id_iteracion){
-        const csrf = document.getElementById('_csrf').value;
-        let data = {id_iteracion: id_iteracion};
-        id = id_iteracion;
-        let chipContainer = M.Chips.getInstance(document.getElementById('chip_' + id))
-        fetch('/proyectos/iteraciones-proyecto-editar',{
-            method : 'POST',
-            body : JSON.stringify(data),
-            headers:{
-                'csrf-token': csrf,
-                'Content-Type': 'application/json'
-            },
-        }).then(result => {
-         return result.json(); 
-        }).then(data => {
-            data.forEach(element => {
-                if (element.usuario!= "<%= user%>"){
-                    colaboradores_anteriores.push(element.usuario);
-                    chipContainer.addChip({
-                        tag: element.usuario,
-                    });
-                }
-            });
-            
-        }).catch(err => {
-            console.error(err);
-        });
-    }
+            <br>
+            <br>
 
+            <% if (!iteraciones[0]) { %>
+                <h4>No hay iteraciones que mostrar</h4>
+            <% } %>  
 
-    document.addEventListener('DOMContentLoaded', function() {
-    var elems = document.querySelectorAll('.chips-autocomplete');
+            <% for (let iteracion of iteraciones) { %>
+                
+                <div class="col s4">
+                    <div class="card small hoverable">
+                        <div class="card-image">
+                            <img src="../<%= imagen_proyecto %>" alt="Proyecto">
+                            <div id="modal1_<%= iteracion.id_iteracion %>" class="modal large">
+                                <form action="/proyectos/modificar-iteracion" method="POST">
+                                <!-- Modal Content -->
+                                    <div class="modal-content">
+                                        <input type="hidden" id="_csrf" name="_csrf" value="<%= csrfToken %>" >
+                                        <input type="hidden" name="id_iteracion" value="<%= iteracion.id_iteracion %>">
+                                        <input type="hidden" name="colaboradores" value="" id="colabsAdd_<%= iteracion.id_iteracion %>">
+                                        <input type="hidden" name="colaboradoresBorrados" value="" id="colabsDelete_<%= iteracion.id_iteracion %>">
+                                            <div class="col s6 offset-s3">
+                                                <div class="row">
+                                                    <div class="col s7 offset-s2">
+                                                        <h6><strong>Modificar proyecto</strong></h6>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="input-field col s12">
+                                                        <input  id="descripcion_proyecto" name="descripcion" maxlength="1000" type="text" class="validate" value = "<%=iteracion.descripcion%>" autocomplete="off">
+                                                        <label for="descripcion_proyecto">Descripcion de la iteracion</label>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="input-field col s12">
+                                                        <input  id="inicio_iteracion" name="fecha_inicio"type="text" class="datepicker"  value = "<%=iteracion.fecha_inicio_YMD %>" autocomplete="off" required>
+                                                        <label for="inicio_iteracion">Selecciona la fecha de inicio de la iteración</label>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="input-field col s12">
+                                                        <input  id="fin_iteracion" name="fecha_fin"type="text" class="datepicker" value = "<%=iteracion.fecha_fin_YMD%>" autocomplete="off" required>
+                                                        <label for="fin_iteracion">Selecciona la fecha de fin de la iteración</label>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col s12">
+                                                        <div class="chips chips-autocomplete"  id="chip_<%= iteracion.id_iteracion %>"></div>
+                                                        <i class="material-icons left">search</i> 
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col s12 offset s2">
+                                                        <button type="submit" class="waves-effect waves-light right btn" name="action" value="editar">Modificar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    </div>  
+                                </form>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <a class='dropdown-trigger right grey-text text-darken-4' data-target='dropdown1_<%= iteracion.num_iteracion %>'><i class="material-icons right">more_vert</i></a>
+                                <div>
+                                    <form action="iteraciones-proyecto" method="POST">
+                                        <input type="hidden" name="_csrf" value="<%= csrfToken %>"> 
+                                        <input type="hidden" name="idIteracion" value="<%= iteracion.id_iteracion %>">
+                                        <input type="hidden" name="numIteracion" value="<%= iteracion.num_iteracion %>">
+                                        <button class="btn-flat d-content" type="submit">IT <%= iteracion.num_iteracion %></botton>
+                                    </form>
+                                </div>
+                            <ul id='dropdown1_<%= iteracion.num_iteracion %>' class='dropdown-content'>
+                                <li><a data-target="modal1_<%= iteracion.id_iteracion %>" class="modal-trigger waves-effect waves-light" onclick='loadChips("<%= iteracion.id_iteracion %>")'><i class="small material-icons right">mode_edit</i></a></li>
+                                <li>
+                                    <form action="/proyectos/eliminar-iteracion" method="POST" id="eliminar_<%= iteracion.id_iteracion %>">
+                                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                        <input type="hidden" name="id_iteracion" value="<%= iteracion.id_iteracion %>">
+                                        <button type="submit" class="boton_dropdown waves-effect waves-red black-text btn-flat"><i class="material-icons">delete</i></button>
+                                        <script> 
+                                            document.getElementById("eliminar_<%= iteracion.id_iteracion %>").addEventListener('submit', (e) => {
+                                            let confirmacion = confirm('¿Estás seguro de eliminar la iteración?');
+                                            if(!confirmacion){
+                                                e.preventDefault();
+                                            }  
+                                            });
+                                        </script>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            <% } %>
+        </div>
+    </div>
 
-    let options = {};
+    <script>
 
-    "<%for (let i = 0; i < empleados.length; i++) { %>"
-        "<% if(empleados[i].usuario != user) { %>"
-            options["<%=empleados[i].usuario%>"] = null;
-        "<% } %>"
-    "<% } %>"
-
-    var instances = M.Chips.init(elems,{
-        autocompleteOptions:{ data : options},
-        placeholder: 'Añadir usuario',
-        secondaryPlaceholder : 'Añade usuario',
-        onChipAdd: chips2Input,
-        onChipDelete: chips2Input,
-        });
-
-        function chips2Input(){
-            var instance = M.Chips.getInstance(document.getElementById('chip_' + id)), inpt = document.getElementById('colabsAdd_' + id),inpt2 = document.getElementById('colabsDelete_' + id);
-            let deleted = [];
-            for(var i = 0; i < colaboradores_anteriores.length; i++){
-                    deleted.push(colaboradores_anteriores[i]);
-                for(var j=0; j<instance.chipsData.length; j++){
-                    if(colaboradores_anteriores[i] == instance.chipsData[j].tag){
-                        deleted.pop();
-                    }
-                }
-            }
-
-            let added = [];
-            let add;
-            for(var i = 0; i < instance.chipsData.length; i++){
-                    add = true;
-                for(var j = 0; j < colaboradores_anteriores.length; j++){
-                    if(colaboradores_anteriores[j] == instance.chipsData[i].tag){
-                        add = false;
-                    }
-                    else{
-                    }
-                }
-                if(add){
-                    added.push(instance.chipsData[i].tag);
-                }
-            }
-
-            inpt.value = null;
-            inpt.value = added;
-            inpt2.value = null;
-            inpt2.value = deleted;
+        if(location.pathname == "/proyectos/iteraciones-desarrollo-proyecto"){
+            var element = document.getElementById("iteraciones_desarrollo");
+            element.classList.add("active");
         }
-    });
 
-    document.addEventListener('DOMContentLoaded', function() {
-    var elems = document.querySelectorAll('.datepicker');
-    var instances = M.Datepicker.init(elems, {
-        format:'yyyy-mm-dd'
+        if(location.pathname == "/proyectos/iteraciones-terminadas-proyecto"){
+            var element = document.getElementById("iteraciones_terminadas");
+            element.classList.add("active");
+        }
+
+        let id;
+        const colaboradores_anteriores = [];
+        function loadChips(id_iteracion){
+            const csrf = document.getElementById('_csrf').value;
+            let data = {id_iteracion: id_iteracion};
+            id = id_iteracion;
+            let chipContainer = M.Chips.getInstance(document.getElementById('chip_' + id))
+            fetch('/proyectos/iteraciones-proyecto-editar',{
+                method : 'POST',
+                body : JSON.stringify(data),
+                headers:{
+                    'csrf-token': csrf,
+                    'Content-Type': 'application/json'
+                },
+            }).then(result => {
+            return result.json(); 
+            }).then(data => {
+                data.forEach(element => {
+                    if (element.usuario!= "<%= user%>"){
+                        colaboradores_anteriores.push(element.usuario);
+                        chipContainer.addChip({
+                            tag: element.usuario,
+                        });
+                    }
+                });
+                
+            }).catch(err => {
+                console.error(err);
+            });
+        }
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.chips-autocomplete');
+
+        let options = {};
+
+        "<%for (let i = 0; i < empleados.length; i++) { %>"
+            "<% if(empleados[i].usuario != user) { %>"
+                options["<%=empleados[i].usuario%>"] = null;
+            "<% } %>"
+        "<% } %>"
+
+        var instances = M.Chips.init(elems,{
+            autocompleteOptions:{ data : options},
+            placeholder: 'Añadir usuario',
+            secondaryPlaceholder : 'Añade usuario',
+            onChipAdd: chips2Input,
+            onChipDelete: chips2Input,
+            });
+
+            function chips2Input(){
+                var instance = M.Chips.getInstance(document.getElementById('chip_' + id)), inpt = document.getElementById('colabsAdd_' + id),inpt2 = document.getElementById('colabsDelete_' + id);
+                let deleted = [];
+                for(var i = 0; i < colaboradores_anteriores.length; i++){
+                        deleted.push(colaboradores_anteriores[i]);
+                    for(var j=0; j<instance.chipsData.length; j++){
+                        if(colaboradores_anteriores[i] == instance.chipsData[j].tag){
+                            deleted.pop();
+                        }
+                    }
+                }
+
+                let added = [];
+                let add;
+                for(var i = 0; i < instance.chipsData.length; i++){
+                        add = true;
+                    for(var j = 0; j < colaboradores_anteriores.length; j++){
+                        if(colaboradores_anteriores[j] == instance.chipsData[i].tag){
+                            add = false;
+                        }
+                        else{
+                        }
+                    }
+                    if(add){
+                        added.push(instance.chipsData[i].tag);
+                    }
+                }
+
+                inpt.value = null;
+                inpt.value = added;
+                inpt2.value = null;
+                inpt2.value = deleted;
+            }
         });
-    });
-</script>
 
+        document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.datepicker');
+        var instances = M.Datepicker.init(elems, {
+            format:'yyyy-mm-dd'
+            });
+        });
+    </script>
 
-<%- include('includes/closeHTML.ejs'); %>
+</main>
+<%- include('includes/closeHTMLtoast.ejs'); %>

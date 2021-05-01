@@ -1,32 +1,28 @@
-<%- include('includes/openHTML.ejs'); %>
+<%- include('includes/openHTMLtoast.ejs'); %>
 
 <%- include('includes/navbarPrincipal.ejs'); %>
 
-<% if (alerta) { %>
-    <script>alert("<%= alerta %>");</script>
-<% } %> 
-          
+<main> 
+
 <div class="row">    
     <div class="col s2 offset-s9">
-      <div class="row">
-        <div class="input-field col s12">
-          <i class="material-icons prefix">search</i>
-          <input type="text" id="autocomplete-input" class="autocomplete" placeholder="Search">
-        </div>  
-      </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <i class="material-icons prefix">search</i>
+                <input type="text" id="autocomplete-input" class="autocomplete" autocomplete="off" placeholder="Buscar">
+            </div>  
+        </div>
     </div>
-  </div>
+</div>
 
-<!-- Set de tres tarjetas -->
-<div class="row center">
-    <div class="col offset-m3 offset-l3">
+
+<div class="row  center">
+    <div class=" col s10  offset-s1 ">
         <% for (let proyecto of proyectos) { %>
-        <div class="col s3">
-            <div class="card small">
-                <div class="card-image">
-                    <img class="imagen_card" src="<%= proyecto.imagen %>">
-                    <!-- <img class="materialboxed"   src="<%= proyecto.imagen %>"> -->
-                    <!-- <img src="<%= proyecto.imagen %>"  alt="Proyecto"> -->
+        <div class="col s4">
+            <div class="card small hoverable">
+                <div class="card-image pointer">
+                    <img class="activator"  src="<%= proyecto.imagen %>">
                     <div id="modal1_<%= proyecto.id_proyecto %>" class="modal large">
                         <form action="/home/modificar-proyecto?_csrf=<%=csrfToken%>" method="POST"  enctype="multipart/form-data">
                         <!-- Modal Content -->
@@ -35,14 +31,19 @@
                                 <input type="hidden" name="id_proyecto" value="<%= proyecto.id_proyecto %>">
                                     <div class="col s6 offset-s3">
                                         <div class="row">
+                                            <div class="col s7 offset-s2">
+                                                <h6><strong>Modificar proyecto</strong></h6>
+                                            </div>
+                                        </div>
+                                        <div class="row">
                                             <div class="input-field col s11">
-                                                <input  id="nombre_proyecto<%= proyecto.id_proyecto %>" type="text" class="validate" name="nombre" value="<%= proyecto.nombre_proyecto %>" required>
+                                                <input  id="nombre_proyecto<%= proyecto.id_proyecto %>" type="text" class="validate" maxlength="64" name="nombre" value="<%= proyecto.nombre_proyecto %>" autocomplete="off" required>
                                                 <label for="nombre_proyecto<%= proyecto.id_proyecto %>">Nombre del proyecto*</label>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="input-field col s11">
-                                                <input  id="descripcion_proyecto<%= proyecto.id_proyecto %>" type="text" class="validate" name="descripcion" value="<%= proyecto.descripcion_proyecto %>">
+                                                <input  id="descripcion_proyecto<%= proyecto.id_proyecto %>" type="text" class="validate" maxlength="1000" name="descripcion" value="<%= proyecto.descripcion_proyecto %>" autocomplete="off">
                                                 <label for="descripcion_proyecto<%= proyecto.id_proyecto %>">Descripción del proyecto</label>
                                             </div>
                                         </div>
@@ -63,20 +64,19 @@
                                             <div class="input-field col s11">
                                                 <div class="file-field input-field">
                                                     <div class="btn">
-                                                      <span>File</span>
-                                                      <input type="file" name="imagen_proyecto" accept="image/*">
+                                                        <input type="file" name="imagen" accept="image/*">
+                                                        <span>Subir</span>
                                                     </div>
                                                     <div class="file-path-wrapper">
-                                                        <input  class="file-path validate" type="text" placeholder="Sube una imagen">
+                                                        <input class="file-path validate" type="text" placeholder="Sube una imagen">
                                                         <input type="hidden" value="<%= proyecto.imagen %>" name="imagen_previa">
                                                     </div>
-                                                  </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col s11 ">
-                                                <a class="modal-close waves-effect waves-green btn-flat " href="/home">Cancelar</a>
-                                                <button type="submit" class="waves-effect waves-green btn-flat" name="action" value="editar">Aceptar</button>
+                                                <button type="submit" class="waves-effect waves-light btn right" name="action" value="editar">Modificar</button>
                                             </div>
                                         </div>
                                     </div>
@@ -85,34 +85,45 @@
                     </div>
                 </div>
                 <div class="card-content">
-                    <a class='dropdown-trigger  grey-text text-darken-4' data-target='dropdown1_<%= proyecto.nombre_proyecto %>'><i class="material-icons right">more_vert</i></a>
-                    <span><%= proyecto.nombre_proyecto %></span>
+                    <a class='dropdown-trigger right  grey-text text-darken-4' data-target='dropdown1_<%= proyecto.nombre_proyecto %>'><i class="material-icons right">more_vert</i></a>
+                    <div>
+                        <form action="home" method="POST">
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
+                            <input type="hidden" name="imagenProyecto" value="<%= proyecto.imagen %>" >
+                            <input type="hidden" name="idProyecto" value="<%= proyecto.id_proyecto %>" >
+                            <input type="hidden" name="nombreProyecto" value="<%= proyecto.nombre_proyecto %>" >
+                            <button class=" btn-flat d-content" type="submit"><%= proyecto.nombre_proyecto %></botton>
+                        </form>
+                    </div>
                     <ul id='dropdown1_<%= proyecto.nombre_proyecto %>' class='dropdown-content'>
-                        <li><a data-target="modal1_<%= proyecto.id_proyecto %>" class="modal-trigger"><i class="material-icons right">mode_edit</i></a></li>
+                        <li><a data-target="modal1_<%= proyecto.id_proyecto %>" class="modal-trigger waves-effect waves-light"><i class="small material-icons right">mode_edit</i></a></li>
                         <li>
                             <form action="/home/eliminar-proyecto" method="POST" id="eliminar_<%= proyecto.id_proyecto %>">
                                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                                 <input type="hidden" name="id_proyecto" value="<%= proyecto.id_proyecto %>">
-                                <button type="submit" class="waves-effect waves-green btn-flat"><i class="material-icons">delete</i>Eliminar</button>
+                                <button type="submit" class="boton_dropdown waves-effect waves-red black-text btn-flat"><i class="small material-icons">delete</i></button>
                                 <script> 
                                     document.getElementById("eliminar_<%= proyecto.id_proyecto %>").addEventListener('submit', (e) => {
-                                      let confirmacion = confirm('¿Estás seguro de eliminar el proyecto?');
-                                      if(!confirmacion){
+                                        let confirmacion = confirm('¿Estás seguro de eliminar el proyecto?');
+                                        if(!confirmacion){
                                         e.preventDefault();
-                                      }  
+                                    }  
                                     });
                                 </script>
                             </form>
                         </li>
                     </ul>
                 </div>
-                <div class="card-action">
-                    <form action="home" method="POST">
-                        <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
-                        <input type="hidden" name="idProyecto" value="<%= proyecto.id_proyecto %>" >
-                        <input type="hidden" name="nombreProyecto" value="<%= proyecto.nombre_proyecto %>" >
-                        <button class="btn-flat" type="submit">Ir al proyecto</botton>
-                    </form>
+                <div class="card-reveal">
+                    <span class="card-title"><strong><%= proyecto.nombre_proyecto %></strong><i class="material-icons right">close</i></span>
+
+                    <% if(proyecto.descripcion_proyecto){ %>
+                        <br>
+                        <p><%= proyecto.descripcion_proyecto %></p>
+                    <% } %>
+                    <br>
+                    <p>Departamento: <%= proyecto.nombre_departamento %></p>
+                    <p>Fecha inicio: <%= proyecto.fecha_inicio %></p>
                 </div>
             </div>
         </div>
@@ -121,27 +132,54 @@
 </div>
 
 
+        
+
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-    let autocomplete = document.getElementById("autocomplete-input");
     
+    
+    document.addEventListener('DOMContentLoaded', function() {
     let options = {};
 
     "<%for (let i = 0; i < proyectos.length; i++) { %>"
-         options["<%=proyectos[i].nombre_proyecto%>"] = null;
-     "<% } %>"
-      
+        options["<%=proyectos[i].nombre_proyecto%>"] = null;
+    "<% } %>"
+
+    let autocomplete = document.getElementById("autocomplete-input");
+    // M.AutoInit();
     var instances = M.Autocomplete.init(autocomplete, { 
         data : options,
         onAutocomplete: GotoProyect
-     });
-
-    function GotoProyect(){
-       
-    }
     
     });
+        function GotoProyect(){
+    
+            let id_proyecto;
+            "<%for (let i = 0; i < proyectos.length; i++) { %>"
+                if ("<%=proyectos[i].nombre_proyecto%>" == autocomplete.value) { 
+                    id_proyecto = "<%=proyectos[i].id_proyecto%>";
+                }
+            "<% } %>"
+            
+            let data = {idProyecto: id_proyecto, nombreProyecto: autocomplete.value};
+            const csrf = "<%= csrfToken %>";
+        
+            
+            fetch('home',{
+                method : 'POST',
+                body : JSON.stringify(data),
+                headers:{
+                    'csrf-token': csrf,
+                    'Content-Type': 'application/json'
+                },
+            });
 
+            location.replace("/proyectos/iteraciones-desarrollo-proyecto");
+        }
+    
+    });
+    
 </script>
 
-<%- include('includes/closeHTML.ejs'); %>
+</main>
+
+<%- include('includes/closeHTMLtoast.ejs'); %>
