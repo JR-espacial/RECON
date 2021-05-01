@@ -1,5 +1,8 @@
 [![Contributors][contributors-shield]][contributors-url]
 # RECON
+### Deploy
+http://recon-natdev.azurewebsites.net/users/login
+
 ### Installation
 Al hacer el clone del repositorio es importante:
 * Utilizar los scripts dentro de las carpetas "Base de Datos/MySQL". 
@@ -15,9 +18,7 @@ Al hacer el clone del repositorio es importante:
 ```sh
   npm start
   ```
-* Desde cualquier navegador ingresar a la ruta "localhost:3000/users/login" e ingresar al sistema con las siguientes credenciales:
-    Nombre de Usuario: juan12
-    Contraseña: hola
+* Desde cualquier navegador ingresar a la ruta "localhost:3000/users/login" e ingresar al sistema.
 
 [contributors-shield]: https://img.shields.io/github/contributors/JR-espacial/RECON.svg?style=for-the-badge
 [contributors-url]: https://github.com/JR-espacial/RECON/graphs/contributors
