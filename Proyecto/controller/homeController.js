@@ -3,37 +3,37 @@ const Proyecto = require('../models/proyecto');
 const Departamento = require('../models/departamento');
 const Usuario = require('../models/user');
 
-exports.getHome = (request, response) => {
-    let alerta = request.session.alerta
+exports.getHome = async function (request, response){
+    let alerta = request.session.alerta;
+    let toast = request.session.toast;
     request.session.alerta = "";
+    request.session.toast = "";
     request.session.last = '/home';
     request.session.navegacion = 0;
 
-    Proyecto.fetchAll(request.session.usuario)
-    .then(([rows, fieldData]) => {
-        Departamento.fetchAll()
-        .then(([rows2, fieldData]) => {
-            response.render('home',{
-                user: request.session.usuario,
-                title: "Home", 
-                proyectos : rows,
-                departamentos : rows2,
-                alerta : alerta,
-                csrfToken: request.csrfToken()
-            });
-        })
-        .catch(err => {
-            console.log(err);
-        });
-    })
-    .catch(err => {
-        console.log(err);
+    let proyectos = await Proyecto.fetchAll(request.session.usuario);
+    let departamentos = await Departamento.fetchAll();
+    let user = await Usuario.fetchOne(request.session.usuario);
+    let users = await Usuario.fetchAll();
+    response.render('home',{
+        imagen_empleado: request.session.imagen_empleado,
+        title: "Home", 
+        proyectos : proyectos[0],
+        departamentos : departamentos[0],
+        user : user[0][0],
+        users : users[0],
+        alerta : alerta,
+        toast : toast,
+        csrfToken: request.csrfToken(),
+        proyecto_actual: request.session.nombreProyecto,
+        navegacion : request.session.navegacion
     });
 }
 
 exports.postProyectoID = (request, response) => {
     request.session.idProyecto = request.body.idProyecto;
     request.session.nombreProyecto = request.body.nombreProyecto;
+    request.session.imagenProyecto = request.body.imagenProyecto;
     response.redirect("/proyectos/iteraciones-desarrollo-proyecto");
 }
 
@@ -61,7 +61,7 @@ exports.postEditarProyecto = (request, response) => {
                 .then(() => {
                     Proyecto.modificarProyectoDepto(id_departamento, id_proyecto)
                         .then(() => {
-                            request.session.alerta = "Proyecto modificado exitosamente";
+                            request.session.toast = "Proyecto modificado.";
                             response.redirect('/home');
                         })
                         .catch(err => {
@@ -73,7 +73,7 @@ exports.postEditarProyecto = (request, response) => {
                 });
             }
             else {
-                request.session.alerta = "Error: ya existe un proyecto con este nombre";
+                request.session.alerta = "Ya existe un proyecto con este nombre";
                 response.redirect('/home');
             }
         })
@@ -86,10 +86,36 @@ exports.postEliminarProyecto = (request, response) => {
     const id_proyecto = request.body.id_proyecto;
     Proyecto.eliminarProyecto(id_proyecto)
     .then(() => {
-        request.session.alerta = "Proyecto eliminado exitosamente";
+        request.session.toast = "Proyecto eliminado.";
         response.redirect('/home');
     })
     .catch(err => {
         console.log(err);
     });
+}
+
+exports.getManualUsuario = async function (request, response){
+    let user = await Usuario.fetchOne(request.session.usuario);
+    let users = await Usuario.fetchAll();
+    response.render('ManualUsuario' ,{
+        imagen_empleado:"../"+ request.session.imagen_empleado,
+        navegacion : request.session.navegacion,
+        user : user[0][0],
+        users : users[0],
+        csrfToken: request.csrfToken(),
+        title: 'Manual Usuario'
+    }) 
+}
+
+exports.getAccesDenied = async function (request, response){
+    let user = await Usuario.fetchOne(request.session.usuario);
+    let users = await Usuario.fetchAll();
+    response.render('AccesDenied' ,{
+        imagen_empleado:"../"+ request.session.imagen_empleado,
+        navegacion : request.session.navegacion,
+        user : user[0][0],
+        users : users[0],
+        csrfToken: request.csrfToken(),
+        title: 'Acces Denied'
+    }) 
 }

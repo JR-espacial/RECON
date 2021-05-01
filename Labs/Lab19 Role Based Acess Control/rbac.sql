@@ -1,4 +1,4 @@
-CREATE TABLE Empleado (
+CREATE TABLE empleado (
     id_empleado CHAR(6) NOT NULL,
 	usuario VARCHAR(14),
     contrasena VARCHAR(16),
@@ -17,7 +17,7 @@ CREATE TABLE Usuarios_Roles(
     Id_Rol numeric(5) NOT NULL,
     PRIMARY KEY(id_empleado, Id_Rol),
     FOREIGN KEY (Id_Rol) REFERENCES Roles(Id_Rol),
-    FOREIGN KEY (id_empleado) REFERENCES Empleado(id_empleado)
+    FOREIGN KEY (id_empleado) REFERENCES empleado(id_empleado)
 )
 
 CREATE TABLE Privilegios(

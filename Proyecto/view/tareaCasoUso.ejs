@@ -1,25 +1,46 @@
-<%- include('includes/openHTML.ejs'); %>
+<%- include('includes/openHTMLtoast.ejs'); %>
 <%- include('includes/navbarIteracion.ejs'); %>
+
+<link rel="stylesheet" href="tabla_tareas_cu.css">
+<link rel="stylesheet" type="text/css" href="loading_io/css/loading-bar.min.css"/>
+<script type="text/javascript" src="loading_io/js/loading-bar.js"></script>
+
 <main>
-    <div>
-        <div class="row center-align">
-            <div class="col s6 offset-s3">
-                <h2>Tareas por Caso de Uso</h2>
-            </div>
+    <br>
+    <div class="row">
+
+        <div class="col s10 offset-s1">
+            <form action="tarea-caso-uso/enviarAirtable" method="POST" id="enviar_airtable">
+                <input type="hidden" id="_csrf" name="_csrf" value="<%= csrfToken %>" >
+                <div class="row">
+                    <div class="col s4 offset-s8 ">
+                        <button class="waves-effect waves-light btn right light-blue darken-4" type="submit">Enviar a Airtable</button>
+                    </div>
+                </div>
+                <script>
+                    document.getElementById("enviar_airtable").addEventListener('submit', stopEnviarAirtable);
+                    
+                    function stopEnviarAirtable(event) {
+                        let confirmacion = confirm('¿Estás seguro de que quieres los datos a AirTable?');
+                        if(!confirmacion) {
+                            event.preventDefault();
+                        }
+                    }
+                </script>
+            </form>
         </div>
-        <hr>
-        <br>
-        <div class="row container">
+        <div class="col s10 offset-s1">
             <% if(lista_quiero.length !== 0) { %>
                 <!-- Quiero -->
-                <div class="col s6 m6 l6">
-                    <div class="tabla_cu">
-                        <table class="highlight tabla_cu">
+                    <div class="col s7">
+                        <table class="tabla_tareas_cu z-depth-3">
                             <thead> 
                                 <tr>
-                                    <th class="row-botonTareas"></th>
-                                    <th class="row-idCaso-Tarea">id</th>
-                                    <th class="row-quiero">Quiero</th>      
+                                    <th></th>
+                                    <th>Num</th>
+                                    <th>Quiero</th>  
+                                    <th>Minutos</th>  
+                                    <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Avance</th>  
                                 </tr>
                             </thead>
                             <tbody>
@@ -28,62 +49,76 @@
                                         <td>
                                             <label>
                                                 <input type="hidden" name="_csrf" id="_csrf" value="<%= csrfToken %>">
-                                                <input name="group1" type="radio" onchange="obtenerTareas('<%= quiero.id_casos %>')"></input>
+                                                <input name="group1" type="radio" class="with-gap" onchange="obtenerTareas('<%= quiero.id_casos %>')"></input>
                                                 <span></span>
                                             </label>
                                         </td>
-                                        <td><%= quiero.id_casos %></td>
+                                        <td><%= quiero.numero_cu %></td>
                                         <td><%= quiero.quiero %></td>
+                                        <td>&nbsp;&nbsp;<%= quiero.real_minutos %></td>
+                                        <td>
+                                            <div data-preset = "fan" id="myBar<%= quiero.id_casos %>" class = "label-center"></div>
+                                        </td>
+                                        <script>
+                                            /* construct manually */
+                                            var bar1 = new ldBar("#myBar<%= quiero.id_casos %>", {
+                                                "stroke": '#01579B',
+                                                "stroke-width": 10,
+                                                "preset": "fan",
+                                                "value": 0
+                                            });
+                                            /* ldBar stored in the element */
+                                            bar1.set('<%= quiero.porcentaje_avance %>' * 100);
+                                            console.log('<%= quiero.porcentaje_avance %>');
+                                        </script>
                                     </tr>
                                 <% } %>
                             </tbody>
                         </table>
                     </div>
-                </div>
                 
-                <!-- Tareas del Proyecto -->
-                <div class="col s6 m6 l6">                    
-                    <div id="fasesVert" class="container">
-                        
-                        <% const idspractica = []; %>
-                        <% for (let tarea = 0; tarea < lista_tareas.length; tarea++) { 
-                            <!-- Si va empezando o cambia de fase  -->
-                            if(tarea === 0 || lista_tareas[tarea].nombre_fase !== lista_tareas[tarea - 1].nombre_fase){ %>
-                                <!-- Empieza bloque de la fase -->
-                                <div id="faseVert" class="center-align">
-                                    <!-- Título de la fase -->
-                                    <div id="titulo-fase">
-                                        <span class=""> <%= lista_tareas[tarea].nombre_fase %>: </span>
+                    <!-- Tareas del Proyecto -->
+                    <div class="col s5">                    
+                        <div id="fasesVert" class="container">                        
+                            <% for (let tarea = 0; tarea < lista_tareas.length; tarea++) { 
+                                <!-- Si va empezando o cambia de fase  -->
+                                if(tarea === 0 || lista_tareas[tarea].nombre_fase !== lista_tareas[tarea - 1].nombre_fase){ %>
+                                    <!-- Empieza bloque de la fase -->
+                                    <div id="faseVert" class="center-align hoverable ">
+                                        <!-- Título de la fase -->
+                                        <div id="titulo-fase">
+                                            <span class=""> <%= lista_tareas[tarea].nombre_fase %>: </span>
+                                        </div>
+                                    <!-- Empieza div para desplegar tareas de la fase -->
+                                    <div>
+                                <% } %>
+                                <!-- Despliegue de tareas de la fase -->
+                                <div id="tarea-en-fase">
+                                    <label>
+                                        <input type="checkbox" id="botonCheck_<%= tarea %>" class="filled-in checkbox-blue-grey" disabled="disabled" onclick="modificarAsociacion('<%= lista_tareas[tarea].id_fase %>','<%= lista_tareas[tarea].id_tarea %>', '<%= tarea %>')"/> 
+                                        <span> <%= lista_tareas[tarea].nombre_tarea %> </span>
+                                    </label>
+                                </div>
+                                <!-- Si es la última tarea de todas o de una fase, cierra la división para la fase -->
+                                <% if(tarea === lista_tareas.length - 1 || lista_tareas[tarea].nombre_fase !== lista_tareas[tarea + 1].nombre_fase) { %> 
+                                    <!-- Cierra bloque de tareas  -->
                                     </div>
-                                <!-- Empieza div para desplegar tareas de la fase -->
-                                <div>
-                            <% } %>
-                            <!-- Despliegue de tareas de la fase -->
-                            <div id="tarea-en-fase">
-                                <label>
-                                    <input type="checkbox" id="botonCheck_<%= tarea %>" class="filled-in" disabled="disabled" onclick="modificarAsociacion('<%= lista_tareas[tarea].id_fase %>','<%= lista_tareas[tarea].id_tarea %>', '<%= tarea %>')"/> 
-                                    <span> <%= lista_tareas[tarea].nombre_tarea %> </span>
-                                </label>
-                            </div>
-                            <!-- Si es la última tarea de todas o de una fase, cierra la división para la fase -->
-                            <% if(tarea === lista_tareas.length - 1 || lista_tareas[tarea].nombre_fase !== lista_tareas[tarea + 1].nombre_fase) { %> 
-                                <!-- Cierra bloque de tareas  -->
-                                </div>
-                                <!-- Cierra bloque de fase -->
-                                </div>
-                            <% } %>
-                            <% idspractica.push(lista_tareas[tarea].id_tarea); %>
-                        <% } %>          
+                                    <!-- Cierra bloque de fase -->
+                                    </div>
+                                <% } %>
+                            <% } %>          
+                        </div>
                     </div>
-                </div>
+                
             <% } else { %>
-                <h4>No se encontraron casos de uso para esta iteracion</h4>
+                <h4>No se encontraron casos de uso para esta iteración</h4>
             <% } %>
         </div>
     </div>
     
     <script>
         let casoactual = ""; 
+        
         function obtenerTareas(idcaso) {
             casoactual = idcaso;
             let csrf = document.getElementById("_csrf").value;
@@ -136,15 +171,20 @@
             let valorCheck = document.getElementById("botonCheck_" + index).checked;
             
             let accion = (valorCheck === true) ? "registrar" : "eliminar";
-
-            if(accion === "registrar") {
-                M.toast({html: 'Asociación registrada'});
-            }
-            else if(accion === "eliminar") {
-                M.toast({html: 'Asociación eliminada'});
-            } 
             
             let data = {id_fase: idFase, id_casos: casoactual, id_tarea: idTrabajo, accion: accion};
+            
+            const listatareas = [];
+            const listafases = [];
+            let i = 0;
+            let id = 0;
+            "<% for (let tarea of lista_tareas){ %>"
+                listatareas.push("<%= tarea.id_tarea %>");
+                listafases.push("<%= tarea.id_fase %>");
+                id = 'botonCheck_' + i;
+                document.getElementById(id).disabled = true;
+                i++;
+            "<% } %>"
 
             fetch('/proyectos/tarea-caso-uso/modificarAsociacion', {
                 method: 'POST',
@@ -157,7 +197,17 @@
             .then(result => {
                 return result.json();
             })
-            .then(data => {            
+            .then(data => {
+                if (data.toast) {
+                    M.toast({html: data.toast, classes: 'blue darken-3'});
+                }
+                // Solo entra aqui si data no es nulo
+                i = 0;
+                for(let tarea of listatareas) {
+                    id = 'botonCheck_' + i;
+                    document.getElementById(id).disabled = false;
+                    i++;
+                }
             })
             .catch(err => {
                 console.log(err);
@@ -166,8 +216,7 @@
 
             return;
         }
-      
     </script>
 </main>
 
-<%- include('includes/closeHTML.ejs'); %>
+<%- include('includes/closeHTMLtoast.ejs'); %>

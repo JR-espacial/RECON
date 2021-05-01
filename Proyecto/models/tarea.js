@@ -1,6 +1,5 @@
 const db = require('../util/mySQL');
 
-
 module.exports =  class Tarea{
     constructor(nombre_tarea){
         this.nombre_tarea = nombre_tarea;
@@ -20,6 +19,10 @@ module.exports =  class Tarea{
     }
 
     static fetchAllFromProyecto(id_proyecto, id_fase){
-        return db.execute('SELECT * FROM tarea WHERE id_tarea IN (SELECT id_tarea FROM proyecto_fase_practica WHERE id_proyecto =? AND id_fase =?)', [id_proyecto, id_fase]);
+        return db.execute('SELECT * FROM tarea WHERE id_tarea IN (SELECT id_tarea FROM proyecto_fase_tarea WHERE id_proyecto =? AND id_fase =?)', [id_proyecto, id_fase]);
+    }
+
+    static fetchAllNotInProject(id_proyecto) {
+        return db.execute('SELECT nombre_tarea FROM tarea WHERE id_tarea NOT IN (SELECT DISTINCT id_tarea FROM proyecto_fase_tarea WHERE id_proyecto =?)', [id_proyecto]);
     }
 }

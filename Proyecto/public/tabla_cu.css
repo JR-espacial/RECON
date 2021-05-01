@@ -1,0 +1,99 @@
+/* Tabla para Casos de Uso */
+
+.tabla_cu tbody {
+    display:block;
+    max-height:400px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color: white;
+}
+
+.tabla_cu thead, tbody tr {
+    display: table;
+    width:100%;
+    table-layout:fixed;
+}
+
+/* 
+.tabla_cu thead {
+    width: calc( 100% - 1em )
+} */
+
+.tabla_cu table {
+    width:100%;
+}
+
+.tabla_cu thead th {
+    padding-left: 15px;
+    position: sticky;
+    top: 0;
+    
+    background-color: #343434;
+    color: white;
+    font-weight: bold;
+}
+
+.tabla_cu tbody tr:hover{
+    background-color: #f5f5f5;
+}
+
+.tabla_cu td {
+    padding-left: 15px;
+    overflow-wrap: break-word;
+    text-overflow: ellipsis;
+}
+
+
+/* Column and td widths */
+/* Theads */
+.tabla_cu thead th:nth-child(1),
+.tabla_cu thead th:nth-child(5) {
+    width: 6.5%;
+}
+
+.tabla_cu thead th:nth-child(2) {
+    width: 12.5%;
+}
+
+.tabla_cu thead th:nth-child(3),
+.tabla_cu thead th:nth-child(4) {
+    width:25.25%;
+}
+
+.tabla_cu thead th:nth-child(6),
+.tabla_cu thead th:nth-child(7),
+.tabla_cu thead th:nth-child(8) {
+    width:8%;
+}
+
+/* Tds */
+.tabla_cu td:nth-child(1),
+.tabla_cu td:nth-child(5) {
+    width: 6.5%;
+}
+
+.tabla_cu td:nth-child(2) {
+    width: 12.5%;
+}
+
+.tabla_cu td:nth-child(3),
+.tabla_cu td:nth-child(4) {
+    width:25.25%;
+}
+
+.tabla_cu td:nth-child(6),
+.tabla_cu td:nth-child(7),
+.tabla_cu td:nth-child(8) {
+    width:8%;
+}
+
+.boton_eliminar{
+    padding: 0 0px;
+    line-height: 0;
+    width: 100%;
+    padding-top: 8px;
+}
+
+.boton_eliminar i{
+    font-size: 2rem;
+}

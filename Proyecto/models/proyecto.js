@@ -10,42 +10,52 @@ module.exports =  class Proyecto{
     }
 
     saveProyecto(){ 
-        return db.execute('INSERT INTO Proyecto (nombre_proyecto, descripcion, imagen, fecha_inicio, fecha_fin, estado_proyecto, proyecto_terminado) VALUES (?, ?, ?, CURRENT_DATE(), NULL, ?,?)',
+        return db.execute('INSERT INTO proyecto (nombre_proyecto, descripcion, imagen, estado_proyecto, proyecto_terminado) VALUES (?, ?, ?, ?, ?);',
         [this.nombre_proyecto, this.descripcion, this.imagen, this.estado_proyecto, this.proyecto_terminado]);
     }
 
     static saveProyectoDepto(id_departamento, id_proyecto){
-        return db.execute('INSERT INTO Proyecto_Departamento (id_proyecto, id_departamento) VALUES (?, ?)',
+        return db.execute('INSERT INTO proyecto_departamento (id_proyecto, id_departamento) VALUES (?, ?);',
         [id_proyecto, id_departamento]);
     }
 
     static fetchAll(usuario){
-        return db.execute('SELECT *, P.descripcion AS descripcion_proyecto FROM Proyecto P, Iteracion I, Empleado_Iteracion EI, Empleado E, Departamento D, Proyecto_departamento PD WHERE estado_proyecto = 1 AND P.id_proyecto = I.id_proyecto AND I.id_iteracion = EI.id_iteracion AND EI.id_empleado = E.id_empleado AND P.id_proyecto = PD.id_proyecto AND PD.id_departamento = D.id_departamento AND E.usuario =? GROUP BY P.id_proyecto', [usuario]);
+        return db.execute('SELECT P.id_proyecto, P.nombre_proyecto, P.descripcion as descripcion_proyecto, P.imagen, DATE_FORMAT(P.fecha_inicio, "%Y-%m-%d")AS fecha_inicio, D.id_departamento, D.nombre_departamento FROM proyecto P, iteracion I, empleado_iteracion EI, empleado E, departamento D, proyecto_departamento PD WHERE estado_proyecto = 1 AND P.id_proyecto = I.id_proyecto AND I.id_iteracion = EI.id_iteracion AND EI.id_empleado = E.id_empleado AND P.id_proyecto = PD.id_proyecto AND PD.id_departamento = D.id_departamento AND E.usuario =? GROUP BY P.id_proyecto, id_departamento ORDER BY P.fecha_inicio DESC;', [usuario]);
     }
 
     static fetchOne(nombre_proyecto){ 
-        return db.execute('SELECT id_proyecto FROM Proyecto WHERE nombre_proyecto =?',[nombre_proyecto]);
+        return db.execute('SELECT id_proyecto FROM proyecto WHERE nombre_proyecto =?;',[nombre_proyecto]);
     }
 
     static fetchAllProyectoIter(id_iteracion) {
-        console.log(id_iteracion);
-        return db.execute('SELECT id_proyecto FROM Iteracion WHERE id_iteracion IN ? AND estado_iteracion = 1',[id_iteracion]);
+        return db.execute('SELECT id_proyecto FROM iteracion WHERE id_iteracion IN ? AND estado_iteracion = 1;',[id_iteracion]);
     }
 
     static fetchOneModificar(nombre_proyecto, id_proyecto){ 
-        return db.execute('SELECT id_proyecto FROM Proyecto WHERE nombre_proyecto =? AND NOT id_proyecto =?',[nombre_proyecto, id_proyecto]);
+        return db.execute('SELECT id_proyecto FROM proyecto WHERE nombre_proyecto =? AND NOT id_proyecto =?;',[nombre_proyecto, id_proyecto]);
     }
 
     static modificarProyecto(nombre_proyecto, descripcion, image_file_name, id_proyecto){
-        return db.execute('UPDATE Proyecto SET nombre_proyecto = ?, descripcion = ?, imagen = ? WHERE id_proyecto = ?', [nombre_proyecto, descripcion, image_file_name, id_proyecto]);
+        return db.execute('UPDATE proyecto SET nombre_proyecto = ?, descripcion = ?, imagen = ? WHERE id_proyecto = ?;', [nombre_proyecto, descripcion, image_file_name, id_proyecto]);
     }
 
     static modificarProyectoDepto(id_departamento, id_proyecto){
-        return db.execute('UPDATE Proyecto_Departamento SET id_departamento = ? WHERE id_proyecto = ?', [id_departamento, id_proyecto]);
+        return db.execute('UPDATE proyecto_departamento SET id_departamento = ? WHERE id_proyecto = ?;', [id_departamento, id_proyecto]);
     }
 
     static eliminarProyecto(id_proyecto){
-        return db.execute('UPDATE Proyecto SET estado_proyecto = 0 WHERE id_proyecto = ?', [id_proyecto]);
+        return db.execute('UPDATE proyecto SET estado_proyecto = 0 WHERE id_proyecto = ?;', [id_proyecto]);
     }
 
+    static saveAirTableKeys(base, API_key, id_proyecto){
+        return db.execute('UPDATE proyecto SET base = ?, API_key = ? WHERE id_proyecto = ?;', [base, API_key, id_proyecto]);
+    }
+
+    static fetchAirTableKeys(id_proyecto){
+        return db.execute('SELECT base, API_key FROM proyecto WHERE id_proyecto = ?;', [id_proyecto]);
+    }
+
+    static fetchInDepartment(usuario, id_departamento) {
+        return db.execute('SELECT P.id_proyecto, P.nombre_proyecto, P.descripcion as descripcion_proyecto, P.imagen, DATE_FORMAT(P.fecha_inicio, "%Y-%m-%d")AS fecha_inicio, D.id_departamento, D.nombre_departamento FROM proyecto P, iteracion I, empleado_iteracion EI, empleado E, departamento D, proyecto_departamento PD WHERE estado_proyecto = 1 AND P.id_proyecto = I.id_proyecto AND I.id_iteracion = EI.id_iteracion AND EI.id_empleado = E.id_empleado AND P.id_proyecto = PD.id_proyecto AND PD.id_departamento = D.id_departamento AND E.usuario =? AND D.id_departamento=?  GROUP BY P.id_proyecto, id_departamento ORDER BY P.fecha_inicio DESC;', [usuario, id_departamento])
+    }
 }

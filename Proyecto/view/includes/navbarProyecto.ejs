@@ -1,42 +1,89 @@
 
-<a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+<%- include('breadcrumbs.ejs'); %>
 <ul class="sidenav sidenav-fixed" id="slide-out">
-    <li><div class="user-view">
-        <div class="background">
-            <img src="https://wallpapercave.com/wp/wp3194552.png">
-        </div>
-        <a href="#user"><img class="circle" src="https://storage.googleapis.com/natgas/others/logos/natgas-logo-simple.png"></a>
-        <div class="row">
-            <div class="col s10">
-                <a href="#name"><span class="white-text name"><%=user%></span></a>
-                <a href="#email"><span class="white-text email"><%=user%>@email.com</span></a>
+    <li><div class="user-view background">
+        <a ><img class="circle resposive-image materialboxed"   src="../<%=imagen_empleado%>" width="60" height="60"></a>
+        <div class="row valign-wrapper">
+            <div class="col s9">
+                <a href="/users/settings"><span class="white-text name"><%=user%></span></a>
+                <a href="/users/settings"><span class="white-text email"><%=user%>@email.com</span></a>
             </div>
-            <div class="col s1">
-                <a href="/home"><i class="white-text material-icons">home</i></a>
+            <div class="col s2 offset-s1">
+                <a href="/users/settings"><i class="white-text material-icons">settings</i></a>
             </div>
         </div>
         </div>
     </li>
     
     
-    
-    <li><a class="waves-effect waves-light btn" href="/proyectos/nueva-iteracion"><i class="material-icons left">add</i>Crear Iteracion</a>
-    <li><a class="waves-effect" href="/proyectos/iteraciones-desarrollo-proyecto">En desarrollo</a></li>
-    <li><a class="waves-effect" href="/proyectos/iteraciones-terminadas-proyecto">Terminado</a></li>
+    <li><a class="waves-effect waves-light btn" href="/proyectos/nueva-iteracion"><i class="material-icons white-text left">add</i>Crear Iteracion</a>
+    <li id="iteraciones"><a class="waves-effect" href="/proyectos/iteraciones-desarrollo-proyecto">Iteraciones<i class="material-icons right">layers</i></a></li>
     <li><div class="divider"></div></li>
+    
+    <li id="miProgreso"><a class="waves-effect" href ="/proyectos/mi-progreso">Mi progreso<i class="material-icons right">donut_large</i></a></li>
+    <li id="fases_proyecto"><a class="waves-effect" href="/proyectos/fases-proyecto">WBS<i class="material-icons right">view_quilt</i></a></li>
+    <li id="estimacion_ap"><a class="waves-effect" href="/proyectos/estimacion-ap">Estimación de Tareas<i class="material-icons right">access_time</i></a></li>
 
-    <li><a class="waves-effect" href="/proyectos/fases-proyecto">WBS</a></li>
-    <li><a class="waves-effect" href="/proyectos/estimados-ap">Estimación AP</a></li>
-    <li><a class="waves-effect" href="/proyectos/promedios-ap">Promedios AP</a></li>
-
-    <li class="logout"><a href="/users/logout"><i class="material-icons right">input</i>Logout &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a></li>
+    <li><a href ="https://airtable.com/<%= proyecto_keys.base %>" target="_blank"> AirTable<i class="material-icons right">cloud_queue</i></a></li>
+    <li><a data-target="modalAirTable" class="modal-trigger">AirTable keys<i class="material-icons right">vpn_key</i></a></li>
+    
+    <li class="logout"><a href="/users/logout"><i class="material-icons right right-logout">input</i>Salir</a></li>
     
 </ul>
 
-<%- include('breadcrumbs.ejs'); %>
+<div id="modalAirTable" class="modal">
+    <div class="modal-content">
+        <div class="row">
+            <div class="col s7 offset-s3">
+                <h6><strong>Configuración AirTable</strong></h6>
+            </div>
+        </div>
+        <form action="/proyectos/configuracion-AirTable" method="POST">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
+        <div class="row">
+            <div class="input-field col s7 offset-s3">
+                <input id="Base" type="text" class="validate" maxlength="50" name="base" value="<%= proyecto_keys.base %>" autocomplete="off" required>
+                <label for="Base" >Base</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s7 offset-s3 ">
+                <input id="User API Key" type="text" class="validate"  maxlength="50" name="API_key" value="<%= proyecto_keys.API_key %>" autocomplete="off" required>
+                <label for="User API Key" >Llave API de Usuario</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col s11 ">
+                <button type="submit" class="waves-effect waves-light btn right" name="action" value="editar">Aceptar</button>
+            </div>
+        </div>
+    </form>
+    </div>
+</div>
+
+<!-- <%- include('breadcrumbs.ejs'); %> -->
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         M.AutoInit();
     });
+
+    if("<%=title%>" == "Fases del Proyecto"){
+        var element = document.getElementById("fases_proyecto");
+        element.classList.add("active");
+    }
+    else if("<%=title%>" == "Estimación AP"){
+        var element = document.getElementById("estimacion_ap");
+        element.classList.add("active");
+    }
+    else if("<%=title%>" == "Iteraciones"){
+        var element = document.getElementById("iteraciones");
+        element.classList.add("active");
+    }
+    else if("<%=title%>" == "Mi progreso"){
+        var element = document.getElementById("miProgreso");
+        element.classList.add("active");
+    }
+
 </script>

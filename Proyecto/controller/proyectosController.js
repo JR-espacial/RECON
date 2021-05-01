@@ -2,10 +2,35 @@ const Proyecto = require('../models/proyecto');
 const Iteracion = require('../models/iteracion');
 const Usuario = require('../models/user');
 const Departamento = require('../models/departamento');
-const Puntos_Agiles = require('../models/puntos_agiles');
 const Proyecto_Fase_Tarea = require('../models/Proyecto_Fase_Tarea');
 const Fase = require('../models/fase');
-const { request } = require('express');
+const APC = require('../models/ap_colaborador');
+const APP = require('../models/ap_promedios');
+const Casos_Uso = require('../models/casos_uso');
+const Entrega = require('../models/entrega');
+const { request, response } = require('express');
+
+
+exports.postNuevoDepartamento =(request,response)=>{
+    Departamento.fetchOne(request.body.nuevo_departamento)
+        .then(([rows, fieldData]) => {
+            if(rows[0]){ 
+                request.session.alerta = "El departamento ingresado ya existe";
+                response.redirect('/home');
+            }
+            else{
+                const nuevo_departamento = new Departamento(request.body.nuevo_departamento);
+                nuevo_departamento.saveDepartamento()
+                .then(() => {
+                    request.session.toast = "Departamento registrado";
+                    response.redirect('/home');
+                }).catch(err => console.log(err));
+            }
+        })
+        .catch(err => {
+            console.log(err);
+        });
+}
 
 exports.getNuevoProyecto = (request, response) => {
     const error = request.session.error;
@@ -14,6 +39,7 @@ exports.getNuevoProyecto = (request, response) => {
     Departamento.fetchAll()
     .then(([rows, fieldData]) => {
         response.render('crearProyecto', {
+            imagen_empleado: request.session.imagen_empleado,
             user: request.session.usuario,
             title: "Crear Proyecto", 
             departamentos : rows,
@@ -38,13 +64,12 @@ exports.postNuevoProyecto = async function (request, response) {
     let image_file_name = '';
 
     if(!image) {
-        console.error('Error al subir la imagen');
-        image_file_name = 'https://www.esan.edu.pe/conexion/actualidad/2017/10/26/1500x844_portafolio_proyectos.jpg';
+        image_file_name = 'portafolio_proyectos.jpg';
     }
     else{
         image_file_name = image.filename;
     }
-  
+
     const proyecto_existente = await Proyecto.fetchOne(nombre_proyecto);
     if (proyecto_existente[0].length < 1) {
         let proyecto = new Proyecto(nombre_proyecto, descripcion, departamento, 1, image_file_name, 0);
@@ -58,59 +83,70 @@ exports.postNuevoProyecto = async function (request, response) {
         }
 
         await Proyecto.saveProyectoDepto(departamento, id_proyecto[0][0].id_proyecto);
-        await Iteracion.saveCapacidad();
-        const fetchLastCapacidad =  await Iteracion.fetchLastCapacidad();
         
-        let iteracion = new Iteracion(id_proyecto[0][0].id_proyecto, fetchLastCapacidad[0][0].id_capacidad, 0, 'NULL', 'NULL', 'NULL', 0);
+        // Se crea iteración fantasma con capacidad fantasma, y se asigna al usuario que creo el proyecto a la iteración fantasma. 
+        let iteracion = new Iteracion(id_proyecto[0][0].id_proyecto, 0, 0, 'NULL', '2000-01-01', '2000-01-02', 0);
         await iteracion.saveIteracion();
         const fetchOneIteracion = await Iteracion.fetchOne(id_proyecto[0][0].id_proyecto, 0);
         const fetchOneUsuario =  await Usuario.fetchOne(request.session.usuario);
         await Iteracion.saveColaborador(fetchOneUsuario[0][0].id_empleado, fetchOneIteracion[0][0].id_iteracion);
 
-        request.session.alerta = "Proyecto creado exitosamente";
+        request.session.toast = "Proyecto creado";
         response.redirect(last);
     }
     else {
-        request.session.error = "Ya hay un proyecto con ese nombre";
+        request.session.error = "Ya hay un proyecto con dicho nombre";
         response.redirect('/proyectos/nuevo-proyecto');
     }
 }
 
-exports.getAvanceProyecto = (request, response) => {
-    response.render('avanceProyecto', {
-        navegacion : request.session.navegacion,
-        proyecto_actual : request.session.nombreProyecto,
-        user: request.session.usuario,
-        title: "Avance del Proyecto",
-        csrfToken: request.csrfToken()
-    });
+exports.getEstimacionAP = (request, response) => {
+    APC.fetchValues(request.session.idProyecto, request.session.id_empleado)
+        .then(([rowsa, fieldData]) => {
+            Proyecto.fetchAirTableKeys(request.session.idProyecto)
+                .then(([rowsc, fieldData]) => {
+                    response.render('estimacionAP', {
+                        navegacion : request.session.navegacion,
+                        proyecto_actual : request.session.nombreProyecto,
+                        imagen_empleado: request.session.imagen_empleado,
+                        user: request.session.usuario,
+                        title: "Estimación AP",
+                        csrfToken: request.csrfToken(),
+                        lista_colaborador: rowsa,
+                        proyecto_keys : rowsc[0]
+                    });
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        })
+        .catch(err => {
+            console.log(err);
+        }); 
 }
 
-exports.getPromediosAP = (request, response) =>{
-    response.render('promediosAP', {
-        navegacion : request.session.navegacion,
-        proyecto_actual : request.session.nombreProyecto,
-        user: request.session.usuario,
-        title: "Promedios AP",
-        csrfToken: request.csrfToken()
-    });
+exports.postEstimacionAP = (request, response) => {
+    APC.actualizaTiempos(request.session.idProyecto, request.session.id_empleado, request.body.id_fase, request.body.id_tarea, request.body.id_ap, request.body.minutos)
+        .then(() => {
+            Casos_Uso.fetchCasosCambioApPromedios(request.body.id_ap, request.session.idProyecto, request.body.id_fase, request.body.id_tarea)
+                .then(([rows, fieldData]) => {
+                    for(caso of rows) {
+                        Entrega.actualiza_con_check(caso.id_casos * 1)
+                        .catch(err => console.log(err));
+                    }
+                    response.status(200).json("");
+                })
+        })
+        .catch( err => console.log(err));      
 }
 
-exports.getEstimadosAP = (request, response) =>{
-    const id_proyecto = request.session.idProyecto;
-
-    Proyecto_Fase_Tarea.fetchAllTareasFaseProyecto(id_proyecto)
+exports.postPromediosAP = (request, response) => {
+    APP.fetchValues(request.session.idProyecto)
         .then(([rows, fieldData]) => {
-            response.render('estimadosAP', {
-                navegacion : request.session.navegacion,
-                proyecto_actual : request.session.nombreProyecto,
-                user: request.session.usuario,
-                title: "Estimados AP",
-                lista_tareas: rows,
-                csrfToken: request.csrfToken()
-            });
+            response.status(200).json(rows);
         })
         .catch(err => {
             console.log(err);
         });  
 }
+

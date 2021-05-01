@@ -1,40 +1,44 @@
-<%- include('includes/openHTML.ejs'); %>
+<%- include('includes/openHTMLtoast.ejs'); %>
 
-<% if (alerta) { %>
-    <script>alert("<%= alerta %>");</script>
-<% } %> 
+<a class=" white btn black-text"  href="/proyectos/iteraciones-desarrollo-proyecto"> <i class="material-icons prefix">chevron_left</i></a>
+
+<div class="row center-align">
+    <div class="col s6 offset-s3">
+        <h4>Crear Iteracion</h4>
+    </div>
+</div>
 
 <div class="row">
-    <div class="col s12 offset-s4">
+    <div class="col s8 offset-s4">
         <form class="col s12" action="nueva-iteracion" method="POST">
             <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
             <input type="hidden" name="colaboradores" value="" id="myInputField" required>
             <div class="row">
-                <div class="input-field col s4">
-                    <input  id="descripcion_proyecto" name="descripcion" type="text" class="validate">
+                <div class="input-field col s6">
+                    <input  id="descripcion_proyecto" maxlength="1000" name="descripcion" type="text" class="validate" autocomplete="off">
                     <label for="descripcion_proyecto">Descripción de la iteración</label>
                 </div>
             </div>
             <div class="row">
-                <div class="input-field col s4">
-                    <input  id="inicio_iteracion" name="fecha_inicio"type="text" class="datepicker" required>
+                <div class="input-field col s6">
+                    <input  id="inicio_iteracion" name="fecha_inicio"type="text" class="datepicker" autocomplete="off" required>
                     <label for="inicio_iteracion">Selecciona la fecha de inicio de la iteración</label>
                 </div>
             </div>
             <div class="row">
-                <div class="input-field col s4">
-                    <input  id="fin_iteracion" name="fecha_fin"type="text" class="datepicker" required>
+                <div class="input-field col s6">
+                    <input  id="fin_iteracion" name="fecha_fin"type="text" class="datepicker" autocomplete="off" required>
                     <label for="fin_iteracion">Selecciona la fecha de fin de la iteración</label>
                 </div>
             </div>
             <div class="row">
-                <div class="col s4">
+                <div class="col s6">
                     <div class="chips chips-autocomplete"  id="chip1"></div>
                     <i class="material-icons">search</i> 
                 </div>
             </div>
             <div class="row">
-                <div class="col s4 offset-s1">
+                <div class="col s6 offset-s1">
                     <a class="waves-effect waves-light btn" id="cancelbtn" href="/proyectos/iteraciones-desarrollo-proyecto">Cancelar</a>
                     <button class="waves-effect waves-light btn" type="submit" value="Crear">Crear</button>
                 </div>
@@ -45,7 +49,6 @@
 
 
 <script>
-   
     document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('.chips-autocomplete');
 
@@ -56,8 +59,6 @@
             options["<%=empleados[i].usuario%>"] = null;
         "<% } %>"
     "<% } %>"
-
-    console.log(options);
 
     var instances = M.Chips.init(elems,{
         autocompleteOptions:{ data : options},
@@ -71,7 +72,6 @@
             var instance = M.Chips.getInstance(document.getElementById('chip1')), inpt = document.getElementById('myInputField');
             inpt.value =  null;
             for(var i=0; i<instance.chipsData.length; i++){
-                console.log(instance.chipsData[i]);
                 if(inpt.value == null)
                     inpt.value = instance.chipsData[i].tag;
                 else{
@@ -87,8 +87,7 @@
         format:'yyyy-mm-dd'
         });
     });
-   
 
 </script>
 
-<%- include('includes/closeHTML.ejs'); %>   
+<%- include('includes/closeHTMLtoast.ejs'); %>   
