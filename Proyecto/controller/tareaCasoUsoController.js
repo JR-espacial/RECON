@@ -104,7 +104,11 @@ exports.postModificarAsocioacion = (request, response) => {
                         if(!rows2[0].id_airtable) {
                             Entrega.dropEntrega(id_proyecto, id_fase, id_tarea, id_casos)
                                 .then(() => {
-                                    response.status(200).json({toast:"Asociación eliminada"});
+                                    Entrega.actualiza_con_check(id_casos)
+                                        .then(() => {
+                                            response.status(200).json({toast:"Asociación eliminada"});
+                                        })
+                                        .catch( err => console.log(err));
                                 })
                                 .catch( err => console.log(err));
                         }
@@ -130,14 +134,22 @@ exports.postModificarAsocioacion = (request, response) => {
 
                             Entrega.dropEntrega(id_proyecto, id_fase, id_tarea, id_casos)
                                 .then(() => {
-                                    response.status(200).json({toast: "Asociación eliminada de airtable."});
+                                    Entrega.actualiza_con_check(id_casos)
+                                        .then(() => {
+                                            response.status(200).json({toast:"Asociación eliminada de airtable."});
+                                        })
+                                        .catch( err => console.log(err));
                                 })
                             .catch( err => console.log(err));
                         }
                         else {
                             Entrega.dropEntrega(id_proyecto, id_fase, id_tarea, id_casos)
                                 .then(() => {
-                                    response.status(200).json({toast:"Asociación eliminada"});
+                                    Entrega.actualiza_con_check(id_casos)
+                                        .then(() => {
+                                            response.status(200).json({toast:"Asociación eliminada."});
+                                        })
+                                        .catch( err => console.log(err));
                                 })
                                 .catch( err => console.log(err));
                         }

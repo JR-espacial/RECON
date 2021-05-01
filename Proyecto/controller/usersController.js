@@ -139,7 +139,6 @@ exports.postRegister = (request, response, next) => {
                     mensaje = "La contraseña no debe contener espacios";
                     
                 }
-        
                 request.session.error = mensaje;
                 response.redirect('/users/register');
                 
@@ -289,6 +288,7 @@ exports.postSettings = (request, response) => {
                                     mensaje = "La nueva contraseña no debe contener espacios";
                                     
                                 }
+                                request.session.alerta = mensaje;
                                 request.session.error = mensaje;
                                 response.redirect('/users/settings');
                                 

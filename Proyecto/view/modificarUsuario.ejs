@@ -138,6 +138,8 @@
                                     <div class="modal-content col s6 offset-s3">
                                         <h5> Modificar usuario</h5>
                                         <br>
+                                        <p>Mayúscula, minúscula, dígito, caracter especial, mínimo 8 caracteres.</p>
+                                        <br>
                                         <form action="/users/settings" method="POST">
                                             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                                             <input type="hidden" name="option" value="5">

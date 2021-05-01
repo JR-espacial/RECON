@@ -412,7 +412,7 @@
         UPDATE casos_uso SET real_minutos = cast((SELECT SUM(estimacion) FROM entrega E WHERE E.id_casos = idCasos)* 60 as decimal (5,1)) 
         WHERE id_casos = idCasos;
         
-        UPDATE casos_uso SET porcentaje_avance = CAST((SELECT SUM(estimacion) FROM entrega WHERE id_casos = idCasos AND estado_entrega = "Done")/real_minutos AS DECIMAL(3,2))
+        UPDATE casos_uso SET porcentaje_avance = CAST((SELECT SUM(estimacion) FROM entrega WHERE id_casos = idCasos AND estado_entrega = "Done") * 60 /real_minutos AS DECIMAL(3,2))
         WHERE id_casos = idCasos;
 
         UPDATE iteracion SET total_min_real = cast((SELECT SUM(real_minutos) FROM casos_uso CU WHERE CU.id_iteracion = (SELECT id_iteracion FROM casos_uso WHERE id_casos = idCasos)) as decimal (5,1)) 
